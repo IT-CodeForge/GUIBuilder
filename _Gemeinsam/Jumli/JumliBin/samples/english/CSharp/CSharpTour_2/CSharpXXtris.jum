@@ -1,0 +1,1313 @@
+Jumli-Datei
+{
+  *** Applikation ***;
+  Version=1.3;
+  {
+    *** Model ***;
+    Typ=3;
+    MainFile="LayoutForm.cs";
+    OptionenCompileOne="/debug";
+    AufrufCompiler="csc";
+    AufrufDebugger="cordbg";
+    ActiveDiagramm="Step 1";
+    {
+      *** Package ***;
+      Name="UseCases";
+      ID=62;
+      Zugriff=2;
+      Type=2;
+      {
+        *** Diagramm ***;
+        Name="UseCases";
+        ID=63;
+        DiagrammTyp=2;
+      };
+    };
+    {
+      *** Package ***;
+      Name="CSharpXXris";
+      ID=64;
+      Zugriff=2;
+      {
+        *** Klasse ***;
+        Doku="/ <summary>/ GUI./ </summary>";
+        Name="LayoutForm";
+        ID=65;
+        Datentyp="class";
+        NameSpace="CSharp_Tetris";
+        FileName="LayoutForm.cs";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Attribut ***;
+          Name="GameTimer";
+          ID=66;
+          Datentyp="System.Windows.Forms.Timer";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="animCanvasHeight";
+          ID=67;
+          Datentyp="int";
+          Zugriff=3;
+        };
+        {
+          *** Attribut ***;
+          Name="animCanvasWidth";
+          ID=68;
+          Datentyp="int";
+          Zugriff=3;
+        };
+        {
+          *** Attribut ***;
+          Name="animationCanvas";
+          ID=69;
+          Datentyp="System.Windows.Forms.Panel";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="arrBrushColors";
+          ID=70;
+          Datentyp="SolidBrush[]";
+          Zugriff=2;
+          AttributWert="new SolidBrush[5]";
+        };
+        {
+          *** Attribut ***;
+          Name="arrBrushColours";
+          ID=71;
+          Datentyp="SolidBrush[]";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="arrBrushes";
+          ID=72;
+          Datentyp="SolidBrush[][]";
+          Zugriff=2;
+          AttributWert="new SolidBrush[30][]";
+        };
+        {
+          *** Attribut ***;
+          Name="arrGameGridBrushes";
+          ID=73;
+          Datentyp="SolidBrush[][]";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="bolIsDropped";
+          ID=74;
+          Datentyp="bool";
+          Zugriff=2;
+          AttributWert="false";
+        };
+        {
+          *** Attribut ***;
+          Name="bolIsGameOver";
+          ID=75;
+          Datentyp="bool";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="bolIsGamePaused";
+          ID=76;
+          Datentyp="bool";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="bolIsRowFull";
+          ID=77;
+          Datentyp="bool";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="bonusCanvas";
+          ID=78;
+          Datentyp="System.Windows.Forms.Panel";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="components";
+          ID=79;
+          Datentyp="System.ComponentModel.IContainer";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Doku=" make a reference to our GameGrid";
+          Name="grdGameGrid";
+          ID=80;
+          Datentyp="GameGrid";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intBonusHeight";
+          ID=81;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intBonusStep";
+          ID=82;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intDropRate";
+          ID=83;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intGameSpeed";
+          ID=84;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intLevel";
+          ID=85;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intLevelRowsCompleted";
+          ID=86;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intNextShapeType";
+          ID=87;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intNumberOfCols";
+          ID=88;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intNumberOfRows";
+          ID=89;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intShapeType";
+          ID=90;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intTotalRowsCompleted";
+          ID=91;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label1";
+          ID=92;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label10";
+          ID=93;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label11";
+          ID=94;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label12";
+          ID=95;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label2";
+          ID=96;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label3";
+          ID=97;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label4";
+          ID=98;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label5";
+          ID=99;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label6";
+          ID=100;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label7";
+          ID=101;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label8";
+          ID=102;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="label9";
+          ID=103;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="lblLevel";
+          ID=104;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="lblRows";
+          ID=105;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="lblScore";
+          ID=106;
+          Datentyp="System.Windows.Forms.Label";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="lngScore";
+          ID=107;
+          Datentyp="long";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="nextShape";
+          ID=108;
+          Datentyp="System.Windows.Forms.Panel";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="panel1";
+          ID=109;
+          Datentyp="System.Windows.Forms.Panel";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="r";
+          ID=110;
+          Datentyp="Rectangle";
+          Zugriff=3;
+        };
+        {
+          *** Attribut ***;
+          Name="rctGameGrid";
+          ID=111;
+          Datentyp="Rectangle[][]";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="rctShape";
+          ID=112;
+          Datentyp="Rectangle[]";
+          Zugriff=3;
+        };
+        {
+          *** Attribut ***;
+          Name="rndShapeType";
+          ID=113;
+          Datentyp="Random";
+          Zugriff=2;
+          AttributWert="new Random()";
+        };
+        {
+          *** Methode ***;
+          Doku="/ <summary>/ Clean up any resources being used./ </summary>";
+          Name="Dispose";
+          ID=114;
+          Zugriff=1;
+          RueckgabeWert="void";
+          IsOverride=true;
+          {
+            *** Parameter ***;
+            Typ="bool";
+            ParameterName="disposing";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="DrawBonus";
+          ID=116;
+          Zugriff=2;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intHeight";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="DrawGameOver";
+          ID=118;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="DrawNextShape";
+          ID=119;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="DrawScreen";
+          ID=120;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="DrawStart";
+          ID=121;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="GameTimer_Tick";
+          ID=122;
+          Zugriff=2;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="object";
+            ParameterName="sender";
+          };
+          {
+            *** Parameter ***;
+            Typ="System.EventArgs";
+            ParameterName="e";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="GetShapeType";
+          ID=125;
+          Zugriff=2;
+          RueckgabeWert="int";
+        };
+        {
+          *** Methode ***;
+          Doku="/ <summary>/ Required method for Designer support - do not modify/ \
+          the contents of this method with the code editor./ </summary>";
+          Name="InitializeComponent";
+          ID=126;
+          Zugriff=2;
+          RueckgabeWert="#region Windows Form Designer generated code";
+        };
+        {
+          *** Methode ***;
+          Name="LayoutForm";
+          ID=127;
+        };
+        {
+          *** Methode ***;
+          Name="LayoutForm_KeyDown";
+          ID=128;
+          Zugriff=2;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="object";
+            ParameterName="sender";
+          };
+          {
+            *** Parameter ***;
+            Typ="System.Windows.Forms.KeyEventArgs";
+            ParameterName="e";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="LayoutForm_Load";
+          ID=131;
+          Zugriff=2;
+          RueckgabeWert="#endregion";
+          {
+            *** Parameter ***;
+            Typ="object";
+            ParameterName="sender";
+          };
+          {
+            *** Parameter ***;
+            Typ="System.EventArgs";
+            ParameterName="e";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="LayoutForm_Paint";
+          ID=134;
+          Zugriff=2;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="object";
+            ParameterName="sender";
+          };
+          {
+            *** Parameter ***;
+            Typ="System.Windows.Forms.PaintEventArgs";
+            ParameterName="e";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="Main";
+          ID=137;
+          IsStatic=true;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="string[]";
+            ParameterName="args";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="SetUpGame";
+          ID=139;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="UpdateLevel";
+          ID=140;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="UpdateScore";
+          ID=141;
+          Zugriff=2;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intRowNum";
+          };
+        };
+        {
+          *** Aggregation ***;
+          ID=143;
+          Datentyp="Shape";
+          Zugriff=3;
+          A=65;
+          B=167;
+          RollenName="shpShape";
+        };
+        {
+          *** Aggregation ***;
+          ID=144;
+          Datentyp="Shape";
+          Zugriff=3;
+          A=65;
+          B=167;
+          RollenName="shpNextShape";
+        };
+        {
+          *** Aggregation ***;
+          ID=145;
+          Datentyp="Screen";
+          Zugriff=2;
+          A=65;
+          B=151;
+          RollenName="scrMainScreen";
+        };
+        {
+          *** Aggregation ***;
+          ID=146;
+          Datentyp="Screen";
+          Zugriff=2;
+          A=65;
+          B=151;
+          RollenName="scrBonusScreen";
+        };
+        {
+          *** Aggregation ***;
+          ID=147;
+          Datentyp="Screen";
+          Zugriff=2;
+          A=65;
+          B=151;
+          RollenName="scrStartScreen";
+        };
+        {
+          *** Aggregation ***;
+          ID=148;
+          Datentyp="Screen";
+          Zugriff=2;
+          A=65;
+          B=151;
+          RollenName="scrNextShape";
+        };
+        {
+          *** Vererbung ***;
+          ID=149;
+          A=65;
+          B=-1;
+          BasisKlasse="System.Windows.Forms.Form";
+        };
+        {
+          *** Vererbung ***;
+          ID=150;
+          A=65;
+          B=220;
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="/ <summary>/ Screen class manages offscreen graphics./ Code reused \
+        and morphed from examples at www.extremetech.com/ </summary>";
+        Name="Screen";
+        ID=151;
+        Datentyp="class";
+        NameSpace="CSharp_Tetris";
+        FileName="Screen.cs";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Attribut ***;
+          Name="g";
+          ID=152;
+          Datentyp="Graphics";
+          Zugriff=1;
+          AttributWert="null";
+        };
+        {
+          *** Attribut ***;
+          Name="graphicsOffScreen";
+          ID=153;
+          Datentyp="Graphics";
+          Zugriff=1;
+          AttributWert="null";
+        };
+        {
+          *** Attribut ***;
+          Name="imageOffScreen";
+          ID=154;
+          Datentyp="Image";
+          Zugriff=1;
+          AttributWert="null";
+        };
+        {
+          *** Attribut ***;
+          Name="screenHeight";
+          ID=155;
+          Datentyp="int";
+          AttributWert="0";
+        };
+        {
+          *** Attribut ***;
+          Name="screenWidth";
+          ID=156;
+          Datentyp="int";
+          AttributWert="0";
+        };
+        {
+          *** Attribut ***;
+          Name="screenX";
+          ID=157;
+          Datentyp="int";
+          AttributWert="0";
+        };
+        {
+          *** Attribut ***;
+          Name="screenY";
+          ID=158;
+          Datentyp="int";
+          AttributWert="0";
+        };
+        {
+          *** Methode ***;
+          Name="GetGraphics";
+          ID=159;
+          RueckgabeWert="Graphics";
+        };
+        {
+          *** Methode ***;
+          Name="Screen";
+          ID=163;
+        };
+        {
+          *** Methode ***;
+          Name="Screen";
+          ID=160;
+          {
+            *** Parameter ***;
+            Typ="Panel";
+            ParameterName="p";
+          };
+          {
+            *** Parameter ***;
+            Typ="Rectangle";
+            ParameterName="r";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="erase";
+          ID=164;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="flip";
+          ID=165;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="isValidGraphics";
+          ID=166;
+          RueckgabeWert="bool";
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="/ <summary>/ Shape class takes care of building the shape and moving \
+        the shape in the game area/ </summary>";
+        Name="Shape";
+        ID=167;
+        Datentyp="class";
+        NameSpace="CSharp_Tetris";
+        FileName="Shape.cs";
+        Parent=-1;
+        {
+          *** Attribut ***;
+          Name="bolIsNextShape";
+          ID=168;
+          Datentyp="bool";
+          Zugriff=2;
+          AttributWert="false";
+        };
+        {
+          *** Attribut ***;
+          Name="bolShapeMoving";
+          ID=169;
+          Datentyp="bool";
+        };
+        {
+          *** Attribut ***;
+          Name="intBlocXPos";
+          ID=170;
+          Datentyp="int[]";
+          Zugriff=2;
+          AttributWert="new int[4]";
+        };
+        {
+          *** Attribut ***;
+          Name="intBlocYPos";
+          ID=171;
+          Datentyp="int[]";
+          Zugriff=2;
+          AttributWert="new int[4]";
+        };
+        {
+          *** Attribut ***;
+          Name="intCurrentShape";
+          ID=172;
+          Datentyp="int";
+          Zugriff=2;
+          AttributWert="1";
+        };
+        {
+          *** Attribut ***;
+          Name="intCurrentShapePosition";
+          ID=173;
+          Datentyp="int";
+          Zugriff=2;
+          AttributWert="1";
+        };
+        {
+          *** Attribut ***;
+          Name="intPanelHeight";
+          ID=174;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intPanelWidth";
+          ID=175;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Doku="private";
+          Name="intStartingXCoordinate";
+          ID=176;
+          Datentyp="int";
+          Zugriff=2;
+        };
+        {
+          *** Attribut ***;
+          Name="intXPositions";
+          ID=177;
+          Datentyp="int[]";
+          Zugriff=2;
+          AttributWert="new int[4]";
+        };
+        {
+          *** Attribut ***;
+          Doku=" set up our class variables public";
+          Name="pntShape";
+          ID=178;
+          Datentyp="Point[]";
+        };
+        {
+          *** Attribut ***;
+          Name="rctShape";
+          ID=179;
+          Datentyp="Rectangle[]";
+        };
+        {
+          *** Methode ***;
+          Name="BuildShape";
+          ID=180;
+          Zugriff=2;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intShapeType";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="FlipShape";
+          ID=182;
+          RueckgabeWert="Rectangle[]";
+          {
+            *** Parameter ***;
+            Typ="string";
+            ParameterName="strDirection";
+          };
+          {
+            *** Parameter ***;
+            Typ="Rectangle[][]";
+            ParameterName="rctGameGrid";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="GetShape";
+          ID=185;
+          RueckgabeWert="Rectangle[]";
+        };
+        {
+          *** Methode ***;
+          Name="SetShapePosition";
+          ID=186;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="SetShapeStart";
+          ID=187;
+          Zugriff=2;
+          RueckgabeWert="void";
+        };
+        {
+          *** Methode ***;
+          Name="Shape";
+          ID=188;
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intShapeType";
+          };
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intScreenWidth";
+          };
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intScreenHeight";
+          };
+          {
+            *** Parameter ***;
+            Typ="bool";
+            ParameterName="bolNextShape";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="moveShapeDown";
+          ID=193;
+          RueckgabeWert="Rectangle[]";
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intMovePixels";
+          };
+          {
+            *** Parameter ***;
+            Typ="Rectangle[][]";
+            ParameterName="rctGameGrid";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="moveShapeLeft";
+          ID=196;
+          RueckgabeWert="Rectangle[]";
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intMovePixels";
+          };
+          {
+            *** Parameter ***;
+            Typ="Rectangle[][]";
+            ParameterName="rctGameGrid";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="moveShapeRight";
+          ID=199;
+          RueckgabeWert="Rectangle[]";
+          {
+            *** Parameter ***;
+            Typ="int";
+            ParameterName="intMovePixels";
+          };
+          {
+            *** Parameter ***;
+            Typ="Rectangle[][]";
+            ParameterName="rctGameGrid";
+          };
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Step 1";
+        ID=202;
+        {
+          *** CJumliTracker ***;
+          Rechteck=130,392,298,451;
+          UMLElementID=220;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=127,236,232,295;
+          UMLElementID=65;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=643,281,748,340;
+          UMLElementID=151;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=486,414,591,473;
+          UMLElementID=167;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=145;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=146;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=147;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=148;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=143;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=144;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=31,40,310,147;
+          UMLElementID=206;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=514,66,791,218;
+          UMLElementID=207;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Step 2";
+        ID=203;
+        {
+          *** CJumliTracker ***;
+          Rechteck=520,264,688,323;
+          UMLElementID=220;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=160,224,265,283;
+          UMLElementID=65;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=472,376,577,435;
+          UMLElementID=151;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=459,175,564,234;
+          UMLElementID=167;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=150;
+          TextOffset=0,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=145;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=146;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=147;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=148;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=143;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          UMLElementID=144;
+          TextOffset=0,5;
+          OffsetRollenName=-20,-10;
+          OffsetA=5,5;
+          OffsetB=5,5;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=34,33,373,125;
+          UMLElementID=208;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=56,387,314,524;
+          Colour=160,167,224;
+          UMLElementID=209;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=527,87,837,149;
+          Colour=255,128,128;
+          UMLElementID=210;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Step 3";
+        ID=204;
+        {
+          *** NotizZeichner ***;
+          Rechteck=247,34,565,163;
+          UMLElementID=211;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=22,233,382,362;
+          UMLElementID=212;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=452,349,800,462;
+          Colour=204,204,255;
+          UMLElementID=213;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Step 4";
+        ID=205;
+        {
+          *** NotizZeichner ***;
+          Rechteck=17,41,369,202;
+          UMLElementID=214;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=416,236,755,381;
+          Colour=128,255,128;
+          UMLElementID=215;
+        };
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nIn this example we will programm a small game.\n\nThe \
+        Tour based on CSharpTour_1. The conditions of the \nCSharpTour_1 must be \
+        fulfilled.";
+        ID=206;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nFollowing things were created:\n- \"Form\" was put from \
+        the class library (SDK-tree) into the \n    diagram-window\n\n- class \"Screen\" \
+        was created\n- class \"Sape\" was created\n- class \"LayoutForm\" was created";
+        ID=207;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nNormally, like learned in the first tour, the sourcecode \
+        generating used \nto be here.  In this case it´s not necessesary because \
+        we programmed \nmany lines of code.";
+        ID=208;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nThe class \"GameGrid\" is missing.\n\nA new and not available \
+        class to add in the project is \nvery easy.\n\nGo on in step 3";
+        ID=209;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nHere we add the inheritance between \"Form\" and \"LayoutForm\"";
+        ID=210;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nYou click on \"open\" and choose \"add files to project\".\n\nNow \
+        you see all .cs-files which are in your project register, you \nchoose \
+        \"GameGrid\" and add it. In the Jumli filetree it is already\navailable.";
+        ID=211;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nWhen you want to see the the new file as class, you must \
+        analyse\nit.\nYou select the \"GameGrid\" in the filetree and click on \
+        \"Code\" and choose \n\"Analyse file\".\nJumli is parsing the file an add \
+        the new class in the projecttree.";
+        ID=212;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nNow you can add the new class in the classdiagram, only \
+        select in the\nclasstree and move into the diagram.\n\nNow we want to see \
+        our programm in action, it goes on in step 4.";
+        ID=213;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nIn this project we have got 4 sourcecodefiles, so we use \
+        the button\n\"build\" and not \"compile\".\n\nWhen Jumli is building our \
+        project you can read the compiler messages \nin the message window. \nNormally \
+        their are no errors in this project, in case of an error you must \nsearch \
+        it!";
+        ID=214;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nNow you must press the button \"Run\", Jumli start the \
+        .exe-file which \nwas build.\n\nAnd now you can play!\n\nHave fun!";
+        ID=215;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Extern";
+      ID=216;
+      Zugriff=2;
+      Type=1;
+      {
+        *** Package ***;
+        Name="System";
+        ID=217;
+        Zugriff=2;
+        Type=1;
+        {
+          *** Package ***;
+          Name="Windows";
+          ID=218;
+          Zugriff=2;
+          Type=1;
+          {
+            *** Package ***;
+            Name="Forms";
+            ID=219;
+            Zugriff=2;
+            Type=1;
+            {
+              *** Klasse ***;
+              Name="Form";
+              ID=220;
+              Datentyp="class";
+              IsExtern=true;
+              FileName="Form.cs";
+              FileActiveLine=-1;
+              HeaderFileActiveLine=-1;
+              IsGenerate=true;
+              Parent=-1;
+            };
+            {
+              *** Diagramm ***;
+              Name="Forms";
+              ID=221;
+            };
+          };
+          {
+            *** Diagramm ***;
+            Name="Windows";
+            ID=222;
+          };
+        };
+        {
+          *** Diagramm ***;
+          Name="System";
+          ID=223;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Extern";
+        ID=224;
+      };
+    };
+    {
+      *** SonstigeFiles ***;
+      FileName="C:\\Projects\\CSharpTour_2\\deutsch\\AssemblyInfo.cs";
+      ActiveLine=-1;
+    };
+  };
+};

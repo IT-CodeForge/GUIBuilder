@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Der Methoden Dialog</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.0  (Win32)">
+	<META NAME="CREATED" CONTENT="20040325;22143621">
+	<META NAME="CHANGED" CONTENT="20040325;22450764">
+	<STYLE>
+	<!--
+		TD P { color: #000000; font-family: "Arial", sans-serif; font-size: 10pt }
+		H1 { color: #000000; font-family: "Arial", sans-serif; font-size: 21pt }
+		P { color: #000000; font-family: "Arial", sans-serif; font-size: 10pt }
+		H5 { color: #000000 }
+		A:link { color: #ff0000; font-family: "Arial", sans-serif; font-size: 10pt; text-decoration: none }
+		A:visited { color: #ff0000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000" LINK="#ff0000" VLINK="#ff0000" BGCOLOR="#ffffff" DIR="LTR">
+<CENTER>
+	<TABLE WIDTH=810 BORDER=0 CELLPADDING=2 CELLSPACING=2 STYLE="page-break-before: always">
+		<TR>
+			<TD STYLE="background: url(../../img/KopfImg/Hilfekopf.jpg) repeat scroll">
+				<H1 ALIGN=CENTER>Der Methoden Dialog</H1>
+			</TD>
+		</TR>
+	</TABLE>
+</CENTER>
+<DL>
+	<DL>
+		<DD>
+		<TABLE WIDTH=832 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+			<COL WIDTH=469>
+			<COL WIDTH=355>
+			<TR VALIGN=TOP>
+				<TD WIDTH=469>
+					<P><BR><IMG SRC="../../img/DialogImg/Deutsch/MethodeDialog.gif" NAME="Graphic1" ALIGN=BOTTOM WIDTH=447 HEIGHT=534 BORDER=0>
+										</P>
+				</TD>
+				<TD WIDTH=355>
+					<P><BR><BR>
+					</P>
+					<UL>
+						<P>1. Geben Sie hier den Namen der <A HREF="../../UMLs/Deutsch/UMLMethode.html">Methode</A>
+						ein. Er darf keine Leerstelle und kein Sonderzeichen enthalten.</P>
+						<P>2. Hier k&ouml;nnen Sie einen Stereotype f&uuml;r die
+						Methode vergeben.</P>
+						<P>3. Hier m&uuml;ssen Sie den R&uuml;ckgabewert der Methode
+						eingeben. Standardm&auml;&szlig;ig ist 'void' vorgeschlagen. Es
+						sind aber auch 'int' oder sogar ganze Klassen als R&uuml;ckgabewert
+						m&ouml;glich</P>
+						<P>4. Throws sollen Ausnahmen bei fehlerhaften Eingaben
+						abfangen. Wird beispielsweise einer Methode, die eigentlich
+						einen int-Parameter hat, ein String-Parameter mitgegeben, w&uuml;rde
+						das Programm nicht laufen. Durch Throws sollen solche Fehler
+						abgefangen werden. 
+						</P>
+						<P>5. Hier k&ouml;nnen Sie den Zugriff auf die Methode
+						festlegen. Sie haben die Auswahl zwischen:</P>
+						<UL>
+							<P><B>private</B>: Die Methode ist nur innerhalb der Klasse
+							sichtbar und bekannt.<BR><B>protected</B>: Die Methode kann
+							von Klassen innerhalb des Packages und von abgeleiteten
+							Klassen aufgerufen werden.<BR><B>public</B>: Alle Objekte, die
+							die zugeh&ouml;rige Klasse kennen, k&ouml;nnen die Methode
+							aufrufen.<BR><B>internal</B>: Diese Option steht nur in C# zu
+							Verf&uuml;gung.<BR><B>protected internal</B>: Auch dieses
+							Zugriffsrecht kann nur in C# gentzt werden.<BR><B>package</B>:
+							Die Methode ist nur im Package bekannt. 
+							</P>
+						</UL>
+					</UL>
+				</TD>
+			</TR>
+			<TR>
+				<TD COLSPAN=2 WIDTH=828>
+					<P><BR><BR>
+					</P>
+					<P>6. Hier k&ouml;nnen Sie die Eigenschaften einer Methode
+					definieren. Es gibt die Auswahl zwischen: 
+					</P>
+					<UL>
+						<P><B>abstract</B>: Diese Methode muss von einer abgeleiteten
+						Klasse &uuml;berschrieben werden.<BR><B>final</B>: Die Methode
+						kann von keiner anderen Klasse &uuml;berschrieben werden ( nur
+						in Java m&ouml;glich ).<BR><B>static</B>: Die Methode wird
+						nicht f&uuml;r jedes Objekt einzeln angelegt, sondern existiert
+						nur einmal f&uuml;r die ganze Klasse. Alle Objekte dieser
+						Klasse haben Zugriff auf diese Methode,d.h. wird sie von einem
+						ver&auml;ndert, erscheint sie f&uuml;r alle ver&auml;ndert. Der
+						Zugriff ist auch m&ouml;glich, wenn noch kein Objekt dieser
+						Klasse existiert.<BR><B>native</B>: Diese Eigenschaft kann nur
+						in Java genutzt werden.<BR><B>synchronized</B>: Eine Klasse
+						kann von mehreren Threads &quot;zeitgleich&quot; ver&auml;ndert
+						werden. Setzt man die Eigenschaft synchronized, so wird
+						sichergestellt, dass nur ein Thread je Zeiteinheit die Klasse
+						ver&auml;ndert. Dies ist nur in Java m&ouml;glich. <B>explicit</B>:
+						Diese Eigenschaft kann nicht in Java gennutzt werden.<BR><B>const</B>:
+						In C++ kann eine Methode const deklariert werden.<BR><B>virtual</B>:Auch
+						diese Eigenschaft kann man nicht in Java nutzen.<BR><B>implicit,
+						new, override, ist delegate</B>: Diese Eigenschaften sind C#
+						vorbehalten.</P>
+					</UL>
+					<P>7. Die Parameter der Methode werden hier aufgelistet. 
+					</P>
+					<P>8. Mit NEU kommen Sie in den <A HREF="ParameterDialog.html">Parameter
+					Dialog</A>.</P>
+					<P>9. Mit ENTF k&ouml;nnen Sie den markierten Parameter
+					entfernen, dann wird der Parameter nach einer nochmaligen
+					Abfrage gel&ouml;scht.</P>
+					<P><BR>
+					</P>
+				</TD>
+			</TR>
+			<TR>
+				<TD COLSPAN=2 WIDTH=828>
+					<P><BR>
+					</P>
+				</TD>
+			</TR>
+			<TR>
+				<TD WIDTH=469>
+					<H5><A HREF="Dialog_Start.html">Zur&uuml;ck zur Dialog &Uuml;bersicht</A></H5>
+				</TD>
+				<TD WIDTH=355 VALIGN=TOP></TD>
+			</TR>
+			<TR>
+				<TD WIDTH=469>
+					<H5><A HREF="../../Startseite.html">Zur&uuml;ck zur Startseite</A></H5>
+				</TD>
+				<TD WIDTH=355 VALIGN=TOP></TD>
+			</TR>
+		</TABLE>
+	</DL>
+</DL>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

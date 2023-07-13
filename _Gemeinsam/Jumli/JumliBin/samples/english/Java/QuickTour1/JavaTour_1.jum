@@ -1,0 +1,936 @@
+Jumli-Datei
+{
+  *** Applikation ***;
+  Version=1.3;
+  {
+    *** Model ***;
+    MainFile="MyWindow.java";
+    OptionenCompileOne="-verbose -g";
+    AufrufCompiler="javac";
+    AufrufDebugger="jdb";
+    RunParameter="-verbose";
+    ActiveDiagramm="Tour 0 Premises";
+    {
+      *** Package ***;
+      Name="UseCases";
+      ID=1;
+      Zugriff=2;
+      Type=2;
+      {
+        *** Diagramm ***;
+        Name="UseCases";
+        ID=2;
+        DiagrammTyp=2;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Tour";
+      ID=3;
+      Zugriff=2;
+      {
+        *** Klasse ***;
+        Doku="This is our first class. The class-dialog settings:\n\n1: name\n2: \
+        checkbox \"main\"";
+        Name="FirstClass";
+        ID=4;
+        Datentyp="class";
+        FileName="FirstClass.java";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        IsMain=true;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="main";
+          ID=5;
+          IsStatic=true;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="String[]";
+            ParameterName="args";
+          };
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="This window-class inherits all properties from JFrame.\n\nClass-Dialog \
+        settings:\n1: name\n2: checkbox \"main\"\n3. checkbox \"Constructor\"";
+        Name="MyWindow";
+        ID=7;
+        Datentyp="class";
+        FileName="MyWindow.java";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        IsMain=true;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="MyWindow";
+          ID=8;
+        };
+        {
+          *** Methode ***;
+          Name="main";
+          ID=9;
+          IsStatic=true;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Typ="String[]";
+            ParameterName="args";
+          };
+        };
+        {
+          *** Vererbung ***;
+          ID=11;
+          A=7;
+          B=48;
+        };
+      };
+      {
+        *** DotLine ***;
+        ID=12;
+        Zugriff=2;
+        A=43;
+        B=48;
+      };
+      {
+        *** DotLine ***;
+        ID=13;
+        Zugriff=2;
+        A=21;
+        B=7;
+      };
+      {
+        *** DotLine ***;
+        ID=14;
+        Zugriff=2;
+        A=22;
+        B=7;
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 1 First overview";
+        ID=15;
+        {
+          *** NotizZeichner ***;
+          Rechteck=11,15,353,96;
+          UMLElementID=28;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=14,128,389,289;
+          UMLElementID=29;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=406,3,785,212;
+          UMLElementID=30;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=409,225,768,434;
+          UMLElementID=31;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=18,324,213,421;
+          UMLElementID=32;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 2 The first class";
+        ID=16;
+        {
+          *** CJumliTracker ***;
+          Rechteck=103,145,208,204;
+          UMLElementID=4;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=19,18,326,95;
+          UMLElementID=33;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=341,17,708,124;
+          UMLElementID=34;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=21,284,489,451;
+          UMLElementID=35;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=396,172,727,234;
+          UMLElementID=36;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=517,286,677,363;
+          Colour=128,128,255;
+          UMLElementID=37;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 3 The first program";
+        ID=17;
+        {
+          *** CJumliTracker ***;
+          Rechteck=75,111,180,170;
+          UMLElementID=4;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=20,19,330,81;
+          UMLElementID=38;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=368,15,713,152;
+          UMLElementID=39;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=23,196,299,453;
+          UMLElementID=40;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=383,181,629,273;
+          UMLElementID=41;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 0 Premises";
+        ID=18;
+        {
+          *** NotizZeichner ***;
+          Rechteck=15,15,375,192;
+          Colour=255,255,128;
+          UMLElementID=24;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=16,218,332,347;
+          UMLElementID=25;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=407,26,621,171;
+          Colour=128,128,255;
+          UMLElementID=26;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=374,211,691,340;
+          Colour=128,128,128;
+          UMLElementID=27;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 4 JDK";
+        ID=19;
+        {
+          *** CJumliTracker ***;
+          Rechteck=485,32,594,91;
+          UMLElementID=48;
+          IsWithAttributs=true;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=11,14,469,301;
+          Colour=255,255,128;
+          UMLElementID=42;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=495,137,852,244;
+          UMLElementID=43;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=57,346,159,408;
+          Colour=128,128,255;
+          UMLElementID=44;
+        };
+        {
+          *** DotLineZeichner ***;
+          Rechteck=637,47,644,54;
+          UMLElementID=12;
+          Knick=641,51;
+          TextOffset=0,5;
+          {
+            *** Linie ***;
+            Punkt=641,51;
+          };
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 5 The first window";
+        ID=20;
+        {
+          *** CJumliTracker ***;
+          Rechteck=47,127,152,191;
+          UMLElementID=7;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=52,21,161,80;
+          UMLElementID=48;
+          IsWithAttributs=true;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=11;
+          TextOffset=0,5;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=236,16,553,213;
+          UMLElementID=21;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=16,257,314,349;
+          UMLElementID=22;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=366,246,670,413;
+          UMLElementID=23;
+        };
+        {
+          *** DotLineZeichner ***;
+          Rechteck=191,96,198,103;
+          UMLElementID=13;
+          Knick=195,100;
+          TextOffset=0,5;
+          {
+            *** Linie ***;
+            Punkt=195,100;
+          };
+        };
+        {
+          *** DotLineZeichner ***;
+          Rechteck=91,216,98,223;
+          UMLElementID=14;
+          Knick=95,220;
+          TextOffset=0,5;
+          {
+            *** Linie ***;
+            Punkt=95,220;
+          };
+        };
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nFirst steps:\n- \"JFrame\" has been dragged from the project-tree \
+        to the diagram\n- the class \"MyWindow\" has been created\n- after pressing \
+        the toolbar-button \"Inheritance\" we created \nan inheritance-line between \
+        the classes \"MyWindow\" and\n \"JFrame\". So \"MyWindow\" inherits all \
+        properties from \"JFrame\"\n\nBy clicking on the class \"MyWindow\" you \
+        can examine the \nproperties in the message dialog or by double-clicking \
+        in the class \ndialog.";
+        ID=21;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nA right-click on the class \"MyWindow\" opens a popup \
+        dialog\nwhere you can generate the source code. Jumli automatically \ncreates \
+        an inner class which handles the close event.";
+        ID=22;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nthe main() operation contains the following code:\n\nMyWindow \
+        window = new MyWindow();\nwindow.show();\nwindow.setSize( 200, 200 );\n\nPress \
+        \"Compile/Run/Debug/Compile File\" to start the compiler.\nBy choosing \
+        \"Run\" the program executes.";
+        ID=23;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nA missing or wrong installed JDK can cause many problems. \
+        \nThe JDK is not included in the Jumli package, please download and install\nthe \
+        recent JDK and documentation.\n\nIf there are stil errors the auto-detection \
+        probably has failed. By choosing\n\"Options/JDK-Options\" you can enter \
+        the directories by hand.\n\nFuther information can be found on http://www.jumli.de \
+        or in the FAQ.";
+        ID=24;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nJumli can display HTML-helpfiles, so you'll need a web \
+        browser.\n\nOn Windows we use the system's default browser and editor. \
+        \nLinux users have to add their favourite browser and editor \nin \"Settings/Jumli \
+        settings\".";
+        ID=25;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nKnown problems:\n\n- Win9x systems\n- user rights\n- project \
+        files are not backward-compatible\n- network installations";
+        ID=26;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\n\nProblem solver:\n\n- install JDK and Jumli on your lokal \
+        harddisc\n\n- don't use directories containing spaces or \"special characters\"";
+        ID=27;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\n\"File/New\" creates a new project, in this case we use \
+        a Java project.\nDon't use project directories containing spaces or special \
+        characters!";
+        ID=28;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nOn the left side you see the project tree. By default \
+        there's a UseCase \nand a project package. This is the whole project. All \
+        diagrams are just views\non the model.\n\n- you can easily switch between \
+        the elements in the project tree\n- a double-click opens the edit-dialog\n- \
+        a right-click shows a popup menu";
+        ID=29;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nThis is our model-window. Here you can create your UML \
+        model. \nYou can uses different kinds of diagrams, the default is a class \
+        diagram.\n\nA double-click on an element like this note opens a popup dialog \
+        where \nyou can edit properties.\nA single click shows the documentation \
+        in the message window.\n\nDiagrams are just views on the model, the project \
+        tree provides an overview.\n\nTour No.2 shows you how to create a new diagram.";
+        ID=30;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\n\nBelow you can see our message window.\nIt shows\n\n- the \
+        documentation of the selected element\n- system messages\n- compiler messages\n- \
+        debug output\n\nBy double clicking on a line containing \nfile information \
+        and line number, the file will be opened in the edit window";
+        ID=31;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 5:\n\nNow we'll create a new Java program.\n\nThe next steps \
+        shows Tour No. 2.";
+        ID=32;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nYou can create a new diagram by using the menu \n\"Model/New \
+        Diagram\" or toolbar. Here we use a class diagram.";
+        ID=33;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nYou can create a new class by using the menu or toolbar. \
+        Then click on the \ndiagram to drop your class there.\n\nIn the popup dialog \
+        you can enter the properties of your new class.";
+        ID=34;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nYou can also delete elements in the diagram. There's a \
+        difference between deleting in the diagram\nand deleting in the model. \
+        After deleting an element in the diagram it\nstill exists in the model. \
+        Pressing <Del> doesn't remove it from the model.\nTo remove an element \
+        you have to use the \"delete-button\" in the dialogs.\n\nExercise:\n\nDelete \
+        the class by pressing <Del>, then drag the class from the project tree \
+        back to the diagram.";
+        ID=35;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\n\nEach element has a popup menu. You can reach it after \
+        a right-click.";
+        ID=36;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 5:\n\nNow we create our first program.\nGo ahead to Tour No.3.";
+        ID=37;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nOur class has been dragged from the project tree to the \
+        diagram.";
+        ID=38;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nTo switch between diagrams and edit windows press the \
+        \"toggle views\"\nbutton in the toolbar.\n\nExercise:\n\nJust try it ;-)";
+        ID=39;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nNow let's start.\n\nExercise:\n\n1. Right-click on the \
+        class and choose \"generate code\". \nA Java source file will be created.\n\n2. \
+        Add the command \"System.out.println(\"Hello\");\" \nto the main method.\n\n3. \
+        Compile the program by pressing \n\"Compile/Run/Debug/Compile\". The compiler\nmessages \
+        will be shown in the message \nwindow. If not check your JDK installation.";
+        ID=40;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\n\nNow start the program by pressing \n\"Compile/Run/Debug/Run\". \
+        \nYou can watch the output in the message window.";
+        ID=41;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nNow we'll create our own program window. We'll use the \
+        Java Swing classes.\n\nJumli parses the JDK documentation at statup. So \
+        you can reach the Java classes\nby switching to the JDK tab in the project \
+        tree.\n\nThe \"JFrame\" class has already been added to the diagram.\n\nExercise:\n\n1. \
+        switch to the JDK tab\n2. double-click on a class, the documentation will \
+        be shown in a browser window\n3. select \"JPanel\" from \"javax.swing\" \
+        and drag it in the diagram. Jumli will try to analize the class\nand and \
+        will create a class with attributes and methods. \nThe new class will be \
+        located in the \"Extern\" package.\n\nIf there are errors go back to Tour \
+        No.0.";
+        ID=42;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nA \"extern\" class has a different color and you can't \
+        generate sources.\n\nFor a quick overview you probably want to show classes \
+        without attributes\nand methods. These settings can be found in the popup \
+        menu (right-click).";
+        ID=43;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nGo on to Tour No.5.";
+        ID=44;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Extern";
+      ID=45;
+      Zugriff=2;
+      Type=1;
+      {
+        *** Package ***;
+        Name="javax";
+        ID=46;
+        Zugriff=2;
+        Type=1;
+        {
+          *** Package ***;
+          Name="swing";
+          ID=47;
+          Zugriff=2;
+          Type=1;
+          {
+            *** Klasse ***;
+            Name="JFrame";
+            ID=48;
+            Datentyp="class";
+            IsExtern=true;
+            FileName="JFrame.java";
+            FileActiveLine=-1;
+            HeaderFileActiveLine=-1;
+            IsGenerate=true;
+            Parent=-1;
+            {
+              *** Methode ***;
+              Doku="Creates a JFrame with the specified title and the\n specified GraphicsConfiguration \
+              of a screen device.\n \n This constructor sets the component's locale property \
+              to the value \n returned by JComponent.getDefaultLocale.\n\nParameters:<DD><CODE>title</CODE> \
+              - the title to be displayed in the\n \t\tframe's border. A <code>null</code> \
+              value is treated as\n \t\tan empty string, \"\".<DD><CODE>gc</CODE> - the \
+              <code>GraphicsConfiguration</code> that is used\n \t\tto construct the \
+              new <code>JFrame</code> with;\n\t\tif <code>gc</code> is <code>null</code>, \
+              the system\n \t\tdefault <code>GraphicsConfiguration</code> is assumed\n<DT><B>Throws:</B>\n<DD><CODE><A \
+              HREF=\"../../java/lang/IllegalArgumentException.html\">IllegalArgumentException</A></CODE> \
+              - if <code>gc</code> is not from\n \t\ta screen device.  This exception \
+              is always thrown when\n      GraphicsEnvironment.isHeadless() returns true.<DT><B>Since:</B><DD>1.3</DD>";
+              Name="JFrame";
+              ID=54;
+              {
+                *** Parameter ***;
+                Typ="String";
+                ParameterName="title";
+              };
+              {
+                *** Parameter ***;
+                Typ="GraphicsConfiguration";
+                ParameterName="gc";
+              };
+            };
+            {
+              *** Methode ***;
+              Name="JFrame";
+              ID=52;
+              Throws="HeadlessException";
+              {
+                *** Parameter ***;
+                Typ="String";
+                ParameterName="title";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Creates a Frame in the specified\n GraphicsConfiguration of\n a screen \
+              device and a blank title.\n \n This constructor sets the component's locale \
+              property to the value \n returned by JComponent.getDefaultLocale.\n\nParameters:<DD><CODE>gc</CODE> \
+              - the <code>GraphicsConfiguration</code> that is used\n \t\tto construct \
+              the new <code>Frame</code>;\n \t\tif <code>gc</code> is <code>null</code>, \
+              the system\n \t\tdefault <code>GraphicsConfiguration</code> is assumed\n<DT><B>Throws:</B>\n<DD><CODE><A \
+              HREF=\"../../java/lang/IllegalArgumentException.html\">IllegalArgumentException</A></CODE> \
+              - if <code>gc</code> is not from\n \t\ta screen device.  This exception \
+              is always thrown when\n      GraphicsEnvironment.isHeadless() returns true.<DT><B>Since:</B><DD>1.3</DD>";
+              Name="JFrame";
+              ID=50;
+              {
+                *** Parameter ***;
+                Typ="GraphicsConfiguration";
+                ParameterName="gc";
+              };
+            };
+            {
+              *** Methode ***;
+              Name="JFrame";
+              ID=49;
+              Throws="HeadlessException";
+            };
+            {
+              *** Methode ***;
+              Doku="By default, children may not be added directly to this component,\n \
+              they must be added to its contentPane instead.  For example:\n \n thisComponent.getContentPane().add(child)\n \
+              \n An attempt to add to directly to this component will cause an\n runtime \
+              exception to be thrown.  Subclasses can disable this\n behavior.";
+              Name="addImpl";
+              ID=57;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="Component";
+                ParameterName="comp";
+              };
+              {
+                *** Parameter ***;
+                Typ="Object";
+                ParameterName="constraints";
+              };
+              {
+                *** Parameter ***;
+                Typ="int";
+                ParameterName="index";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Called by the constructor methods to create the default\n rootPane.";
+              Name="createRootPane";
+              ID=61;
+              Zugriff=1;
+              RueckgabeWert="JRootPane";
+            };
+            {
+              *** Methode ***;
+              Doku="Called by the constructors to init the JFrame properly.";
+              Name="frameInit";
+              ID=62;
+              Zugriff=1;
+              RueckgabeWert="void";
+            };
+            {
+              *** Methode ***;
+              Doku="Gets the AccessibleContext associated with this JFrame. \n For JFrames, \
+              the AccessibleContext takes the form of an \n AccessibleJFrame. \n A new \
+              AccessibleJFrame instance is created if necessary.";
+              Name="getAccessibleContext";
+              ID=63;
+              RueckgabeWert="AccessibleContext";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the contentPane object for this frame.";
+              Name="getContentPane";
+              ID=64;
+              RueckgabeWert="Container";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the operation that occurs when the user\n initiates a \"close\" \
+              on this frame.";
+              Name="getDefaultCloseOperation";
+              ID=65;
+              RueckgabeWert="int";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the glassPane object for this frame.";
+              Name="getGlassPane";
+              ID=66;
+              RueckgabeWert="Component";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the menubar set on this frame.";
+              Name="getJMenuBar";
+              ID=67;
+              RueckgabeWert="JMenuBar";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the layeredPane object for this frame.";
+              Name="getLayeredPane";
+              ID=68;
+              RueckgabeWert="JLayeredPane";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the rootPane object for this frame.";
+              Name="getRootPane";
+              ID=69;
+              RueckgabeWert="JRootPane";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns true if newly created JFrames should have their\n Window \
+              decorations provided by the current look and feel. This is only\n a hint, \
+              as certain look and feels may not support this feature.";
+              Name="isDefaultLookAndFeelDecorated";
+              ID=70;
+              IsStatic=true;
+              RueckgabeWert="boolean";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns whether calls to add and \n setLayout cause an exception \
+              to be thrown.";
+              Name="isRootPaneCheckingEnabled";
+              ID=71;
+              Zugriff=1;
+              RueckgabeWert="boolean";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns a string representation of this JFrame.\n This method \n \
+              is intended to be used only for debugging purposes, and the \n content \
+              and format of the returned string may vary between      \n implementations. \
+              The returned string may be empty but may not \n be null.";
+              Name="paramString";
+              ID=72;
+              Zugriff=1;
+              RueckgabeWert="String";
+            };
+            {
+              *** Methode ***;
+              Doku="Processes window events occurring on this component.\n Hides the \
+              window or disposes of it, as specified by the setting\n of the defaultCloseOperation \
+              property.";
+              Name="processWindowEvent";
+              ID=73;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="WindowEvent";
+                ParameterName="e";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Removes the specified component from this container.";
+              Name="remove";
+              ID=75;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="Component";
+                ParameterName="comp";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the contentPane property. \n This method is called by the constructor.";
+              Name="setContentPane";
+              ID=77;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="Container";
+                ParameterName="contentPane";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the operation that will happen by default when\n the user initiates \
+              a \"close\" on this frame.\n You must specify one of the following choices:\n \
+              \n \n DO_NOTHING_ON_CLOSE\n (defined in WindowConstants):\n Don't do anything; \
+              require the\n program to handle the operation in the windowClosing\n method \
+              of a registered WindowListener object.\n\n HIDE_ON_CLOSE\n (defined in \
+              WindowConstants):\n Automatically hide the frame after\n invoking any registered \
+              WindowListener\n objects.\n\n DISPOSE_ON_CLOSE\n (defined in WindowConstants):\n \
+              Automatically hide and dispose the \n frame after invoking any registered \
+              WindowListener\n objects.\n\n EXIT_ON_CLOSE\n (defined in JFrame):\n Exit \
+              the application using the System exit method.\n Use this only in applications.\n \
+              \n \n The value is set to HIDE_ON_CLOSE by default.";
+              Name="setDefaultCloseOperation";
+              ID=79;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="int";
+                ParameterName="operation";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Provides a hint as to whether or not newly created JFrames\n should \
+              have their Window decorations (such as borders, widgets to\n close the \
+              window, title...) provided by the current look\n and feel. If defaultLookAndFeelDecorated \
+              is true,\n the current LookAndFeel supports providing window\n decorations, \
+              and the current window manager supports undecorated\n windows, then newly \
+              created JFrames will have their\n Window decorations provided by the current \
+              LookAndFeel.\n Otherwise, newly created JFrames will have their\n Window \
+              decorations provided by the current window manager.\n \n You can get the \
+              same effect on a single JFrame by doing the following:\n \n    JFrame frame \
+              = new JFrame();\n    frame.setUndecorated(true);\n    frame.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);";
+              Name="setDefaultLookAndFeelDecorated";
+              ID=81;
+              IsStatic=true;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="boolean";
+                ParameterName="defaultLookAndFeelDecorated";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the glassPane property. \n This method is called by the constructor.";
+              Name="setGlassPane";
+              ID=83;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="Component";
+                ParameterName="glassPane";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the menubar for this frame.";
+              Name="setJMenuBar";
+              ID=85;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="JMenuBar";
+                ParameterName="menubar";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the layeredPane property.\n This method is called by the constructor.";
+              Name="setLayeredPane";
+              ID=87;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="JLayeredPane";
+                ParameterName="layeredPane";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="By default the layout of this component may not be set,\n the layout \
+              of its contentPane should be set instead.  \n For example:\n \n thisComponent.getContentPane().setLayout(new \
+              GridLayout(1, 2))\n \n An attempt to set the layout of this component will \
+              cause an\n runtime exception to be thrown.  Subclasses can disable this\n \
+              behavior.";
+              Name="setLayout";
+              ID=89;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="LayoutManager";
+                ParameterName="manager";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the rootPane property. \n This method is called by the constructor.";
+              Name="setRootPane";
+              ID=91;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="JRootPane";
+                ParameterName="root";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Determines whether calls to add and \n setLayout will cause an exception \
+              to be thrown.";
+              Name="setRootPaneCheckingEnabled";
+              ID=93;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="boolean";
+                ParameterName="enabled";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Just calls paint(g).  This method was overridden to \n prevent an \
+              unnecessary call to clear the background.";
+              Name="update";
+              ID=95;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Typ="Graphics";
+                ParameterName="g";
+              };
+            };
+          };
+          {
+            *** Diagramm ***;
+            Name="swing";
+            ID=97;
+          };
+        };
+        {
+          *** Diagramm ***;
+          Name="javax";
+          ID=98;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Extern";
+        ID=99;
+      };
+    };
+  };
+};

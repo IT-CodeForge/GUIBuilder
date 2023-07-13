@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Win32)">
+	<META NAME="CREATED" CONTENT="20030918;15454406">
+	<META NAME="CHANGEDBY" CONTENT="Kristin R&auml;sch">
+	<META NAME="CHANGED" CONTENT="20030930;12520283">
+	<STYLE>
+	<!--
+		TD P { color: #000000; font-family: "Arial", sans-serif; font-size: 10pt }
+		H1 { color: #000000; font-family: "Arial", sans-serif; font-size: 21pt }
+		P { color: #000000; font-family: "Arial", sans-serif; font-size: 10pt }
+		H5 { color: #000000 }
+		A:visited { color: #ff0000 }
+		A:link { color: #ff0000; font-family: "Arial", sans-serif; font-size: 10pt; text-decoration: none }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000" LINK="#ff0000" VLINK="#ff0000" BGCOLOR="#ffffff">
+<DL>
+	<DL>
+		<DL>
+			<DL>
+				<DL>
+					<DD>
+					<TABLE WIDTH=800 BORDER=0 CELLPADDING=2 CELLSPACING=0 STYLE="page-break-before: always">
+						<COL WIDTH=796>
+						<TR>
+							<TD WIDTH=796 STYLE="background: url(../../img/KopfImg/CKopf.jpg) repeat scroll">
+								<H1 ALIGN=CENTER>Setup for C++</H1>
+							</TD>
+						</TR>
+					</TABLE>
+					<DD>
+					<TABLE WIDTH=800 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+						<COL WIDTH=796>
+						<TR>
+							<TD WIDTH=796>
+								<P><A HREF="../../LegalNoteEnglisch.html"><B><U><FONT SIZE=3><FONT COLOR="#800000">Legal
+								References</FONT></FONT></U></B></A></P>
+								<P><BR>
+								</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P><FONT SIZE=3><U><B>C++ - Compiler Setup</B></U></FONT></P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P>In principle Jumli can use each compiler, we advise mingw.
+								Mingw (minimalist GNU For Windows) is the Windows Port of the
+								well-known GNU compiler GCC. The version 3.0.0-1
+								(MinGW-3.0.0-1.exe) can be downloaded e.g. under
+								<A HREF="http://www.mingw.org/download.shtml"><U><FONT COLOR="#800000">http://www.mingw.org/download.shtml</FONT></U></A>.
+								The installation uses the directory e.g. in
+								c:\programme\mingw.</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P STYLE="text-decoration: none">Subsequently, the
+								subordinated bin directory has to add to the system path. For
+								Win9x systems you can do this in the file autoexec.bat, there
+								you should insert the following: 
+								</P>
+								<P STYLE="text-decoration: none">set
+								PATH=c:\programme\mingw\bin:%PATH% the path must be naturally
+								adapted to the respective listing!</P>
+								<P><SPAN STYLE="text-decoration: none">For Windows NT systems
+								you have to set the system path as this is explained also for
+								Java compiler, only that the path to set must be e.g.
+								c:\programme\mingw\bin. The explanations you can find <A HREF="../../ErsteSchritte/Englisch/ErsteSchritte1.html"><SPAN STYLE="text-decoration: none"><B><FONT COLOR="#800000"><U>here</U><SPAN STYLE="text-decoration: none">.</SPAN></FONT></B></SPAN></A></SPAN></P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P STYLE="text-decoration: none">Additionally MSYS is needed.
+								MSYS supplies further GNU Tools e.g. make. Download likewise
+								under the address (MSYS-1.0.9.exe), specified above. The
+								installation takes place either in the mingw directory or
+								e.g. under c:\programme\msys. Afterwards, as described
+								already above, the paths have to set,: 
+								</P>
+								<P STYLE="text-decoration: none">The bin directory must be
+								taken up now to the system path FORWARDS mingw. Thus e.g.. 
+								</P>
+								<P STYLE="text-decoration: none">set
+								PATH=c:\programme\msys\bin:c:\programme\mingw\bin:%PATH%</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P STYLE="text-decoration: none">Starting from version 1.3
+								Jumli uses makefiles for building the projects (a makefile is
+								a kind of a control file, which contains information for
+								compiling and linking. Descriptions in more detail find you
+								simple in the internet, put into a search machine the terms
+								&bdquo;makefile&ldquo; and &bdquo;introduction&ldquo;).</P>
+								<P><SPAN STYLE="text-decoration: none">To produce makefiles
+								tmake (Download: <A HREF="http://www.trolltech.com/download/tmake.html"><U><FONT COLOR="#800000">http://www.trolltech.com/download/tmake.html</FONT></U></A><SPAN STYLE="text-decoration: none"><U><FONT COLOR="#800000">
+								</FONT></U></SPAN>) is used. Unpack the zip archives e.g.
+								after c:\programme\tmake and afterwards again add the bin
+								directory to the path, this is according to the same pattern,
+								as it is described already above 2 times. Additionally still
+								the new environment variable must be set TMAKEPATH, dependent
+								on the used compiler. For Mingw e.g. on
+								c:\programme\tmake\lib\win32-g++. </SPAN>
+								</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P><U><B>wxWindows</B></U></P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P>Jumli can provide also wxWindows projects now. WxWindows (<U><FONT COLOR="#800000">
+								</FONT></U><A HREF="http://www.wxwindows.org/"><U><FONT COLOR="#800000">http://www.wxwindows.org</FONT></U></A><U><FONT COLOR="#800000">
+								</FONT></U>) is a free system-independent class library,
+								which is available for Windows, Linux and other Unix
+								derivatives. Jumli itself was migrated with version 1.3 to
+								wxWindows. After the Download and the installation into any
+								directory you first have to compile wxWindows. This must take
+								place with the same compiler, which is to be used afterwards
+								in Jumli! If you use Mingw the following steps are necessary:</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<UL>
+									<LI><P STYLE="margin-bottom: 0cm">change into the
+									installation directory</P>
+									<LI><P STYLE="margin-bottom: 0cm">cd src/msw</P>
+									<LI><P STYLE="margin-bottom: 0cm">make -f Makefile.g95</P>
+									<LI><P STYLE="margin-bottom: 0cm">then the same prodedure
+									for the contrib-libraries</P>
+									<LI><P STYLE="margin-bottom: 0cm">change into the
+									installation directory</P>
+									<LI><P STYLE="margin-bottom: 0cm">cd contrib\src</P>
+									<LI><P STYLE="margin-bottom: 0cm">make -f Makefile.g95</P>
+									<LI><P>set the environment variable WXWIN to the
+									installation directory</P>
+								</UL>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P>While create a project Jumli analyses the wxWindows
+								documentation A condition therefor is the installed HTML
+								documentatopn for wxWindows, that is available likewise on
+								the wxWindows homepage. After the Download this must simply
+								unpacked, at the best one into the already existing
+								installation directory of wxwindows, thus e.g.
+								c:\wxwindows\docs.</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P>And now enjoy working with jumli.</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<P><BR>
+								</P>
+							</TD>
+						</TR>
+						<TR>
+							<TD WIDTH=796>
+								<H5><A HREF="../../Startpage.html"><U><FONT FACE="Arial, sans-serif"><FONT COLOR="#800000">Back
+								to startpage</FONT></FONT></U></A></H5>
+							</TD>
+						</TR>
+					</TABLE>
+				</DL>
+			</DL>
+		</DL>
+	</DL>
+</DL>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

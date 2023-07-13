@@ -1,0 +1,1622 @@
+Jumli
+{
+  *** Applikation ***;
+  Version=1.4;
+  Elements=183;
+  {
+    *** Model ***;
+    Typ=4;
+    ActiveDiagramm=26023;
+    {
+      *** GenSettings ***;
+      GetPrefix="Get";
+      SetPrefix="Set";
+      DBBaseClass="DbBasisObject";
+      DBRecordSet="DbSet";
+      GenerateWrite=true;
+      GenerateRead=true;
+    };
+    {
+      *** CompileDebugSettings ***;
+      AufrufCompiler="g++";
+      AufrufDebugger="gdb";
+      DebugOptionen="-nw";
+      Libs="-L\"$(WXWIN)/lib\" -lwxxrc -lwxmswd -ljpeg -lpng -lzlib -lgcc -lkernel32 \
+      -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 \
+      -luuid -lodbc32 -lodbccp32 -lcomctl32 -lrpcrt4 -lwsock32";
+      Includes="\"$(WXWIN)/lib/mswd\" \"$(WXWIN)/include\" \"$(WXWIN)/contrib/include\" \
+      \"$(WXWIN)/src/regex\" \"$(WXWIN)/src/zlib\" \"$(WXWIN)/src/tiff\"";
+      Defines="WINVER=0x0400 __WIN95__ __GNUWIN32__ STRICT HAVE_W32API_H __WXMSW__ \
+      __WINDOWS__ __WXDEBUG__";
+      LinkDefines="WINVER=0x0400 __WIN95__ __GNUWIN32__ STRICT HAVE_W32API_H \
+      __WXMSW__ __WINDOWS__ __WXDEBUG__";
+    };
+    {
+      *** Package ***;
+      Name="UseCases";
+      ID=26020;
+      Zugriff=2;
+      Type=2;
+      {
+        *** Diagramm ***;
+        Name="UseCases";
+        ID=26021;
+        DiagrammTyp=2;
+      };
+    };
+    {
+      *** Package ***;
+      Name="JumliWx";
+      ID=26022;
+      Zugriff=2;
+      {
+        *** Diagramm ***;
+        Name="JumliWx";
+        ID=26023;
+        {
+          *** CJumliTracker ***;
+          Rechteck=33,161,138,220;
+          UMLElementID=26175;
+          IsWithAttributs=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=210,161,315,220;
+          UMLElementID=26128;
+          IsWithAttributs=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=404,281,604,384;
+          UMLElementID=26024;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=461,145,566,204;
+          UMLElementID=26065;
+          IsWithAttributs=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=187,291,339,366;
+          UMLElementID=26032;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=31,287,139,348;
+          UMLElementID=26053;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=600,35,735,94;
+          UMLElementID=26115;
+          IsWithAttributs=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=608,153,726,228;
+          UMLElementID=26039;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=26031;
+          TextOffset=0,5;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=26038;
+          TextOffset=0,5;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=26059;
+          TextOffset=0,5;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=26052;
+          TextOffset=0,5;
+        };
+        {
+          *** AssoziationZeichner ***;
+          Rechteck=683,262,768,276;
+          UMLElementID=26030;
+          Knick=667,329;
+          TextOffset=0,5;
+          OffsetRollenName=60,6;
+          OffsetA=5,5;
+          OffsetB=5,5;
+          {
+            *** Linie ***;
+            Punkt=667,329;
+          };
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=31,13,371,120;
+          UMLElementID=26060;
+        };
+      };
+      {
+        *** Klasse ***;
+        Name="JumliWx";
+        ID=26024;
+        Datentyp="class";
+        NameSpace="JumliWx";
+        KomponentenId=26035;
+        FileName="JumliWx.cpp";
+        FileActiveLine=-1;
+        HeaderFileName="JumliWx.h";
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Attribut ***;
+          Name="m_DocManager";
+          ID=26025;
+          Datentyp="wxDocManager *";
+          Zugriff=2;
+        };
+        {
+          *** Methode ***;
+          Name="GetJumliWxFrame";
+          ID=26026;
+          RueckgabeWert="JumliWxFrame*";
+        };
+        {
+          *** Methode ***;
+          Name="JumliWx";
+          ID=26027;
+        };
+        {
+          *** Methode ***;
+          Name="OnExit";
+          ID=26028;
+          RueckgabeWert="int";
+        };
+        {
+          *** Methode ***;
+          Name="OnInit";
+          ID=26029;
+          RueckgabeWert="bool";
+        };
+        {
+          *** Aggregation ***;
+          ID=26030;
+          Datentyp="JumliWxFrame*";
+          Zugriff=2;
+          A=26024;
+          B=26039;
+          RollenName="m_JumliWxFrame";
+        };
+        {
+          *** Vererbung ***;
+          ID=26031;
+          A=26024;
+          B=26065;
+        };
+      };
+      {
+        *** Klasse ***;
+        Name="JumliWxDoc";
+        ID=26032;
+        Datentyp="class";
+        NameSpace="JumliWx";
+        KomponentenId=26035;
+        FileName="JumliWxDoc.cpp";
+        FileActiveLine=-1;
+        HeaderFileName="JumliWxDoc.h";
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="OnNewDocument";
+          ID=26033;
+          IsVirtual=true;
+          RueckgabeWert="bool";
+        };
+        {
+          *** Methode ***;
+          Name="OnOpenDocument";
+          ID=26034;
+          IsVirtual=true;
+          RueckgabeWert="bool";
+          {
+            *** Parameter ***;
+            Name="filename";
+            ID=26035;
+            Typ="const wxString&";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="OnSaveDocument";
+          ID=26036;
+          IsVirtual=true;
+          RueckgabeWert="bool";
+          {
+            *** Parameter ***;
+            Name="filename";
+            ID=26037;
+            Typ="const wxString&";
+          };
+        };
+        {
+          *** Vererbung ***;
+          ID=26038;
+          A=26032;
+          B=26128;
+        };
+      };
+      {
+        *** Klasse ***;
+        Name="JumliWxFrame";
+        ID=26039;
+        Datentyp="class";
+        NameSpace="JumliWx";
+        KomponentenId=26035;
+        FileName="JumliWxFrame.cpp";
+        FileActiveLine=-1;
+        HeaderFileName="JumliWxFrame.h";
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="JumliWxFrame";
+          ID=26040;
+          {
+            *** Parameter ***;
+            Name="manager";
+            ID=26041;
+            Typ="wxDocManager*";
+          };
+          {
+            *** Parameter ***;
+            Name="parent";
+            ID=26042;
+            Typ="wxFrame *";
+          };
+          {
+            *** Parameter ***;
+            Name="id";
+            ID=26043;
+            Typ="wxWindowID";
+          };
+          {
+            *** Parameter ***;
+            Name="title";
+            ID=26044;
+            Typ="const wxString&";
+          };
+          {
+            *** Parameter ***;
+            Name="pos";
+            ID=26045;
+            Typ="const wxPoint&";
+            Default="wxDefaultPosition";
+          };
+          {
+            *** Parameter ***;
+            Name="size";
+            ID=26046;
+            Typ="const wxSize&";
+            Default="wxDefaultSize";
+          };
+          {
+            *** Parameter ***;
+            Name="style";
+            ID=26047;
+            Typ="long";
+            Default="wxDEFAULT_FRAME_STYLE";
+          };
+          {
+            *** Parameter ***;
+            Name="name";
+            ID=26048;
+            Typ="const wxString&";
+            Default="\"frame\"";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="OnAbout";
+          ID=26049;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="event";
+            ID=26050;
+            Typ="wxCommandEvent&";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="~JumliWxFrame";
+          ID=26051;
+          IsVirtual=true;
+        };
+        {
+          *** Vererbung ***;
+          ID=26052;
+          A=26039;
+          B=26115;
+        };
+      };
+      {
+        *** Klasse ***;
+        Name="JumliWxView";
+        ID=26053;
+        Datentyp="class";
+        NameSpace="JumliWx";
+        KomponentenId=26035;
+        FileName="JumliWxView.cpp";
+        FileActiveLine=-1;
+        HeaderFileName="JumliWxView.h";
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="OnCreate";
+          ID=26054;
+          IsVirtual=true;
+          RueckgabeWert="bool";
+          {
+            *** Parameter ***;
+            Name="doc";
+            ID=26055;
+            Typ="wxDocument*";
+          };
+          {
+            *** Parameter ***;
+            Name="flags";
+            ID=26056;
+            Typ="long";
+          };
+        };
+        {
+          *** Methode ***;
+          Name="OnDraw";
+          ID=26057;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="dc";
+            ID=26058;
+            Typ="wxDC *";
+          };
+        };
+        {
+          *** Vererbung ***;
+          ID=26059;
+          A=26053;
+          B=26175;
+        };
+      };
+      {
+        *** Notiz ***;
+        Doku="Jumli generierte eine Doc-View Anwendung, die auf den wxWidgets\nBasisklasssen \
+        basiert.\nDie XML-Resourcen sind im \"Files\"-Register zu finden.\n\nMehr \
+        Informationen über wxWindows und die Compiler- und Debugger-\nEinstellungen \
+        gibt's in der C++-Übersicht im \"Info\"-Register.";
+        ID=26060;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Extern";
+      ID=26061;
+      Zugriff=2;
+      Type=1;
+      {
+        *** Diagramm ***;
+        Name="Extern";
+        ID=26062;
+      };
+      {
+        *** Package ***;
+        Name="wxWidgets";
+        ID=26063;
+        Zugriff=2;
+        Type=1;
+        {
+          *** Diagramm ***;
+          Name="wxWidgets";
+          ID=26064;
+        };
+        {
+          *** Klasse ***;
+          Name="wxApp";
+          ID=26065;
+          Datentyp="class";
+          IsExtern=true;
+          KomponentenId=26035;
+          FileActiveLine=-1;
+          HeaderFileActiveLine=-1;
+          IsGenerate=true;
+          Parent=-1;
+          {
+            *** Methode ***;
+            Doku="Creates a wxLog class for the application to use for logging errors. \
+            The default\nimplementation returns a new wxLogGui class.\nSee also\nwxLog";
+            Name="CreateLogTarget";
+            ID=26066;
+            IsVirtual=true;
+            RueckgabeWert="wxLog*";
+          };
+          {
+            *** Methode ***;
+            Doku="Dispatches the next event in the windowing system event queue.\nThis \
+            can be used for programming event loops, e.g.\n\n  while (app.Pending())\n    \
+            Dispatch();\n\nSee also\nwxApp::Pending";
+            Name="Dispatch";
+            ID=26067;
+            RueckgabeWert="void";
+          };
+          {
+            *** Methode ***;
+            Doku="Call this to explicitly exit the main message (event) loop.\nYou \
+            should normally exit the main loop (and the application) by deleting\nthe \
+            top window.";
+            Name="ExitMainLoop";
+            ID=26068;
+            RueckgabeWert="void";
+          };
+          {
+            *** Methode ***;
+            Doku="This function is called before processing any event and allows the \
+            application\nto preempt the processing of some events. If this method returns \
+            -1 the event\nis processed normally, otherwise either TRUE or FALSE should \
+            be\nreturned and the event processing stops immediately considering that \
+            the event\nhad been already processed (for the former return value) or \
+            that it is not\ngoing to be processed at all (for the latter one).";
+            Name="FilterEvent";
+            ID=26069;
+            RueckgabeWert="int";
+            {
+              *** Parameter ***;
+              Name="event";
+              ID=26070;
+              Typ="wxEvent&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Returns TRUE if the application has been initialized (i.e. if\nwxApp::OnInit \
+            has returned successfully).  This can be useful for error\nmessage routines \
+            to determine which method of output is best for the\ncurrent state of the \
+            program (some windowing systems may not like\ndialogs to pop up before \
+            the main loop has been entered).";
+            Name="Initialized";
+            ID=26071;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Called by wxWindows on creation of the application. Override this \
+            if you wish\nto provide your own (environment-dependent) main loop.\nReturn \
+            value\nReturns 0 under X, and the wParam of the WM_QUIT message under Windows.";
+            Name="MainLoop";
+            ID=26072;
+            RueckgabeWert="int";
+          };
+          {
+            *** Methode ***;
+            Doku="This function is called when an assert failure occurs, i.e. the condition\nspecified \
+            in wxASSERT macro evaluated to FALSE.\nIt is only called in debug mode \
+            (when __WXDEBUG__ is defined) as\nasserts are not left in the release code \
+            at all.\nThe base class version show the default assert failure dialog \
+            box proposing to\nthe user to stop the program, continue or ignore all \
+            subsequent asserts.\nParameters\nfile\nthe name of the source file where \
+            the assert occured\n\nline\nthe line number in this file where the assert \
+            occured\n\ncond\nthe condition of the failed assert in string form\n\nmsg\nthe \
+            message specified as argument to \nwxASSERT_MSG or wxFAIL_MSG, will\nbe \
+            NULL if just wxASSERT or wxFAIL \nwas used";
+            Name="OnAssert";
+            ID=26073;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="file";
+              ID=26074;
+              Typ="const wxChar *";
+            };
+            {
+              *** Parameter ***;
+              Name="line";
+              ID=26075;
+              Typ="int";
+            };
+            {
+              *** Parameter ***;
+              Name="cond";
+              ID=26076;
+              Typ="const wxChar *";
+            };
+            {
+              *** Parameter ***;
+              Name="msg";
+              ID=26077;
+              Typ="const wxChar *";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Called when command line parsing fails (i.e. an incorrect command \
+            line option\nwas specified by the user). The default behaviour is to show \
+            the program usage\ntext and abort the program.\nReturn TRUE to continue \
+            normal execution or FALSE to return \nFALSE from OnInit thus terminating \
+            the program.\nSee also\nOnInitCmdLine";
+            Name="OnCmdLineError";
+            ID=26078;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="parser";
+              ID=26079;
+              Typ="wxCmdLineParser&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Called when the help option (--help) was specified on the command \
+            line.\nThe default behaviour is to show the program usage text and abort \
+            the program.\nReturn TRUE to continue normal execution or FALSE to return \
+            \nFALSE from OnInit thus terminating the program.\nSee also\nOnInitCmdLine";
+            Name="OnCmdLineHelp";
+            ID=26080;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="parser";
+              ID=26081;
+              Typ="wxCmdLineParser&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Called after the command line had been successfully parsed. You may \
+            override\nthis method to test for the values of the various parameters \
+            which could be\nset from the command line.\nDon't forget to call the base \
+            class version unless you want to suppress\nprocessing of the standard command \
+            line options.\nReturn TRUE to continue normal execution or FALSE to return \
+            \nFALSE from OnInit thus terminating the program.\nSee also\nOnInitCmdLine";
+            Name="OnCmdLineParsed";
+            ID=26082;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="parser";
+              ID=26083;
+              Typ="wxCmdLineParser&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Provide this member function for any processing which needs to be\ndone \
+            as the application is about to exit. OnExit is called after\ndestroying \
+            all application windows and controls, but before\nwxWindows cleanup.";
+            Name="OnExit";
+            ID=26084;
+            RueckgabeWert="int";
+          };
+          {
+            *** Methode ***;
+            Doku="This function may be called if something fatal happens: an unhandled\nexception \
+            under Win32 or a a fatal signal under Unix, for example. However,\nthis \
+            will not happen by default: you have to explicitly call \nwxHandleFatalExceptions \
+            to enable this.\nGenerally speaking, this function should only show a message \
+            to the user and\nreturn. You may attempt to save unsaved data but this \
+            is not guaranteed to\nwork and, in fact, probably won't.\nSee also\nwxHandleFatalExcetions";
+            Name="OnFatalException";
+            ID=26085;
+            RueckgabeWert="void";
+          };
+          {
+            *** Methode ***;
+            Doku="This must be provided by the application, and will usually create \
+            the\napplication's main window, optionally calling \nwxApp::SetTopWindow.\nNotice \
+            that if you want to to use the command line processing provided by\nwxWindows \
+            you have to call the base class version in the derived class\nOnInit().\nReturn \
+            TRUE to continue processing, FALSE to exit the application.";
+            Name="OnInit";
+            ID=26086;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Called from OnInit and may be used to initialize the\nparser with \
+            the command line options for this application. The base class\nversions \
+            adds support for a few standard options only.";
+            Name="OnInitCmdLine";
+            ID=26087;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="parser";
+              ID=26088;
+              Typ="wxCmdLineParser&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="This is an event handler function called when the operating system \
+            or GUI session is\nabout to close down. Typically, an application will \
+            try to save unsaved documents\nat this point.\nIf wxCloseEvent::CanVeto \
+            returns TRUE, the application\nis allowed to veto the shutdown by calling \
+            wxCloseEvent::Veto.\nThe application might veto the shutdown after prompting \
+            for documents to be saved, and the\nuser has cancelled the save.\nUse the \
+            EVT_QUERY_END_SESSION event table macro to handle query end session events.\nYou \
+            should check whether the application is forcing the deletion of the window\nusing \
+            wxCloseEvent::GetForce. If this is TRUE,\ndestroy the window using wxWindow::Destroy.\nIf \
+            not, it is up to you whether you respond by destroying the window.\nThe \
+            default handler calls wxWindow::Close on the top-level window,\nand vetoes \
+            the shutdown if Close returns FALSE. This will be sufficient for many applications.\nRemarks\nUnder \
+            X, OnQueryEndSession is called in response to the 'save session' event.\nUnder \
+            Windows, OnQueryEndSession is called in response to the WM_QUERYENDSESSION \
+            message.\nSee also\nwxWindow::Close,\nwxCloseEvent";
+            Name="OnQueryEndSession";
+            ID=26089;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="event";
+              ID=26090;
+              Typ="wxCloseEvent&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Returns TRUE if unprocessed events are in the window system event \
+            queue.\nSee also\nwxApp::Dispatch";
+            Name="Pending";
+            ID=26091;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Windows-only function for processing a message. This function\nis \
+            called from the main message loop, checking for windows that\nmay wish \
+            to process it. The function returns TRUE if the message\nwas processed, \
+            FALSE otherwise. If you use wxWindows with another class\nlibrary with \
+            its own message loop, you should make sure that this\nfunction is called \
+            to allow wxWindows to receive messages. For example,\nto allow co-existence \
+            with the Microsoft Foundation Classes, override\nthe PreTranslateMessage \
+            function:\n\n// Provide wxWindows message loop compatibility\nBOOL CTheApp::PreTranslateMessage(MSG \
+            *msg)\n\{\n  if (wxTheApp && wxTheApp-&gt;ProcessMessage((WXMSW *)msg))\n    \
+            return TRUE;\n  else\n    return CWinApp::PreTranslateMessage(msg);\n\}";
+            Name="ProcessMessage";
+            ID=26092;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="msg";
+              ID=26093;
+              Typ="WXMSG *";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sends idle events to all top-level windows.";
+            Name="SendIdleEvents";
+            ID=26096;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Sends idle events to a window and its children.\nRemarks\nThese functions \
+            poll the top-level windows, and their children, for idle event processing.\nIf \
+            TRUE is returned, more OnIdle processing is requested by one or more window.\nSee \
+            also\nwxIdleEvent";
+            Name="SendIdleEvents";
+            ID=26094;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="win";
+              ID=26095;
+              Typ="wxWindow*";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the name of the application. The name may be used in dialogs\n(for \
+            example by the document/view framework). A default name is set by\nwxWindows.\nSee \
+            also\nwxApp::GetAppName";
+            Name="SetAppName";
+            ID=26097;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="name";
+              ID=26098;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Switches automatic 3D controls on or off.\nParameters\nauto3D\nIf \
+            TRUE, all controls will be created with 3D appearances unless\noverridden \
+            for a control or dialog. The default is TRUE\n\nRemarks\nThis has an effect \
+            on Windows only.\nSee also\nwxApp::GetAuto3D";
+            Name="SetAuto3D";
+            ID=26099;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="auto3D";
+              ID=26100;
+              Typ="const bool";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the class name of the application. This may be used in a platform \
+            specific\nmanner to refer to the application.\nSee also\nwxApp::GetClassName";
+            Name="SetClassName";
+            ID=26101;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="name";
+              ID=26102;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Allows the programmer to specify whether the application will exit \
+            when the\ntop-level frame is deleted.\nParameters\nflag\nIf TRUE (the default), \
+            the application will exit when the top-level frame is\ndeleted. If FALSE, \
+            the application will continue to run.\n\nSee also\nwxApp::GetExitOnFrameDelete,\n\nwxApp \
+            shutdown overview";
+            Name="SetExitOnFrameDelete";
+            ID=26103;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="flag";
+              ID=26104;
+              Typ="bool";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the 'top' window. You can call this from within wxApp::OnInit \
+            to\nlet wxWindows know which is the main window. You don't have to set \
+            the top window;\nit is only a convenience so that (for example) certain \
+            dialogs without parents can use a\nspecific window as the top window. If \
+            no top window is specified by the application,\nwxWindows just uses the \
+            first frame or dialog in its top-level window list, when it\nneeds to use \
+            the top window.\nParameters\nwindow\nThe new top window.\n\nSee also\nwxApp::GetTopWindow, \
+            wxApp::OnInit";
+            Name="SetTopWindow";
+            ID=26105;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="window";
+              ID=26106;
+              Typ="wxWindow*";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Allows the programmer to specify whether the application will use \
+            the best visual\non systems that support several visual on the same display. \
+            This is typically the\ncase under Solaris and IRIX, where the default visual \
+            is only 8-bit whereas certain\napplications are supposed to run in TrueColour \
+            mode.\nNote that this function has to be called in the constructor of the \
+            wxApp \ninstance and won't have any effect when called later on.\nThis \
+            function currently only has effect under GTK.\nParameters\nflag\nIf TRUE, \
+            the app will use the best visual.";
+            Name="SetUseBestVisual";
+            ID=26107;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="flag";
+              ID=26108;
+              Typ="bool";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the name of application's vendor. The name will be used\nin \
+            registry access. A default name is set by\nwxWindows.\nSee also\nwxApp::GetVendorName";
+            Name="SetVendorName";
+            ID=26109;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="name";
+              ID=26110;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Yields control to pending messages in the windowing system. This \
+            can be useful, for example, when a\ntime-consuming process writes to a \
+            text window. Without an occasional\nyield, the text window will not be \
+            updated properly, and on systems with\ncooperative multitasking, such as \
+            Windows 3.1 other processes will not respond.\nCaution should be exercised, \
+            however, since yielding may allow the\nuser to perform actions which are \
+            not compatible with the current task.\nDisabling menu items or whole menus \
+            during processing can avoid unwanted\nreentrance of code: see ::wxSafeYield \
+            for a better\nfunction.\nNote that Yield() will not flush the message logs. \
+            This is intentional as\ncalling Yield() is usually done to quickly update \
+            the screen and popping up a\nmessage box dialog may be undesirable. If \
+            you do wish to flush the log\nmessages immediately (otherwise it will be \
+            done during the next idle loop\niteration), call wxLog::FlushActive.\nCalling \
+            Yield() recursively is normally an error and an assert failure is\nraised \
+            in debug build if such situation is detected. However if the the \nonlyIfNeeded \
+            parameter is TRUE, the method will just silently\nreturn FALSE instead.";
+            Name="Yield";
+            ID=26111;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="onlyIfNeeded";
+              ID=26112;
+              Typ="bool";
+              Default="FALSE";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Constructor. Called implicitly with a definition of a wxApp object.";
+            Name="wxApp";
+            ID=26113;
+            RueckgabeWert="void";
+          };
+          {
+            *** Methode ***;
+            Doku="Destructor. Will be called implicitly on program exit if the wxApp\nobject \
+            is created on the stack.";
+            Name="~wxApp";
+            ID=26114;
+            RueckgabeWert="void";
+          };
+        };
+        {
+          *** Klasse ***;
+          Name="wxDocParentFrame";
+          ID=26115;
+          Datentyp="class";
+          IsExtern=true;
+          KomponentenId=26035;
+          FileActiveLine=-1;
+          HeaderFileActiveLine=-1;
+          IsGenerate=true;
+          Parent=-1;
+          {
+            *** Methode ***;
+            Doku="Deletes all views and documents. If no user input cancelled the\noperation, \
+            the frame will be destroyed and the application will exit.\nSince understanding \
+            how document/view clean-up takes place can be difficult,\nthe implementation \
+            of this function is shown below.\n\nvoid wxDocParentFrame::OnCloseWindow(wxCloseEvent& \
+            event)\n\{\n  if (m_docManager-&gt;Clear(!event.CanVeto()))\n  \{\n    \
+            this-&gt;Destroy();\n  \}\n  else\n    event.Veto();\n\}";
+            Name="OnCloseWindow";
+            ID=26116;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="event";
+              ID=26117;
+              Typ="wxCloseEvent&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Constructor.";
+            Name="wxDocParentFrame";
+            ID=26118;
+            {
+              *** Parameter ***;
+              Name="manager";
+              ID=26119;
+              Typ="wxDocManager*";
+            };
+            {
+              *** Parameter ***;
+              Name="parent";
+              ID=26120;
+              Typ="wxFrame *";
+            };
+            {
+              *** Parameter ***;
+              Name="id";
+              ID=26121;
+              Typ="wxWindowID";
+            };
+            {
+              *** Parameter ***;
+              Name="title";
+              ID=26122;
+              Typ="const wxString&";
+            };
+            {
+              *** Parameter ***;
+              Name="pos";
+              ID=26123;
+              Typ="const wxPoint&";
+              Default="wxDefaultPosition";
+            };
+            {
+              *** Parameter ***;
+              Name="size";
+              ID=26124;
+              Typ="const wxSize&";
+              Default="wxDefaultSize";
+            };
+            {
+              *** Parameter ***;
+              Name="style";
+              ID=26125;
+              Typ="long";
+              Default="wxDEFAULT_FRAME_STYLE";
+            };
+            {
+              *** Parameter ***;
+              Name="name";
+              ID=26126;
+              Typ="const wxString&";
+              Default="\"frame\"";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Destructor.";
+            Name="~wxDocParentFrame";
+            ID=26127;
+          };
+        };
+        {
+          *** Klasse ***;
+          Name="wxDocument";
+          ID=26128;
+          Datentyp="class";
+          IsExtern=true;
+          KomponentenId=26035;
+          FileActiveLine=-1;
+          HeaderFileActiveLine=-1;
+          IsGenerate=true;
+          Parent=-1;
+          {
+            *** Methode ***;
+            Doku="If the view is not already in the list of views, adds the view and \
+            calls OnChangedViewList.";
+            Name="AddView";
+            ID=26129;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="view";
+              ID=26130;
+              Typ="wxView *";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Closes the document, by calling OnSaveModified and then (if this \
+            returned TRUE) OnCloseDocument.\nThis does not normally delete the document \
+            object: use DeleteAllViews to do this implicitly.";
+            Name="Close";
+            ID=26131;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Calls wxView::Close and deletes each view. Deleting the final view \
+            will implicitly\ndelete the document itself, because the wxView destructor \
+            calls RemoveView. This\nin turns calls wxDocument::OnChangedViewList, whose \
+            default implemention is to\nsave and delete the document if no views exist.";
+            Name="DeleteAllViews";
+            ID=26132;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Name="LoadObject";
+            ID=26135;
+            IsVirtual=true;
+            RueckgabeWert="istream&";
+            {
+              *** Parameter ***;
+              Name="stream";
+              ID=26136;
+              Typ="istream&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Override this function and call it from your own LoadObject before\nstreaming \
+            your own data. LoadObject is called by the framework\nautomatically when \
+            the document contents need to be loaded.\nNote that only one of these forms \
+            exists, depending on how wxWindows\nwas configured.";
+            Name="LoadObject";
+            ID=26133;
+            IsVirtual=true;
+            RueckgabeWert="wxInputStream&";
+            {
+              *** Parameter ***;
+              Name="stream";
+              ID=26134;
+              Typ="wxInputStream&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Call with TRUE to mark the document as modified since the last save, \
+            FALSE otherwise.\nYou may need to override this if your document view maintains \
+            its own\nrecord of being modified (for example if using wxTextWindow to \
+            view and edit the document).\nSee also IsModified.";
+            Name="Modify";
+            ID=26137;
+            IsVirtual=true;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="modify";
+              ID=26138;
+              Typ="bool";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Called when a view is added to or deleted from this document. The \
+            default\nimplementation saves and deletes the document if no views exist \
+            (the last\none has just been removed).";
+            Name="OnChangedViewList";
+            ID=26139;
+            IsVirtual=true;
+            RueckgabeWert="void";
+          };
+          {
+            *** Methode ***;
+            Doku="The default implementation calls DeleteContents (an empty implementation)\nsets \
+            the modified flag to FALSE. Override this to\nsupply additional behaviour \
+            when the document is closed with Close.";
+            Name="OnCloseDocument";
+            ID=26140;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Called just after the document object is created to give it a chance\nto \
+            initialize itself. The default implementation uses the\ntemplate associated \
+            with the document to create an initial view.\nIf this function returns \
+            FALSE, the document is deleted.";
+            Name="OnCreate";
+            ID=26141;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="path";
+              ID=26142;
+              Typ="const wxString&";
+            };
+            {
+              *** Parameter ***;
+              Name="flags";
+              ID=26143;
+              Typ="long";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Override this function if you want a different (or no) command processor\nto \
+            be created when the document is created. By default, it returns\nan instance \
+            of wxCommandProcessor.\nSee wxCommandProcessor.";
+            Name="OnCreateCommandProcessor";
+            ID=26144;
+            IsVirtual=true;
+            RueckgabeWert="wxCommandProcessor*";
+          };
+          {
+            *** Methode ***;
+            Doku="The default implementation calls OnSaveModified and DeleteContents, \
+            makes a default title for the\ndocument, and notifies the views that the \
+            filename (in fact, the title) has changed.";
+            Name="OnNewDocument";
+            ID=26145;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Constructs an input file stream for the given filename (which must \
+            not be empty),\nand calls LoadObject. If LoadObject returns TRUE, the document \
+            is set to\nunmodified; otherwise, an error message box is displayed. The \
+            document's\nviews are notified that the filename has changed, to give windows \
+            an opportunity\nto update their titles. All of the document's views are \
+            then updated.";
+            Name="OnOpenDocument";
+            ID=26146;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="filename";
+              ID=26147;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Constructs an output file stream for the given filename (which must \
+            not be empty),\nand calls SaveObject. If SaveObject returns TRUE, the document \
+            is set to\nunmodified; otherwise, an error message box is displayed.";
+            Name="OnSaveDocument";
+            ID=26148;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="filename";
+              ID=26149;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="If the document has been modified, prompts the user to ask if the \
+            changes should\nbe changed. If the user replies Yes, the Save function \
+            is called. If No, the\ndocument is marked as unmodified and the function \
+            succeeds. If Cancel, the\nfunction fails.";
+            Name="OnSaveModified";
+            ID=26150;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Removes the view from the document's list of views, and calls OnChangedViewList.";
+            Name="RemoveView";
+            ID=26151;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="view";
+              ID=26152;
+              Typ="wxView*";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Saves the document by calling OnSaveDocument if there is an associated \
+            filename,\nor SaveAs if there is no filename.";
+            Name="Save";
+            ID=26153;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Doku="Prompts the user for a file to save to, and then calls OnSaveDocument.";
+            Name="SaveAs";
+            ID=26154;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+          };
+          {
+            *** Methode ***;
+            Name="SaveObject";
+            ID=26157;
+            IsVirtual=true;
+            RueckgabeWert="ostream&";
+            {
+              *** Parameter ***;
+              Name="stream";
+              ID=26158;
+              Typ="ostream&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Override this function and call it from your own SaveObject before\nstreaming \
+            your own data. SaveObject is called by the framework\nautomatically when \
+            the document contents need to be saved.\nNote that only one of these forms \
+            exists, depending on how wxWindows\nwas configured.";
+            Name="SaveObject";
+            ID=26155;
+            IsVirtual=true;
+            RueckgabeWert="wxOutputStream&";
+            {
+              *** Parameter ***;
+              Name="stream";
+              ID=26156;
+              Typ="wxOutputStream&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the command processor to be used for this document. The document \
+            will then be responsible\nfor its deletion. Normally you should not call \
+            this; override OnCreateCommandProcessor\ninstead.\nSee wxCommandProcessor.";
+            Name="SetCommandProcessor";
+            ID=26159;
+            IsVirtual=true;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="processor";
+              ID=26160;
+              Typ="wxCommandProcessor *";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the document type name for this document. See the comment for \
+            documentTypeName.";
+            Name="SetDocumentName";
+            ID=26161;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="name";
+              ID=26162;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the pointer to the template that created the document. Should \
+            only be called by the\nframework.";
+            Name="SetDocumentTemplate";
+            ID=26163;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="templ";
+              ID=26164;
+              Typ="wxDocTemplate*";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the filename for this document. Usually called by the framework.\nIf \
+            notifyViews is TRUE, wxView::OnChangeFilename is called for all views.";
+            Name="SetFilename";
+            ID=26165;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="filename";
+              ID=26166;
+              Typ="const wxString&";
+            };
+            {
+              *** Parameter ***;
+              Name="notifyViews";
+              ID=26167;
+              Typ="bool";
+              Default="FALSE";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the title for this document. The document title is used for \
+            an associated\nframe (if any), and is usually constructed by the framework \
+            from\nthe filename.";
+            Name="SetTitle";
+            ID=26168;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="title";
+              ID=26169;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Updates all views. If sender is non-NULL, does not update this view.\nhint \
+            represents optional information to allow a view to optimize its update.";
+            Name="UpdateAllViews";
+            ID=26170;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="sender";
+              ID=26171;
+              Typ="wxView*";
+              Default="NULL";
+            };
+            {
+              *** Parameter ***;
+              Name="hint";
+              ID=26172;
+              Typ="wxObject*";
+              Default="NULL";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Constructor. Define your own default constructor to initialize application-specific\ndata.";
+            Name="wxDocument";
+            ID=26173;
+          };
+          {
+            *** Methode ***;
+            Doku="Destructor. Removes itself from the document manager.";
+            Name="~wxDocument";
+            ID=26174;
+          };
+        };
+        {
+          *** Klasse ***;
+          Name="wxView";
+          ID=26175;
+          Datentyp="class";
+          IsExtern=true;
+          KomponentenId=26035;
+          FileActiveLine=-1;
+          HeaderFileActiveLine=-1;
+          IsGenerate=true;
+          Parent=-1;
+          {
+            *** Methode ***;
+            Doku="Call this from your view frame's OnActivate member to tell the framework \
+            which view is\ncurrently active. If your windowing system doesn't call \
+            OnActivate, you may need to\ncall this function from OnMenuCommand or any \
+            place where you know the view must\nbe active, and the framework will need \
+            to get the current view.\nThe prepackaged view frame wxDocChildFrame calls \
+            wxView::Activate from its OnActivate member\nand from its OnMenuCommand \
+            member.\nThis function calls wxView::OnActivateView.";
+            Name="Activate";
+            ID=26176;
+            IsVirtual=true;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="activate";
+              ID=26177;
+              Typ="bool";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Closes the view by calling OnClose. If deleteWindow is TRUE, this \
+            function should\ndelete the window associated with the view.";
+            Name="Close";
+            ID=26178;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="deleteWindow";
+              ID=26179;
+              Typ="bool";
+              Default="TRUE";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Gets the frame associated with the view (if any).";
+            Name="GetFrame";
+            ID=26180;
+            RueckgabeWert="wxFrame *";
+          };
+          {
+            *** Methode ***;
+            Doku="Called when a view is activated by means of wxView::Activate. The \
+            default implementation does\nnothing.";
+            Name="OnActivateView";
+            ID=26181;
+            IsVirtual=true;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="activate";
+              ID=26182;
+              Typ="bool";
+            };
+            {
+              *** Parameter ***;
+              Name="activeView";
+              ID=26183;
+              Typ="wxView *";
+            };
+            {
+              *** Parameter ***;
+              Name="deactiveView";
+              ID=26184;
+              Typ="wxView *";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Called when the filename has changed. The default implementation \
+            constructs a\nsuitable title and sets the title of the view frame (if any).";
+            Name="OnChangeFilename";
+            ID=26185;
+            IsVirtual=true;
+            RueckgabeWert="void";
+          };
+          {
+            *** Methode ***;
+            Doku="Implements closing behaviour. The default implementation calls wxDocument::Close\nto \
+            close the associated document. Does not delete the view. The application\nmay \
+            wish to do some cleaning up operations in this function, if a\ncall to \
+            wxDocument::Close succeeded. For example, if your application's\nall share \
+            the same window, you need to disassociate the window from the view\nand \
+            perhaps clear the window. If deleteWindow is TRUE, delete the\nframe associated \
+            with the view.";
+            Name="OnClose";
+            ID=26186;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="deleteWindow";
+              ID=26187;
+              Typ="bool";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="wxDocManager or wxDocument creates a wxView via a wxDocTemplate.\nJust \
+            after the wxDocTemplate creates the wxView, it calls\nwxView::OnCreate. \
+            In its OnCreate member function, the wxView can create a wxDocChildFrame\nor \
+            a derived class. This wxDocChildFrame provides user interface\nelements \
+            to view and/or edit the contents of the wxDocument.\nBy default, simply \
+            returns TRUE. If the function returns FALSE, the\nview will be deleted.";
+            Name="OnCreate";
+            ID=26188;
+            IsVirtual=true;
+            RueckgabeWert="bool";
+            {
+              *** Parameter ***;
+              Name="doc";
+              ID=26189;
+              Typ="wxDocument*";
+            };
+            {
+              *** Parameter ***;
+              Name="flags";
+              ID=26190;
+              Typ="long";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="If the printing framework is enabled in the library, this function \
+            returns a\nwxPrintout object for the purposes of printing. It should create \
+            a new object\nevery time it is called; the framework will delete objects \
+            it creates.\nBy default, this function returns an instance of wxDocPrintout, \
+            which prints\nand previews one page by calling wxView::OnDraw.\nOverride \
+            to return an instance of a class other than wxDocPrintout.";
+            Name="OnCreatePrintout";
+            ID=26191;
+            IsVirtual=true;
+            RueckgabeWert="wxPrintout*";
+          };
+          {
+            *** Methode ***;
+            Doku="Called when the view should be updated. sender is a pointer to the \
+            view\nthat sent the update request, or NULL if no single view requested \
+            the update (for instance,\nwhen the document is opened). hint is as yet \
+            unused but may in future contain\napplication-specific information for \
+            making updating more efficient.";
+            Name="OnUpdate";
+            ID=26192;
+            IsVirtual=true;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="sender";
+              ID=26193;
+              Typ="wxView*";
+            };
+            {
+              *** Parameter ***;
+              Name="hint";
+              ID=26194;
+              Typ="wxObject*";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Associates the given document with the view. Normally called by the\nframework.";
+            Name="SetDocument";
+            ID=26195;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="doc";
+              ID=26196;
+              Typ="wxDocument*";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the frame associated with this view. The application should \
+            call this\nif possible, to tell the view about the frame.";
+            Name="SetFrame";
+            ID=26197;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="frame";
+              ID=26198;
+              Typ="wxFrame*";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Sets the view type name. Should only be called by the framework.";
+            Name="SetViewName";
+            ID=26199;
+            RueckgabeWert="void";
+            {
+              *** Parameter ***;
+              Name="name";
+              ID=26200;
+              Typ="const wxString&";
+            };
+          };
+          {
+            *** Methode ***;
+            Doku="Constructor. Define your own default constructor to initialize application-specific\ndata.";
+            Name="wxView";
+            ID=26201;
+          };
+          {
+            *** Methode ***;
+            Doku="Destructor. Removes itself from the document's list of views.";
+            Name="~wxView";
+            ID=26202;
+          };
+        };
+      };
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWx.cpp";
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWx.h";
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWxDoc.cpp";
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWxDoc.h";
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWxFrame.cpp";
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWxFrame.h";
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWxView.cpp";
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\wx\\JumliWx\\JumliWxView.h";
+      ActiveLine=-1;
+    };
+  };
+};

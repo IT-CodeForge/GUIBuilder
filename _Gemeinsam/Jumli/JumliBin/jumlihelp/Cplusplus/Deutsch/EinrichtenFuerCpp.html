@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.0  (Win32)">
+	<META NAME="CREATED" CONTENT="20030918;15454406">
+	<META NAME="CHANGED" CONTENT="20040329;15461191">
+	<STYLE>
+	<!--
+		TD P { color: #000000; font-family: "Arial", sans-serif; font-size: 10pt }
+		H1 { color: #000000; font-family: "Arial", sans-serif; font-size: 21pt }
+		P { color: #000000; font-family: "Arial", sans-serif; font-size: 10pt }
+		A:link { color: #ff0000; font-family: "Arial", sans-serif; font-size: 10pt; text-decoration: none }
+		A:visited { color: #ff0000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000" LINK="#ff0000" VLINK="#ff0000" BGCOLOR="#ffffff" DIR="LTR">
+<CENTER>
+	<TABLE WIDTH=810 BORDER=0 CELLPADDING=2 CELLSPACING=0 STYLE="page-break-before: always">
+		<COL WIDTH=806>
+		<TR>
+			<TD WIDTH=806 STYLE="background: url(../../img/KopfImg/Steps4.jpg) repeat scroll">
+				<H1 ALIGN=CENTER>Einrichten f&uuml;r C++</H1>
+			</TD>
+		</TR>
+	</TABLE>
+</CENTER>
+<CENTER>
+	<TABLE WIDTH=790 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+		<COL WIDTH=786>
+		<TR>
+			<TD WIDTH=786>
+				<P><A HREF="../../LegalNote.html"><B><U><FONT SIZE=3><FONT COLOR="#800000">Rechtliche
+				Hinweise</FONT></FONT></U></B></A></P>
+				<P><BR>
+				</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P><FONT SIZE=3><U><B>C++ - Compiler Setup</B></U></FONT></P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P><SPAN STYLE="text-decoration: none">Jumli kann prinzipiell
+				jeden Compiler verwenden, wir empehlen mingw. Mingw (Minimalist
+				GNU For Windows) ist die Windows-Portierung des allseits
+				bekannten GNU-Compilers gcc. Die zum Erstellungszeitpunkt dieser
+				Seite aktuellste Version 3.0.0-1 (MinGW-3.0.0-1.exe) kann z.B.
+				unter </SPAN><A HREF="http://www.mingw.org/download.shtml"><U><FONT COLOR="#800000">http://www.mingw.org/download.shtml</FONT></U></A><SPAN STYLE="text-decoration: none">
+				heruntergeladen werden. Die Installation erfolgt dann z.B. in</SPAN>
+				c:\programme\mingw. 
+				</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P STYLE="text-decoration: none">Anschlie&szlig;end mu&szlig; das
+				untergeordnete bin-Verzeichnis in den <B>Systempfad</B>
+				aufgenommen werden. F&uuml;r Win9x Systeme erfolgt diese
+				Einstellung &uuml;ber die Datei autoexec.bat, dort sollte
+				folgendes eingtragen werden:</P>
+				<P>set PATH=c:\programme\mingw\bin:%PATH% 
+				</P>
+				<P>Der Pfad mu&szlig; nat&uuml;rlich an das jeweilige Verzeichnis
+				angepasst werden!</P>
+				<P>F&uuml;r Systeme ab Windows NT werden die Einstellungen in der
+				Systemsteuerung vorgenommen.Dies funktioniert genau so, wie dies
+				auch f&uuml;r das Java-Compiler erkl&auml;rt wird, nur dass Sie
+				nun den oben genannten Pfad eintragen m&uuml;ssen (
+				c:\programme\mingw\bin ). Die angesprochenen Erkl&auml;rungen
+				finden Sie <A HREF="../../ErsteSchritte/Deutsch/ErsteSchritte1.html"><B><FONT COLOR="#800000">hier.</FONT></B></A></P>
+				<P>Wer seine Pfade absolut nicht ver&auml;ndern will kann Jumli
+				aus einer Dosbox heraus starten und dort die Einstellung lokal
+				z.B. &uuml;ber eine Batch-Datei vornehmen.</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P><SPAN STYLE="text-decoration: none">Zus&auml;tzlich wird MSYS
+				ben&ouml;tigt. MSYS liefert weitere GNU-Tools wie z.B. make.
+				Download ebenfalls unter der oben genannten Adresse
+				(</SPAN>MSYS-1.0.9.exe)<SPAN STYLE="text-decoration: none">. Die
+				Installation erfolgt entweder ins mingw-Verzeichnis oder z.B.
+				unter </SPAN>c:\programme\msys.<SPAN STYLE="text-decoration: none">
+				Danach m&uuml;ssen, wie bereits oben beschrieben, die Pfade
+				erweitert, also gesetzt, werden: </SPAN>
+				</P>
+				<P STYLE="text-decoration: none">Das bin-Verzeichnis muss nun in
+				den Systempfad VOR mingw aufgenommen werden. Also z.B. 
+				</P>
+				<P>set PATH=c:\programme\msys\bin:c:\programme\mingw\bin:%PATH%</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P STYLE="text-decoration: none">Ab Version 1.3 verwendet Jumli
+				Makefiles zum Bauen der Projekte (Ein Makefile ist eine Art
+				Steuerdatei, die Informationen f&uuml;r das Compilieren und
+				Linken beinhaltet. Ausf&uuml;hrlichere Beschreibungen finden Sie
+				im Internet, einfach in eine Suchmaschine die Begriffe &bdquo;Makefile&ldquo;
+				und &bdquo;Einf&uuml;hrung&ldquo; eingeben). 
+				</P>
+				<P><SPAN STYLE="text-decoration: none">F&uuml;r die
+				Makefile-Erzeugung kommt tmake ( Download:
+				</SPAN><A HREF="http://www.trolltech.com/download/tmake.html"><U><FONT COLOR="#800000">http://www.trolltech.com/download/tmake.html</FONT></U></A><SPAN STYLE="text-decoration: none"><U><FONT COLOR="#800000">
+				</FONT></U><SPAN STYLE="text-decoration: none">) zum Einsatz. Das
+				Zip-Archiv z.B. nac</SPAN></SPAN>h c:\programme\tmake <SPAN STYLE="text-decoration: none">entpacken
+				und anschlie&szlig;end wieder das bin-Verzeichnis in den Pfad
+				aufnehmen, dies erfolgt wieder nach dem gleichen Schema, wie es
+				bereits oben 2 Mal beschrieben wird.. Zus&auml;tzlich mu&szlig;
+				noch die Umgebungsvariable TMAKEPATH gesetzt werden, und zwar
+				abh&auml;ngig vom verwendeten Compiler. F&uuml;r Mingw z.B. auf
+				c:\programme\tmake\lib\win32-g++. </SPAN>Dies geschieht &auml;hnlich
+				wie das Setzen des Pfades, nur dass Sie dieses Mal im Dialog der
+				Umgebungsvariablen den Button &bdquo;Neu&ldquo; anstatt
+				&bdquo;Bearbeiten&ldquo; w&auml;hlen m&uuml;ssen. Als Namen geben
+				Sie hier TMAKEPATH an, der Wert der Variable ist dann der eben
+				beschriebene Pfad.</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P><U><B>wxWidgets</B></U></P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P>Jumli kann jetzt auch wxWidgets-Projekte erstellen. wxWidgets
+				(<U><FONT COLOR="#800000"> </FONT></U><A HREF="http://www.wxWidgets.org/"><U><FONT COLOR="#800000">http://www.wxWidgets.org</FONT></U></A><U><FONT COLOR="#800000">
+				</FONT></U>) ist eine freie systemunabh&auml;ngige
+				Oberfl&auml;chenbibliothek, die z.B. f&uuml;r Windows, Linux und
+				andere Unix-Derivate verf&uuml;gbar ist. Jumli selbst wurde mit
+				Version 1.3 nach wxWidgets portiert. Nach dem Download und der
+				Installation in ein beliebiges Verzeichnis mu&szlig; wxWidgets
+				zuerst kompiliert werden. Dies mu&szlig; mit demselben Compiler
+				erfolgen, der nachher in Jumli verwendet werden soll! F&uuml;r
+				den hier verwendeten Mingw sind folgende Schritte erforderlich:</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<UL>
+					<LI><P STYLE="margin-bottom: 0cm">ins Installationsverzeichnis
+					wechseln</P>
+					<LI><P STYLE="margin-bottom: 0cm">cd src/msw</P>
+					<LI><P STYLE="margin-bottom: 0cm">make -f Makefile.g95</P>
+					<LI><P STYLE="margin-bottom: 0cm">dann dasselbe nochmal f&uuml;r
+					die contrib-Bibliotheken</P>
+					<LI><P STYLE="margin-bottom: 0cm">ins Installationsverzeichnis
+					wechseln</P>
+					<LI><P STYLE="margin-bottom: 0cm">cd contrib\src</P>
+					<LI><P STYLE="margin-bottom: 0cm">make -f Makefile.g95</P>
+					<LI><P>und danach noch die Umgebungsvariable WXWIN auf das
+					Installationsverzeichnis setzen</P>
+				</UL>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P>Beim Anlegen eines Projekts parst Jumli die wxWidgets-Hilfe
+				(HTML). Voraussetzung hier&uuml;fr ist die installierte
+				html-Hilfe f&uuml;r wxWidgets, die ebenfalls auf der
+				wxWidgets-Homepage erh&auml;ltlich ist. Diese muss nach dem
+				Download einfach entpackt werden, am Besten in das bereits
+				vorhandene Installationsverzeichnis von wxWidgets, also z.B.
+				c:\wxWidgets\docs. 
+				</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P>Und nun viel Spa&szlig; mit Jumli.</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD WIDTH=786>
+				<P><A HREF="../../Startseite.html"><B>Zur&uuml;ck zur Startseite</B></A></P>
+			</TD>
+		</TR>
+	</TABLE>
+</CENTER>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

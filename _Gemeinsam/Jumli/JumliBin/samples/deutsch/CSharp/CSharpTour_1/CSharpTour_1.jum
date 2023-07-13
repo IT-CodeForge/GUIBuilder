@@ -1,0 +1,639 @@
+Jumli
+{
+  *** Applikation ***;
+  Version=1.4;
+  Elements=52;
+  {
+    *** Model ***;
+    Typ=3;
+    MainFile="FirstWindow.cs";
+    ActiveDiagramm=11485;
+    {
+      *** GenSettings ***;
+      GetPrefix="get";
+      SetPrefix="set";
+      DBBaseClass="DbBasisObject";
+      DBRecordSet="DbSet";
+      GenerateWrite=true;
+      GenerateRead=true;
+    };
+    {
+      *** CompileDebugSettings ***;
+      AufrufCompiler="csc";
+      AufrufDebugger="cordbg";
+      DebugOptionen="/debug";
+    };
+    {
+      *** Package ***;
+      Name="UseCases";
+      ID=11481;
+      Zugriff=2;
+      Type=2;
+      {
+        *** Diagramm ***;
+        Name="UseCases";
+        ID=11482;
+        DiagrammTyp=2;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Tour";
+      ID=11483;
+      Zugriff=2;
+      {
+        *** Diagramm ***;
+        Name="Tour 2 Die erste Klasse";
+        ID=11484;
+        {
+          *** CJumliTracker ***;
+          Rechteck=99,194,184,253;
+          UMLElementID=11490;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=14,11,311,88;
+          Colour=255,255,0;
+          UMLElementID=11510;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=366,27,719,164;
+          UMLElementID=11511;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=362,209,718,436;
+          UMLElementID=11512;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=17,310,317,372;
+          UMLElementID=11513;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=34,404,296,481;
+          UMLElementID=11514;
+        };
+        {
+          *** DotLineZeichner ***;
+          UMLElementID=11498;
+          TextOffset=0,5;
+        };
+        {
+          *** DotLineZeichner ***;
+          UMLElementID=11499;
+          TextOffset=0,5;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 0 Voraussetzungen";
+        ID=11485;
+        {
+          *** NotizZeichner ***;
+          Rechteck=19,28,348,240;
+          Colour=255,255,0;
+          UMLElementID=11501;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=378,55,641,192;
+          UMLElementID=11502;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=23,291,383,518;
+          UMLElementID=11503;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=446,310,650,492;
+          UMLElementID=11504;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 1 Erste Übersicht";
+        ID=11486;
+        {
+          *** NotizZeichner ***;
+          Rechteck=12,6,336,183;
+          UMLElementID=11505;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=15,212,333,389;
+          Colour=128,255,128;
+          UMLElementID=11506;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=397,39,710,248;
+          Colour=0,0,255;
+          UMLElementID=11507;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=385,270,672,479;
+          UMLElementID=11508;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=12,420,273,501;
+          UMLElementID=11509;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 3 Erstes Programm";
+        ID=11487;
+        {
+          *** CJumliTracker ***;
+          Rechteck=29,159,114,218;
+          UMLElementID=11490;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=22,30,346,92;
+          UMLElementID=11515;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=367,30,756,152;
+          UMLElementID=11516;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=24,261,354,503;
+          UMLElementID=11517;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=425,232,743,414;
+          UMLElementID=11518;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 4 SDK";
+        ID=11488;
+        {
+          *** CJumliTracker ***;
+          Rechteck=472,72,640,131;
+          UMLElementID=11532;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=29,39,386,446;
+          UMLElementID=11519;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=405,256,745,378;
+          UMLElementID=11520;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=245,597,507,659;
+          UMLElementID=11521;
+        };
+        {
+          *** DotLineZeichner ***;
+          Rechteck=572,194,579,201;
+          UMLElementID=11500;
+          TextOffset=0,5;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 5 Erstes Fenster";
+        ID=11489;
+        {
+          *** CJumliTracker ***;
+          Rechteck=136,228,239,292;
+          UMLElementID=11493;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=14,20,182,79;
+          UMLElementID=11532;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=11497;
+          TextOffset=0,5;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=301,4,644,246;
+          UMLElementID=11522;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=27,341,292,418;
+          UMLElementID=11523;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=323,257,613,469;
+          UMLElementID=11524;
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="Dies ist die erste Klasse, die angelegt wurde. \nFolgende Angaben \
+        wurden im Dialog gemacht:\n1: Der Name\n2: Die Checkbox \"bindet main ein\" \
+        wurde ausgewählt";
+        Name="FirstClass";
+        ID=11490;
+        Datentyp="class";
+        KomponentenId=11492;
+        FileName="FirstClass.cs";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        IsMain=true;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="Main";
+          ID=11491;
+          IsStatic=true;
+          Zugriff=3;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="args";
+            ID=11492;
+            Typ="string[]";
+          };
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="Dies ist die FirstWindow- Klasse, die die Eigentschaften von \"Form\"\nerbt. \
+        Folgende Angaben wurden im Dialog gemacht:\n1. Der Name\n2. Die Checkbox \
+        \"bindet main ein\" wurde ausgewählt\n3. Die Checkbox \"Konstruktor\" wurde \
+        ausgewählt";
+        Name="FirstWindow";
+        ID=11493;
+        Datentyp="class";
+        KomponentenId=11492;
+        FileName="FirstWindow.cs";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        IsMain=true;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="FirstWindow";
+          ID=11494;
+        };
+        {
+          *** Methode ***;
+          Name="Main";
+          ID=11495;
+          IsStatic=true;
+          Zugriff=3;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="args";
+            ID=11496;
+            Typ="string[]";
+          };
+        };
+        {
+          *** Vererbung ***;
+          ID=11497;
+          A=11493;
+          B=11532;
+        };
+      };
+      {
+        *** DotLine ***;
+        ID=11498;
+        Zugriff=2;
+        A=11511;
+        B=11490;
+      };
+      {
+        *** DotLine ***;
+        ID=11499;
+        Zugriff=2;
+        A=11490;
+        B=11513;
+      };
+      {
+        *** DotLine ***;
+        ID=11500;
+        Zugriff=2;
+        A=11520;
+        B=11532;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nUns erreichen viele Anfragen von Benutzern, bei denen\nes \
+        zu Fehlermeldungen beim Compilieren wegen einem \nfehlenden oder nicht \
+        gefundenen Microsoft .Net SDK kommt.\nWichtig ist, dass man das SDK installiert \
+        hat, die nicht Bestandteil \nvon Jumli sind.\n\nFalls es trotz einer Installation \
+        zu Fehlermeldungen kommt, sollte man\nversuchen, über das Menü \"Optionen/ \
+        SDK-Optionen\" die \nVerzeichnisse anzugeben. \n\nWeitere Informationen \
+        gibt es auf unserer Homepage www.jumli.de\nbei den FAQ's.";
+        ID=11501;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nJumli zeigt die Hilfe von anderen Systemen \nwie z.B. dem \
+        SDK in einem HTML-Browser an.\nAlso sollte man einen solchen installiert \
+        haben.\n\nUnter Linux muss man den Browser und einen\nEditor im Optionendialog, \
+        den man über das Menü\n\"Optionen/ Jumli Optionen\" öffnet, angegeben haben.";
+        ID=11502;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nEs kann zu Problemen kommen, wenn:\n\n- Bei Jumli unter \
+        einer älteren Windows 98-Versionen eingesetzt \n  wird,  da das .Net Framework \
+        SDK aber als mind. Anforderung:\n   - NT mit SP6a\n   - W2k\n   -Windows \
+        XP hat sollte dies aber kein Problem sein.\n- Die Benutzerrechte vom Systemadministrator \
+        stark eingeschränkt wurden.\n- Man neuere Projekte mit älteren Jumli-Versionen \
+        öffnet.\n- Jumli auf einem Server- Netz-Laufwerk installiert wurde und \
+        mehrere\nBenutzer gleichzeitig darauf zugreifen.\n- Projekte auf einem \
+        Netzlaufwerk von mehreren Benutzern gleichzeitig\nbearbeitet werden.";
+        ID=11503;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\n\nEs wird empfohlen:\n\n- Jumli lokal zu installieren.\n\n- \
+        Nicht das Verzeichnis \"Eigene Dateien\" \n als Verzeichnis für Jumli oder \
+        ein Projekt\n zu wählen, da die meisten Compiler bei\n Verzeichnissen mit \
+        Leerstellen oder \n Sonderzeichen Probleme haben.";
+        ID=11504;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nÜber \"Datei Neu\" kann man ein neues Projekt anlegen.\nIn \
+        diesem Fall wurde ein C#-Projekt erstellt. \nWichtig ist, dass man ein \
+        Projekt- Verzeichnis angibt, \ndas KEINE Leerstellen oder Sonderzeichen \
+        hat, da einige Compiler\ndiese nicht verarbeiten können.\n\nMan sollte \
+        sich sowieso ein seperates Verzeichnis für seine\nprogrammier Aktivitäten \
+        zulegen, da kann man dann nach \nHerzenslust programmieren, löschen und \
+        tun und machen.";
+        ID=11505;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nLinks ist der Projektbaum. Als Standard wird ein UseCase- \
+        und\nein Projekt- Package erstellt. Alles, was hier zu sehen ist, macht \
+        \ndas gesamte Projekt aus. Diagramme sind grundsätzlich nur\neine Ansicht \
+        auf das Modell.\n- Im Projektbaum kann mit einem einfachen Klick zwischen \
+        den\nElementen wechseln.\n- Mit einem Doppelklick öffnet sich der entsprechende \
+        \nBearbeitungsdialog.\n- Mit der rechten Maustaste erhält man ein Kontextmenü.";
+        ID=11506;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nHier ist das Modellfenster, in dem man das UML-Modell erstellt.\nDazu \
+        gibt es unterschiedliche Diagrammtypen, wobei immer\nein Klassendiagramm \
+        als Standard erzeugt wird.\n\nEin Doppelklick auf ein Element öffnet einen \
+        Dialog (wie z.B. bei \ndieser Notiz), in dem man die Eigenschaften des \
+        Elements \nangeben kann. Mit einem einfachem Klick kann man die \nDokumentation \
+        des Elements im Nachrichtenfenster anschauen.\n\nEin Diagramm ist immer \
+        nur eine Teilansicht eines Modells. Die\ngesamte Übersicht findet man im \
+        Projektbaum => Info 2";
+        ID=11507;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\nUnten ist das Nachrichtenfenster.\nHier werden folgende \
+        Informationen angezeigt:\n- Die Dokumentation eines selektierten Modellelements\n- \
+        Meldungen von Jumli an den User\n- Compile Meldungen\n- Meldungen der Programme, \
+        die man programmiert hat\n- Meldungen eines Debuggers\n\nFalls eine Meldung \
+        die Angabe einer Datei und einer Zeile \nbeinhaltet (z.B. bei einem Compile-Error \
+        ), kann man  duch \nDoppelklick auf diese Zeile die Datei öffnen.";
+        ID=11508;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 5:\nUnd jetzt machen wir ein C#-Programm\nWeiter gehts im Diagramm \
+        \"Tour 2\" durch einen Klick \nim Projektbaum.";
+        ID=11509;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nEin Diagramm erstellt man über das Menü oder die Toolbar.\nIn \
+        diesem Fall ist es ein Klassendiagramm, weil wir eine Klasse\nerstellen \
+        wollen.";
+        ID=11510;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nEine Klasse erstellt man über das Menü oder die Toolbar. \
+        Dannach\nklickt man an der Stelle im Diagramm, an der man die Klasse erzeugen\nwill.\nZuerst \
+        startet ein Dialog, in dem man die Eigenschaften der Klasse \nangeben kann. \
+        In der Dokumentation der Klasse haben wir angegeben,\nwelche Einstellungen \
+        wir für sie gemacht haben => einfach auf die Klasse\nklicken und die Dokumentation \
+        wird im Nachrichtenfenster angezeigt.";
+        ID=11511;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nAlle Elemente in einem Diagramm kann man löschen. Dabei \
+        muß man \nzwischen dem Entfernen aus dem Diagramm und dem Löschen aus \ndem \
+        Modell unterscheiden. Da Diagramme immer nur Teilansichten\ndes gesamten \
+        Modells darstellen, wird ein Element nicht automatisch \ngelöscht, wenn \
+        es aus dem Diagramm entfernt wurde. (Ganz wichtig)\n\n<Entf> löscht nur \
+        aus dem Diagramm. Das Entfernen aus dem Modell\nfunktioniert nur über die \
+        Dialoge (Doppelklick auf das Element)\n\nÜbung:\nDie Klassen soll aus dem \
+        Diagramm mit der Taste <Entf> gelöscht werden.\nDanach die Klassen wieder \
+        in das Diagramm einfügen, indem man \nim Projektbaum die Klasse selektiert \
+        und in das Diagramm zieht.";
+        ID=11512;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\nZu jedem Element gibt es immer ein Kontextmenü, das man \
+        mit\neinem Rechtsklick der Maus erreicht.";
+        ID=11513;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 5:\nJetzt machen wir unser erstes Programm. \nWeiter gehts im \
+        Diagramm \"Tour 3\" durch einen Klick \nim Projektbaum.";
+        ID=11514;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nIn diesem Diagramm wurde die Klasse aus dem Projektbaum \
+        in das \nDiagramm gezogen, damit sie auch hier sichtbar ist.";
+        ID=11515;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nMit dem Toolbar-Button \"Ansicht wechseln\" kann man zwischen \
+        Modelldiagramm\nund dem Editor mit der Dateiansicht schnell wechseln. In \
+        manchen Fällen \nwechselt Jumli selbst die Ansicht.\n\nÜbung: \nEinfach \
+        mal den Button \"Ansicht wechseln\" ausprobieren.";
+        ID=11516;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nJetzt machen wir ein Programm:\nÜbung:\n1: Durch einen Klick \
+        mit der rechten Maustaste auf die Klasse\nund der Auswahl \"Sourcecode \
+        generieren\" wird eine Java-Datei \nerzeugt.\n2: In der Methode main() \
+        den Befehl\n\"System.Console.WriteLine(\" Meine erste Klasse! \");\" eingeben.\n\n3: \
+        Über die Toolbar über den Button \"Compile/Run/Debug\" und das\nUntermenü \
+        die Datei compilieren. Jetzt sollten im Nachrichtenfenster\ndie Meldungen \
+        des Compilers erscheinen. Und es sollten keine \nFehler auftreten, es sei \
+        denn, man hat kein SDK installiert => Tour 0 \noder man hat über den Klassendialog \
+        die Klasse geändert und das \nwäre schlecht.";
+        ID=11517;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\nNachdem die Datei compiliert wurde, kann man das Programm \
+        \nstarten.\nZur Zeit macht unser Programm nichts anderes, als die Nachricht \
+        \n\"Hallo\" zu senden. Da Jumli die eben erstellte \"FirstClass.exe\" \naufruft, \
+        öffnet sich eine Eingabeaufforderung und das Programm\nläuft ab.\n\nÜbung:\nÜber \
+        die Toolbar über den Button \"Compile/Run/Debug\" und das\nUntermenü mit \
+        \"Run\" das Programm starten.";
+        ID=11518;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nJetzt machen wir ein Programm mit einem eigenen Fenster. \
+        \nDazu sollte man bei C# die entsprechenden .Net-Framework Klassen \nverwenden, \
+        dafür sind sie schließlich da.\n\nWenn alle Bedingungen wie im Diagramm \
+        \"Voraussetzungen\" erfüllt\nsind, sollte es im Projektbaum die Ansicht \
+        \"SDK\" geben.\nJedesmal wenn ein neues oder bestehendes Projekt geöffnet \
+        wird,\nversucht Jumli die Dokumentation des zugrundeliegenden Systems\n- \
+        in unserem Fall das .NET Framwork SDK - zu analysieren und zeigt\n  das \
+        Ergebnis\nim Projektbaum an.\n\nHier wurde schon mal die Klasse \"Forms\" \
+        eingefügt.\n\nÜbung:\n1: Nach \"SDK\" wechseln.\n2: Eine Klasse durch Doppelklick \
+        auswählen.\n    Danach müsste die entsprechene Originaldokumentation \n    \
+        angezeigt werden\n3: Im Package \"System.Windows.Forms\" die Klasse \"Forms\" \
+        selektieren\n    und ins Diagramm ziehen. Die Klasse wird jetzt im \"Extern\" \
+        - \n    Package im Projektbaum in der \"Projekt\" Ansicht angzeigt.\n\nFalls \
+        es hier zu Fehlern kommt, sollte man unter \"Tour 0 Voraussetzungen\"\nnachschauen.";
+        ID=11519;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nEine externe Klasse wird in einer anderen Farbe angezeigt \
+        und \nman kann keinen Sourcecode generieren.\n\nNormalerweise will man \
+        zur Übersichtlichkeit die Klasse ohne Attribute\nund ohne Methoden darstellen. \
+        Dies kann man über das Kontextmenü \n(rechte Maustaste) einstellen.";
+        ID=11520;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nWeiter gehts im Diagramm \"Tour 5\" durch einen Klick \nim \
+        Projektbaum.";
+        ID=11521;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nFolgendes wurde hier erstellt:\n- \"Form\" wurde aus dem \
+        Projektbaum in das Diagramm gezogen.\n- Die Klasse \"FirstWindow\" wurde \
+        erstellt, mit den Optionen:\n  - bindet Main ein\n  - Konstruktor\n- In \
+        der Toolbar wurde der Button \"Vererbung\" ausgewählt.\n- Zwischen der \
+        Klasse \"FirstWindow\" und \"Form\" wurde ausgehend \nvon \"FirstWindow\" \
+        eine Vererbung gezogen. Damit erbt \"FirstWindow\" \nalle Eigenschaften \
+        von \"Form\".\n\nDie Einstellungen für \"FirstWindow\" kann man wieder \
+        über das \nNachrichtenfenster einsehen (Klick auf die Klasse) oder über \
+        den \nKlassendialog (Doppelklick)";
+        ID=11522;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nDann wurde über das Kontextmenü (rechte Maustaste)\nfür \
+        die Klasse \"FirstWindow\" der Sourcecode erstellt.";
+        ID=11523;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nIn der Main()- Methode wurde noch folgendes programmiert:\n\nApplication.Run( \
+        new FirstWindow() );\n\nund in den Konstruktor dieses:\n\nthis.Text = \"Nur \
+        ein Fenster\";\n\nMan muß die Datei über \"Compile/Run/Debug\" und dann\n\"Compile \
+        File\" wieder compilieren. Anschliessend kann man \ndas Programm über \"Run\" \
+        starten.";
+        ID=11524;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Extern";
+      ID=11525;
+      Zugriff=2;
+      Type=1;
+      {
+        *** Package ***;
+        Name="System";
+        ID=11526;
+        Zugriff=2;
+        Type=1;
+        {
+          *** Diagramm ***;
+          Name="System";
+          ID=11527;
+        };
+        {
+          *** Package ***;
+          Name="Windows";
+          ID=11528;
+          Zugriff=2;
+          Type=1;
+          {
+            *** Diagramm ***;
+            Name="Windows";
+            ID=11529;
+          };
+          {
+            *** Package ***;
+            Name="Forms";
+            ID=11530;
+            Zugriff=2;
+            Type=1;
+            {
+              *** Diagramm ***;
+              Name="Forms";
+              ID=11531;
+            };
+            {
+              *** Klasse ***;
+              Name="Form";
+              ID=11532;
+              Datentyp="class";
+              IsExtern=true;
+              KomponentenId=11492;
+              FileName="Form.cs";
+              FileActiveLine=-1;
+              HeaderFileActiveLine=-1;
+              IsGenerate=true;
+              Parent=-1;
+            };
+          };
+        };
+      };
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\CSharp\\CSharpTour_1\\FirstClass.cs";
+      ActiveLine=-1;
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\CSharp\\CSharpTour_1\\FirstWindow.cs";
+      ActiveLine=-1;
+    };
+  };
+};

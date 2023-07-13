@@ -1,0 +1,178 @@
+Jumli
+{
+  *** Applikation ***;
+  Version=1.4;
+  Elements=15;
+  {
+    *** Model ***;
+    MainFile="Start.java";
+    ActiveDiagramm=11469;
+    {
+      *** GenSettings ***;
+      GetPrefix="get";
+      SetPrefix="set";
+      DBBaseClass="DbBasisObject";
+      DBRecordSet="DbSet";
+      GenerateWrite=true;
+      GenerateRead=true;
+    };
+    {
+      *** CompileDebugSettings ***;
+      AufrufCompiler="javac";
+      AufrufDebugger="jdb";
+      RunParameter="-verbose";
+      Defines="-verbose -g";
+    };
+    {
+      *** Package ***;
+      Name="UseCases";
+      ID=11466;
+      Zugriff=2;
+      Type=2;
+      {
+        *** Diagramm ***;
+        Name="UseCases";
+        ID=11467;
+        DiagrammTyp=2;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Analyse";
+      ID=11468;
+      Zugriff=2;
+      {
+        *** Diagramm ***;
+        Name="Analyse 1: Analyse-Projekt erstellen und Dateien hinzufügen";
+        ID=11469;
+        {
+          *** NotizZeichner ***;
+          Rechteck=29,27,343,89;
+          UMLElementID=11472;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=393,29,772,226;
+          UMLElementID=11473;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=27,299,431,481;
+          UMLElementID=11474;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Analyse 2: Dateien analysieren";
+        ID=11470;
+        {
+          *** NotizZeichner ***;
+          Rechteck=13,24,449,249;
+          UMLElementID=11475;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=25,304,364,449;
+          UMLElementID=11476;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Analyse 3: Nach-Dokumentation erstellen";
+        ID=11471;
+        {
+          *** NotizZeichner ***;
+          Rechteck=48,239,630,384;
+          UMLElementID=11477;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=39,72,527,185;
+          UMLElementID=11478;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=55,447,411,592;
+          UMLElementID=11479;
+        };
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nIn diesem Beispiel wird gezeigt, wie man aus einem bestehenden \
+        \nJava- Projekt nachträglich ein Jumli-Projekt erstellt.";
+        ID=11472;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nZuerst muss man sicherstellen, dass die zu analysierenden \
+        Java-Dateien\nund das Jumli-Projekt in demselben Verzeichnis stehen. Z.B. \
+        indem man \n\n- ein Jumli-Projekt (über \"Neu\") erstellt und dann die \
+        Dateien in das Projekt-\nverzeichnis kopiert. \n\n- Oder indem man das \
+        Jumli-Projekt direkt im Verzeichnis der Dateien\nerstellt.\n\nIn unserem \
+        Fall wurde dieses Projekt \"Analyse.jum\" schon direkt im Verzeichnis\nder \
+        Dateien erstellt.";
+        ID=11473;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nJetzt sollten Sie die Dateien über \"Öffnen\" und \n\"Alle \
+        Dateien eines Verzeichnisses zum Projekt hinzufügen\" zum Projekt hinzufügen.\n\nDie \
+        Einstellung im Verzeichnisdialog sollten stimmen, d.h das vorgeschlagene\nVerzeichnis \
+        ist das Projektverzeichnis. Also müssen Sie hier nur noch \"OK\"\nwählen\n\nDie \
+        Dateien sollten jetzt im Projektbaum in der Ansicht \"Dateien\" unter dem \
+        Eintrag\n\"Sonstige Projekt-Dateien\" zu sehen sein.";
+        ID=11474;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nJetzt sollten Sie über das Menü \"Code\" und \"Alle Files \
+        analysieren\" die\nAnalyse starten.\n\nDas Ergebnis sollte sein:\n\n- Im \
+        Projektbaum unter der Ansicht \"Dateien\" befinden sich die analysierten\nDateien \
+        unter dem Projektverzeichnis. Die Unterverzeichnisse werden jetzt \ndargestellt.\n\n- \
+        Im Projektbaum unter der Ansicht \"Projekt\" werden die Klassen und Package \
+        dargestellt.\nZu jedem Package wurde ein Diagramm erzeugt.";
+        ID=11475;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nWährend der Analyse hat Jumli versucht\n\n- Assoziationen \
+        aufzubauen\n\n- den einer Methode, Klasse oder Attribut vorangestellten \
+        Kommentar\nals Dokumentation zu übernehmen.";
+        ID=11476;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nDamit Ihre Nach-Dokumentation noch ausführlicher wird, \
+        können Sie jetzt die JDK-Klassen, die Sie in Ihrem Java-Projekt \nverwendet \
+        haben, im Diagramm einfügen.\n\nWählen Sie dazu wieder das Diagramm \"game\" \
+        aus und suchen Sie im \nProjketbaum unter der Ansicht \"JDK\" die Klasse \
+        javax.swing.JFrame, die Sie\ndann in das Diagramm ziehen.";
+        ID=11477;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\n\nNach der Analyse können Sie Ihre Klassen zur Dokumentation \
+        in einem Klassendiagramm darstellen.\nGehen Sie dazu in das Diagramm \"game\" \
+        im Package \"game\", indem sie \ndas Diagramm im Projektbaum anklicken, \
+        und ziehen Sie die Klassen \naus dem Projektbaum in das Diagramm.";
+        ID=11478;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\n\nAb jetzt sollte es möglich sein, dass Sie Ihr Java-Projekt \
+        mit Jumli\nweiterbearbeiten. \n\nZum Test fügen Sie in einer Klasse (z.B. \
+        GamePanel ) ein zusätzliches\nAttribut ( DoppelKlick auf die Klasse und \
+        im Klassendialog \"Neu\" wählen)\n ein und lassen anschliessend die Klasse \
+        generieren (Über die Toolbar).";
+        ID=11479;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Extern";
+      ID=11480;
+      Zugriff=2;
+      Type=1;
+    };
+  };
+};

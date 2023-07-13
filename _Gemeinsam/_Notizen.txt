@@ -1,0 +1,64 @@
+Dokumentation aller public Methoden und Funktionen.
+Formatierung grob gemäß PEP8: https://peps.python.org/pep-0008/
+
+
+
+py - js-Programmierung
+  -> auto-py-to-exe
+
+GUI:
+  EEL: https://github.com/python-eel/Eel
+  portable Browser: Brave
+
+Klassendiagramme: Jumli
+
+MIT-License
+  -> ITG Dateien MIT License
+
+Elemente gespeichert in json
+-> wird compiled in erwartete programmiersprache
+
+Offen:
+  - Logging: https://docs.python.org/3/library/logging.html
+
+
+
+GUIs:
+  - EEL -> Python
+  - TGWindow (HAA) -> C++
+
+GUI-Elemente:
+  - Button
+  - EditFeld
+  - Label
+  - Canvas
+  - Checkbox
+  - Timer
+  - Slider
+  - (Bild)
+
+
+Eigenschaften:
+Fenstereigenschaften:
+  - Titel
+  - Hintergrundfarbe (/ bild)
+  - Größe -> Lock
+Elementeigenschaften:
+  - Farbe
+  - Titel
+  - Name (Programmierintern)
+  - Größe / Pos
+  - (Font)
+
+Events:
+Fenster:
+  - Resize
+  - Create
+Element:
+  - Pressed
+  - Hovered
+  - Changed
+  - KeyEvent
+  - MouseEvent
+Timer:
+  - TimerEvent

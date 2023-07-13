@@ -1,0 +1,1345 @@
+Jumli
+{
+  *** Applikation ***;
+  Version=1.4;
+  Elements=150;
+  {
+    *** Model ***;
+    MainFile="Start.java";
+    ActiveDiagramm=11159;
+    {
+      *** GenSettings ***;
+      GetPrefix="get";
+      SetPrefix="set";
+      DBBaseClass="DbBasisObject";
+      DBRecordSet="DbSet";
+      GenerateWrite=true;
+      GenerateRead=true;
+    };
+    {
+      *** CompileDebugSettings ***;
+      AufrufCompiler="javac";
+      AufrufDebugger="jdb";
+      RunParameter="-verbose";
+      Defines="-verbose -g";
+    };
+    {
+      *** Package ***;
+      Name="UseCases";
+      ID=11156;
+      Zugriff=2;
+      Type=2;
+      {
+        *** Diagramm ***;
+        Name="UseCases";
+        ID=11157;
+        DiagrammTyp=2;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Tour";
+      ID=11158;
+      Zugriff=2;
+      {
+        *** Diagramm ***;
+        Name="Tour 1 Der Anfang";
+        ID=11159;
+        {
+          *** CJumliTracker ***;
+          Rechteck=16,259,121,318;
+          UMLElementID=11181;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=254,258,359,317;
+          UMLElementID=11167;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=139,257,244,316;
+          UMLElementID=11164;
+          IsWithAttributs=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=254,143,359,202;
+          UMLElementID=11273;
+          IsWithAttributs=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=96,139,201,198;
+          UMLElementID=11224;
+          IsWithAttributs=true;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=11166;
+          TextOffset=0,5;
+        };
+        {
+          *** VererbungZeichner ***;
+          UMLElementID=11180;
+          TextOffset=0,5;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=426,125,627,382;
+          UMLElementID=11205;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=13,11,444,88;
+          UMLElementID=11206;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 2 Die Maus";
+        ID=11160;
+        {
+          *** CJumliTracker ***;
+          Rechteck=63,239,202,363;
+          UMLElementID=11167;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** CJumliTracker ***;
+          Rechteck=62,12,201,151;
+          UMLElementID=11295;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** VererbungZeichner ***;
+          Rechteck=143,177,200,191;
+          UMLElementID=11179;
+          TextOffset=40,-3;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=251,22,589,234;
+          UMLElementID=11207;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=266,280,619,357;
+          UMLElementID=11216;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 3 Die Linien";
+        ID=11161;
+        {
+          *** CJumliTracker ***;
+          Rechteck=31,43,170,167;
+          UMLElementID=11167;
+          IsWithAttributs=true;
+          IsWithMethods=true;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=264,28,683,210;
+          UMLElementID=11208;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=12,240,375,422;
+          UMLElementID=11209;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=402,272,643,349;
+          Colour=128,128,255;
+          UMLElementID=11210;
+        };
+        {
+          *** DotLineZeichner ***;
+          Rechteck=219,114,226,121;
+          UMLElementID=11184;
+          Knick=221,45;
+          TextOffset=0,5;
+          {
+            *** Linie ***;
+            Punkt=221,45;
+          };
+          {
+            *** Linie ***;
+            Punkt=223,118;
+          };
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 4 Das Spiel";
+        ID=11162;
+        {
+          *** NotizZeichner ***;
+          Rechteck=20,23,410,168;
+          UMLElementID=11211;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=23,193,382,354;
+          UMLElementID=11212;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=27,370,335,429;
+          Colour=128,128,255;
+          UMLElementID=11217;
+        };
+      };
+      {
+        *** Diagramm ***;
+        Name="Tour 5 Die Beziehung";
+        ID=11163;
+        {
+          *** NotizZeichner ***;
+          Rechteck=16,12,401,173;
+          UMLElementID=11213;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=439,20,637,133;
+          UMLElementID=11214;
+        };
+        {
+          *** NotizZeichner ***;
+          Rechteck=440,222,625,287;
+          Colour=128,128,255;
+          UMLElementID=11215;
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="Diese Klasse ist das Hauptfenster. Damit das Programm richtig \nbeendet \
+        wird, hat sie einen Konstruktor, in dem Jumli \nSourcecode zum Beenden \
+        hinzufügt.";
+        Name="SpielFrame";
+        ID=11164;
+        Datentyp="class";
+        KomponentenId=11170;
+        FileName="SpielFrame.java";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="SpielFrame";
+          ID=11165;
+        };
+        {
+          *** Vererbung ***;
+          ID=11166;
+          A=11164;
+          B=11224;
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="In dieser Klasse wird gezeichnet.";
+        Name="SpielPanel";
+        ID=11167;
+        Datentyp="class";
+        KomponentenId=11170;
+        FileName="SpielPanel.java";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="SpielPanel";
+          ID=11168;
+        };
+        {
+          *** Methode ***;
+          Doku="\n\nInvoked when the mouse button has been clicked (pressed\n and \
+          released) on a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+          Name="mouseClicked";
+          ID=11169;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="e";
+            ID=11170;
+            Typ="MouseEvent";
+          };
+        };
+        {
+          *** Methode ***;
+          Doku="\n\nInvoked when the mouse enters a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+          Name="mouseEntered";
+          ID=11171;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="e";
+            ID=11172;
+            Typ="MouseEvent";
+          };
+        };
+        {
+          *** Methode ***;
+          Doku="\n\nInvoked when the mouse exits a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+          Name="mouseExited";
+          ID=11173;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="e";
+            ID=11174;
+            Typ="MouseEvent";
+          };
+        };
+        {
+          *** Methode ***;
+          Doku="\n\nInvoked when a mouse button has been pressed on a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+          Name="mousePressed";
+          ID=11175;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="e";
+            ID=11176;
+            Typ="MouseEvent";
+          };
+        };
+        {
+          *** Methode ***;
+          Doku="\n\nInvoked when a mouse button has been released on a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+          Name="mouseReleased";
+          ID=11177;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="e";
+            ID=11178;
+            Typ="MouseEvent";
+          };
+        };
+        {
+          *** Vererbung ***;
+          ID=11179;
+          A=11167;
+          B=11295;
+          IstRealize=true;
+        };
+        {
+          *** Vererbung ***;
+          ID=11180;
+          A=11167;
+          B=11273;
+        };
+      };
+      {
+        *** Klasse ***;
+        Doku="Diese Klasse hat die main()-Methode \nund ist nur dazu da, das Spiel \
+        zu starten.";
+        Name="Start";
+        ID=11181;
+        Datentyp="class";
+        KomponentenId=11170;
+        FileName="Start.java";
+        FileActiveLine=-1;
+        HeaderFileActiveLine=-1;
+        IsMain=true;
+        Parent=-1;
+        {
+          *** Methode ***;
+          Name="main";
+          ID=11182;
+          IsStatic=true;
+          RueckgabeWert="void";
+          {
+            *** Parameter ***;
+            Name="args";
+            ID=11183;
+            Typ="String[]";
+          };
+        };
+      };
+      {
+        *** DotLine ***;
+        ID=11184;
+        Zugriff=2;
+        A=11208;
+        B=11167;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nÜber \"Datei Neu\" kann man ein neues Projekt anlegen.\nIn \
+        diesem Fall ein Java-Projekt. \nWichtig ist, dass man ein Projekt- Verzeichnis \
+        angibt, \ndas KEINE Leerstellen oder Sonderzeichen hat, da einige Compiler\ndiese \
+        nicht verarbeiten können.";
+        ID=11185;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\nUnten ist das Nachrichtenfenster.\nHier werden folgende \
+        Informationen angezeigt:\n- Die Dokumentation eines selektierten Modellelements\n- \
+        Meldungen von Jumli an den User\n- Compile Meldungen\n- Meldungen der Programme, \
+        die man programmiert hat\n- Meldungen eines Debuggers\n\nFalls eine Meldung \
+        die Angabe einer Datei und einer Zeile \nbeinhaltet (z.B. bei einem Compile-Error \
+        ), kann man  duch \nDoppelklick auf diese Zeile die Datei öffnen.";
+        ID=11186;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nHier ist das Modellfenster, in dem man das UML-Modell erstellt.\nDazu \
+        gibt es unterschiedliche Diagrammtypen, wobei immer\nein Klassendiagramm \
+        als Standard erzeugt wird.\n\nEin Doppelklick auf ein Element öffnet einen \
+        Dialog (wie z.B. bei \ndieser Notiz), in dem man die Eigenschaften des \
+        Elements \nangeben kann. Mit einem einfachem Klick kann man die \nDokumentation \
+        des Elements im Nachrichtenfenster anschauen.\n\nEin Diagramm ist immer \
+        nur eine Teilansicht eines Modells. Die\ngesamte Übersicht findet man im \
+        Projektbaum => Info 2\n\nWie man ein Diagramm erstellt, zeigt Tour 2";
+        ID=11187;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nLinks ist der Projektbaum. Als Standard wird ein UseCase- \
+        und\nein Projekt- Package erstellt. Alles, was hier zu sehen ist, macht \
+        \ndas gesamte Projekt aus. Diagramme sind grundsätzlich nur\neine Ansicht \
+        auf das Modell.\n- Im Projektbaum kann mit einem einfachen Klick zwischen \
+        den\nElementen wechseln.\n- Mit einem Doppelklick öffnet sich der entsprechende \
+        \nBearbeitungsdialog.\n- Mit der rechten Maustaste erhält man ein Kontextmenü.";
+        ID=11188;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 5:\nUnd jetzt machen wir ein Java-Programm\nWeiter gehts im \
+        Diagramm \"Tour 2\" durch einen Klick \nim Projektbaum.";
+        ID=11189;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nEin Diagramm erstellt man über das Menü oder die Toolbar.\nIn \
+        diesem Fall ist es ein Klassendiagramm, weil wir eine Klasse\nerstellen \
+        wollen.";
+        ID=11190;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nEine Klasse erstellt man über das Menü oder die Toolbar. \
+        Dannach\nklickt man an der Stelle im Diagramm, an der man die Klasse erzeugen\nwill.\nZuerst \
+        startet ein Dialog, in dem man die Eigenschaften der Klasse \nangeben kann. \
+        In der Dokumentation der Klasse haben wir angegeben,\nwelche Einstellungen \
+        wir für sie gemacht haben => einfach auf die Klasse\nklicken und die Dokumentation \
+        wird im Nachrichtenfenster angezeigt.";
+        ID=11191;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nAlle Elemente in einem Diagramm kann man löschen. Dabei \
+        muß man \nzwischen dem Entfernen aus dem Diagramm und dem Löschen aus \ndem \
+        Modell unterscheiden. Da Diagramme immer nur Teilansichten\ndes gesamten \
+        Modells darstellen, wird ein Element nicht automatisch \ngelöscht, wenn \
+        es aus dem Diagramm entfernt wurde.\n\n<Entf> löscht nur aus dem Diagramm. \
+        Das Entfernen aus dem Modell\nfunktioniert nur über die Dialoge (Doppelklick \
+        auf das Element)\n\nÜbung:\nDie Klassen soll aus dem Diagramm mit der Taste \
+        <Entf> gelöscht werden.\nDanach die Klassen wieder in das Diagramm einfügen, \
+        indem man \nim Projektbaum die Klasse selektiert und in das Diagramm zieht.";
+        ID=11192;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\nZu jedem Element gibt es immer ein Kontextmenü, das man \
+        mit\neinem Rechtsklick der Maus erreicht.";
+        ID=11193;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 5:\nJetzt machen wir unser erstes Programm. \nWeiter gehts im \
+        Diagramm \"Tour 3\" durch einen Klick \nim Projektbaum.";
+        ID=11194;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nIn diesem Diagramm wurde die Klasse aus dem Projektbaum \
+        in das \nDiagramm gezogen, damit sie auch hier sichtbar ist.";
+        ID=11195;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nMit dem Toolbar-Button \"Ansicht wechseln\" kann man zwischen \
+        Modelldiagramm\nund dem Editor mit der Dateiansicht schnell wechseln. In \
+        manchen Fällen \nwechselt Jumli selbst die Ansicht.\n\nÜbung: \nEinfach \
+        mal den Button \"Ansicht wechseln\" ausprobieren.";
+        ID=11196;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nJetzt machen wir ein Programm:\nÜbung:\n1: Durch einen Klick \
+        mit der rechten Maustaste auf die Klasse\nund der Auswahl \"Sourcecode \
+        generieren\" wird eine Java-Datei erzeugt.\n2: In der Methode main() den \
+        Befehl \"System.out.println( \"Hallo\" );\" \neingeben.\n3: Über die Toolbar \
+        über den Button \"Compile/Run/Debug\" und das\nUntermenü die Datei compilieren. \
+        Jetzt sollten im Nachrichtenfenster\ndie Meldungen des Compilers erscheinen. \
+        Und es sollten keine Fehler\nauftreten, es sei denn, man hat kein JDK installiert \
+        => Tour 0 oder man\nhat über den Klassendialog die Klasse geändert und \
+        das wäre schlecht.";
+        ID=11197;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 4:\nNachdem die Datei compiliert wurde, kann man das Programm \
+        starten.\nZur Zeit macht unser Programm nichts anderes, als die Nachricht \
+        \n\"Hallo\" zu senden. Da Jumli alle Nachrichten abfängt, wird sie im \nNachrichtenfenster \
+        angezeigt. Zusätzlich sieht man die Nachrichten\nvon Jumli an die Virtual \
+        Machine (Laufzeitumgebung) von Java und\ndie Antworten.\n\nÜbung:\n Über \
+        die Toolbar über den Button \"Compile/Run/Debug\" und das\nUntermenü mit \
+        \"Run\" das Programm starten.";
+        ID=11198;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nUns erreichen viele Anfragen von Benutzern, bei denen\nes \
+        zu Fehlermeldungen beim Compilieren wegen einem \nfehlenden oder nicht \
+        gefundenen JDK kommt.\nWichtig ist, dass man das JDK und die zugehörige \
+        Dokumentation\ninstalliert hat, die nicht Bestandteil von Jumli sind.\n\nFalls \
+        es trotz einer Installation zu Fehlermeldungen kommt, sollte man\nversuchen, \
+        über das Menü \"Optionen/ JDK-Optionen\" die \nVerzeichnisse anzugeben. \
+        \n\nWeitere Informationen gibt es auf unserer Homepage www.jumli.de\nbei \
+        den FAQ's.";
+        ID=11199;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nJetzt machen wir ein Programm mit einem eigenen Fenster. \
+        Dazu sollte man bei Java\ndie entsprechenden JDK-Klassen verwenden.\n\nWenn \
+        alle Bedingungen wie im Diagramm \"Voraussetzungen\" erfüllt\nsind, sollte \
+        es unterhalb des Projektbaums den Button \"JDK\" geben.\nJedesmal wenn \
+        ein neues oder bestehendes Projekt geöffnet wird,\nversucht Jumli die Dokumentation \
+        des zugrundeliegenden Systems\n- in unserem Fall das JDK - zu analysieren \
+        und zeigt das Ergebnis\nim Projektbaum an.\n\nHier wurde schon mal die \
+        JDK-Klasse \"JFrame\" eingefügt.\n\nÜbung:\n1: Nach \"JDK\" wechseln.\n2: \
+        Eine Klasse durch Doppelklick auswählen.\nDanach müsste die entsprechene \
+        Originaldokumentation angezeigt werden\n3: Im Package \"javax.swing\" die \
+        Klasse \"JPanel\" selektieren und ins \nDiagramm ziehen\". Jumli versucht \
+        jetzt, die Originaldokumentation zu analysieren \nund erzeugt eine Klasse \
+        mit Attributen und Methoden. Die Klasse wird jetzt im \n\"Extern\" -Package \
+        im Projektbaum in der \"Projekt\" Ansicht angzeigt.\n\nFalls es hier zu \
+        Fehlern kommt, sollte man unter \"Tour 0 Voraussetzungen\"\nnachschauen.";
+        ID=11200;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nJumli zeigt die Hilfe von anderen Systemen wie z.B. dem \
+        JDK in einem\nHTML-Browser an. Also sollte man einen solchen installiert \
+        haben.";
+        ID=11201;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nEine externe Klasse wird in einer anderen Farbe angezeigt \
+        und \nman kann keinen Sourcecode generieren.\n\nNormalerweise will man \
+        zur Übersichtlichkeit die Klasse ohne Attribute\nund ohne Methoden darstellen. \
+        Dies kann man über das Kontextmenü \n(rechte Maustaste) einstellen.";
+        ID=11202;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nEs kann zu Problemen kommen, wenn:\n\n- Ältere Windows 98-Versionen \
+        eingesetzt werden.\n- Die Benutzerrechte vom Systemadministrator stark \
+        eingeschränkt wurden.\n- Man neuere Projekte mit älteren Jumli-Versionen \
+        öffnet.\n- Jumli auf einem Server- Netz-Laufwerk installiert wurde und \
+        mehrere\nBenutzer gleichzeitig darauf zugreifen.\n- Projekte auf einem \
+        Netzlaufwerk von mehreren Benutzern gleichzeitig\nbearbeitet werden.";
+        ID=11203;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nWeiter gehts im Diagramm \"Tour 5\" durch einen Klick \nim \
+        Projektbaum.";
+        ID=11204;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nFolgendes wurde hier erstellt:\n- \"JFrame\" wurde aus dem \
+        JDK-Baum \n   aus dem Package \"javax.swing\" \n   in das Diagramm gezogen.\n- \
+        \"JPanel\" wurde aus dem JDK-Baum\n   aus dem Package \"javax.swing\"\n   \
+        in das Diagramm gezogen.\n- Die Klasse \"Start\" wurde erstellt.\n- Die \
+        Klasse \"SpielFrame\" wurde erstellt.\n- Die Klasse \"SpielPanel\" wurde \
+        erstellt.\n- Die Vererbungen wurden eingefügt.\n\nDie Einstellungen für \
+        die Klassen \nkann man wieder über das Nachrichten-\nfenster oder den Klassendialog \
+        einsehen.";
+        ID=11205;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nIn diesem Beispiel wird ein kleines Spiel programmiert. \
+        \nDiese Tour baut auf JavaTour_1 auf. Insbesondere müssen die Voraussetzungen, \
+        wie sie \nin JavaTour_1 beschrieben sind, erfüllt sein.";
+        ID=11206;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nDas Panel soll auch die Mausevents verarbeiten. Dazu muß \
+        es das\nInterface \"MouseListener\" realisieren.\n\n- Aus dem JDK-Baum \
+        und dem Package \"java.awt.event\" wurde die\nKlasse \"MouseListener\" \
+        in das Diagramm gezogen.\n\n- Eine Vererbung wurde eingefügt\n\n- Im Projektbaum \
+        und dem Package \"Extern.java.awt.event\" wurde\n\"MouseListener\" selektiert \
+        und die Event-Methoden in die Klasse\n\"SpielPanel\" gezogen. Damit überschreibt \
+        \"SpielPanel\" alle Methoden\ndes Interface.";
+        ID=11207;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nUm im Panel zeichnen zu können, muß die Methode \"paintComponent()\"\nüberschrieben \
+        werden.\n\nDiese Methode werden wir diesmal nicht im Methodendialog erstellen,\nsondern \
+        direkt programmieren und danach durch einen Analyse-Vorgang\nim Modell \
+        einfügen lassen. \nDamit es einfacher ist, wurde die Methode schon vorprogrammiert \
+        und auskommentiert. \n\nJetzt in den Sourcecode wechseln (z.B. über das \
+        Kontextmenü) und dort\ndem Anleitung folgen, die gleich nach der Klassen-Deklaration \
+        folgt.";
+        ID=11208;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nNachdem die Methode \"paintComponent()\" durch die Analyse \
+        \nzu \"SpielPanel\" hinzugefügt wurde, muß noch die Erzeugung der Objekte\nprogrammiert \
+        werden.\n\nIn \"Start\" wird ein \"SpielFrame\"-Objekt erzeugt und im Konstruktor \
+        von\n\"SpielFrame\" wird ein \"SpielPanel\"-Objekt erzeugt in in das Frame \
+        \neingefügt.\n\nZu den Dateien gelangt man am einfachsten über den Projektbaum \
+        und da \nüber das Kontextmenü der jeweiligen Klassen.";
+        ID=11209;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nJetzt kann man über die Toolbar mit \"Compile all\" \ndas \
+        gesamte Programm compilieren und \nanschließend starten.";
+        ID=11210;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nJetzt fehlt noch die Spiel-Logik, die wir aber schon vorprogrammiert \
+        haben. \n\nÜber die Toolbar \"Öffnen\" und \"Bestehende Dateien zum Projekt \
+        hinzufügen \"\ndie Datei \"Spiel.java\" auswählen. Danach kann man die \
+        Datei im Projektbaum\nunter der Ansicht \"Dateien\" im Verzeichnis \"Sonstige \
+        Projekt-Dateien\" anklicken \nund im Editor anschauen. Diese Datei wird \
+        ab jetzt bei \"Compile all\" ebenfalls\ncompiliert.";
+        ID=11211;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\n\nJetzt sollte die Datei \"Spiel.java\" im Editor geladen \
+        sein. \nUm die Klasse \"Spiel\" zum Modell hinzuzufügen, muß man über das \
+        Menü\n\"Code\" und \"File analysieren\" die Analyse starten und die Frage\n\"Soll \
+        die Klasse Spiel zum Modell hinzugefügt werden?\" mit \"Ja\"\nbeantworten.\n\nJetzt \
+        sollte sich die Klasse in diesem Diagramm befinden.";
+        ID=11212;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 1:\nJetzt fehlt noch die Beziehung vom Panel zum Spiel.\n\nDazu \
+        sollte man die Klassen \"Spiel\" und \"SpielPanel\" aus dem Projektbaum\nin \
+        dieses Diagramm ziehen. Anschliessend über die Toolbar eine \"Assoziation\"\nauswählen \
+        und ausgehend von \"SpielPanel\" bis \"Spiel\" eine Assoziation\nerstellen. \
+        \n\nIm Assoziationendialog spezifiziert man die Assoziation als Aggregation.";
+        ID=11213;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info2:\nJetzt noch über das Kontextmenü \noder die Toolbar die Klasse \
+        \"SpielPanel\"\nerneut generieren und im Sourcecode \nalle auskommentierten \
+        Stellen mit\nHinweis auf Tour 5 einkommentieren.";
+        ID=11214;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nAnschliessend alles compilieren und \nman kann spielen.";
+        ID=11215;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 2:\nAnschliessend wurde im Klassendialog \"Konstruktor\" ausgewählt \
+        und der\nSourcecode generiert. Im Konstruktor wurde das Panel als MouseListener\nregistriert.";
+        ID=11216;
+      };
+      {
+        *** Notiz ***;
+        Doku="Info 3:\nWeiter gehts im Projektbaum in der Ansciht \"Projekt\" mit \
+        Tour 5.";
+        ID=11217;
+      };
+    };
+    {
+      *** Package ***;
+      Name="Extern";
+      ID=11218;
+      Zugriff=2;
+      Type=1;
+      {
+        *** Diagramm ***;
+        Name="Extern";
+        ID=11219;
+      };
+      {
+        *** Package ***;
+        Name="javax";
+        ID=11220;
+        Zugriff=2;
+        Type=1;
+        {
+          *** Diagramm ***;
+          Name="javax";
+          ID=11221;
+        };
+        {
+          *** Package ***;
+          Name="swing";
+          ID=11222;
+          Zugriff=2;
+          Type=1;
+          {
+            *** Diagramm ***;
+            Name="swing";
+            ID=11223;
+          };
+          {
+            *** Klasse ***;
+            Name="JFrame";
+            ID=11224;
+            Datentyp="class";
+            IsExtern=true;
+            KomponentenId=11170;
+            FileActiveLine=-1;
+            HeaderFileActiveLine=-1;
+            IsGenerate=true;
+            Parent=-1;
+            {
+              *** Methode ***;
+              Name="JFrame";
+              ID=11232;
+              Throws="HeadlessException";
+            };
+            {
+              *** Methode ***;
+              Doku="Creates a Frame in the specified\n GraphicsConfiguration of\n a screen \
+              device and a blank title.\n \n This constructor sets the component's locale \
+              property to the value \n returned by JComponent.getDefaultLocale.\n\nParameters:<DD><CODE>gc</CODE> \
+              - the <code>GraphicsConfiguration</code> that is used\n \t\tto construct \
+              the new <code>Frame</code>;\n \t\tif <code>gc</code> is <code>null</code>, \
+              the system\n \t\tdefault <code>GraphicsConfiguration</code> is assumed\n<DT><B>Throws:</B>\n<DD><CODE><A \
+              HREF=\"../../java/lang/IllegalArgumentException.html\">IllegalArgumentException</A></CODE> \
+              - if <code>gc</code> is not from\n \t\ta screen device.  This exception \
+              is always thrown when\n      GraphicsEnvironment.isHeadless() returns true.<DT><B>Since:</B><DD>1.3</DD>";
+              Name="JFrame";
+              ID=11230;
+              {
+                *** Parameter ***;
+                Name="gc";
+                ID=11231;
+                Typ="GraphicsConfiguration";
+              };
+            };
+            {
+              *** Methode ***;
+              Name="JFrame";
+              ID=11228;
+              Throws="HeadlessException";
+              {
+                *** Parameter ***;
+                Name="title";
+                ID=11229;
+                Typ="String";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Creates a JFrame with the specified title and the\n specified GraphicsConfiguration \
+              of a screen device.\n \n This constructor sets the component's locale property \
+              to the value \n returned by JComponent.getDefaultLocale.\n\nParameters:<DD><CODE>title</CODE> \
+              - the title to be displayed in the\n \t\tframe's border. A <code>null</code> \
+              value is treated as\n \t\tan empty string, \"\".<DD><CODE>gc</CODE> - the \
+              <code>GraphicsConfiguration</code> that is used\n \t\tto construct the \
+              new <code>JFrame</code> with;\n\t\tif <code>gc</code> is <code>null</code>, \
+              the system\n \t\tdefault <code>GraphicsConfiguration</code> is assumed\n<DT><B>Throws:</B>\n<DD><CODE><A \
+              HREF=\"../../java/lang/IllegalArgumentException.html\">IllegalArgumentException</A></CODE> \
+              - if <code>gc</code> is not from\n \t\ta screen device.  This exception \
+              is always thrown when\n      GraphicsEnvironment.isHeadless() returns true.<DT><B>Since:</B><DD>1.3</DD>";
+              Name="JFrame";
+              ID=11225;
+              {
+                *** Parameter ***;
+                Name="title";
+                ID=11226;
+                Typ="String";
+              };
+              {
+                *** Parameter ***;
+                Name="gc";
+                ID=11227;
+                Typ="GraphicsConfiguration";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="By default, children may not be added directly to this component,\n \
+              they must be added to its contentPane instead.  For example:\n \n thisComponent.getContentPane().add(child)\n \
+              \n An attempt to add to directly to this component will cause an\n runtime \
+              exception to be thrown.  Subclasses can disable this\n behavior.";
+              Name="addImpl";
+              ID=11233;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="comp";
+                ID=11234;
+                Typ="Component";
+              };
+              {
+                *** Parameter ***;
+                Name="constraints";
+                ID=11235;
+                Typ="Object";
+              };
+              {
+                *** Parameter ***;
+                Name="index";
+                ID=11236;
+                Typ="int";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Called by the constructor methods to create the default\n rootPane.";
+              Name="createRootPane";
+              ID=11237;
+              Zugriff=1;
+              RueckgabeWert="JRootPane";
+            };
+            {
+              *** Methode ***;
+              Doku="Called by the constructors to init the JFrame properly.";
+              Name="frameInit";
+              ID=11238;
+              Zugriff=1;
+              RueckgabeWert="void";
+            };
+            {
+              *** Methode ***;
+              Doku="Gets the AccessibleContext associated with this JFrame. \n For JFrames, \
+              the AccessibleContext takes the form of an \n AccessibleJFrame. \n A new \
+              AccessibleJFrame instance is created if necessary.";
+              Name="getAccessibleContext";
+              ID=11239;
+              RueckgabeWert="AccessibleContext";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the contentPane object for this frame.";
+              Name="getContentPane";
+              ID=11240;
+              RueckgabeWert="Container";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the operation that occurs when the user\n initiates a \"close\" \
+              on this frame.";
+              Name="getDefaultCloseOperation";
+              ID=11241;
+              RueckgabeWert="int";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the glassPane object for this frame.";
+              Name="getGlassPane";
+              ID=11242;
+              RueckgabeWert="Component";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the menubar set on this frame.";
+              Name="getJMenuBar";
+              ID=11243;
+              RueckgabeWert="JMenuBar";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the layeredPane object for this frame.";
+              Name="getLayeredPane";
+              ID=11244;
+              RueckgabeWert="JLayeredPane";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the rootPane object for this frame.";
+              Name="getRootPane";
+              ID=11245;
+              RueckgabeWert="JRootPane";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns true if newly created JFrames should have their\n Window \
+              decorations provided by the current look and feel. This is only\n a hint, \
+              as certain look and feels may not support this feature.";
+              Name="isDefaultLookAndFeelDecorated";
+              ID=11246;
+              IsStatic=true;
+              RueckgabeWert="boolean";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns whether calls to add and \n setLayout cause an exception \
+              to be thrown.";
+              Name="isRootPaneCheckingEnabled";
+              ID=11247;
+              Zugriff=1;
+              RueckgabeWert="boolean";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns a string representation of this JFrame.\n This method \n \
+              is intended to be used only for debugging purposes, and the \n content \
+              and format of the returned string may vary between      \n implementations. \
+              The returned string may be empty but may not \n be null.";
+              Name="paramString";
+              ID=11248;
+              Zugriff=1;
+              RueckgabeWert="String";
+            };
+            {
+              *** Methode ***;
+              Doku="Processes window events occurring on this component.\n Hides the \
+              window or disposes of it, as specified by the setting\n of the defaultCloseOperation \
+              property.";
+              Name="processWindowEvent";
+              ID=11249;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="e";
+                ID=11250;
+                Typ="WindowEvent";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Removes the specified component from this container.";
+              Name="remove";
+              ID=11251;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="comp";
+                ID=11252;
+                Typ="Component";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the contentPane property. \n This method is called by the constructor.";
+              Name="setContentPane";
+              ID=11253;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="contentPane";
+                ID=11254;
+                Typ="Container";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the operation that will happen by default when\n the user initiates \
+              a \"close\" on this frame.\n You must specify one of the following choices:\n \
+              \n \n DO_NOTHING_ON_CLOSE\n (defined in WindowConstants):\n Don't do anything; \
+              require the\n program to handle the operation in the windowClosing\n method \
+              of a registered WindowListener object.\n\n HIDE_ON_CLOSE\n (defined in \
+              WindowConstants):\n Automatically hide the frame after\n invoking any registered \
+              WindowListener\n objects.\n\n DISPOSE_ON_CLOSE\n (defined in WindowConstants):\n \
+              Automatically hide and dispose the \n frame after invoking any registered \
+              WindowListener\n objects.\n\n EXIT_ON_CLOSE\n (defined in JFrame):\n Exit \
+              the application using the System exit method.\n Use this only in applications.\n \
+              \n \n The value is set to HIDE_ON_CLOSE by default.";
+              Name="setDefaultCloseOperation";
+              ID=11255;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="operation";
+                ID=11256;
+                Typ="int";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Provides a hint as to whether or not newly created JFrames\n should \
+              have their Window decorations (such as borders, widgets to\n close the \
+              window, title...) provided by the current look\n and feel. If defaultLookAndFeelDecorated \
+              is true,\n the current LookAndFeel supports providing window\n decorations, \
+              and the current window manager supports undecorated\n windows, then newly \
+              created JFrames will have their\n Window decorations provided by the current \
+              LookAndFeel.\n Otherwise, newly created JFrames will have their\n Window \
+              decorations provided by the current window manager.\n \n You can get the \
+              same effect on a single JFrame by doing the following:\n \n    JFrame frame \
+              = new JFrame();\n    frame.setUndecorated(true);\n    frame.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);";
+              Name="setDefaultLookAndFeelDecorated";
+              ID=11257;
+              IsStatic=true;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="defaultLookAndFeelDecorated";
+                ID=11258;
+                Typ="boolean";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the glassPane property. \n This method is called by the constructor.";
+              Name="setGlassPane";
+              ID=11259;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="glassPane";
+                ID=11260;
+                Typ="Component";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the menubar for this frame.";
+              Name="setJMenuBar";
+              ID=11261;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="menubar";
+                ID=11262;
+                Typ="JMenuBar";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the layeredPane property.\n This method is called by the constructor.";
+              Name="setLayeredPane";
+              ID=11263;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="layeredPane";
+                ID=11264;
+                Typ="JLayeredPane";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="By default the layout of this component may not be set,\n the layout \
+              of its contentPane should be set instead.  \n For example:\n \n thisComponent.getContentPane().setLayout(new \
+              GridLayout(1, 2))\n \n An attempt to set the layout of this component will \
+              cause an\n runtime exception to be thrown.  Subclasses can disable this\n \
+              behavior.";
+              Name="setLayout";
+              ID=11265;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="manager";
+                ID=11266;
+                Typ="LayoutManager";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the rootPane property. \n This method is called by the constructor.";
+              Name="setRootPane";
+              ID=11267;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="root";
+                ID=11268;
+                Typ="JRootPane";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Determines whether calls to add and \n setLayout will cause an exception \
+              to be thrown.";
+              Name="setRootPaneCheckingEnabled";
+              ID=11269;
+              Zugriff=1;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="enabled";
+                ID=11270;
+                Typ="boolean";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Just calls paint(g).  This method was overridden to \n prevent an \
+              unnecessary call to clear the background.";
+              Name="update";
+              ID=11271;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="g";
+                ID=11272;
+                Typ="Graphics";
+              };
+            };
+          };
+          {
+            *** Klasse ***;
+            Name="JPanel";
+            ID=11273;
+            Datentyp="class";
+            IsExtern=true;
+            KomponentenId=11170;
+            FileActiveLine=-1;
+            HeaderFileActiveLine=-1;
+            IsGenerate=true;
+            Parent=-1;
+            {
+              *** Methode ***;
+              Name="JPanel";
+              ID=11279;
+              {
+                *** Parameter ***;
+                Name="layout";
+                ID=11280;
+                Typ="LayoutManager";
+              };
+              {
+                *** Parameter ***;
+                Name="isDoubleBuffered";
+                ID=11281;
+                Typ="boolean";
+              };
+            };
+            {
+              *** Methode ***;
+              Name="JPanel";
+              ID=11277;
+              {
+                *** Parameter ***;
+                Name="layout";
+                ID=11278;
+                Typ="LayoutManager";
+              };
+            };
+            {
+              *** Methode ***;
+              Name="JPanel";
+              ID=11275;
+              {
+                *** Parameter ***;
+                Name="isDoubleBuffered";
+                ID=11276;
+                Typ="boolean";
+              };
+            };
+            {
+              *** Methode ***;
+              Name="JPanel";
+              ID=11274;
+            };
+            {
+              *** Methode ***;
+              Doku="Gets the AccessibleContext associated with this JPanel. \n For JPanels, \
+              the AccessibleContext takes the form of an \n AccessibleJPanel. \n A new \
+              AccessibleJPanel instance is created if necessary.";
+              Name="getAccessibleContext";
+              ID=11282;
+              RueckgabeWert="AccessibleContext";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns the look and feel (L&F) object that renders this component.";
+              Name="getUI";
+              ID=11283;
+              RueckgabeWert="PanelUI";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns a string that specifies the name of the L&F class\n that \
+              renders this component.";
+              Name="getUIClassID";
+              ID=11284;
+              RueckgabeWert="String";
+            };
+            {
+              *** Methode ***;
+              Doku="Returns a string representation of this JPanel. This method \n is \
+              intended to be used only for debugging purposes, and the \n content and \
+              format of the returned string may vary between      \n implementations. \
+              The returned string may be empty but may not \n be null.";
+              Name="paramString";
+              ID=11285;
+              Zugriff=1;
+              RueckgabeWert="String";
+            };
+            {
+              *** Methode ***;
+              Doku="Sets the look and feel (L&F) object that renders this component.";
+              Name="setUI";
+              ID=11286;
+              RueckgabeWert="void";
+              {
+                *** Parameter ***;
+                Name="ui";
+                ID=11287;
+                Typ="PanelUI";
+              };
+            };
+            {
+              *** Methode ***;
+              Doku="Resets the UI property with a value from the current look and feel.";
+              Name="updateUI";
+              ID=11288;
+              RueckgabeWert="void";
+            };
+          };
+        };
+      };
+      {
+        *** Package ***;
+        Name="java";
+        ID=11289;
+        Zugriff=2;
+        Type=1;
+        {
+          *** Diagramm ***;
+          Name="java";
+          ID=11290;
+        };
+        {
+          *** Package ***;
+          Name="awt";
+          ID=11291;
+          Zugriff=2;
+          Type=1;
+          {
+            *** Diagramm ***;
+            Name="awt";
+            ID=11292;
+          };
+          {
+            *** Package ***;
+            Name="event";
+            ID=11293;
+            Zugriff=2;
+            Type=1;
+            {
+              *** Diagramm ***;
+              Name="event";
+              ID=11294;
+            };
+            {
+              *** Klasse ***;
+              Name="MouseListener";
+              Stereotype="Interface";
+              ID=11295;
+              Image="Interface";
+              Datentyp="interface";
+              IsExtern=true;
+              KomponentenId=11170;
+              FileName="MouseListener.java";
+              FileActiveLine=-1;
+              HeaderFileActiveLine=-1;
+              IsInterface=true;
+              IsGenerate=true;
+              Parent=-1;
+              {
+                *** Methode ***;
+                Doku="\n\nInvoked when the mouse button has been clicked (pressed\n and \
+                released) on a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+                Name="mouseClicked";
+                ID=11296;
+                RueckgabeWert="void";
+                {
+                  *** Parameter ***;
+                  Name="e";
+                  ID=11297;
+                  Typ="MouseEvent";
+                };
+              };
+              {
+                *** Methode ***;
+                Doku="\n\nInvoked when the mouse enters a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+                Name="mouseEntered";
+                ID=11298;
+                RueckgabeWert="void";
+                {
+                  *** Parameter ***;
+                  Name="e";
+                  ID=11299;
+                  Typ="MouseEvent";
+                };
+              };
+              {
+                *** Methode ***;
+                Doku="\n\nInvoked when the mouse exits a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+                Name="mouseExited";
+                ID=11300;
+                RueckgabeWert="void";
+                {
+                  *** Parameter ***;
+                  Name="e";
+                  ID=11301;
+                  Typ="MouseEvent";
+                };
+              };
+              {
+                *** Methode ***;
+                Doku="\n\nInvoked when a mouse button has been pressed on a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+                Name="mousePressed";
+                ID=11302;
+                RueckgabeWert="void";
+                {
+                  *** Parameter ***;
+                  Name="e";
+                  ID=11303;
+                  Typ="MouseEvent";
+                };
+              };
+              {
+                *** Methode ***;
+                Doku="\n\nInvoked when a mouse button has been released on a component.\n\n<DL>\n</DL>\n</DD>\n<DD><DL>\n</DL>";
+                Name="mouseReleased";
+                ID=11304;
+                RueckgabeWert="void";
+                {
+                  *** Parameter ***;
+                  Name="e";
+                  ID=11305;
+                  Typ="MouseEvent";
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\Java\\QuickTour2\\SpielFrame.java";
+      ActiveLine=-1;
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\Java\\QuickTour2\\SpielPanel.java";
+      ActiveLine=-1;
+    };
+    {
+      *** SourceFiles ***;
+      FileName="C:\\Develop\\Jumli\\wxjumli\\samples\\deutsch\\Java\\QuickTour2\\Start.java";
+      ActiveLine=-1;
+    };
+  };
+};

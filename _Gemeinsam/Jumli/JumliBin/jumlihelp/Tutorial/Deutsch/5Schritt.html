@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>Das Jumli Tutorial - Klassenbeziehungen</title>
+<meta name="author" content="JumliTeam">
+<link rel=stylesheet type="text/css" href="../../format/styles.css">
+</head>
+
+<body text="#000000" bgcolor="#FFFFFF" link="#FF0000" alink="#FF0000" vlink="#FF0000">
+<div align="center"><table width=810 border=0>
+<tr>
+    <td background="../../img/KopfImg/Tutorialkopf.jpg">
+        <h1><div align="center">Klassenbeziehungen</div></h1>
+    </td>
+</tr>
+</table></div>
+
+<div align="center"><table width=810 border=0>
+<tr>
+    <td width=150><div align="center"><a href="#ErGehoertZuMir">Beziehungen zwischen Klassen</a></div></td>
+    <td width=150><div align="center"><a href="#ExtendsOderNichtExtends">Die Extends-Beziehung</a></div></td>
+    <td width=150><div align="center"><a href="#MalEinWechsel">Richtung tauschen</a></div></td>
+    <td width=150><div align="center"><a href="#RuettelMichUndSchuettelMich">Diagrammansicht &auml;ndern</a></div></td>
+    <td width=150><div align="center"><a href="JumliTutorial_start.html">zur&uuml;ck zur Tutorial-Startseite</a></div></td>
+</tr>
+</table></div>
+<br>
+
+<div align="center"><table width=790 border=0>
+<tr>
+    <td>
+        <p>In den vorherigen Schritten haben Sie die drei <a href="../../UMLs/Deutsch/UMLKlasse.html">Klassen</a>
+        "M&auml;dchen", "PipiLangstrumpf" und "Ausgabe" erstellt.
+        Allerdings gibt es zwischen diesen <a href="../../UMLs/Deutsch/UMLKlasse.html">Klassen</a> noch keinerlei Verbindung.
+        Diesem Problem wird hier Abhilfe verschafft.</p>
+    </td>
+</tr>
+</table></div>
+
+<div align="center"><table width=790 border=0>
+<tr>
+    <td>
+        <br>
+        <br>
+        <h3><a name="ErGehoertZuMir">Beziehungen zwischen Klassen</a></h3>
+    </td>
+</tr>
+
+<tr>
+    <td width="300"><img src="../../img/TutorialImg/Vererbung_ziehen.gif" width="132" height="258" border="0" alt=""></td>
+    <td valign= top>
+        Ohne Zweifel ist "PipiLangstrumpf" ein "M&auml;dchen". Deshalb k&ouml;nnen wir zwischen ihr und der
+        "M&auml;dchen"-Klasse eine Verbindung herstellen. <br>
+        Diese "Ist-ein" Verbindung nennt man in der objektorientieren Programmierung
+        <a href="../../UMLs/Deutsch/UMLVererbung.html">"Vererbung"</a>. Sie wird ertellt, indem wir auf den
+        <a href="../../Buttons/Deutsch/UML_Buttons.html#ButtonVererbung">Vererbungs-Button</a> klicken und im Anschluss
+        von der "PipiLangstrumpf"-Klasse zur "M&auml;dchen"-Klasse mit gedr&uuml;ckter linker Maustaste ziehen.
+        Dabei sieht man ein Linie, die anzeigt, wo man sich gerade mit der Maus befindet.
+        Wichtig ist, dass die Linie beide <a href="../../UMLs/Deutsch/UMLKlasse.html">Klassen</a> ber&uuml;hrt.
+        Nun muss man nur noch die linke Maustaste loslassen und es erscheint ein Pfeil an dem "extends" steht. <br>
+        <br><br>
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160<a href="5Schritt.html"><img src="../../img/NaviImg/PfeilOben1.gif" width="41" height="40" border="0" alt="... wieder nach oben"></a>
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160
+        <a href="#ExtendsOderNichtExtends"><img src="../../img/NaviImg/PfeilWeiter1.gif" width="41" height="40" border="0" alt="...verstanden, weiter geht's"></a>
+    </td>
+</tr>
+</p>
+
+<tr>
+    <td>
+        <br>
+        <br>
+        <h3><a name="ExtendsOderNichtExtends">Die Extends-Beziehung</a></h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top" colspan=2>
+        "Extends" bedeutet, dass "PipiLangstrumpf" ein "M&auml;dchen" ist.
+        Im sp&auml;teren Sourcecode &auml;u&szlig;ert sich dies durch die Zeile "PipiLangstrumpf extends M&auml;dchen".
+        Bei der Generierung wird diese Zeile automatisch erzeugt, das hei&szlig;t, man braucht sie nicht selbst einzugeben.<br>
+        <br><br>
+
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160<a href="5Schritt.html"><img  src="../../img/NaviImg/PfeilOben1.gif" width="41" height="40" border="0" alt="... wieder nach oben"></a>
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160
+        <a href="#MalEinWechsel"><img src="../../img/NaviImg/PfeilWeiter1.gif" width="41" height="40" border="0" alt="...verstanden, weiter geht's"></a>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <br>
+        <br>
+        <h3><a name="MalEinWechsel">Richtung tauschen</a></h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top"><img src="../../img/TutorialImg/Vererbung_Dialog.gif" width="197" height="235" alt=""></td>
+    <td valign="top">
+        M&ouml;chte man den Vererbungs-Pfeil in die andere Richtung zeigen lassen, ist dies auch kein Problem.
+        Wenn nicht "PipiLangstrumpf" ein "M&auml;dchen" w&auml;re, sondern alle "M&auml;dchen" w&auml;ren
+        "PipiLangstrumpf", k&ouml;nnten wir durch einen Doppelklick auf den Pfeil den Vererbungs-Dialog aufrufen.
+        Dort klickt man auf "Richtung tauschen" sowie "Ok" und die Richtung wird getauscht.  <br>
+        <br><br>
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160  <a href="5Schritt.html"><img  src="../../img/NaviImg/PfeilOben1.gif" width="41" height="40" border="0" alt="... wieder nach oben"></a>
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160
+        <a href="#RuettelMichUndSchuettelMich"><img src="../../img/NaviImg/PfeilWeiter1.gif" width="41" height="40" border="0" alt="...verstanden, weiter geht's"></a>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <br>
+        <br>
+        <h3><a name="RuettelMichUndSchuettelMich">Diagrammansicht &auml;ndern</a></h3>
+    </td>
+</tr>
+
+<tr>
+    <td valign="top" colspan=2>
+        Das Aussehen unseres Diagrammes k&ouml;nnen wir ebenfalls ver&auml;ndern.<br>
+        Die Farben der <a href="../../UMLs/Deutsch/UMLKlasse.html">Klassen</a> und aller anderen Diagramm-Komponenten
+        &auml;ndert man, indem man im Men&uuml;punkt "Optionen" die "Jumli-Optionen" ausw&auml;hlt und f&uuml;r jede
+        Komponente die entsprechende Farbe aussucht.<br>
+        Die Anordnung der <a href="../../UMLs/Deutsch/UMLKlasse.html">Klassen</a>
+        geschieht mittels "drag&drop". Dieser Begriff bedeutet,
+        dass man eine <a href="../../UMLs/Deutsch/UMLKlasse.html">Klasse</a> mit der linken Maustaste anklickt,
+        "festh&auml;lt" und an eine andere Stelle zieht. Dort l&auml;sst man sie durch "Loslassen" der linken Maustaste
+        "fallen". Mit diesen Funktionen l&auml;sst sich das Diagramm an die Bed&uuml;rfnisse jedes Nutzers anpassen.
+        <br>
+        <br><br>
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160&#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160<a href="5Schritt.html"><img  src="../../img/NaviImg/PfeilOben1.gif" width="41" height="40" border="0" alt="... wieder nach oben"></a>
+        &#160 &#160 &#160 &#160 &#160 &#160 &#160 &#160
+        <a href="6Schritt.html"><img src="../../img/NaviImg/PfeilWeiter1.gif" width="41" height="40" border="0" alt="...verstanden, weiter geht's"></a>
+    </td>
+</tr>
+
+
+</table></div>
+</body>
+</html>
