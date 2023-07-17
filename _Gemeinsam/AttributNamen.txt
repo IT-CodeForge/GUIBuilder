@@ -1,0 +1,3 @@
+"name": Name des Objekts,
+"text": Text der auf dem Objekt angezeigt wird,
+"position": Position des Objektes (absolut)
