@@ -1,3 +1,4 @@
-"name": Name des Objekts,
-"text": Text der auf dem Objekt angezeigt wird,
-"position": Position des Objektes (absolut)
+"name": str | Name des Objekts,
+"text": str | Text der auf dem Objekt angezeigt wird,
+"position": [int, int] | Position des Objektes (absolut),
+"size": [int, int] | Größe des Objektes,
