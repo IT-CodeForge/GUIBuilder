@@ -1,0 +1,6 @@
+17.07.2023:
+* Objekte können Attribute haben.
+* Objekte können hinzugefügt und entfernt werden.
+* Objekte können ausgelesen werden.
+* Button-Objekt existiert.
+
