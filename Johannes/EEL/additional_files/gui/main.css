@@ -1,0 +1,57 @@
+:root
+{
+    --menubar-elements-height: 3rem;
+
+    --element-attributes-width: 10rem;
+}
+
+body
+{
+    background-color: #f0f0f0;
+}
+
+#menubar-elements
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--menubar-elements-height);
+    outline: 3px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.menubar-element
+{
+    cursor: grab;
+}
+
+#element-attributes
+{
+    position: absolute;
+    top: var(--menubar-elements-height);
+    left: 0;
+    width: var(--element-attributes-width);
+    height: calc(100% - var(--menubar-elements-height));
+    outline: 3px solid yellow;
+}
+
+#gui-elements
+{
+    position: absolute;
+    top: 3rem;
+    left: var(--element-attributes-width);
+    width: calc(100% - var(--element-attributes-width));
+    height: calc(100% - var(--menubar-elements-height));
+    outline: 3px solid red;
+}
+
+.gui-element
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    user-select: none;
+}
