@@ -1,8 +1,10 @@
 from intermediary.intermediary import Intermediary
 from intermediary.intermediary import ObjectEnum
+from intermediary.json import JSON
 
 if __name__ == "__main__":
     intermediary: Intermediary = Intermediary()
+    json: JSON = JSON(intermediary)
 
     # The frontend now adds objects...
     button_1_id = intermediary.createObject(ObjectEnum.BUTTON)
@@ -19,8 +21,5 @@ if __name__ == "__main__":
     button_2_object.setAttribute("position", [25, 0])
     button_2_object.setAttribute("size", [20, 20])
 
-    # Generator starts here.
-    objects: list[dict[str, any]] = intermediary.getObjects()
-
-    for object in objects:
-        print(object)
+    json.save("test")
+    json.load("test")

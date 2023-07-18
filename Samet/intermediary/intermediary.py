@@ -8,15 +8,19 @@ class ObjectEnum(Enum):
 
 class Intermediary:
     def __init__(self) -> None:
-        self.__mapping: dict[ObjectEnum, type] = {
+        self.__enum_mapping: dict[ObjectEnum, type] = {
             ObjectEnum.BUTTON: ButtonObject
+        }
+
+        self.__string_mapping: dict[str, type] = {
+            "button": ButtonObject
         }
 
         self.__objects: list[GenericObject] = []
         self.__count: int = 0
 
     def createObject(self, type: ObjectEnum) -> int:
-        object_type: type = self.__mapping.get(type)
+        object_type: type = self.__enum_mapping.get(type)
 
         if object_type == None:
             print(f"Error: An object mapping called {type} could not be found.")
@@ -45,6 +49,21 @@ class Intermediary:
 
         print(f"Error: An object with the ID {id} could not be retrieved.")
 
+    def setObjects(self, objects: list[dict[str, any]]) -> None:
+        # Clear all objects.
+        self.__objects = []
+
+        for object in objects:
+            object_type: type = self.__string_mapping.get(object["type"])
+            object_id: int = object["id"]
+            new_object: GenericObject = object_type(object_id)
+
+            self.__objects.append(new_object)
+
+            # Apply all available attributes to the object.
+            for attribute in object:
+                new_object.setAttribute(attribute, object[attribute])
+                
     def getObjects(self) -> list[dict[str, any]]:
         objects: list[dict[str, any]] = []
 
@@ -52,12 +71,14 @@ class Intermediary:
             attributes: list[ObjectAttribute] = object.getAttributes()
             dictionary: dict[str, any] = {}
 
+            # Create a dictionary containing the object's attributes.
             for attribute in attributes:
                 name: str = attribute.getName()
                 value: any = attribute.getValue()
 
                 dictionary[name] = value
 
+            # Append the object's attributes to the list.
             objects.append(dictionary)
             
         return objects

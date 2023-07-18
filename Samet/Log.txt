@@ -4,3 +4,6 @@
 * Objekte können ausgelesen werden.
 * Button-Objekt existiert.
 
+18.07.2023
+* JSON speichern und laden.
+* Standardwerte für Objekte.
