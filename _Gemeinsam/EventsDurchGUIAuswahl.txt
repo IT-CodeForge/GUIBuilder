@@ -1,0 +1,16 @@
+Essenziel:
+
+eventKeyUp
+eventKeyDown
+eventMouseMove
+eventMouseClick
+eventPaint
+
+Addon:
+
+eventShow
+eventClose
+eventResize
+eventDestroy
+
+(eventClient)
