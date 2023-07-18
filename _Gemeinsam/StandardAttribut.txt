@@ -1,0 +1,7 @@
+type: "button":
+	id
+	name
+	text
+	position
+	size
+	color
