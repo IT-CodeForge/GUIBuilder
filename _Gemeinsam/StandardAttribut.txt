@@ -1,3 +1,10 @@
+type: "window":
+	id
+	name
+	position
+	size
+	color
+
 type: "button":
 	id
 	name
