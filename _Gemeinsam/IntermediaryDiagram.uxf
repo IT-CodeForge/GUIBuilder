@@ -98,10 +98,10 @@ m1=0..n</panel_attributes>
 -name: str
 -value: any
 --
-setName(name: str): None
-getName(): str
-setValue(value: any): None
-getValue(): any</panel_attributes>
++setName(name: str): None
++getName(): str
++setValue(value: any): None
++getValue(): any</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
