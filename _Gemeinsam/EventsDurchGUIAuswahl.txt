@@ -1,5 +1,6 @@
 Essenziel:
 
+eventTimer
 eventKeyUp
 eventKeyDown
 eventMouseMove
