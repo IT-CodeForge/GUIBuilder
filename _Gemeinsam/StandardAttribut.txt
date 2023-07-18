@@ -1,6 +1,7 @@
 type: "window":
 	id
 	name
+	text
 	position
 	size
 	color

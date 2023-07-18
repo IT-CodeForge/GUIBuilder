@@ -1,18 +1,22 @@
 from enum import Enum
 from intermediary.object.object_attribute import ObjectAttribute
 from intermediary.object.generic_object import GenericObject
+from intermediary.object.window_object import WindowObject
 from intermediary.object.button_object import ButtonObject
 
 class ObjectEnum(Enum):
-    BUTTON = 0
+    WINDOW = 0
+    BUTTON = 1
 
 class Intermediary:
     def __init__(self) -> None:
         self.__enum_mapping: dict[ObjectEnum, type] = {
+            ObjectEnum.WINDOW: WindowObject,
             ObjectEnum.BUTTON: ButtonObject
         }
 
         self.__string_mapping: dict[str, type] = {
+            "window": WindowObject,
             "button": ButtonObject
         }
 

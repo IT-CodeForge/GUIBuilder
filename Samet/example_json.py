@@ -7,6 +7,8 @@ if __name__ == "__main__":
     json: JSON = JSON(intermediary)
 
     # The frontend now adds objects...
+    window_id = intermediary.createObject(ObjectEnum.WINDOW)
+
     button_1_id = intermediary.createObject(ObjectEnum.BUTTON)
     button_1_object = intermediary.getObject(button_1_id)
     button_1_object.setAttribute("name", "Button1")
