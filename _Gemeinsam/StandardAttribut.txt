@@ -4,4 +4,20 @@ type: "button":
 	text
 	position
 	size
-	color //nicht möglich in Hallmann
+	color // nicht möglich in Hallmann
+
+type: "label":
+	id
+	name
+	text
+	position
+	size
+	color // nicht möglich in Hallmann
+	
+type: "edit":
+	id
+	name
+	text
+	position
+	size
+	color // nicht möglich in Hallmann
