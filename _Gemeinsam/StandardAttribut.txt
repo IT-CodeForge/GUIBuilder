@@ -4,4 +4,4 @@ type: "button":
 	text
 	position
 	size
-	color
+	color //nicht möglich in Hallmann
