@@ -135,8 +135,8 @@ class Intermediary:
 
     def loadEvents(self, events: dict[str, bool]) -> None:
         self.__timer_enabled = events["timer_enabled"]
-        self.__timer_enabled = events["key_up_enabled"]
-        self.__timer_enabled = events["key_down_enabled"]
-        self.__timer_enabled = events["mouse_move_enabled"]
-        self.__timer_enabled = events["mouse_click_enabled"]
-        self.__timer_enabled = events["paint_enabled"]
+        self.__key_up_enabled = events["key_up_enabled"]
+        self.__key_down_enabled = events["key_down_enabled"]
+        self.__mouse_move_enabled = events["mouse_move_enabled"]
+        self.__mouse_click_enabled = events["mouse_click_enabled"]
+        self.__paint_enabled = events["paint_enabled"]
