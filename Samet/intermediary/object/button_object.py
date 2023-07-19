@@ -9,4 +9,5 @@ class ButtonObject(GenericObject):
         self.setAttribute("text", "Button")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [20, 20])
-        self.setAttribute("color", [127, 127, 127])
+        self.setAttribute("textColor", [0, 0, 0])
+        self.setAttribute("backgroundColor", [127, 127, 127])
