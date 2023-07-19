@@ -133,16 +133,16 @@ class Intermediary:
             self.__paint_enabled = False
 
     def getEvents(self) -> dict[str, bool]:
-        dictionary: dict[str, bool] = {}
+        events: dict[str, bool] = {}
 
-        dictionary["timer_enabled"] = self.__timer_enabled
-        dictionary["keyup_enabled"] = self.__key_up_enabled
-        dictionary["keydown_enabled"] = self.__key_down_enabled
-        dictionary["mousemove_enabled"] = self.__mouse_move_enabled
-        dictionary["mouseclick_enabled"] = self.__mouse_click_enabled
-        dictionary["paint_enabled"] = self.__paint_enabled
+        events["timer_enabled"] = self.__timer_enabled
+        events["keyup_enabled"] = self.__key_up_enabled
+        events["keydown_enabled"] = self.__key_down_enabled
+        events["mousemove_enabled"] = self.__mouse_move_enabled
+        events["mouseclick_enabled"] = self.__mouse_click_enabled
+        events["paint_enabled"] = self.__paint_enabled
 
-        return dictionary
+        return events
 
     def loadEvents(self, events: dict[str, bool]) -> None:
         self.__timer_enabled = events["timer_enabled"]
