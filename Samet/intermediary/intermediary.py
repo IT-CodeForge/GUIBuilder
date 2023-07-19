@@ -83,8 +83,11 @@ class Intermediary:
             # Apply all available attributes to the object.
             for attribute in object:
                 new_object.setAttribute(attribute, object[attribute])
-                
-    def getObjects(self) -> list[dict[str, any]]:
+    
+    def getObjects(self) -> list[GenericObject]:
+        return self.__objects
+
+    def getObjectsAsDictionary(self) -> list[dict[str, any]]:
         objects: list[dict[str, any]] = []
 
         for object in self.__objects:
