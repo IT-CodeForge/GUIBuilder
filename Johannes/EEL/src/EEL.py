@@ -9,16 +9,19 @@ intermediary = Intermediary()
 @eel.expose
 def load_gui_elements() -> list[dict[str, Any]]:
     global intermediary
-    t_intermediary = intermediary
-    t_data = t_intermediary.getObjects()
-    print(t_data)
-    return t_data
+    t_objekts = []
+    for o in intermediary.getObjects():
+        t_objekts.append(o.getAttributesAsDictionary())
+    print(intermediary.getObjects())
+    print(t_objekts)
+    return t_objekts
 
 
 
 @eel.expose
 def create_btn() -> int:
-    return intermediary.createObject(ObjectEnum.BUTTON)
+    t_id = intermediary.createObject(ObjectEnum.BUTTON)
+    return intermediary.getObject(t_id).getAttributesAsDictionary()
 
 
 
@@ -65,7 +68,7 @@ def generateTestData():
 
 
 if __name__ == "__main__":
-    generateTestData()
+    #generateTestData() NOTE
     eel.init('additional_files\\gui')
     eel.brw.set_path('chrome', 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe') #NOTE
-    eel.start('main.html', size=(320, 120))
+    eel.start('main.html', size=(320, 120), mode='firefox')

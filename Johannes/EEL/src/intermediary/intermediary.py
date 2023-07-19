@@ -8,6 +8,14 @@ class ObjectEnum(Enum):
     WINDOW = 0
     BUTTON = 1
 
+class EventEnum(Enum):
+    TIMER = 0
+    KEY_UP = 1
+    KEY_DOWN = 2
+    MOUSE_MOVE = 3
+    MOUSE_CLICK = 4
+    PAINT = 5
+
 class Intermediary:
     def __init__(self) -> None:
         self.__enum_mapping: dict[ObjectEnum, type] = {
@@ -22,6 +30,13 @@ class Intermediary:
 
         self.__objects: list[GenericObject] = []
         self.__count: int = 0
+
+        self.__timer_enabled = False
+        self.__key_up_enabled = False
+        self.__key_down_enabled = False
+        self.__mouse_move_enabled = False
+        self.__mouse_click_enabled = False
+        self.__paint_enabled = False
 
     def createObject(self, type: ObjectEnum) -> int:
         object_type: type = self.__enum_mapping.get(type)
@@ -53,9 +68,10 @@ class Intermediary:
 
         print(f"Error: An object with the ID {id} could not be retrieved.")
 
-    def setObjects(self, objects: list[dict[str, any]]) -> None:
+    def loadObjects(self, objects: list[dict[str, any]]) -> None:
         # Clear all objects.
         self.__objects = []
+        self.__count = 0
 
         for object in objects:
             object_type: type = self.__string_mapping.get(object["type"])
@@ -67,22 +83,63 @@ class Intermediary:
             # Apply all available attributes to the object.
             for attribute in object:
                 new_object.setAttribute(attribute, object[attribute])
-                
-    def getObjects(self) -> list[dict[str, any]]:
+    
+    def getObjects(self) -> list[GenericObject]:
+        return self.__objects
+
+    def getObjectsAsDictionaryList(self) -> list[dict[str, any]]:
         objects: list[dict[str, any]] = []
 
         for object in self.__objects:
-            attributes: list[ObjectAttribute] = object.getAttributes()
-            dictionary: dict[str, any] = {}
-
-            # Create a dictionary containing the object's attributes.
-            for attribute in attributes:
-                name: str = attribute.getName()
-                value: any = attribute.getValue()
-
-                dictionary[name] = value
-
             # Append the object's attributes to the list.
-            objects.append(dictionary)
+            objects.append(object.getAttributesAsDictionary())
             
         return objects
+
+    def enableEvent(self, type: EventEnum) -> None:
+        if type == EventEnum.Timer:
+            self.__timer_enabled = True
+        elif type == EventEnum.KeyUp:
+            self.__key_up_enabled = True
+        elif type == EventEnum.KeyDown:
+            self.__key_down_enabled = True
+        elif type == EventEnum.MouseMove:
+            self.__mouse_move_enabled = True
+        elif type == EventEnum.MouseClick:
+            self.__mouse_click_enabled = True
+        elif type == EventEnum.Paint:
+            self.__paint_enabled = True
+
+    def disableEvent(self, type: EventEnum) -> None:
+        if type == EventEnum.Timer:
+            self.__timer_enabled = False
+        elif type == EventEnum.KeyUp:
+            self.__key_up_enabled = False
+        elif type == EventEnum.KeyDown:
+            self.__key_down_enabled = False
+        elif type == EventEnum.MouseMove:
+            self.__mouse_move_enabled = False
+        elif type == EventEnum.MouseClick:
+            self.__mouse_click_enabled = False
+        elif type == EventEnum.Paint:
+            self.__paint_enabled = False
+
+    def getEvents(self) -> dict[str, bool]:
+        events: dict[str, bool] = {}
+
+        events["timer_enabled"] = self.__timer_enabled
+        events["key_up_enabled"] = self.__key_up_enabled
+        events["key_down_enabled"] = self.__key_down_enabled
+        events["mouse_move_enabled"] = self.__mouse_move_enabled
+        events["mouse_click_enabled"] = self.__mouse_click_enabled
+        events["paint_enabled"] = self.__paint_enabled
+
+        return events
+
+    def loadEvents(self, events: dict[str, bool]) -> None:
+        self.__timer_enabled = events["timer_enabled"]
+        self.__key_up_enabled = events["key_up_enabled"]
+        self.__key_down_enabled = events["key_down_enabled"]
+        self.__mouse_move_enabled = events["mouse_move_enabled"]
+        self.__mouse_click_enabled = events["mouse_click_enabled"]
+        self.__paint_enabled = events["paint_enabled"]

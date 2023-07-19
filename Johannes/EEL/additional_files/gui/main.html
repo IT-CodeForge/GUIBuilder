@@ -12,6 +12,10 @@
       let random_filename = await eel.funct()();
     }
   </script>
+
+  <div id="copy-elements" style="display: none;">
+    <button id="copy-element-btn" style="position: absolute; transform: translate(0px, 0px);">Button</button>
+  </div>
 </head>
 
 <body>
@@ -22,20 +26,25 @@
     <p class="center">Eigenschaften:</p>
     <div id="element-attributes-inner" style="visibility: hidden;">
       <span>ID:</span>
-      <span id="element-attributes-id"></span>
+      <span id="element-attribut-id"></span>
       <br>
       <span>Name:</span>
-      <input id="element-attributes-name" type="text" onchange="attribut_setname()">
+      <input id="element-attribut-name" type="text" onchange="attribut_setname()">
       <br>
-      <span>Titel:</span>
-      <input id="element-attributes-titel" type="text" oninput="attribut_settitel()">
+      <span>Text:</span>
+      <input id="element-attribut-text" type="text" oninput="attribut_settext()">
+      <br>
+      <span>Postition:</span>
+      <input id="element-attribut-position-x" type="text" style="width: 2rem;" onchange="attribut_setpos_x()">
+      <input id="element-attribut-position-y" type="text" style="width: 2rem;" onchange="attribut_setpos_y()">
+      <br>
+      <span>Size:</span>
+      <input id="element-attribut-size-x" type="text" style="width: 2rem;" onchange="attribut_setsize_x()">
+      <input id="element-attribut-size-y" type="text" style="width: 2rem;" onchange="attribut_setsize_y()">
       <br>
     </div>
   </div>
   <div class="nobreak" id="gui-elements">
-    <!--<div class="gui-element" style="width:100px; background-color:red">test</div>
-        <div class="gui-element" style="width:100px; background-color:red">test</div>
-        <button class="gui_element" style="background-color:red">test</button>!-->
   </div>
 </body>
 

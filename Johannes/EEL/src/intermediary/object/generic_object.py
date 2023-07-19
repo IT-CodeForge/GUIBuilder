@@ -46,4 +46,16 @@ class GenericObject:
 
     def getAttributes(self) -> list[ObjectAttribute]:
         return self.__attributes
-                
+        
+    def getAttributesAsDictionary(self) -> dict[str, any]:
+        attributes: list[ObjectAttribute] = self.getAttributes()
+        dictionary: dict[str, any] = {}
+
+        # Create a dictionary containing the object's attributes.
+        for attribute in attributes:
+            name: str = attribute.getName()
+            value: any = attribute.getValue()
+
+            dictionary[name] = value
+        
+        return dictionary

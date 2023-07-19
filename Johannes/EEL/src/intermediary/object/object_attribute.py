@@ -3,6 +3,9 @@ class ObjectAttribute:
         self.__name: str = name
         self.__value: any = value
 
+    def __str__(self):
+        return f"name: {self.__name}, value: {self.__value}"
+
     def setName(self, name: str) -> None:
         self.__name = name
 

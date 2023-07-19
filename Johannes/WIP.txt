@@ -1,6 +1,10 @@
-attribute
-Fenstergröße
+Attributes
+delete element
+save/load
 Resize
-JSON
 Events
-portable browser
+Fenstergröße
+portable Browser
+NOTE
+logging
+Kommentare
