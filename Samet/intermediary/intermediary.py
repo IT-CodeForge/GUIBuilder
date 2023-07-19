@@ -9,12 +9,12 @@ class ObjectEnum(Enum):
     BUTTON = 1
 
 class EventEnum(Enum):
-    Timer = 0
-    KeyUp = 1
-    KeyDown = 2
-    MouseMove = 3
-    MouseClick = 4
-    Paint = 5
+    TIMER = 0
+    KEY_UP = 1
+    KEY_DOWN = 2
+    MOUSE_MOVE = 3
+    MOUSE_CLICK = 4
+    PAINT = 5
 
 class Intermediary:
     def __init__(self) -> None:
@@ -96,7 +96,7 @@ class Intermediary:
             
         return objects
 
-    def setEvent(self, type: EventEnum) -> None:
+    def enableEvent(self, type: EventEnum) -> None:
         if type == EventEnum.Timer:
             self.__timer_enabled = True
         elif type == EventEnum.KeyUp:
@@ -110,7 +110,7 @@ class Intermediary:
         elif type == EventEnum.Paint:
             self.__paint_enabled = True
 
-    def clearEvent(self, type: EventEnum) -> None:
+    def disableEvent(self, type: EventEnum) -> None:
         if type == EventEnum.Timer:
             self.__timer_enabled = False
         elif type == EventEnum.KeyUp:
