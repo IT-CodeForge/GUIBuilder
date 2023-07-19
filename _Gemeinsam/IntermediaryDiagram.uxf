@@ -7,7 +7,7 @@
       <x>570</x>
       <y>550</y>
       <w>360</w>
-      <h>240</h>
+      <h>260</h>
     </coordinates>
     <panel_attributes>Intermediary
 --
@@ -20,7 +20,8 @@
 +removeObject(id: int): None
 +getObject(id: int): GenericObject
 +loadObjects(objects: list[dict[str, any]]): None
-+getObjects(): list[dict[str, any]]
++getObjects(): list[GenericObject]
++getObjectsAsDictionaryList(): list[dict[str, any]]
 +setEvent(type: EventEnum): None
 +clearEvent(type: EventEnum): None
 +getEvents(): dict[str, bool]
