@@ -16,6 +16,8 @@ class GenericObject:
         if len(self.__attributes) <= 0:
             print("Error: Object does not have any attributes.")
             return
+
+        # TODO: Error handling for invalid values.
         
         for attribute in self.__attributes:
             # If the attribute already exists, set its value.

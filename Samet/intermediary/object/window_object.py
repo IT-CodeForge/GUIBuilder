@@ -9,4 +9,4 @@ class WindowObject(GenericObject):
         self.setAttribute("name", "Window")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [300, 300])
-        self.setAttribute("color", [127, 127, 127])
+        self.setAttribute("backgroundColor", [127, 127, 127])

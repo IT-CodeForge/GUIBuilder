@@ -30,4 +30,3 @@ class JSON:
 
         with open(f"{name}_events.json", "w") as file:
             file.write(json.dumps(events, indent = 4))
-        
