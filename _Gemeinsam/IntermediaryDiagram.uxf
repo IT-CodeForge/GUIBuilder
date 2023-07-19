@@ -22,8 +22,8 @@
 +loadObjects(objects: list[dict[str, any]]): None
 +getObjects(): list[GenericObject]
 +getObjectsAsDictionaryList(): list[dict[str, any]]
-+setEvent(type: EventEnum): None
-+clearEvent(type: EventEnum): None
++enableEvent(type: EventEnum): None
++disableEvent(type: EventEnum): None
 +getEvents(): dict[str, bool]
 +loadEvents(events: dict[str, bool]): None</panel_attributes>
     <additional_attributes/>

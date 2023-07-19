@@ -33,3 +33,4 @@ type: "edit":
 	size
 	backgroundColor // nicht möglich in Hallmann
 	textColor // nicht möglich in Hallmann
+	multipleLines
