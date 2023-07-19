@@ -87,7 +87,7 @@ class Intermediary:
     def getObjects(self) -> list[GenericObject]:
         return self.__objects
 
-    def getObjectsAsDictionary(self) -> list[dict[str, any]]:
+    def getObjectsAsDictionaryList(self) -> list[dict[str, any]]:
         objects: list[dict[str, any]] = []
 
         for object in self.__objects:
