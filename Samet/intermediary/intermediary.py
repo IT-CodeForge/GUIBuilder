@@ -88,18 +88,8 @@ class Intermediary:
         objects: list[dict[str, any]] = []
 
         for object in self.__objects:
-            attributes: list[ObjectAttribute] = object.getAttributes()
-            dictionary: dict[str, any] = {}
-
-            # Create a dictionary containing the object's attributes.
-            for attribute in attributes:
-                name: str = attribute.getName()
-                value: any = attribute.getValue()
-
-                dictionary[name] = value
-
             # Append the object's attributes to the list.
-            objects.append(dictionary)
+            objects.append(object.getAttributesAsDictionary())
             
         return objects
 
