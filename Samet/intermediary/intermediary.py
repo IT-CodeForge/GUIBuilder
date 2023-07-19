@@ -1,5 +1,4 @@
 from enum import Enum
-from multiprocessing import Event
 from intermediary.object.object_attribute import ObjectAttribute
 from intermediary.object.generic_object import GenericObject
 from intermediary.object.window_object import WindowObject
