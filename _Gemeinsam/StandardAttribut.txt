@@ -4,7 +4,8 @@ type: "window":
 	text
 	position
 	size
-	color
+	backgroundColor // nicht möglich in Hallmann
+	textColor // nicht möglich in Hallmann
 
 type: "button":
 	id
@@ -12,7 +13,8 @@ type: "button":
 	text
 	position
 	size
-	color // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
+	textColor // nicht möglich in Hallmann
 
 type: "label":
 	id
@@ -20,7 +22,8 @@ type: "label":
 	text
 	position
 	size
-	color // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
+	textColor // nicht möglich in Hallmann
 	
 type: "edit":
 	id
@@ -28,4 +31,5 @@ type: "edit":
 	text
 	position
 	size
-	color // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
+	textColor // nicht möglich in Hallmann
