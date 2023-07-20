@@ -108,14 +108,6 @@ class Generator:
                 #WIP add check for event types once implemented
                 ret_str += "void GUI::event_pressed_" + object["name"] + "(int event)\n{\n}\n\n"
         
-        loop_content = ""
-        start = ret_str.find("void GUI::loop()")
-        if start != -1:
-            loop_content = self._get_method_contents(ret_str[start:])[0][0].lstrip("{\n").rstrip("}\n")
-            end   = self._get_method_contents(ret_str[start:])[0][2] + start + 2
-            ret_str = ret_str.replace(ret_str[start:end], "")
-        ret_str += "void GUI::loop()\n{\n" + loop_content + "}\n\n"
-        
         return ret_str
     
 
