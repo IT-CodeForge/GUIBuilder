@@ -47,7 +47,7 @@ class Generator:
             if object["type"] == "window":
                 continue
             ret_str += self.offset + self.type_translation[object["type"]] + "* " + object["name"] + ";\n"
-        ret_str += 'public:\n  GUI();\n  void loop();\n'
+        ret_str += 'public:\n  GUI();\n'
         ret_str += '  void eventButton(TGWButton* einButton, int event);\n'
         ret_str += 'private:\n'
         for object in objects:
@@ -88,7 +88,6 @@ class Generator:
             start_index = temp_str.find("void GUI::event_")
             end_index   = self._get_method_contents(temp_str[start_index:])[0][2]
             event_name  = temp_str[start_index + 24:temp_str.find("(", start_index)]
-            print(event_name)
             is_in_list   = False
             for object in objects:
                 if object["type"] == "window":
