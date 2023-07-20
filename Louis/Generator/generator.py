@@ -1,5 +1,4 @@
-#import intermediary
-
+import os.path
 
 class Generator:
     def __init__(self) -> None:
@@ -15,26 +14,22 @@ class Generator:
 
 
 
-    def initialize(self):
-        try:
-            self.read_data(self.gui_h)
-            self.read_data(self.gui_cpp)
-            self.read_data(self.event_cpp)
-        except:
-            self.write_data(self.gui_h, "")
-            self.write_data(self.gui_cpp, "")
-            self.write_data(self.event_cpp, "")
-    
-    def update_files(self, objects: list[dict[str, any]]):
-        self.write_data(self.gui_h, self.generate_h("GUI.h", objects, "TGWMainWindow.h"))
-        self.write_data(self.gui_cpp, self.generate_cpp(objects))
-        self.write_data(self.event_cpp, self.generate_cpp_user(objects))
+    def write_files(self, path: str, objects: list[dict[str, any]]):
+        if not os.path.exists(path + self.gui_h):
+            self.__write_data(path + self.gui_h, "")
+        if not os.path.exists(path + self.gui_cpp):
+            self.__write_data(path + self.gui_cpp, "")
+        if not os.path.exists(path + self.event_cpp):
+            self.__write_data(path + self.event_cpp, "")
+        self.__write_data(path + self.gui_h, self.__generate_h("GUI.h", objects, "TGWMainWindow.h"))
+        self.__write_data(path + self.gui_cpp, self.__generate_cpp(objects))
+        self.__write_data(path + self.event_cpp, self.__generate_cpp_user(objects))
     
 
 
 
 
-    def generate_h(self, className: str, objects: list[dict[str, any]], inheritance: str = '') -> str:
+    def __generate_h(self, className: str, objects: list[dict[str, any]], inheritance: str = '') -> str:
         ret_str  = '#ifndef _' + className[:className.find('.')] + '_h_\n'
         ret_str += '#define _' + className[:className.find('.')] + '_h_\n'
         ret_str += '#include "TGWMainWindow.h"\n'
@@ -53,40 +48,44 @@ class Generator:
         for object in objects:
             if object["type"] == "window":
                 continue
-            #WIP need to add check for Type of event once implemented
-            ret_str += "  void event_pressed_" + object["name"] + "(int event);\n"
+            if object["eventPressed"]:
+                ret_str += "  void event_pressed_" + object["name"] + "(int event);\n"
+            if object["eventHovered"]:
+                ret_str += "  void event_hovered_" + object["name"] + "();\n"
+            if object["eventHovered"]:
+                ret_str += "  void event_changed_" + object["name"] + "();\n"
         ret_str += '};\n\n#endif'
         return ret_str
     
-    def generate_cpp(self, objects: list[dict[str, any]]) -> str:
-        ret_str  = '#include "GUI.h"\n#include "TGW_AllClassDefinitions.h"\n\n'
+    def __generate_cpp(self, objects: list[dict[str, any]]) -> str:
+        ret_str  = '#include "GUI.h"\n#include "TGW_AllClassDefinitions.h"\n#include "TGWTimer"\n\n'
         for object in objects:
             if object["type"] == "window":
                 ret_str += '\nGUI::GUI()\n  :TGWMainWindow('
                 ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
                 ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ", "
                 ret_str += '"' + str(object["text"]) + '", '
-                ret_str += "0x" + self._hex_color_converter(object["color"][0]) + self._hex_color_converter(object["color"][1])+ self._hex_color_converter(object["color"][2]) + ')\n{\n'
+                ret_str += "0x" + self.__hex_color_converter(object["color"][0]) + self.__hex_color_converter(object["color"][1])+ self.__hex_color_converter(object["color"][2]) + ')\n{\n'
                 break
         for object in objects:
             if object["type"] == "window":
                 continue
-            ret_str += "  " + object["name"] + " = " + self._generate_cpp_object(object)
+            ret_str += "  " + object["name"] + " = " + self.__generate_cpp_object(object)
         ret_str += self.function_end + "\n"
-        ret_str += self._generate_btn_event(objects)
+        ret_str += self.__generate_btn_event(objects)
         return ret_str
     
-    def generate_cpp_user(self, objects: list[dict[str, any]]) -> str:
-        ret_str = self.read_data(self.event_cpp)
+    def __generate_cpp_user(self, objects: list[dict[str, any]]) -> str:
+        ret_str = self.__read_data(self.event_cpp)
         if ret_str.find('#include "GUI.h"\n\n') != -1:
             ret_str = ret_str.replace(ret_str[:ret_str.find('#include "GUI.h"\n\n') + 18], "")
-        ret_str = self._check_user_includes(objects) + '#include "GUI.h"\n\n' + ret_str
+        ret_str = self.__check_user_includes(objects) + '#include "GUI.h"\n\n' + ret_str
         already_added_events = []
         offset = 0
         temp_str = ret_str
         while temp_str.find("void GUI::event_") != -1:
             start_index = temp_str.find("void GUI::event_")
-            end_index   = self._get_method_contents(temp_str[start_index:])[0][2]
+            end_index   = self.__get_method_contents(temp_str[start_index:])[0][2]
             event_name  = temp_str[start_index + 24:temp_str.find("(", start_index)]
             is_in_list   = False
             for object in objects:
@@ -113,11 +112,11 @@ class Generator:
 
 
 
-    def write_data(self, file: str, data: str):
+    def __write_data(self, file: str, data: str):
         with open(file, "w") as f:
             f.write(data)
     
-    def read_data(self, file: str) -> str:
+    def __read_data(self, file: str) -> str:
         data = ""
         with open(file, "r") as f:
             data = f.read()
@@ -127,13 +126,13 @@ class Generator:
 
 
 
-    def _hex_color_converter(self, num: int) -> str:
+    def __hex_color_converter(self, num: int) -> str:
         hex_num = hex(num).lstrip("0x")[:2]
         while len(hex_num) < 2:
             hex_num = "0" + hex_num
         return hex_num[:2]
     
-    def _get_method_contents(self, string_file:str) -> list[list[str,int,int]]:
+    def __get_method_contents(self, string_file:str) -> list[list[str,int,int]]:
         method_contents = []
         level = 0
         t_start_i = 0
@@ -152,7 +151,7 @@ class Generator:
 
 
 
-    def _check_user_includes(self, objects: list[dict[str, any]]) -> str:
+    def __check_user_includes(self, objects: list[dict[str, any]]) -> str:
         ret_str = ""
         unique_type_list = []
         for object in objects:
@@ -160,17 +159,17 @@ class Generator:
                 unique_type_list.append("button")
         
         for type in unique_type_list:
-            ret_str += '#include "' + self.type_translation[type] + '"\n'
+            ret_str += '#include "' + self.type_translation[type] + '.h"\n'
         return ret_str
     
-    def _generate_cpp_object(self, object: dict[str, any]) -> str:
+    def __generate_cpp_object(self, object: dict[str, any]) -> str:
         ret_str = ""
         if object["type"] == "button":
-            ret_str += self._generate_button(object)
+            ret_str += self.__generate_button(object)
             return ret_str
         return ret_str
 
-    def _generate_btn_event(self, objects: list[dict[str, any]]) -> str:
+    def __generate_btn_event(self, objects: list[dict[str, any]]) -> str:
         ret_str = "\nvoid GUI::eventButton(TGWButton* einButton, int event)\n{\n"
         for object in objects:
             if object["type"] == "button":
@@ -178,9 +177,12 @@ class Generator:
                 ret_str += "    event_pressed_" + object["name"] + "(event);\n  }\n"
         ret_str += self.function_end + "\n"
         return ret_str
+    
+    def __generate_hovered_event(self, objects: list[dict[str, any]]) -> str:
+        pass
 
 
-    def _generate_button(self, object: dict[str, any]) -> str:
+    def __generate_button(self, object: dict[str, any]) -> str:
         ret_str  = ""
         ret_str += "new " + self.type_translation[object["type"]] + "(this, "
         ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
@@ -195,13 +197,10 @@ class Generator:
     
 if __name__ == "__main__":
     myGenerator = Generator()
-    myGenerator.initialize()
-    objects = [{"type": "window", "position": [10,10], "size": [1024,512], "text": "Hallo", "color": [12,23,34]},{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf"},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2"}
-]
-    myGenerator.update_files(objects)
-    tempStr = "test\n123\n void event_meinButton(var1 var2)\n{print(hallo)}"
+    objects = [{"type": "window", "position": [10,10], "size": [1024,512], "text": "Hallo", "color": [12,23,34]},{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf", "eventPressed": True, "eventHovered": False, "eventChanged": False},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2", "eventPressed": True, "eventHovered": False, "eventChanged": False}]
+    myGenerator.write_files("", objects)
 
-#,{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf"},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2"}
+#,{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf", "eventPressed": True, "eventHovered": False, "eventChanged": False},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2", "eventPressed": True, "eventHovered": False, "eventChanged": False}
 """
 noch zu tun
 type: "label":
