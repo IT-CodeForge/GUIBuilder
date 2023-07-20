@@ -1,10 +1,16 @@
-Attributes
-delete element
-save/load
-Resize
-Events
-Fenstergröße
-portable Browser
+Notizen sortieren
+
+window: events save
+save/load: file
+window close warning
+timer
+language auswählen: disable features
+element resizer
+Farbselektor
+Fix: Btn outside, if am Rand dann Größenänderung
+Fix: Btn outside, wenn Window kleiner gemacht
+
+Doku
 NOTE
 logging
 Kommentare

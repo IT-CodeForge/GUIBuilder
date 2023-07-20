@@ -16,35 +16,113 @@
   <div id="copy-elements" style="display: none;">
     <button id="copy-element-btn" style="position: absolute; transform: translate(0px, 0px);">Button</button>
   </div>
+
+  <div class="gui-element" id="gui-element-0" style="display: none;"></div>
 </head>
 
 <body>
   <div id="menubar-elements">
     <button class="menubar-element" id="menubar-element-btn" style="position: relative; left: 1rem;">Button</button>
+    <button class="menubar-element" id="menubar-element-load" style="position: absolute; right: 4rem; cursor: default;"
+      onclick="load_gui_elements_from_database()">Load</button>
+    <button class="menubar-element" id="menubar-element-save" style="position: absolute; right: 1rem; cursor: default;"
+      onclick="save_gui_elements_to_database()">Save</button>
   </div>
   <div id="element-attributes">
-    <p class="center">Eigenschaften:</p>
+    <p class="center"><b><u>Element-Eigenschaften:</u></b></p>
     <div id="element-attributes-inner" style="visibility: hidden;">
+      <button id="element-attribut-delete" onclick="attribut_delete_element()"
+        style="background-color: #FF0000; color: #FFFFFF;">Delete</button>
+      <br>
       <span>ID:</span>
       <span id="element-attribut-id"></span>
       <br>
       <span>Name:</span>
-      <input id="element-attribut-name" type="text" onchange="attribut_setname()">
+      <input id="element-attribut-name" type="text" onchange="attribut_set_name()">
       <br>
       <span>Text:</span>
-      <input id="element-attribut-text" type="text" oninput="attribut_settext()">
+      <input id="element-attribut-text" type="text" oninput="attribut_set_text()">
       <br>
       <span>Postition:</span>
-      <input id="element-attribut-position-x" type="text" style="width: 2rem;" onchange="attribut_setpos_x()">
-      <input id="element-attribut-position-y" type="text" style="width: 2rem;" onchange="attribut_setpos_y()">
+      <input id="element-attribut-position-x" type="text" style="width: 2rem;" onchange="attribut_set_pos_x()">
+      <input id="element-attribut-position-y" type="text" style="width: 2rem;" onchange="attribut_set_pos_y()">
       <br>
       <span>Size:</span>
-      <input id="element-attribut-size-x" type="text" style="width: 2rem;" onchange="attribut_setsize_x()">
-      <input id="element-attribut-size-y" type="text" style="width: 2rem;" onchange="attribut_setsize_y()">
+      <input id="element-attribut-size-x" type="text" style="width: 2rem;" onchange="attribut_set_size_x()">
+      <input id="element-attribut-size-y" type="text" style="width: 2rem;" onchange="attribut_set_size_y()">
+      <br>
+      <span>Text-Color (RGB 24bit):</span>
+      <input id="element-attribut-text-color" type="text" style="width: 3rem;" onchange="attribut_set_text_color()">
+      <br>
+      <span>Background-Color (RGB 24bit):</span>
+      <input id="element-attribut-background-color" type="text" style="width: 3rem;"
+        onchange="attribut_set_background_color()">
+      <br>
+      <br>
+      <br>
+      <p class=""><b>Events:</b></p>
+      <span>Event pressed:</span>
+      <input id="element-attribut-event-pressed" type="checkbox" style="width: 3rem;"
+        onchange="attribut_set_event_pressed()">
+      <br>
+      <span>Event hovered:</span>
+      <input id="element-attribut-event-hovered" type="checkbox" style="width: 3rem;"
+        onchange="attribut_set_event_hovered()">
+      <br>
+      <span>Event changed:</span>
+      <input id="element-attribut-event-changed" type="checkbox" style="width: 3rem;"
+        onchange="attribut_set_event_changed()">
       <br>
     </div>
   </div>
+  <div id="window-attributes">
+    <p class="center"><b><u>Fenster-Eigenschaften:</u></b></p>
+    <span>ID:</span>
+    <span id="window-attribut-id"></span>
+    <br>
+    <span>Name:</span>
+    <input id="window-attribut-name" type="text" onchange="window_set_name()">
+    <br>
+    <span>Titel:</span>
+    <input id="window-attribut-text" type="text" onchange="window_set_text()">
+    <br>
+    <span>Size:</span>
+    <input id="window-attribut-size-x" type="text" style="width: 2rem;" onchange="window_set_size_x()">
+    <input id="window-attribut-size-y" type="text" style="width: 2rem;" onchange="window_set_size_y()">
+    <br>
+    <span>Titel-Color (RGB 24bit):</span>
+    <input id="window-attribut-text-color" type="text" style="width: 3rem;" onchange="window_set_text_color()">
+    <br>
+    <span>Background-Color (RGB 24bit):</span>
+    <input id="window-attribut-background-color" type="text" style="width: 3rem;"
+      onchange="window_set_background_color()">
+    <br>
+    <br>
+    <br>
+    <p class=""><b>Events:</b></p>
+    <span>Event create:</span>
+    <input id="window-attribut-event-create" type="checkbox" style="width: 3rem;"
+      onchange="window_set_event_create()">
+    <br>
+    <span>Event paint:</span>
+    <input id="window-attribut-event-paint" type="checkbox" style="width: 3rem;"
+      onchange="window_set_event_paint()">
+    <br>
+    <span>Event resize:</span>
+    <input id="window-attribut-event-resize" type="checkbox" style="width: 3rem;"
+      onchange="window_set_event_resize()">
+    <br>
+    <span>Event mouse_click:</span>
+    <input id="window-attribut-event-mouse-click" type="checkbox" style="width: 3rem;"
+      onchange="window_set_event_mouse_click()">
+    <br>
+    <span>Event mouse_move:</span>
+    <input id="window-attribut-event-mouse-move" type="checkbox" style="width: 3rem;"
+      onchange="window_set_event_mouse_move()">
+    <br>
+  </div>
   <div class="nobreak" id="gui-elements">
+    <br>
   </div>
 </body>
 
