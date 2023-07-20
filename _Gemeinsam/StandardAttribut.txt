@@ -2,7 +2,7 @@ type: "window":
 	id
 	name
 	text
-	position
+	position // not usable
 	size
 	backgroundColor // nicht möglich in Hallmann
 	textColor // nicht möglich in Hallmann
