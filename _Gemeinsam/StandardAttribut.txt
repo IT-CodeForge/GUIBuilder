@@ -6,6 +6,11 @@ type: "window":
 	size
 	backgroundColor // nicht möglich in Hallmann
 	textColor // nicht möglich in Hallmann
+	eventCreate
+	eventPaint
+	eventResize
+	eventMouseClick
+	eventMouseMove
 
 type: "button":
 	id
