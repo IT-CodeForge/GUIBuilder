@@ -50,4 +50,5 @@ type: "checkbox":
 	size
 	textColor // nicht möglich in Hallmann
 	backgroundColor // nicht möglich in Hallmann
+	checked
 	eventChanged
