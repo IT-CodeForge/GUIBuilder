@@ -71,7 +71,7 @@ public:
   virtual void eventTimer  (int id) {};
   virtual void eventMouseMove(int posX, int posY){};
   virtual void eventMouseClick(int posX, int posY, TGWindow* affectedWindow){};
-  virtual void eventEditChanged(TGWEdit* einEdit);
+  virtual void eventEditChanged(TGWEdit* einEdit){};
   virtual void eventClient(){};
 };
 
