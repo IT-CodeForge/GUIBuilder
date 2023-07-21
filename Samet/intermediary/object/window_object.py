@@ -5,11 +5,11 @@ class WindowObject(GenericObject):
         super().__init__(id, "window")
 
         # Initialize default values.
-        self.setAttribute("name", f"Window{id}")
+        self.setAttribute("name", f"Window")
         self.setAttribute("text", "Window")
-        self.setAttribute("size", [300, 300])
-        self.setAttribute("textColor", [127, 127, 127])
-        self.setAttribute("backgroundColor", [127, 127, 127])
+        self.setAttribute("size", [500, 500])
+        self.setAttribute("textColor", [0, 0, 0])
+        self.setAttribute("backgroundColor", [255, 255, 255])
         self.setAttribute("eventCreate", False)
         self.setAttribute("eventPaint", False)
         self.setAttribute("eventResize", False)
