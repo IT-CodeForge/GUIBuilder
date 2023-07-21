@@ -8,7 +8,7 @@ class EditObject(GenericObject):
         self.setAttribute("name", f"Edit{id}")
         self.setAttribute("text", "Edit")
         self.setAttribute("position", [0, 0])
-        self.setAttribute("size", [50, 100])
+        self.setAttribute("size", [200, 100])
         self.setAttribute("textColor", [0, 0, 0])
         self.setAttribute("backgroundColor", [255, 255, 255])
         self.setAttribute("eventChanged", False)
