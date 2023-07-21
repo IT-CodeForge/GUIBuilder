@@ -29,7 +29,7 @@ class Intermediary:
             ObjectEnum.BUTTON: ButtonObject,
             ObjectEnum.LABEL: LabelObject,
             ObjectEnum.EDIT: EditObject,
-            ObjectEnum.CHECKBOX, CheckboxObject
+            ObjectEnum.CHECKBOX: CheckboxObject
         }
 
         self.__string_mapping: dict[str, type] = {
