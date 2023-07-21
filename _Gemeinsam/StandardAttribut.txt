@@ -30,6 +30,7 @@ type: "label":
 	size
 	textColor // nicht möglich in Hallmann
 	backgroundColor // nicht möglich in Hallmann
+	eventHovered
 	
 type: "edit":
 	id
@@ -41,6 +42,7 @@ type: "edit":
 	backgroundColor // nicht möglich in Hallmann
 	multipleLines
 	eventChanged
+	eventHovered
 
 type: "checkbox":
 	id
@@ -52,10 +54,13 @@ type: "checkbox":
 	backgroundColor // nicht möglich in Hallmann
 	checked
 	eventChanged
+	eventHovered
 
 type: "timer":
 	id
 	name
+	position
+	size
 	enabled
 
 type: "canvas":
@@ -64,3 +69,4 @@ type: "canvas":
 	position
 	size
 	backgroundColor
+	eventHovered
