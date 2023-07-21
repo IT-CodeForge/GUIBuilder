@@ -1,6 +1,6 @@
 import json
-from intermediary.intermediary import Intermediary
 import os.path
+from intermediary.intermediary import Intermediary
 
 class JSON:
     def __init__(self, intermediary: Intermediary) -> None:
@@ -22,7 +22,7 @@ class JSON:
         self.__intermediary.loadEvents(events)
 
     def save(self, name: str) -> None:
-        objects: list[dict[str, any]] = self.__intermediary.getObjects()
+        objects: list[dict[str, any]] = self.__intermediary.getObjectsAsDictionaryList()
 
         with open(os.path.join(name, "gui_objects.json"), "w") as file:
             file.write(json.dumps(objects, indent = 4))

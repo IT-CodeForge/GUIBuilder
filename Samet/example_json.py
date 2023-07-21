@@ -23,5 +23,5 @@ if __name__ == "__main__":
     button_2_object.setAttribute("position", [25, 0])
     button_2_object.setAttribute("size", [20, 20])
 
-    json.save("test")
-    json.load("test")
+    json.save("C:\\Users\\pgminstall\\Desktop")
+    json.load("C:\\Users\\pgminstall\\Desktop")
