@@ -18,6 +18,16 @@ function getElement(id) {
     return document.getElementById(id)
 }
 
+function toggleCollapsable(p_collapsable) {
+    p_collapsable.classList.toggle("collapsible-active");
+    var t_content = p_collapsable.nextElementSibling;
+    if (t_content.style.display) {
+        t_content.style.display = null;
+    } else {
+        t_content.style.display = "block";
+    }
+}
+
 
 
 window.onbeforeunload = function (e) {
@@ -39,7 +49,7 @@ function init_element_variables() {
     window.gui_elements_main = getElement('gui-elements')
     window.copy_elements = { main: getElement("copy-elements"), btn: getElement("copy-element-btn"), label: getElement("copy-element-label"), edit: getElement("copy-element-edit"), checkbox: getElement("copy-element-checkbox"), canvas: getElement("copy-element-canvas"), timer: getElement("copy-element-timer") }
     window.menubar_elements = { main: getElement("menubar-elements"), btn: getElement("menubar-element-btn"), label: getElement("menubar-element-label"), edit: getElement("menubar-element-edit"), checkbox: getElement("menubar-element-checkbox"), canvas: getElement("menubar-element-canvas"), timer: getElement("menubar-element-timer") }
-    window.element_attributes = { main: getElement("element-attributes"), inner: getElement("element-attributes-inner"), id: getElement("element-attribut-id"), name: getElement("element-attribut-name"), text_section: getElement("element-attribut-text-section"), text: getElement("element-attribut-text"), pos_x: getElement("element-attribut-position-x"), pos_y: getElement("element-attribut-position-y"), size_x: getElement("element-attribut-size-x"), size_y: getElement("element-attribut-size-y"), text_color_section: getElement("element-attribut-text-color-section"), text_color: getElement("element-attribut-text-color"), background_color_section: getElement("element-attribut-background-color-section"), background_color: getElement("element-attribut-background-color"), multiple_lines_section: getElement("element-attribut-multiple-lines-section"), checked_section: getElement("element-attribut-checked-section"), checked: getElement("element-attribut-checked"), enabled_section: getElement("element-attribut-enabled-section"), enabled: getElement("element-attribut-enabled"), multiple_lines: getElement("element-attribut-multiple-lines"), event_section: getElement("element-attribut-section"), event_pressed_section: getElement("element-attribut-event-pressed-section"), event_pressed: getElement("element-attribut-event-pressed"), event_hovered_section: getElement("element-attribut-event-hovered-section"), event_hovered: getElement("element-attribut-event-hovered"), event_changed_section: getElement("element-attribut-event-changed-section"), event_changed: getElement("element-attribut-event-changed") }
+    window.element_attributes = { main: getElement("element-attributes"), inner: getElement("element-attributes-inner"), id: getElement("element-attribut-id"), name: getElement("element-attribut-name"), text_section: getElement("element-attribut-text-section"), text: getElement("element-attribut-text"), pos_x: getElement("element-attribut-position-x"), pos_y: getElement("element-attribut-position-y"), size_x: getElement("element-attribut-size-x"), size_y: getElement("element-attribut-size-y"), text_color_section: getElement("element-attribut-text-color-section"), text_color: getElement("element-attribut-text-color"), background_color_section: getElement("element-attribut-background-color-section"), background_color: getElement("element-attribut-background-color"), interval_section: getElement("element-attribut-interval-section"), interval: getElement("element-attribut-interval"), multiple_lines_section: getElement("element-attribut-multiple-lines-section"), checked_section: getElement("element-attribut-checked-section"), checked: getElement("element-attribut-checked"), enabled_section: getElement("element-attribut-enabled-section"), enabled: getElement("element-attribut-enabled"), multiple_lines: getElement("element-attribut-multiple-lines"), event_section: getElement("element-attribut-section"), event_pressed_section: getElement("element-attribut-event-pressed-section"), event_pressed: getElement("element-attribut-event-pressed"), event_hovered_section: getElement("element-attribut-event-hovered-section"), event_hovered: getElement("element-attribut-event-hovered"), event_changed_section: getElement("element-attribut-event-changed-section"), event_changed: getElement("element-attribut-event-changed") }
     window.window_attributes = { main: getElement("window-attributes"), id: getElement("window-attribut-id"), name: getElement("window-attribut-name"), text: getElement("window-attribut-text"), size_x: getElement("window-attribut-size-x"), size_y: getElement("window-attribut-size-y"), text_color: getElement("window-attribut-text-color"), background_color: getElement("window-attribut-background-color"), event_create: getElement("window-attribut-event-create"), event_paint: getElement("window-attribut-event-paint"), event_resize: getElement("window-attribut-event-resize"), event_mouse_click: getElement("window-attribut-event-mouse-click"), event_mouse_move: getElement("window-attribut-event-mouse-move") }
 }
 
@@ -132,6 +142,9 @@ function set_gui_element_translation(p_element, p_x, p_y) {
     else if (t_topTranslation > (gui_elements_main.data.size_y - p_element.data.size_y))
         t_topTranslation = gui_elements_main.data.size_y - p_element.data.size_y
 
+    t_leftTranslation = Math.round(t_leftTranslation)
+    t_topTranslation = Math.round(t_topTranslation)
+
     p_element.data.pos_x = t_leftTranslation;
     p_element.data.pos_y = t_topTranslation;
 
@@ -144,30 +157,56 @@ function set_gui_element_translation(p_element, p_x, p_y) {
 }
 
 
-// GUI-MOVE-Methods
+// load or store Element to database
+async function load_gui_elements_from_database() {
+    const t_gui_elements = await eel.load_gui_elements()()
+    window.temptest = t_gui_elements
+    for (i = 0; i < t_gui_elements.length; i++) {
+        const t_akt = t_gui_elements[i]
+        switch (t_akt.type) {
+            case "window":
+                load_window(t_akt)
+                break
 
-function start_move_element(p_element, p_mouseX, p_mouseY, p_offset_element_override = null) {
-    if (p_offset_element_override == null)
-        p_offset_element_override = p_element
-    window.addEventListener('mousemove', gui_element_mousemove_event, true)
-    window.g_move_mouse_x_offset = p_mouseX - p_offset_element_override.getBoundingClientRect().left
-    window.g_move_mouse_y_offset = p_mouseY - p_offset_element_override.getBoundingClientRect().top
-    window.g_move_element = p_element
-    p_element.classList.add("element-moving")
-    document.body.style.cursor = "grabbing"
+            case "button":
+                load_gui_element(copy_elements.btn, t_akt)
+                break
+
+            case "label":
+                load_gui_element(copy_elements.label, t_akt)
+                break
+
+            case "edit":
+                load_gui_element(copy_elements.edit, t_akt)
+                break
+
+            case "checkbox":
+                load_gui_element(copy_elements.checkbox, t_akt)
+
+            case "canvas":
+                load_gui_element(copy_elements.canvas, t_akt)
+
+            case "timer":
+                load_gui_element(copy_elements.timer, t_akt)
+
+            default:
+                break
+        }
+    }
 }
 
-function end_move_element(p_element) {
-    window.removeEventListener('mousemove', gui_element_mousemove_event, true)
-    window.g_move_mouse_x_offset = 0
-    window.g_move_mouse_y_offset = 0
-    window.g_move_element = null
-    p_element.classList.remove("element-moving")
-    document.body.style.cursor = ""
+async function save_gui_elements_to_database() {
+    const t_gui_elements = document.getElementsByClassName("gui-element")
+    await eel.save_gui_element(gui_elements_main.data)()
+    for (i = 0; i < t_gui_elements.length; i++) {
+        const akt = t_gui_elements[i]
+        await eel.save_gui_element(akt.data)()
+    }
+    await eel.save()()
 }
 
 
-// load or create Elements
+// load or create GUI-Elements
 
 function load_window(p_attributes) {
     gui_elements_main.data = p_attributes
@@ -233,6 +272,29 @@ function create_new_element(p_origin_element, p_attributes, p_x, p_y, p_menubar_
 }
 
 
+// GUI-MOVE-Methods
+
+function start_move_element(p_element, p_mouseX, p_mouseY, p_offset_element_override = null) {
+    if (p_offset_element_override == null)
+        p_offset_element_override = p_element
+    window.addEventListener('mousemove', gui_element_mousemove_event, true)
+    window.g_move_mouse_x_offset = p_mouseX - p_offset_element_override.getBoundingClientRect().left
+    window.g_move_mouse_y_offset = p_mouseY - p_offset_element_override.getBoundingClientRect().top
+    window.g_move_element = p_element
+    p_element.classList.add("element-moving")
+    document.body.style.cursor = "grabbing"
+}
+
+function end_move_element(p_element) {
+    window.removeEventListener('mousemove', gui_element_mousemove_event, true)
+    window.g_move_mouse_x_offset = 0
+    window.g_move_mouse_y_offset = 0
+    window.g_move_element = null
+    p_element.classList.remove("element-moving")
+    document.body.style.cursor = ""
+}
+
+
 // Active-Element-Attribut-Editor-Element
 
 function set_active_gui_element(p_element) {
@@ -250,6 +312,7 @@ function set_active_gui_element(p_element) {
     element_attributes.size_y.value = g_active_gui_element.data.size_y
     element_attributes.text_color.value = g_active_gui_element.data.text_color
     element_attributes.background_color.value = g_active_gui_element.data.background_color
+    element_attributes.interval.value = g_active_gui_element.data.interval
     element_attributes.checked.checked = g_active_gui_element.data.checked
     element_attributes.enabled.checked = g_active_gui_element.data.enabled
     element_attributes.multiple_lines.checked = g_active_gui_element.data.multiple_lines
@@ -299,19 +362,23 @@ function set_active_gui_element(p_element) {
         element_attributes.checked_section.style.display = ""
     else
         element_attributes.checked_section.style.display = "none"
-    
-    if (p_element.data.type == "timer")
-        element_attributes.enabled.style.display = ""
-    else
-        element_attributes.enabled.style.display = "none"
 
-    element_attributes.inner.style.visibility = ""
+    if (p_element.data.type == "timer") {
+        element_attributes.enabled_section.style.display = ""
+        element_attributes.interval_section.style.display = ""
+    }
+    else {
+        element_attributes.enabled_section.style.display = "none"
+        element_attributes.interval_section.style.display = "none"
+    }
+
+    element_attributes.inner.style.visibility = "visible"
 }
 
 function reset_active_gui_element() {
     if (g_active_gui_element != null)
         g_active_gui_element.classList.remove("active-gui-element")
-    element_attributes.inner.style.visibility = "hidden"
+    element_attributes.inner.style.visibility = ""
     g_active_gui_element = null
 }
 
@@ -349,7 +416,7 @@ function attribut_set_pos_x() {
         element_attributes.pos_x.value = g_active_gui_element.data.pos_x
         return;
     }
-    g_active_gui_element.data.pos_x = Number(element_attributes.pos_x.value)
+    g_active_gui_element.data.pos_x = Math.round(Number(element_attributes.pos_x.value))
     g_active_gui_element.style.transform = "translate(" + g_active_gui_element.data.pos_x + "px, " + g_active_gui_element.data.pos_y + "px)"
 }
 
@@ -358,7 +425,7 @@ function attribut_set_pos_y() {
         element_attributes.pos_y.value = g_active_gui_element.data.pos_y
         return;
     }
-    g_active_gui_element.data.pos_y = Number(element_attributes.pos_y.value)
+    g_active_gui_element.data.pos_y = Math.round(Number(element_attributes.pos_y.value))
     g_active_gui_element.style.transform = "translate(" + g_active_gui_element.data.pos_x + "px, " + g_active_gui_element.data.pos_y + "px)"
 }
 
@@ -367,7 +434,7 @@ function attribut_set_size_x() {
         element_attributes.size_x.value = g_active_gui_element.data.size_x
         return;
     }
-    g_active_gui_element.data.size_x = Number(element_attributes.size_x.value)
+    g_active_gui_element.data.size_x = Math.round(Number(element_attributes.size_x.value))
     g_active_gui_element.style.width = g_active_gui_element.data.size_x + "px"
 }
 
@@ -376,7 +443,7 @@ function attribut_set_size_y() {
         element_attributes.size_y.value = g_active_gui_element.data.size_y
         return;
     }
-    g_active_gui_element.data.size_y = Number(element_attributes.size_y.value)
+    g_active_gui_element.data.size_y = Math.round(Number(element_attributes.size_y.value))
     g_active_gui_element.style.height = g_active_gui_element.data.size_y + "px"
 }
 
@@ -388,6 +455,10 @@ function attribut_set_text_color() {
 function attribut_set_background_color() {
     g_active_gui_element.data.background_color = element_attributes.background_color.value
     g_active_gui_element.style.backgroundColor = "#" + g_active_gui_element.data.background_color
+}
+
+function attribut_set_interval() {
+    g_active_gui_element.data.interval = element_attributes.interval.value
 }
 
 function attribut_set_multiple_lines() {
@@ -432,7 +503,7 @@ function window_set_size_x() {
         window_attributes.size_x.value = gui_elements_main.data.size_x
         return;
     }
-    gui_elements_main.data.size_x = Number(window_attributes.size_x.value)
+    gui_elements_main.data.size_x = Math.round(Number(window_attributes.size_x.value))
     gui_elements_main.style.width = gui_elements_main.data.size_x + "px"
 }
 
@@ -441,7 +512,7 @@ function window_set_size_y() {
         window_attributes.size_y.value = gui_elements_main.data.size_y
         return;
     }
-    gui_elements_main.data.size_y = Number(window_attributes.size_y.value)
+    gui_elements_main.data.size_y = Math.round(Number(window_attributes.size_y.value))
     gui_elements_main.style.height = gui_elements_main.data.size_y + "px"
 }
 
@@ -476,49 +547,12 @@ function window_set_event_mouse_move() {
 
 
 
-async function load_gui_elements_from_database() {
-    const t_gui_elements = await eel.load_gui_elements()()
-    window.temptest = t_gui_elements
-    for (i = 0; i < t_gui_elements.length; i++) {
-        const t_akt = t_gui_elements[i]
-        switch (t_akt.type) {
-            case "window":
-                load_window(t_akt)
-                break
-
-            case "button":
-                load_gui_element(copy_elements.btn, t_akt)
-                break
-
-            case "label":
-                load_gui_element(copy_elements.label, t_akt)
-                break
-
-            case "edit":
-                load_gui_element(copy_elements.edit, t_akt)
-                break
-
-            case "checkbox":
-                load_gui_element(copy_elements.checkbox, t_akt)
-
-            case "canvas":
-                load_gui_element(copy_elements.canvas, t_akt)
-
-            case "timer":
-                load_gui_element(copy_elements.timer, t_akt)
-
-            default:
-                break
-        }
-    }
+function show_license_window() {
+    getElement("license-window-main-outer").style.display = "flex"
+    getElement("license-window-shadow").style.display = "block"
 }
 
-async function save_gui_elements_to_database() {
-    const t_gui_elements = document.getElementsByClassName("gui-element")
-    await eel.save_gui_element(gui_elements_main.data)()
-    for (i = 0; i < t_gui_elements.length; i++) {
-        const akt = t_gui_elements[i]
-        await eel.save_gui_element(akt.data)()
-    }
-    await eel.save()()
+function hide_license_window() {
+    getElement("license-window-main-outer").style.display = ""
+    getElement("license-window-shadow").style.display = ""
 }

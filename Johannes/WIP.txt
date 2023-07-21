@@ -1,6 +1,5 @@
 Notizen sortieren
 
-Lizenzen
 language auswählen: disable features
 element resizer
 Farbselektor

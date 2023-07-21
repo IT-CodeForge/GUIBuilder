@@ -85,6 +85,7 @@ def convert_attribut_to_js_data(p_attribut) -> dict[str, any]:
     
     if t_type == "timer":
         t_return["enabled"] = p_attribut["enabled"]
+        t_return["interval"] = p_attribut["interval"]
     
     if t_type == "window":
         t_return["event_create"] = p_attribut["eventCreate"]
@@ -132,6 +133,7 @@ def convert_attribut_from_js_data(p_attribut) -> dict[str, any]:
     
     if t_type == "timer":
         t_return["enabled"] = p_attribut["enabled"]
+        t_return["interval"] = p_attribut["interval"]
 
     if t_type == "window":
         t_return["eventCreate"] = p_attribut["event_create"]
