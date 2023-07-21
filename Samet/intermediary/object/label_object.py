@@ -8,6 +8,6 @@ class LabelObject(GenericObject):
         self.setAttribute("name", f"Label{id}")
         self.setAttribute("text", "Label")
         self.setAttribute("position", [0, 0])
-        self.setAttribute("size", [75, 25])
+        self.setAttribute("size", [75, 18])
         self.setAttribute("textColor", [0, 0, 0])
         self.setAttribute("backgroundColor", [255, 255, 255])
