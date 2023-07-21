@@ -11,4 +11,4 @@ class LabelObject(GenericObject):
         self.setAttribute("size", [75, 18])
         self.setAttribute("textColor", [0, 0, 0])
         self.setAttribute("backgroundColor", [255, 255, 255])
-		self.setAttribute("eventHovered", False)
+        self.setAttribute("eventHovered", False)

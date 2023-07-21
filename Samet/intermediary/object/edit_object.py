@@ -13,4 +13,4 @@ class EditObject(GenericObject):
         self.setAttribute("backgroundColor", [255, 255, 255])
         self.setAttribute("multipleLines", True)
         self.setAttribute("eventChanged", False)
-		self.setAttribute("eventHovered", False)
+        self.setAttribute("eventHovered", False)
