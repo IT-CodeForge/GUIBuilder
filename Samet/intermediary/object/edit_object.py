@@ -11,4 +11,5 @@ class EditObject(GenericObject):
         self.setAttribute("size", [200, 100])
         self.setAttribute("textColor", [0, 0, 0])
         self.setAttribute("backgroundColor", [255, 255, 255])
+        self.setAttribute("multipleLines", True)
         self.setAttribute("eventChanged", False)
