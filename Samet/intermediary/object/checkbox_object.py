@@ -13,3 +13,4 @@ class CheckboxObject(GenericObject):
         self.setAttribute("backgroundColor", [255, 255, 255])
         self.setAttribute("checked", False)
         self.setAttribute("eventChanged", True)
+		self.setAttribute("eventHovered", False)
