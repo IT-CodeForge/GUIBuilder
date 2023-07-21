@@ -26,7 +26,7 @@ class Generator:
             self.__write_data(os.path.join(path, self.event_cpp), "")
         self.__write_data(os.path.join(path, self.gui_h), self.__generate_h("GUI.h", objects, "TGWMainWindow.h"))
         self.__write_data(os.path.join(path, self.gui_cpp), self.__generate_cpp(objects))
-        self.__write_data(os.path.join(path, self.event_cpp), self.__generate_cpp_user(objects))
+        self.__write_data(os.path.join(path, self.event_cpp), self.__generate_cpp_user(path, objects))
     
 
 
@@ -86,8 +86,8 @@ class Generator:
         ret_str += self.__generate_hov_event(objects)
         return ret_str
     
-    def __generate_cpp_user(self, objects: list[dict[str, any]]) -> str:
-        ret_str = self.__read_data(self.event_cpp)
+    def __generate_cpp_user(self, path: str, objects: list[dict[str, any]]) -> str:
+        ret_str = self.__read_data(os.path.join(path, self.event_cpp))
         if ret_str.find('#include "GUI.h"\n\n') != -1:
             ret_str = ret_str.replace(ret_str[:ret_str.find('#include "GUI.h"\n\n') + 18], "")
         ret_str = self.__check_user_includes(objects) + '#include "GUI.h"\n\n' + ret_str
