@@ -30,7 +30,6 @@ type: "label":
 	size
 	textColor // nicht möglich in Hallmann
 	backgroundColor // nicht möglich in Hallmann
-	eventChanged
 	
 type: "edit":
 	id
