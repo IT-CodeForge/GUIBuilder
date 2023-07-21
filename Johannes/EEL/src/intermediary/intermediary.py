@@ -3,10 +3,20 @@ from intermediary.object.object_attribute import ObjectAttribute
 from intermediary.object.generic_object import GenericObject
 from intermediary.object.window_object import WindowObject
 from intermediary.object.button_object import ButtonObject
+from intermediary.object.label_object import LabelObject
+from intermediary.object.edit_object import EditObject
+from intermediary.object.checkbox_object import CheckboxObject
+from intermediary.object.timer_object import TimerObject
+from intermediary.object.canvas_object import CanvasObject
 
 class ObjectEnum(Enum):
     WINDOW = 0
     BUTTON = 1
+    LABEL = 2
+    EDIT = 3
+    CHECKBOX = 4
+    TIMER = 5
+    CANVAS = 6
 
 class EventEnum(Enum):
     TIMER = 0
@@ -20,24 +30,27 @@ class Intermediary:
     def __init__(self) -> None:
         self.__enum_mapping: dict[ObjectEnum, type] = {
             ObjectEnum.WINDOW: WindowObject,
-            ObjectEnum.BUTTON: ButtonObject
+            ObjectEnum.BUTTON: ButtonObject,
+            ObjectEnum.LABEL: LabelObject,
+            ObjectEnum.EDIT: EditObject,
+            ObjectEnum.CHECKBOX: CheckboxObject,
+            ObjectEnum.TIMER: TimerObject,
+            ObjectEnum.CANVAS: CanvasObject
         }
 
         self.__string_mapping: dict[str, type] = {
             "window": WindowObject,
-            "button": ButtonObject
+            "button": ButtonObject,
+            "label": LabelObject,
+            "edit": EditObject,
+            "checkbox": CheckboxObject,
+            "timer": TimerObject,
+            "canvas": CanvasObject
         }
 
         self.__objects: list[GenericObject] = []
         self.__count: int = 0
-
-        self.__timer_enabled = False
-        self.__key_up_enabled = False
-        self.__key_down_enabled = False
-        self.__mouse_move_enabled = False
-        self.__mouse_click_enabled = False
-        self.__paint_enabled = False
-
+    
     def createObject(self, type: ObjectEnum) -> int:
         object_type: type = self.__enum_mapping.get(type)
 
@@ -95,51 +108,3 @@ class Intermediary:
             objects.append(object.getAttributesAsDictionary())
             
         return objects
-
-    def enableEvent(self, type: EventEnum) -> None:
-        if type == EventEnum.Timer:
-            self.__timer_enabled = True
-        elif type == EventEnum.KeyUp:
-            self.__key_up_enabled = True
-        elif type == EventEnum.KeyDown:
-            self.__key_down_enabled = True
-        elif type == EventEnum.MouseMove:
-            self.__mouse_move_enabled = True
-        elif type == EventEnum.MouseClick:
-            self.__mouse_click_enabled = True
-        elif type == EventEnum.Paint:
-            self.__paint_enabled = True
-
-    def disableEvent(self, type: EventEnum) -> None:
-        if type == EventEnum.Timer:
-            self.__timer_enabled = False
-        elif type == EventEnum.KeyUp:
-            self.__key_up_enabled = False
-        elif type == EventEnum.KeyDown:
-            self.__key_down_enabled = False
-        elif type == EventEnum.MouseMove:
-            self.__mouse_move_enabled = False
-        elif type == EventEnum.MouseClick:
-            self.__mouse_click_enabled = False
-        elif type == EventEnum.Paint:
-            self.__paint_enabled = False
-
-    def getEvents(self) -> dict[str, bool]:
-        events: dict[str, bool] = {}
-
-        events["timer_enabled"] = self.__timer_enabled
-        events["key_up_enabled"] = self.__key_up_enabled
-        events["key_down_enabled"] = self.__key_down_enabled
-        events["mouse_move_enabled"] = self.__mouse_move_enabled
-        events["mouse_click_enabled"] = self.__mouse_click_enabled
-        events["paint_enabled"] = self.__paint_enabled
-
-        return events
-
-    def loadEvents(self, events: dict[str, bool]) -> None:
-        self.__timer_enabled = events["timer_enabled"]
-        self.__key_up_enabled = events["key_up_enabled"]
-        self.__key_down_enabled = events["key_down_enabled"]
-        self.__mouse_move_enabled = events["mouse_move_enabled"]
-        self.__mouse_click_enabled = events["mouse_click_enabled"]
-        self.__paint_enabled = events["paint_enabled"]

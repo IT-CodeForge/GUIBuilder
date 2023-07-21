@@ -1,14 +1,12 @@
 Notizen sortieren
 
-window: events save
-save/load: file
-window close warning
-timer
+Lizenzen
 language auswählen: disable features
 element resizer
 Farbselektor
 Fix: Btn outside, if am Rand dann Größenänderung
 Fix: Btn outside, wenn Window kleiner gemacht
+Fix: label, edit: Multiline
 
 Doku
 NOTE
