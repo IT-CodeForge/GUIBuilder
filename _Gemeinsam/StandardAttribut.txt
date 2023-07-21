@@ -41,3 +41,13 @@ type: "edit":
 	backgroundColor // nicht möglich in Hallmann
 	multipleLines
 	eventChanged
+
+type: "checkbox":
+	id
+	name
+	text
+	position
+	size
+	textColor // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
+	eventChanged
