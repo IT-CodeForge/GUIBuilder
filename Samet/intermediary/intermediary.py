@@ -3,10 +3,12 @@ from intermediary.object.object_attribute import ObjectAttribute
 from intermediary.object.generic_object import GenericObject
 from intermediary.object.window_object import WindowObject
 from intermediary.object.button_object import ButtonObject
+from intermediary.object.label_object import LabelObject
 
 class ObjectEnum(Enum):
     WINDOW = 0
     BUTTON = 1
+    LABEL = 2
 
 class EventEnum(Enum):
     TIMER = 0
@@ -20,24 +22,19 @@ class Intermediary:
     def __init__(self) -> None:
         self.__enum_mapping: dict[ObjectEnum, type] = {
             ObjectEnum.WINDOW: WindowObject,
-            ObjectEnum.BUTTON: ButtonObject
+            ObjectEnum.BUTTON: ButtonObject,
+            ObjectEnum.LABEL: LabelObject,
         }
 
         self.__string_mapping: dict[str, type] = {
             "window": WindowObject,
-            "button": ButtonObject
+            "button": ButtonObject,
+            "label": LabelObject
         }
 
         self.__objects: list[GenericObject] = []
         self.__count: int = 0
-
-        self.__timer_enabled = False
-        self.__key_up_enabled = False
-        self.__key_down_enabled = False
-        self.__mouse_move_enabled = False
-        self.__mouse_click_enabled = False
-        self.__paint_enabled = False
-
+    
     def createObject(self, type: ObjectEnum) -> int:
         object_type: type = self.__enum_mapping.get(type)
 
