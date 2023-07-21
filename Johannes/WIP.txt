@@ -1,4 +1,4 @@
-Notizen sortieren
+s. global Notizen
 
 language auswählen: disable features
 element resizer

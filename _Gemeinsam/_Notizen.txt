@@ -1,7 +1,27 @@
+ToDo:
+
+GUI-Elemente:
+  - Slider
+  - (Bild)
+
+Eigenschaften:
+Fenstereigenschaften:
+  - Größe -> Lock
+Elementeigenschaften:
+  - (Font)
+
+Events:
+Fenster:
+  - eventDestroy
+KeyListener:
+  - KeyEvent
+  
+  
+
+Formalitäten:
+
 Dokumentation aller public Methoden und Funktionen.
 Formatierung grob gemäß PEP8: https://peps.python.org/pep-0008/
-
-
 
 py - js-Programmierung
   -> auto-py-to-exe
@@ -21,47 +41,6 @@ Elemente gespeichert in json
 Offen:
   - Logging: https://docs.python.org/3/library/logging.html
 
-
-
 GUIs:
   - EEL -> Python
   - TGWindow (HAA) -> C++
-
-GUI-Elemente:
-  - Button
-  - EditFeld
-  - Label
-  - Canvas
-  - Checkbox
-  - Timer
-  - Slider
-  - (Bild)
-
-
-Eigenschaften:
-Fenstereigenschaften:
-  - Titel
-  - Hintergrundfarbe (/ bild)
-  - Größe -> Lock
-Elementeigenschaften:
-  - Farbe
-  - Titel
-  - Name (Programmierintern)
-  - Größe / Pos
-  - (Font)
-
-Events:
-Fenster:
-  - Resize
-  - Create
-  - MouseEvent
-  - eventPaint
-Element:
-  - Pressed
-  - (doubleclicked)
-  - Hovered
-  - Changed
-Timer:
-  - TimerEvent
-KeyListener:
-  - KeyEvent
