@@ -61,6 +61,7 @@ type: "timer":
 	name
 	position
 	size
+	interval
 	enabled
 
 type: "canvas":
