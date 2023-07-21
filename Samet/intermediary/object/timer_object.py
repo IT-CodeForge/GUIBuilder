@@ -7,5 +7,5 @@ class TimerObject(GenericObject):
         # Initialize default values.
         self.setAttribute("name", f"Timer{id}")
         self.setAttribute("position", [0, 0])
-        self.setAttribute("size", [100, 100])
+        self.setAttribute("size", [40, 18])
         self.setAttribute("enabled", True)
