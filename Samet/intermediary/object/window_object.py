@@ -7,6 +7,11 @@ class WindowObject(GenericObject):
         # Initialize default values.
         self.setAttribute("name", f"Window{id}")
         self.setAttribute("text", "Window")
-        self.setAttribute("position", [0, 0])
         self.setAttribute("size", [300, 300])
+        self.setAttribute("textColor", [127, 127, 127])
         self.setAttribute("backgroundColor", [127, 127, 127])
+        self.setAttribute("eventCreate", False)
+        self.setAttribute("eventPaint", False)
+        self.setAttribute("eventResize", False)
+        self.setAttribute("eventMouseClick", False)
+        self.setAttribute("eventMouseMove", False)
