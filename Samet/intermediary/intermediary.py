@@ -4,11 +4,13 @@ from intermediary.object.generic_object import GenericObject
 from intermediary.object.window_object import WindowObject
 from intermediary.object.button_object import ButtonObject
 from intermediary.object.label_object import LabelObject
+from intermediary.object.edit_object import EditObject
 
 class ObjectEnum(Enum):
     WINDOW = 0
     BUTTON = 1
     LABEL = 2
+    EDIT = 3
 
 class EventEnum(Enum):
     TIMER = 0
@@ -24,12 +26,14 @@ class Intermediary:
             ObjectEnum.WINDOW: WindowObject,
             ObjectEnum.BUTTON: ButtonObject,
             ObjectEnum.LABEL: LabelObject,
+            ObjectEnum.EDIT: EditObject
         }
 
         self.__string_mapping: dict[str, type] = {
             "window": WindowObject,
             "button": ButtonObject,
-            "label": LabelObject
+            "label": LabelObject,
+            "edit": EditObject
         }
 
         self.__objects: list[GenericObject] = []
