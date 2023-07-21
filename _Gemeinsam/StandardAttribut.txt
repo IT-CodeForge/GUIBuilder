@@ -2,10 +2,9 @@ type: "window":
 	id
 	name
 	text
-	position // not usable
 	size
-	backgroundColor // nicht möglich in Hallmann
 	textColor // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
 	eventCreate
 	eventPaint
 	eventResize
@@ -18,11 +17,10 @@ type: "button":
 	text
 	position
 	size
+	textColor // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
 	eventPressed
 	eventHovered
-	eventChanged //nur für kompatibilität
-	backgroundColor // nicht möglich in Hallmann
-	textColor // nicht möglich in Hallmann
 
 type: "label":
 	id
@@ -30,8 +28,9 @@ type: "label":
 	text
 	position
 	size
-	backgroundColor // nicht möglich in Hallmann
 	textColor // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
+	eventChanged
 	
 type: "edit":
 	id
@@ -39,6 +38,7 @@ type: "edit":
 	text
 	position
 	size
-	backgroundColor // nicht möglich in Hallmann
 	textColor // nicht möglich in Hallmann
+	backgroundColor // nicht möglich in Hallmann
 	multipleLines
+	eventChanged
