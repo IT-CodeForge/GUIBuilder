@@ -9,3 +9,4 @@ class CanvasObject(GenericObject):
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [100, 100])
         self.setAttribute("backgroundColor", [255, 255, 255])
+        self.setAttribute("eventHovered", False)
