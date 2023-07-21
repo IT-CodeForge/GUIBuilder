@@ -5,12 +5,14 @@ from intermediary.object.window_object import WindowObject
 from intermediary.object.button_object import ButtonObject
 from intermediary.object.label_object import LabelObject
 from intermediary.object.edit_object import EditObject
+from intermediary.object.checkbox_object import CheckboxObject
 
 class ObjectEnum(Enum):
     WINDOW = 0
     BUTTON = 1
     LABEL = 2
     EDIT = 3
+    CHECKBOX = 4
 
 class EventEnum(Enum):
     TIMER = 0
@@ -26,14 +28,16 @@ class Intermediary:
             ObjectEnum.WINDOW: WindowObject,
             ObjectEnum.BUTTON: ButtonObject,
             ObjectEnum.LABEL: LabelObject,
-            ObjectEnum.EDIT: EditObject
+            ObjectEnum.EDIT: EditObject,
+            ObjectEnum.CHECKBOX, CheckboxObject
         }
 
         self.__string_mapping: dict[str, type] = {
             "window": WindowObject,
             "button": ButtonObject,
             "label": LabelObject,
-            "edit": EditObject
+            "edit": EditObject,
+            "checkbox": CheckboxObject,
         }
 
         self.__objects: list[GenericObject] = []
