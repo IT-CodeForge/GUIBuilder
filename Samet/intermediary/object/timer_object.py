@@ -8,4 +8,5 @@ class TimerObject(GenericObject):
         self.setAttribute("name", f"Timer{id}")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [40, 18])
+        self.setAttribute("interval", 1000)
         self.setAttribute("enabled", True)
