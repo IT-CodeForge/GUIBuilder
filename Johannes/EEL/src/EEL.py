@@ -1,5 +1,11 @@
 from typing import Any
 
+from os import environ, path, devnull
+from sys import executable
+
+import sys
+sys.stdout = sys.stderr = open(devnull, 'w') #NOTE: Disables print(), etc
+
 import eel
 from tkinter import Tk, filedialog as fd
 from intermediary.intermediary import *
@@ -23,9 +29,11 @@ def init():
     global g_json
     g_json = JSON(g_intermediary)
 
-    eel.init('additional_files\\gui')
-    eel.brw.set_path('chrome', '.\\additional_files\\brave\\brave.exe')
-    eel.start('main.html', size=(320, 120), mode="firefox") #NOTE
+    t_additional_files = f"{path.split(__file__)[0]}\\{additionalFilesPath}"
+
+    eel.init(f'{t_additional_files}\\gui')
+    eel.brw.set_path('chrome', f'{t_additional_files}\\brave\\brave.exe')
+    eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE
 
 def resetData():
     global g_intermediary
@@ -253,4 +261,10 @@ def temptest():
     pass
 
 if __name__ == "__main__":
+    if environ.get("DEV") != None:
+        file = path.abspath(__file__)
+        additionalFilesPath = "..\\additional_files"
+    else:
+        file = path.abspath(executable)
+        additionalFilesPath = "additional_files"
     init()
