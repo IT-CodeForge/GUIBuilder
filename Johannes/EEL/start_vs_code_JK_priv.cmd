@@ -1,6 +1,6 @@
 @echo off
 
-SET SCRIPT_LOCATION=%cd%
+SET SCRIPT_LOCATION="%cd%"
 set PYTHONPATH=
 set DEV=True
 python -m pip install --upgrade pip
