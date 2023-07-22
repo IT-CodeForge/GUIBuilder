@@ -16,7 +16,7 @@ class Generator:
                                 "edit": "TGWEdit",
                                 "checkbox": "TGWCheckBox",
                                 "timer": "TGWTimer",
-                                "canvas": "TGWBitmapWindow.h"}
+                                "canvas": "TGWBitmapWindow"}
 
                                 
 
@@ -73,7 +73,7 @@ class Generator:
                 if object.get("type", "") == "checkbox":
                     ret_str += "  void event_changed_" + object["name"] + "(int isChecked_1_0);\n"
             if object.get("type", "") == "timer":
-                ret_str += "  void event_timer_" + object["name"] + ""
+                ret_str += "  void event_timer_" + object["name"] + "();\n"
         ret_str += '  void eventCheckBox(TGWCheckBox* eineCheckBox, int isChecked_1_0);\n'
         ret_str += '  void eventEditChanged(TGWEdit* einEdit);\n'
         ret_str += '  void eventButton(TGWButton* einButton, int event);\n'
@@ -119,7 +119,7 @@ class Generator:
             print(event_name, event_type)
             is_in_list   = False
             for object in objects:
-                type_checking  = (event_type == "pressed" and object.get("eventPressed", False)) or (event_type == "hovered" and object.get("eventHovered", False)) or (event_type == "changed" and object.get("eventChanged", False))
+                type_checking  = (event_type == "pressed" and object.get("eventPressed", False)) or (event_type == "hovered" and object.get("eventHovered", False)) or (event_type == "changed" and object.get("eventChanged", False)) or (event_type == "timer" and object.get("type") == "timer")
                 type_checking |= (event_type == "Create" and object.get("eventCreate", False)) or (event_type == "Resize" and object.get("eventResize", False)) or (event_type == "Paint" and object.get("eventPaint", False)) or (event_type == "Click" and object.get("eventMouseClicked", False)) or (event_type == "Move" and object.get("eventMouseMove", False))
                 if object["type"] == "window":
                     if type_checking:
@@ -155,6 +155,8 @@ class Generator:
                     ret_str += "void GUI::event_changed_" + object["name"] + "()\n{\n}\n\n"
                 if object["type"] == "checkbox":
                     ret_str += "void GUI::event_changed_" + object["name"] + "(int isChecked_1_0)\n{\n}\n\n"
+            if [object["name"], "timer"] not in already_added_events and object["type"] == "timer":
+                ret_str += "void GUI::event_timer_" + object["name"] + "()\n{\n}\n\n"
         
         return ret_str
 
@@ -170,12 +172,11 @@ class Generator:
             if object["type"] == "window":
                 continue
             ret_str += self.offset + object["name"] + " = " + self.__generate_cpp_object(object)
-        ret_str += self.function_end + "\n"
         for object in objects:
-            if object["type"] == "window":
-                continue
-            if "backgroundColor" in object:
-                ret_str += "" #macht was sobald man die Farbe in Hallmans image sten kann|self.offset + object["name"] + "->set"
+            if object["type"] == "canvas":
+               #erstmal gescrapt, bis die setBackgroundColor methode funktioniert | ret_str += self.offset + object["name"] + "->canvas->setBackgroundColor(0x" + self.__hex_color_converter(object["backgroundColor"][0]) + self.__hex_color_converter(object["backgroundColor"][1]) + self.__hex_color_converter(object["backgroundColor"][2]) + ");\n"
+                pass
+        ret_str += self.function_end + "\n"
         return ret_str
 
     
@@ -190,8 +191,8 @@ class Generator:
 
         for object in objects:
             if object["type"] == "timer":
-                ret_str += "int " + object["name"] + "Id = " + str(object["id"] + 1) + ";\n"
-                ret_str += "bool " + object["name"] + "IsEnabled = " + str(object["enabled"]).lower() + ";\n"
+                ret_str += "  int " + object["name"] + "Id = " + str(object["id"] + 1) + ";\n"
+                ret_str += "  bool " + object["name"] + "IsEnabled = " + str(object["enabled"]).lower() + ";\n"
         
         return ret_str
 
@@ -297,8 +298,15 @@ class Generator:
     def __generate_timer(self, object: dict[str, any]) -> str:
         ret_str  = ""
         ret_str += "new " + self.type_translation[object["type"]] + "(this, "
-        ret_str += str(object["interval"][0]) + ", "
+        ret_str += str(object["interval"]) + ", "
         ret_str += '&' + object["name"] + 'Id);\n'
+        return ret_str
+    
+    def __generate_canvas(self, object: dict[str, any]) -> str:
+        ret_str  = ""
+        ret_str += "new " + self.type_translation[object["type"]] + "(this, "
+        ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
+        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ');\n'
         return ret_str
     
     
@@ -329,6 +337,8 @@ class Generator:
             ret_str += self.__generate_checkbox(object)
         if object["type"] == "timer":
             ret_str += self.__generate_timer(object)
+        if object["type"] == "canvas":
+            ret_str += self.__generate_canvas(object)
         return ret_str
     
 
@@ -377,7 +387,11 @@ class Generator:
     
 if __name__ == "__main__":
     myGenerator = Generator()
-    objects = [{"type": "window", "position": [10,10], "size": [1024,512], "text": "Hallo", "backgroundColor": [12,23,34], "eventMouseMove": True},{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf", "eventPressed": True, "eventChanged": False},{"type": "checkbox", "name": "meineCheckbox", "position": [10,84], "size": [128,64], "text": "ich bin eine Checkbox", "eventChanged": True, "checked": False}]
+    objects = [{"type": "window", "position": [10,10], "size": [1024,512], "text": "Hallo", "backgroundColor": [12,23,34], "eventMouseMove": True},
+               {"type": "button", "name": "einButton", "position": [10,10], "size": [128,32], "text": "Knopf", "eventPressed": True, "eventChanged": False},
+               {"type": "checkbox", "name": "meineCheckbox", "position": [10,52], "size": [128,32], "text": "ich bin eine Checkbox", "eventChanged": True, "checked": False},
+               {"id": 0, "type": "timer", "name": "einTimer", "interval": 1000, "enabled": True},
+               {"type": "canvas", "name": "einCanvas", "position": [148,10], "size": [138,138], "backgroundColor": [255,0,0]}]
     myGenerator.write_files("", objects)
 
 #,{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf", "eventPressed": True, "eventHovered": False, "eventChanged": False},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2", "eventPressed": True, "eventHovered": False, "eventChanged": False}
