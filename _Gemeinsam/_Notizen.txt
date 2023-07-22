@@ -13,6 +13,8 @@ Elementeigenschaften:
   - (Font)
 
 Events:
+Button:
+  - DoublePressed
 KeyListener:
   - KeyEvent
   
