@@ -9,7 +9,7 @@ from os import environ, path, devnull
 from sys import executable
 
 import sys
-sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Disables print(), etc
+sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
 
 
 g_intermediary: Intermediary

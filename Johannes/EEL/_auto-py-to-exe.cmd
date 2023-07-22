@@ -1,0 +1,1 @@
+auto-py-to-exe -c auto-py-to-exe.json -o .\output -lang de
