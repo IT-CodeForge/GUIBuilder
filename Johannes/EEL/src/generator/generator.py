@@ -11,7 +11,12 @@ class Generator:
         self.offset = "  "
         self.type_translation = {"button": "TGWButton",
                                 "window": "TGWMainWindow",
-                                "timer": "TGWTimer"}
+                                "timer": "TGWTimer",
+                                "label": "TGWEdit",
+                                "edit": "TGWEdit",
+                                "checkbox": "TGWCheckBox",
+                                "timer": "TGWTimer",
+                                "canvas": "TGWBitmapWindow"}
 
                                 
 
@@ -47,17 +52,34 @@ class Generator:
         ret_str += 'private:\n'
         for object in objects:
             if object["type"] == "window":
+                if object.get("eventCreate") == True:
+                    ret_str += "  void eventShow();\n  void event_Create_Window();\n"
+                if object.get("eventPaint") == True:
+                    ret_str += "  void eventPaint(HDC hDeviceContext);\n  void event_Paint_Background(HDC hDeviceContext);\n"
+                if object.get("eventResize") == True:
+                    ret_str += "  void eventResize();\n  void event_Resize_Window();\n"
+                if object.get("eventMouseClick") == True:
+                    ret_str += "  void eventMouseClick(int posX, int posY, TGWindow* affectedWindow);\n  void event_Click_Mouse(int posX, int posY, TGWindow* affectedWindow);\n"
+                if object.get("eventMouseMove") == True:
+                    ret_str += "  void eventMouseMove(int posX, int posY);\n  void event_Move_Mouse(int posX, int posY);\n"
                 continue
             if object.get("eventPressed", False):
                 ret_str += "  void event_pressed_" + object["name"] + "(int event);\n"
             if object.get("eventHovered", False):
                 ret_str += "  void event_hovered_" + object["name"] + "();\n"
             if object.get("eventChanged", False):
-                ret_str += "  void event_changed_" + object["name"] + "();\n"
-        #ret_str += "  void eventHovered(void* id);\n" | hovered vorerst gescrapt
-        ret_str += 'public:\n  GUI();\n  void eventMouseMove(int posX, int posY);\n'
+                if object.get("type", "") == "edit":
+                    ret_str += "  void event_changed_" + object["name"] + "();\n"
+                if object.get("type", "") == "checkbox":
+                    ret_str += "  void event_changed_" + object["name"] + "(int isChecked_1_0);\n"
+            if object.get("type", "") == "timer":
+                ret_str += "  void event_timer_" + object["name"] + "();\n"
+        ret_str += '  void eventCheckBox(TGWCheckBox* eineCheckBox, int isChecked_1_0);\n'
+        ret_str += '  void eventEditChanged(TGWEdit* einEdit);\n'
         ret_str += '  void eventButton(TGWButton* einButton, int event);\n'
         ret_str += '  void eventTimer(int id);\n'
+        #ret_str += "  void eventHovered(void* id);\n" | hovered vorerst gescrapt
+        ret_str += 'public:\n  GUI();\n'
         ret_str += '};\n\n#endif'
         return ret_str
     
@@ -74,9 +96,10 @@ class Generator:
         
         ret_str += self.__generate_constructor(objects)
 
-        ret_str += self.__generate_btn_event(objects)
-        ret_str += self.__generate_moumo_event(objects)
-        ret_str += self.__generate_tim_event(objects)
+        ret_str += self.__generate_button_event(objects)
+        ret_str += self.__generate_timer_event(objects)
+        ret_str += self.__generate_changed_event(objects)
+        ret_str += self.__generate_parsed_events(objects)
         #ret_str += self.__generate_hov_event(objects) | hovered vorerst gescrapt
         return ret_str
     
@@ -87,35 +110,53 @@ class Generator:
         ret_str = self.__check_user_includes(objects) + '#include "GUI.h"\n\n' + ret_str
         already_added_events = []
 
-        offset = 0
         temp_str = ret_str
         while temp_str.find("void GUI::event_") != -1:
             start_index = temp_str.find("void GUI::event_")
             end_index   = self.__get_method_contents(temp_str[start_index:])[0][2]
-            event_name  = temp_str[start_index + 24:temp_str.find("(", start_index)]
-            event_type  = temp_str[start_index + 16:start_index + 23]
+            event_name  = temp_str[temp_str[start_index + 16:].find("_") + start_index + 17:temp_str.find("(", start_index)]
+            event_type  = temp_str[start_index + 16:temp_str[start_index + 16:].find("_") + start_index + 16]
+            print(event_name, event_type)
             is_in_list   = False
             for object in objects:
+                type_checking  = (event_type == "pressed" and object.get("eventPressed", False)) or (event_type == "hovered" and object.get("eventHovered", False)) or (event_type == "changed" and object.get("eventChanged", False)) or (event_type == "timer" and object.get("type") == "timer")
+                type_checking |= (event_type == "Create" and object.get("eventCreate", False)) or (event_type == "Resize" and object.get("eventResize", False)) or (event_type == "Paint" and object.get("eventPaint", False)) or (event_type == "Click" and object.get("eventMouseClicked", False)) or (event_type == "Move" and object.get("eventMouseMove", False))
                 if object["type"] == "window":
+                    if type_checking:
+                        is_in_list = True
+                        already_added_events.append([event_name, event_type])
                     continue
-                type_checking = (event_type == "pressed" and object.get("eventPressed", False)) or (event_type == "hovered" and object.get("eventHovered", False)) or (event_type == "changed" and object.get("eventChanged", False))
                 if event_name == object["name"] and (type_checking):
                     is_in_list = True
                     already_added_events.append([event_name, event_type])
             if not is_in_list:
                 ret_str = ret_str.replace(ret_str[start_index:end_index + start_index + 2], "")
             temp_str = temp_str[start_index + 24:]
-            offset += start_index
 
         for object in objects:
             if object["type"] == "window":
+                if ["Window", "Create"] not in already_added_events and object.get("eventCreate") == True:
+                    ret_str += "void GUI::event_Create_Window()\n{\n}\n"
+                if ["Background", "Paint"] not in already_added_events and object.get("eventPaint") == True:
+                    ret_str += "void GUI::event_Paint_Background(HDC hDeviceContext)\n{\n}\n"
+                if ["Window", "Resize"] not in already_added_events and object.get("eventResize") == True:
+                    ret_str += "void GUI::event_Resize_Window()\n{\n}\n"
+                if ["Mouse", "Click"] not in already_added_events and object.get("eventMouseClick") == True:
+                    ret_str += "void GUI::event_Click_Mouse(int posX, int posY, TGWindow* affectedWindow)\n}\n"
+                if ["Mouse", "Move"] not in already_added_events and object.get("eventMouseMove") == True:
+                    ret_str += "void GUI::event_Move_Mouse(int posX, int posY)\n{\n}\n"
                 continue
             if [object["name"], "pressed"] not in already_added_events and object.get("eventPressed", False):
-                        ret_str += "void GUI::event_pressed_" + object["name"] + "(int event)\n{\n}\n\n"
+                    ret_str += "void GUI::event_pressed_" + object["name"] + "(int event)\n{\n}\n\n"
             if [object["name"], "hovered"] not in already_added_events and object.get("eventHovered", False):
-                        ret_str += "void GUI::event_hovered_" + object["name"] + "()\n{\n}\n\n"
+                    ret_str += "void GUI::event_hovered_" + object["name"] + "()\n{\n}\n\n"
             if [object["name"], "changed"] not in already_added_events and object.get("eventChanged", False):
-                        ret_str += "void GUI::event_changed_" + object["name"] + "()\n{\n}\n\n"
+                if object["type"] == "edit":
+                    ret_str += "void GUI::event_changed_" + object["name"] + "()\n{\n}\n\n"
+                if object["type"] == "checkbox":
+                    ret_str += "void GUI::event_changed_" + object["name"] + "(int isChecked_1_0)\n{\n}\n\n"
+            if [object["name"], "timer"] not in already_added_events and object["type"] == "timer":
+                ret_str += "void GUI::event_timer_" + object["name"] + "()\n{\n}\n\n"
         
         return ret_str
 
@@ -131,12 +172,11 @@ class Generator:
             if object["type"] == "window":
                 continue
             ret_str += self.offset + object["name"] + " = " + self.__generate_cpp_object(object)
-        ret_str += self.function_end + "\n"
         for object in objects:
-            if object["type"] == "window":
-                continue
-            if "backgroundColor" in object:
-                ret_str += "" #macht was sobald man die Farbe in Hallmans image sten kann|self.offset + object["name"] + "->set"
+            if object["type"] == "canvas":
+               #erstmal gescrapt, bis die setBackgroundColor methode funktioniert | ret_str += self.offset + object["name"] + "->canvas->setBackgroundColor(0x" + self.__hex_color_converter(object["backgroundColor"][0]) + self.__hex_color_converter(object["backgroundColor"][1]) + self.__hex_color_converter(object["backgroundColor"][2]) + ");\n"
+                pass
+        ret_str += self.function_end + "\n"
         return ret_str
 
     
@@ -148,12 +188,16 @@ class Generator:
             ret_str += self.offset + self.type_translation[object["type"]] + "* " + object["name"] + ";\n"
         
         ret_str += "\n"
+
+        for object in objects:
+            if object["type"] == "timer":
+                ret_str += "  int " + object["name"] + "Id = " + str(object["id"] + 1) + ";\n"
+                ret_str += "  bool " + object["name"] + "IsEnabled = " + str(object["enabled"]).lower() + ";\n"
         
-        ret_str += "  int mouseX = 0;\n  int mouseY = 0;\n"
         return ret_str
 
 
-    def __generate_btn_event(self, objects: list[dict[str, any]]) -> str:
+    def __generate_button_event(self, objects: list[dict[str, any]]) -> str:
         ret_str = "\nvoid GUI::eventButton(TGWButton* einButton, int event)\n{\n"
         for object in objects:
             if object["type"] == "button" and object["eventPressed"]:
@@ -162,11 +206,11 @@ class Generator:
         ret_str += self.function_end + "\n"
         return ret_str
     
-    def __generate_tim_event(self, objects: list[dict[str, any]]) -> str:
+    def __generate_timer_event(self, objects: list[dict[str, any]]) -> str:
         ret_str  = "\nvoid GUI::eventTimer(int id)\n{\n"
         for object in objects:
             if object["type"] == "timer":
-                ret_str += "  if(id == " + object["name"] + "Id)\n  {\n"
+                ret_str += "  if(id == " + object["name"] + "Id && " + object["name"] + "IsEnabled == true)\n  {\n"
                 ret_str += "    event_timer_" + object["name"] + "();\n  }\n"
         ret_str += self.function_end + "\n"
         return ret_str
@@ -182,8 +226,19 @@ class Generator:
         ret_str += self.function_end + "\n"
         return ret_str
     
-    def __generate_moumo_event(self, objects: list[dict[str, any]]) -> str:
-        ret_str = "\nvoid GUI::eventMouseMove(int posX, int posY)\n{\n  ""\n}\n"
+    def __generate_changed_event(self, objects: list[dict[str, any]]) -> str:
+        ret_str  = "void GUI::eventCheckBox(TGWCheckBox* eineCheckBox, int isChecked_1_0)\n{\n"
+        for object in objects:
+            if object["type"] == "checkbox":
+                ret_str += "  if(eineCheckBox == this->" + object["name"] + ")\n  {\n"
+                ret_str += "    event_changed_" + object["name"] + "(isChecked_1_0);\n  }\n"
+        ret_str += self.function_end + "\n"
+        ret_str += "void GUI::eventEditChanged(TGWEdit* einEdit)\n{\n"
+        for object in objects:
+            if object["type"] == "edit":
+                ret_str += "  if(einEdit == this->" + object["name"] + ")\n  {\n"
+                ret_str += "    event_changed_" + object["name"] + "();\n  }\n"
+        ret_str += self.function_end + "\n"
         return ret_str
     
     def __generate_parsed_events(self, objects: list[dict[str, any]]) -> str:
@@ -191,16 +246,17 @@ class Generator:
         for object in objects:
             if object.get("type") != "window":
                 continue
-            if "eventCreate" in object:
-                ret_str += "\nvoid GUI::eventShow()\n{\n  event"
-            if "eventPaint" in object:
-                pass
-            if "eventResize" in object:
-                pass
-            if "eventMouseClick" in object:
-                pass
-            if "eventMouseMove" in object:
-                ret_str += "\nvoid GUI::eventMouseMove(int posX, int posY)\n{\n  event_Mousmov(posX, posY);\n}\n"
+            if object.get("eventCreate") == True:
+                ret_str += "\nvoid GUI::eventShow()\n{\n  event_Create_Window();\n}\n"
+            if object.get("eventPaint") == True:
+                ret_str += "\nvoid GUI::eventPaint(HDC hDeviceContext)\n{\n  event_Paint_Background(hDeviceContext);\n}\n"
+            if object.get("eventResize") == True:
+                ret_str += "\nvoid GUI::eventResize()\n{\n  event_Resize_Window();\n}\n"
+            if object.get("eventMouseClick") == True:
+                ret_str += "\nvoid GUI::eventMouseClick(int posX, int posY, TGWindow* affectedWindow)\n{\n  event_Click_Mouse(posX, posY, affectedWindow);\n}\n"
+            if object.get("eventMouseMove") == True:
+                ret_str += "\nvoid GUI::eventMouseMove(int posX, int posY)\n{\n  event_Move_Mouse(posX, posY);\n}\n"
+        return ret_str
 
 	
 	
@@ -215,14 +271,54 @@ class Generator:
         ret_str += '"' + object["text"] + '");\n'
         return ret_str
     
+    def __generate_label(self, object: dict[str, any]) -> str:
+        ret_str  = ""
+        ret_str += "new " + self.type_translation[object["type"]] + "(this, "
+        ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
+        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ", "
+        ret_str += '"' + object["text"] + '", false, false);\n'
+        return ret_str
+    
+    def __generate_edit(self, object: dict[str, any]) -> str:
+        ret_str  = ""
+        ret_str += "new " + self.type_translation[object["type"]] + "(this, "
+        ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
+        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ", "
+        ret_str += '"' + object["text"] + '", ' + object["multipleLines"] + ', false);\n'
+        return ret_str
+    
+    def __generate_checkbox(self, object: dict[str, any]) -> str:
+        ret_str  = ""
+        ret_str += "new " + self.type_translation[object["type"]] + "(this, "
+        ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
+        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ", "
+        ret_str += '"' + object["text"] + '", ' + str(object["checked"]).lower() + ');\n'
+        return ret_str
+    
+    def __generate_timer(self, object: dict[str, any]) -> str:
+        ret_str  = ""
+        ret_str += "new " + self.type_translation[object["type"]] + "(this, "
+        ret_str += str(object["interval"]) + ", "
+        ret_str += '&' + object["name"] + 'Id);\n'
+        return ret_str
+    
+    def __generate_canvas(self, object: dict[str, any]) -> str:
+        ret_str  = ""
+        ret_str += "new " + self.type_translation[object["type"]] + "(this, "
+        ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
+        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ');\n'
+        return ret_str
+    
     
 
     def __check_user_includes(self, objects: list[dict[str, any]]) -> str:
         ret_str = ""
         unique_type_list = []
         for object in objects:
-            if object["type"] == "button" and "button" not in unique_type_list:
-                unique_type_list.append("button")
+            if object["type"] == "window":
+                continue
+            if object["type"] not in unique_type_list:
+                unique_type_list.append(object["type"])
         
         for type in unique_type_list:
             ret_str += '#include "' + self.type_translation[type] + '.h"\n'
@@ -233,7 +329,16 @@ class Generator:
         ret_str = ""
         if object["type"] == "button":
             ret_str += self.__generate_button(object)
-            return ret_str
+        if object["type"] == "label":
+            ret_str += self.__generate_label(object)
+        if object["type"] == "edit":
+            ret_str += self.__generate_edit(object)
+        if object["type"] == "checkbox":
+            ret_str += self.__generate_checkbox(object)
+        if object["type"] == "timer":
+            ret_str += self.__generate_timer(object)
+        if object["type"] == "canvas":
+            ret_str += self.__generate_canvas(object)
         return ret_str
     
 
@@ -282,7 +387,11 @@ class Generator:
     
 if __name__ == "__main__":
     myGenerator = Generator()
-    objects = [{"type": "window", "position": [10,10], "size": [1024,512], "text": "Hallo", "backgroundColor": [12,23,34]},{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf", "eventPressed": True, "eventChanged": False},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2", "eventPressed": True, "eventHovered": False, "eventChanged": False}]
+    objects = [{"type": "window", "position": [10,10], "size": [1024,512], "text": "Hallo", "backgroundColor": [12,23,34], "eventMouseMove": True},
+               {"type": "button", "name": "einButton", "position": [10,10], "size": [128,32], "text": "Knopf", "eventPressed": True, "eventChanged": False},
+               {"type": "checkbox", "name": "meineCheckbox", "position": [10,52], "size": [128,32], "text": "ich bin eine Checkbox", "eventChanged": True, "checked": False},
+               {"id": 0, "type": "timer", "name": "einTimer", "interval": 1000, "enabled": True},
+               {"type": "canvas", "name": "einCanvas", "position": [148,10], "size": [138,138], "backgroundColor": [255,0,0]}]
     myGenerator.write_files("", objects)
 
 #,{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf", "eventPressed": True, "eventHovered": False, "eventChanged": False},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2", "eventPressed": True, "eventHovered": False, "eventChanged": False}
