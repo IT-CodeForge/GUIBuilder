@@ -11,6 +11,7 @@ class WindowObject(GenericObject):
         self.setAttribute("textColor", [0, 0, 0])
         self.setAttribute("backgroundColor", [255, 255, 255])
         self.setAttribute("eventCreate", False)
+        self.setAttribute("eventDestroy", False)
         self.setAttribute("eventPaint", False)
         self.setAttribute("eventResize", False)
         self.setAttribute("eventMouseClick", False)

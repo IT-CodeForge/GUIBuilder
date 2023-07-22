@@ -89,6 +89,7 @@ def convert_attribut_to_js_data(p_attribut) -> dict[str, any]:
     
     if t_type == "window":
         t_return["event_create"] = p_attribut["eventCreate"]
+        t_return["event_destroy"] = p_attribut["eventDestroy"]
         t_return["event_paint"] = p_attribut["eventPaint"]
         t_return["event_resize"] = p_attribut["eventResize"]
         t_return["event_mouse_click"] = p_attribut["eventMouseClick"]
@@ -137,6 +138,7 @@ def convert_attribut_from_js_data(p_attribut) -> dict[str, any]:
 
     if t_type == "window":
         t_return["eventCreate"] = p_attribut["event_create"]
+        t_return["eventDestroy"] = p_attribut["event_destroy"]
         t_return["eventPaint"] = p_attribut["event_paint"]
         t_return["eventResize"] = p_attribut["event_resize"]
         t_return["eventMouseClick"] = p_attribut["event_mouse_click"]

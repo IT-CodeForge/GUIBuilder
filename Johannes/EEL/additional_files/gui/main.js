@@ -50,7 +50,7 @@ function init_element_variables() {
     window.copy_elements = { main: getElement("copy-elements"), btn: getElement("copy-element-btn"), label: getElement("copy-element-label"), edit: getElement("copy-element-edit"), checkbox: getElement("copy-element-checkbox"), canvas: getElement("copy-element-canvas"), timer: getElement("copy-element-timer") }
     window.menubar_elements = { main: getElement("menubar-elements"), btn: getElement("menubar-element-btn"), label: getElement("menubar-element-label"), edit: getElement("menubar-element-edit"), checkbox: getElement("menubar-element-checkbox"), canvas: getElement("menubar-element-canvas"), timer: getElement("menubar-element-timer") }
     window.element_attributes = { main: getElement("element-attributes"), inner: getElement("element-attributes-inner"), id: getElement("element-attribut-id"), name: getElement("element-attribut-name"), text_section: getElement("element-attribut-text-section"), text: getElement("element-attribut-text"), pos_x: getElement("element-attribut-position-x"), pos_y: getElement("element-attribut-position-y"), size_x: getElement("element-attribut-size-x"), size_y: getElement("element-attribut-size-y"), text_color_section: getElement("element-attribut-text-color-section"), text_color: getElement("element-attribut-text-color"), background_color_section: getElement("element-attribut-background-color-section"), background_color: getElement("element-attribut-background-color"), interval_section: getElement("element-attribut-interval-section"), interval: getElement("element-attribut-interval"), multiple_lines_section: getElement("element-attribut-multiple-lines-section"), checked_section: getElement("element-attribut-checked-section"), checked: getElement("element-attribut-checked"), enabled_section: getElement("element-attribut-enabled-section"), enabled: getElement("element-attribut-enabled"), multiple_lines: getElement("element-attribut-multiple-lines"), event_section: getElement("element-attribut-section"), event_pressed_section: getElement("element-attribut-event-pressed-section"), event_pressed: getElement("element-attribut-event-pressed"), event_hovered_section: getElement("element-attribut-event-hovered-section"), event_hovered: getElement("element-attribut-event-hovered"), event_changed_section: getElement("element-attribut-event-changed-section"), event_changed: getElement("element-attribut-event-changed") }
-    window.window_attributes = { main: getElement("window-attributes"), id: getElement("window-attribut-id"), name: getElement("window-attribut-name"), text: getElement("window-attribut-text"), size_x: getElement("window-attribut-size-x"), size_y: getElement("window-attribut-size-y"), text_color: getElement("window-attribut-text-color"), background_color: getElement("window-attribut-background-color"), event_create: getElement("window-attribut-event-create"), event_paint: getElement("window-attribut-event-paint"), event_resize: getElement("window-attribut-event-resize"), event_mouse_click: getElement("window-attribut-event-mouse-click"), event_mouse_move: getElement("window-attribut-event-mouse-move") }
+    window.window_attributes = { main: getElement("window-attributes"), id: getElement("window-attribut-id"), name: getElement("window-attribut-name"), text: getElement("window-attribut-text"), size_x: getElement("window-attribut-size-x"), size_y: getElement("window-attribut-size-y"), text_color: getElement("window-attribut-text-color"), background_color: getElement("window-attribut-background-color"), event_create: getElement("window-attribut-event-create"), event_destroy: getElement("window-attribut-event-destroy"), event_paint: getElement("window-attribut-event-paint"), event_resize: getElement("window-attribut-event-resize"), event_mouse_click: getElement("window-attribut-event-mouse-click"), event_mouse_move: getElement("window-attribut-event-mouse-move") }
 }
 
 
@@ -222,11 +222,12 @@ function load_window(p_attributes) {
     window_attributes.size_y.value = gui_elements_main.data.size_y
     window_attributes.text_color.value = gui_elements_main.data.text_color
     window_attributes.background_color.value = gui_elements_main.data.background_color
-    window_attributes.event_create = gui_elements_main.data.event_create
-    window_attributes.event_paint = gui_elements_main.data.event_paint
-    window_attributes.event_resize = gui_elements_main.data.event_resize
-    window_attributes.event_mouse_click = gui_elements_main.data.event_mouse_click
-    window_attributes.event_mouse_move = gui_elements_main.data.event_mouse_move
+    window_attributes.event_create.checked = gui_elements_main.data.event_create
+    window_attributes.event_destroy.checked = gui_elements_main.data.event_destroy
+    window_attributes.event_paint.checked = gui_elements_main.data.event_paint
+    window_attributes.event_resize.checked = gui_elements_main.data.event_resize
+    window_attributes.event_mouse_click.checked = gui_elements_main.data.event_mouse_click
+    window_attributes.event_mouse_move.checked = gui_elements_main.data.event_mouse_move
 }
 
 function load_gui_element(p_origin_element, p_attributes) {
@@ -527,6 +528,10 @@ function window_set_background_color() {
 
 function window_set_event_create() {
     gui_elements_main.data.event_create = window_attributes.event_create.checked
+}
+
+function window_set_event_destroy() {
+    gui_elements_main.data.event_destroy = window_attributes.event_destroy.checked
 }
 
 function window_set_event_paint() {

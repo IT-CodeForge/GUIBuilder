@@ -1,0 +1,37 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "filenames",
+   "value": "./src/main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": true
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "./Icon.ico"
+  },
+  {
+   "optionDest": "datas",
+   "value": "./additional_files;additional_files/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "./src/modules;."
+  },
+  {
+   "optionDest": "name",
+   "value": "IT-Tools"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}
