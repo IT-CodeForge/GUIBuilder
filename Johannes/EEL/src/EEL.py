@@ -33,7 +33,8 @@ def init():
 
     eel.init(f'{t_additional_files}\\gui')
     eel.brw.set_path('chrome', f'{t_additional_files}\\brave\\brave.exe')
-    eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE
+    #eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE: Realease-Mode
+    eel.start('main.html', mode="firefox") #NOTE: Dev-Mode
 
 def resetData():
     global g_intermediary
