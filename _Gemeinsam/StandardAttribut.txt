@@ -6,6 +6,7 @@ type: "window":
 	textColor // nicht möglich in Hallmann
 	backgroundColor // nicht möglich in Hallmann
 	eventCreate
+	eventDestroy
 	eventPaint
 	eventResize
 	eventMouseClick

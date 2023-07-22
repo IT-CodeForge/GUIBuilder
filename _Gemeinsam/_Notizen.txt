@@ -11,8 +11,6 @@ Elementeigenschaften:
   - (Font)
 
 Events:
-Fenster:
-  - eventDestroy
 KeyListener:
   - KeyEvent
   
