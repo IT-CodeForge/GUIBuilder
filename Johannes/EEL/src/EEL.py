@@ -1,3 +1,7 @@
+import os
+import sys
+# sys.stdout = sys.stderr = open(os.devnull, 'w')  # NOTE: Release: Disables print(), etc
+
 from generator.generator import *
 from intermediary.json import *
 from intermediary.intermediary import *
@@ -5,11 +9,8 @@ from tkinter import Tk, filedialog as fd
 import eel
 from typing import Any
 
-from os import environ, path, devnull
+from os import environ, path
 from sys import executable
-
-import sys
-sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
 
 
 g_intermediary: Intermediary
