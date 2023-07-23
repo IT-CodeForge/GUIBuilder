@@ -7,7 +7,7 @@
   },
   {
    "optionDest": "filenames",
-   "value": "C:/Users/Johannes/Arbeitsordner/Prog/_SVN/Johannes/EEL/src/EEL.py"
+   "value": "C:/Users/Johannes/Arbeitsordner/Prog/_SVN/Johannes/EEL/src/main.py"
   },
   {
    "optionDest": "onefile",
@@ -16,6 +16,10 @@
   {
    "optionDest": "console",
    "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/Johannes/Arbeitsordner/Prog/_SVN/Johannes/EEL/favicon.ico"
   },
   {
    "optionDest": "name",
