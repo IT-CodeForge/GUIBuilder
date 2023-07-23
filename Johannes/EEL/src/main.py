@@ -1,6 +1,6 @@
 from os import devnull
-from sys import stdout, stderr
-# stdout = stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
+import sys
+# sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
 
 from typing import Any
 from os import environ, path
