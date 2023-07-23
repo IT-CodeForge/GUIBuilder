@@ -1,6 +1,5 @@
 s. global Notizen
 
-language auswählen: disable features
 element resizer
 Farbselektor
 Fix: Btn outside, if am Rand dann Größenänderung

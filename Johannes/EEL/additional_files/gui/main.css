@@ -16,6 +16,7 @@
 
 body {
     background-color: #f0f0f0;
+    user-select: none;
 }
 
 
@@ -164,6 +165,10 @@ body {
 
 .menubar-element-action-btn {
     position: absolute;
+}
+
+#menubar-element-select-language {
+    right: 7rem;
 }
 
 #menubar-element-load {

@@ -3,6 +3,8 @@ var g_move_mouse_x_offset = 0
 var g_move_mouse_y_offset = 0
 var g_active_gui_element = null
 var g_last_gui_element_mousedown_event = 0
+var g_prog_language = null
+
 var gui_elements_main = null
 var copy_elements = null
 var menubar_elements = null
@@ -37,6 +39,8 @@ window.onbeforeunload = function (e) {
 window.onload = async function () {
     init_element_variables()
 
+    set_language()
+
     t_w_attr = await eel.gui_init()()
     load_window(t_w_attr)
 
@@ -48,9 +52,32 @@ window.onload = async function () {
 function init_element_variables() {
     window.gui_elements_main = getElement('gui-elements')
     window.copy_elements = { main: getElement("copy-elements"), btn: getElement("copy-element-btn"), label: getElement("copy-element-label"), edit: getElement("copy-element-edit"), checkbox: getElement("copy-element-checkbox"), canvas: getElement("copy-element-canvas"), timer: getElement("copy-element-timer") }
-    window.menubar_elements = { main: getElement("menubar-elements"), btn: getElement("menubar-element-btn"), label: getElement("menubar-element-label"), edit: getElement("menubar-element-edit"), checkbox: getElement("menubar-element-checkbox"), canvas: getElement("menubar-element-canvas"), timer: getElement("menubar-element-timer") }
+    window.menubar_elements = { main: getElement("menubar-elements"), btn: getElement("menubar-element-btn"), label: getElement("menubar-element-label"), edit: getElement("menubar-element-edit"), checkbox: getElement("menubar-element-checkbox"), canvas: getElement("menubar-element-canvas"), timer: getElement("menubar-element-timer"), select_language: getElement("menubar-element-select-language") }
     window.element_attributes = { main: getElement("element-attributes"), inner: getElement("element-attributes-inner"), id: getElement("element-attribut-id"), name: getElement("element-attribut-name"), text_section: getElement("element-attribut-text-section"), text: getElement("element-attribut-text"), pos_x: getElement("element-attribut-position-x"), pos_y: getElement("element-attribut-position-y"), size_x: getElement("element-attribut-size-x"), size_y: getElement("element-attribut-size-y"), text_color_section: getElement("element-attribut-text-color-section"), text_color: getElement("element-attribut-text-color"), background_color_section: getElement("element-attribut-background-color-section"), background_color: getElement("element-attribut-background-color"), interval_section: getElement("element-attribut-interval-section"), interval: getElement("element-attribut-interval"), multiple_lines_section: getElement("element-attribut-multiple-lines-section"), checked_section: getElement("element-attribut-checked-section"), checked: getElement("element-attribut-checked"), enabled_section: getElement("element-attribut-enabled-section"), enabled: getElement("element-attribut-enabled"), multiple_lines: getElement("element-attribut-multiple-lines"), event_section: getElement("element-attribut-section"), event_pressed_section: getElement("element-attribut-event-pressed-section"), event_pressed: getElement("element-attribut-event-pressed"), event_hovered_section: getElement("element-attribut-event-hovered-section"), event_hovered: getElement("element-attribut-event-hovered"), event_changed_section: getElement("element-attribut-event-changed-section"), event_changed: getElement("element-attribut-event-changed") }
     window.window_attributes = { main: getElement("window-attributes"), id: getElement("window-attribut-id"), name: getElement("window-attribut-name"), text: getElement("window-attribut-text"), size_x: getElement("window-attribut-size-x"), size_y: getElement("window-attribut-size-y"), text_color: getElement("window-attribut-text-color"), background_color: getElement("window-attribut-background-color"), event_create: getElement("window-attribut-event-create"), event_destroy: getElement("window-attribut-event-destroy"), event_paint: getElement("window-attribut-event-paint"), event_resize: getElement("window-attribut-event-resize"), event_mouse_click: getElement("window-attribut-event-mouse-click"), event_mouse_move: getElement("window-attribut-event-mouse-move") }
+}
+
+
+// Set Programming Language
+function set_language() {
+    g_prog_language = menubar_elements.select_language.value
+
+    if (g_prog_language == "C++")
+    {
+        element_attributes.text_color.disabled = true;
+        element_attributes.background_color.disabled = true;
+        element_attributes.event_hovered.disabled = true;
+        window_attributes.text_color.disabled = true;
+        window_attributes.background_color.disabled = true;
+    }
+    else
+    {
+        element_attributes.text_color.disabled = false;
+        element_attributes.background_color.disabled = false;
+        element_attributes.event_hovered.disabled = false;
+        window_attributes.text_color.disabled = false;
+        window_attributes.background_color.disabled = false;
+    }
 }
 
 

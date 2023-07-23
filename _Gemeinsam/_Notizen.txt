@@ -1,7 +1,5 @@
 ToDo:
 
-Icon, Favicon
-
 GUI-Elemente:
   - Slider
   - (Bild)
