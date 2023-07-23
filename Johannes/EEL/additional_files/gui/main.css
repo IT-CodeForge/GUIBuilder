@@ -116,6 +116,13 @@ body {
 
 
 
+.element-checkbox-inner{
+    position: relative;
+    z-index: -1;
+}
+
+
+
 #copy-elements {
     display: none;
 }
