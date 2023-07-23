@@ -284,7 +284,7 @@ class Generator:
         ret_str += "new " + self.type_translation[object["type"]] + "(this, "
         ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
         ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ", "
-        ret_str += '"' + object["text"] + '", ' + object["multipleLines"] + ', false);\n'
+        ret_str += '"' + object["text"] + '", ' + str(object["multipleLines"]).lower() + ', false);\n'
         return ret_str
     
     def __generate_checkbox(self, object: dict[str, any]) -> str:
@@ -391,7 +391,9 @@ if __name__ == "__main__":
                {"type": "button", "name": "einButton", "position": [10,10], "size": [128,32], "text": "Knopf", "eventPressed": True, "eventChanged": False},
                {"type": "checkbox", "name": "meineCheckbox", "position": [10,52], "size": [128,32], "text": "ich bin eine Checkbox", "eventChanged": True, "checked": False},
                {"id": 0, "type": "timer", "name": "einTimer", "interval": 1000, "enabled": True},
-               {"type": "canvas", "name": "einCanvas", "position": [148,10], "size": [138,138], "backgroundColor": [255,0,0]}]
+               {"type": "canvas", "name": "einCanvas", "position": [148,10], "size": [138,138], "backgroundColor": [255,0,0]},
+               {"type": "label", "name": "einLabel", "position": [10, 94], "size": [12, 128], "text": "Ich bin ein label"},
+               {"type": "edit", "name": "einEdit", "position": [148, 94], "size": [12, 128], "text": "Ich bin ein edit", "multipleLines": True, "eventChanged": True}]
     myGenerator.write_files("", objects)
 
 #,{"type": "button", "name": "einButton", "position": [10,10], "size": [128,64], "text": "Knopf", "eventPressed": True, "eventHovered": False, "eventChanged": False},{"type": "button", "name": "einButton2", "position": [10,30], "size": [128,64], "text": "Knopf2", "eventPressed": True, "eventHovered": False, "eventChanged": False}
