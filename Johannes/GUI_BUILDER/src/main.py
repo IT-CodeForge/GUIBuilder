@@ -170,20 +170,22 @@ class Steuerung:
 
     # Öffnet TKinter Fenster, um Filedialoge zu öffnen
 
-    @staticmethod
-    def __get_load_file_path() -> str:
+    @classmethod
+    def __get_load_file_path(cls) -> str:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
-        file = fd.askopenfilename(filetypes=[("JSON", ".json")])
+        t_initialdir_path = f"{path.split(cls.c_file)[0]}"
+        file = fd.askopenfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path)
         return file
 
-    @staticmethod
-    def __get_save_file_path() -> str:
+    @classmethod
+    def __get_save_file_path(cls) -> str:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
-        file = fd.asksaveasfilename(filetypes=[("JSON", ".json")])
+        t_initialdir_path = f"{path.split(cls.c_file)[0]}"
+        file = fd.asksaveasfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path, defaultextension=".json")
         return file
 
     @classmethod
@@ -233,7 +235,7 @@ class Steuerung:
         cls = Steuerung
         t_data = cls.__c_intermediary.getObjectsAsDictionaryList()
         # print(t_data)
-        t_path = cls.__get_save_file_path
+        t_path = cls.__get_save_file_path()
         if (t_path == ""):
             return None
         # print(t_path)
