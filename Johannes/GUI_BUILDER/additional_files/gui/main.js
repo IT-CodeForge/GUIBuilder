@@ -59,7 +59,7 @@ function init_element_variables() {
     window.gui_elements_main = getElement('gui-elements')
     window.copy_elements = { main: getElement("copy-elements"), btn: getElement("copy-element-btn"), label: getElement("copy-element-label"), edit: getElement("copy-element-edit"), checkbox: getElement("copy-element-checkbox"), canvas: getElement("copy-element-canvas"), timer: getElement("copy-element-timer") }
     window.menubar_elements = { main: getElement("menubar-elements"), btn: getElement("menubar-element-btn"), label: getElement("menubar-element-label"), edit: getElement("menubar-element-edit"), checkbox: getElement("menubar-element-checkbox"), canvas: getElement("menubar-element-canvas"), timer: getElement("menubar-element-timer"), select_language: getElement("menubar-element-select-language") }
-    window.element_attributes = { main: getElement("element-attributes"), inner: getElement("element-attributes-inner"), id: getElement("element-attribut-id"), name: getElement("element-attribut-name"), text_section: getElement("element-attribut-text-section"), text: getElement("element-attribut-text"), pos_x: getElement("element-attribut-position-x"), pos_y: getElement("element-attribut-position-y"), size_x: getElement("element-attribut-size-x"), size_y: getElement("element-attribut-size-y"), text_color_section: getElement("element-attribut-text-color-section"), text_color: getElement("element-attribut-text-color"), background_color_section: getElement("element-attribut-background-color-section"), background_color: getElement("element-attribut-background-color"), interval_section: getElement("element-attribut-interval-section"), interval: getElement("element-attribut-interval"), multiple_lines_section: getElement("element-attribut-multiple-lines-section"), checked_section: getElement("element-attribut-checked-section"), checked: getElement("element-attribut-checked"), enabled_section: getElement("element-attribut-enabled-section"), enabled: getElement("element-attribut-enabled"), multiple_lines: getElement("element-attribut-multiple-lines"), event_section: getElement("element-attribut-section"), event_pressed_section: getElement("element-attribut-event-pressed-section"), event_pressed: getElement("element-attribut-event-pressed"), event_hovered_section: getElement("element-attribut-event-hovered-section"), event_hovered: getElement("element-attribut-event-hovered"), event_changed_section: getElement("element-attribut-event-changed-section"), event_changed: getElement("element-attribut-event-changed") }
+    window.element_attributes = { main: getElement("element-attributes"), inner: getElement("element-attributes-inner"), id: getElement("element-attribut-id"), name: getElement("element-attribut-name"), text_section: getElement("element-attribut-text-section"), text: getElement("element-attribut-text"), pos_x: getElement("element-attribut-position-x"), pos_y: getElement("element-attribut-position-y"), size_x: getElement("element-attribut-size-x"), size_y: getElement("element-attribut-size-y"), text_color_section: getElement("element-attribut-text-color-section"), text_color: getElement("element-attribut-text-color"), background_color_section: getElement("element-attribut-background-color-section"), background_color: getElement("element-attribut-background-color"), interval_section: getElement("element-attribut-interval-section"), interval: getElement("element-attribut-interval"), multiple_lines_section: getElement("element-attribut-multiple-lines-section"), checked_section: getElement("element-attribut-checked-section"), checked: getElement("element-attribut-checked"), enabled_section: getElement("element-attribut-enabled-section"), enabled: getElement("element-attribut-enabled"), multiple_lines: getElement("element-attribut-multiple-lines"), event_section: getElement("element-attribut-section"), event_pressed_section: getElement("element-attribut-event-pressed-section"), event_pressed: getElement("element-attribut-event-pressed"), event_single_pressed_section: getElement("element-attribut-event-single-pressed-section"), event_single_pressed: getElement("element-attribut-event-single-pressed"), event_double_pressed_section: getElement("element-attribut-event-double-pressed-section"), event_double_pressed: getElement("element-attribut-event-double-pressed"), event_hovered_section: getElement("element-attribut-event-hovered-section"), event_hovered: getElement("element-attribut-event-hovered"), event_changed_section: getElement("element-attribut-event-changed-section"), event_changed: getElement("element-attribut-event-changed") }
     window.window_attributes = { main: getElement("window-attributes"), id: getElement("window-attribut-id"), name: getElement("window-attribut-name"), text: getElement("window-attribut-text"), size_x: getElement("window-attribut-size-x"), size_y: getElement("window-attribut-size-y"), text_color: getElement("window-attribut-text-color"), background_color: getElement("window-attribut-background-color"), event_create: getElement("window-attribut-event-create"), event_destroy: getElement("window-attribut-event-destroy"), event_paint: getElement("window-attribut-event-paint"), event_resize: getElement("window-attribut-event-resize"), event_mouse_click: getElement("window-attribut-event-mouse-click"), event_mouse_move: getElement("window-attribut-event-mouse-move") }
 }
 
@@ -385,6 +385,8 @@ function set_active_gui_element(p_element) {
     element_attributes.enabled.checked = g_active_gui_element.data.enabled
     element_attributes.multiple_lines.checked = g_active_gui_element.data.multiple_lines
     element_attributes.event_pressed.checked = g_active_gui_element.data.event_pressed
+    element_attributes.event_single_pressed.checked = g_active_gui_element.data.event_single_pressed
+    element_attributes.event_double_pressed.checked = g_active_gui_element.data.event_double_pressed
     element_attributes.event_hovered.checked = g_active_gui_element.data.event_hovered
     element_attributes.event_changed.checked = g_active_gui_element.data.event_changed
 
@@ -414,9 +416,17 @@ function set_active_gui_element(p_element) {
         element_attributes.event_hovered_section.style.display = "none"
 
     if (p_element.data.type == "button")
+    {
         element_attributes.event_pressed_section.style.display = ""
+        element_attributes.event_single_pressed_section.style.display = ""
+        element_attributes.event_double_pressed_section.style.display = ""
+    }
     else
+    {
         element_attributes.event_pressed_section.style.display = "none"
+        element_attributes.event_single_pressed_section.style.display = "none"
+        element_attributes.event_double_pressed_section.style.display = "none"
+    }
 
     if (p_element.data.type == "edit" || p_element.data.type == "checkbox")
         element_attributes.event_changed_section.style.display = ""
@@ -549,6 +559,14 @@ function attribut_set_enabled() {
 
 function attribut_set_event_pressed() {
     g_active_gui_element.data.event_pressed = element_attributes.event_pressed.checked
+}
+
+function attribut_set_event_single_pressed() {
+    g_active_gui_element.data.event_single_pressed = element_attributes.event_single_pressed.checked
+}
+
+function attribut_set_event_double_pressed() {
+    g_active_gui_element.data.event_double_pressed = element_attributes.event_double_pressed.checked
 }
 
 function attribut_set_event_hovered() {

@@ -89,6 +89,8 @@ class Steuerung:
 
         if t_type in ("button"):
             t_return["event_pressed"] = p_attribut["eventPressed"]
+            t_return["event_single_pressed"] = p_attribut["eventSinglePressed"]
+            t_return["event_double_pressed"] = p_attribut["eventDoublePressed"]
 
         if t_type in ("edit", "checkbox"):
             t_return["event_changed"] = p_attribut["eventChanged"]
@@ -141,6 +143,8 @@ class Steuerung:
 
         if t_type in ("button"):
             t_return["eventPressed"] = p_attribut["event_pressed"]
+            t_return["eventSinglePressed"] = p_attribut["event_single_pressed"]
+            t_return["eventDoublePressed"] = p_attribut["event_double_pressed"]
 
         if t_type in ("edit", "checkbox"):
             t_return["eventChanged"] = p_attribut["event_changed"]
