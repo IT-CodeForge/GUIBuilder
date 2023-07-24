@@ -1,6 +1,4 @@
 import os.path
-from signal import default_int_handler
-from turtle import st
 
 class TGW_usercpp_generator:
     def __init__(self, user_cpp: str, type_translation: dict[str, str]) -> None:
