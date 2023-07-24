@@ -5,7 +5,7 @@ class CheckboxObject(GenericObject):
         super().__init__(id, "checkbox")
 
         # Initialize default values.
-        self.setAttribute("name", f"Checkbox{id}")
+        self.setAttribute("name", f"checkbox{id}")
         self.setAttribute("text", "Checkbox")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [100, 25])

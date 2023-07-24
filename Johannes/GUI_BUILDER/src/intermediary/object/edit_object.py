@@ -5,7 +5,7 @@ class EditObject(GenericObject):
         super().__init__(id, "edit")
 
         # Initialize default values.
-        self.setAttribute("name", f"Edit{id}")
+        self.setAttribute("name", f"edit{id}")
         self.setAttribute("text", "Edit")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [200, 100])

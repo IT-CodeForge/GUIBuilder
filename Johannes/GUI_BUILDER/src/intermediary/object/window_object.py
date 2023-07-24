@@ -5,7 +5,7 @@ class WindowObject(GenericObject):
         super().__init__(id, "window")
 
         # Initialize default values.
-        self.setAttribute("name", f"Window")
+        self.setAttribute("name", f"window")
         self.setAttribute("text", "Window")
         self.setAttribute("size", [500, 500])
         self.setAttribute("textColor", [0, 0, 0])

@@ -5,7 +5,7 @@ class TimerObject(GenericObject):
         super().__init__(id, "timer")
 
         # Initialize default values.
-        self.setAttribute("name", f"Timer{id}")
+        self.setAttribute("name", f"timer{id}")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [40, 18])
         self.setAttribute("interval", 1000)

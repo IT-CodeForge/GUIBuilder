@@ -5,7 +5,7 @@ class LabelObject(GenericObject):
         super().__init__(id, "label")
 
         # Initialize default values.
-        self.setAttribute("name", f"Label{id}")
+        self.setAttribute("name", f"label{id}")
         self.setAttribute("text", "Label")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [75, 18])

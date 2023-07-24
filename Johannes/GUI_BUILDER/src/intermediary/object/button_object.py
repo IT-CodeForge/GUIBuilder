@@ -5,7 +5,7 @@ class ButtonObject(GenericObject):
         super().__init__(id, "button")
 
         # Initialize default values.
-        self.setAttribute("name", f"Button{id}")
+        self.setAttribute("name", f"button{id}")
         self.setAttribute("text", "Button")
         self.setAttribute("position", [0, 0])
         self.setAttribute("size", [70, 25])
