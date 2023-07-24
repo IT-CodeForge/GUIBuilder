@@ -201,7 +201,7 @@ class Steuerung:
     @staticmethod
     def load_gui_elements() -> list[dict[str, Any]]:
         cls = Steuerung
-        t_path = cls.__get_dir_path()
+        t_path = cls.__get_load_file_path()
         if (t_path == ""):
             return None
         cls.__c_json.load(t_path)
@@ -233,7 +233,7 @@ class Steuerung:
         cls = Steuerung
         t_data = cls.__c_intermediary.getObjectsAsDictionaryList()
         # print(t_data)
-        t_path = cls.__get_dir_path()
+        t_path = cls.__get_save_file_path
         if (t_path == ""):
             return None
         # print(t_path)
