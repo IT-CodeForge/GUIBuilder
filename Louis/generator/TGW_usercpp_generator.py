@@ -1,4 +1,5 @@
 import os.path
+from turtle import st
 
 class TGW_usercpp_generator:
     def __init__(self, user_cpp: str, type_translation: dict[str, str]) -> None:
@@ -30,9 +31,10 @@ class TGW_usercpp_generator:
         temp_str: str = ret_str
 
         #finds all events and finds out, if they are stil implemented (e.g. Button event, got turned off)
+        offset = 0
         while temp_str.find("void GUI::event_") != -1:
             start_index: int = temp_str.find("void GUI::event_")
-            end_index: int   = self.__get_method_end(temp_str[start_index:])
+            end_index: int   = self.__get_method_end(temp_str[start_index:]) + start_index
             event_name: str  = temp_str[temp_str[start_index + 16:].find("_") + start_index + 17:temp_str.find("(", start_index)]
             event_type: str  = temp_str[start_index + 16:temp_str[start_index + 16:].find("_") + start_index + 16]
             is_in_list: bool = False
@@ -40,7 +42,7 @@ class TGW_usercpp_generator:
             for object in objects:
                 #type_checking checks, if the object has a certain event
                 type_checking  =  (event_type == "pressed" and object.get("eventPressed", False)) or (event_type == "hovered" and object.get("eventHovered", False)) or (event_type == "changed" and object.get("eventChanged", False)) or (event_type == "timer" and object.get("type") == "timer")
-                type_checking        |= (event_type == "Create" and object.get("eventCreate", False)) or (event_type == "Resize" and object.get("eventResize", False)) or (event_type == "Paint" and object.get("eventPaint", False)) or (event_type == "Click" and object.get("eventMouseClicked", False)) or (event_type == "Move" and object.get("eventMouseMove", False))
+                type_checking  |= (event_type == "Create" and object.get("eventCreate", False)) or (event_type == "Resize" and object.get("eventResize", False)) or (event_type == "Paint" and object.get("eventPaint", False)) or (event_type == "Click" and object.get("eventMouseClicked", False)) or (event_type == "Move" and object.get("eventMouseMove", False))
                 
                 if object["type"] == "window":
                 
@@ -52,10 +54,11 @@ class TGW_usercpp_generator:
                 if event_name == object["name"] and (type_checking):
                     is_in_list = True
                     already_added_events.append([event_name, event_type])
-            
+
             if not is_in_list:
-                ret_str = ret_str.replace(ret_str[start_index:end_index + start_index + 2], "")
-            temp_str = temp_str[start_index + 24:]
+                ret_str = ret_str.replace(ret_str[start_index + offset:end_index + offset + 1], "")
+            temp_str = temp_str[end_index + 1 - start_index:]
+            offset += end_index + 1 - start_index
 
         return [ret_str, already_added_events]
 
@@ -69,19 +72,19 @@ class TGW_usercpp_generator:
             if object["type"] == "window":
 
                 if ["Window", "Create"] not in already_added_events and object.get("eventCreate") == True:
-                    ret_str += "void GUI::event_Create_Window()\n{\n}\n"
+                    ret_str += "void GUI::event_Create_Window()\n{\n}\n\n"
 
                 if ["Background", "Paint"] not in already_added_events and object.get("eventPaint") == True:
-                    ret_str += "void GUI::event_Paint_Background(HDC hDeviceContext)\n{\n}\n"
+                    ret_str += "void GUI::event_Paint_Background(HDC hDeviceContext)\n{\n}\n\n"
 
                 if ["Window", "Resize"] not in already_added_events and object.get("eventResize") == True:
-                    ret_str += "void GUI::event_Resize_Window()\n{\n}\n"
+                    ret_str += "void GUI::event_Resize_Window()\n{\n}\n\n"
 
                 if ["Mouse", "Click"] not in already_added_events and object.get("eventMouseClick") == True:
-                    ret_str += "void GUI::event_Click_Mouse(int posX, int posY, TGWindow* affectedWindow)\n}\n"
+                    ret_str += "void GUI::event_Click_Mouse(int posX, int posY, TGWindow* affectedWindow)\n}\n\n"
 
                 if ["Mouse", "Move"] not in already_added_events and object.get("eventMouseMove") == True:
-                    ret_str += "void GUI::event_Move_Mouse(int posX, int posY)\n{\n}\n"
+                    ret_str += "void GUI::event_Move_Mouse(int posX, int posY)\n{\n}\n\n"
                 continue
 
             if [object["name"], "pressed"] not in already_added_events and object.get("eventPressed", False):
@@ -114,11 +117,13 @@ class TGW_usercpp_generator:
             if object["type"] == "window":
                 continue
 
-            if object["type"] not in unique_type_list:
-                unique_type_list.append(object["type"])
+            if self.__type_translation[object["type"]] not in unique_type_list:
+                unique_type_list.append(self.__type_translation[object["type"]])
         
         for type in unique_type_list:
-            ret_str += '#include "' + self.__type_translation[type] + '.h"\n'
+            ret_str += '#include "' + type + '.h"\n'
+            if type == "canvas":
+                ret_str += '#include "TGWCanvas.h"\n'
 
         return ret_str
 
