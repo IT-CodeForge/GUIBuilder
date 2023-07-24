@@ -89,7 +89,7 @@ class Intermediary:
 
         print(f"Error: An object with the ID {id} could not be retrieved.")
 
-    def loadObjectsFromDictionary(self, objects: list[dict[str, any]]) -> None:
+    def loadObjectsFromDictionaryList(self, objects: list[dict[str, any]]) -> None:
         """Loads a list of objects in dictionary format."""
 
         # Clear all objects.
