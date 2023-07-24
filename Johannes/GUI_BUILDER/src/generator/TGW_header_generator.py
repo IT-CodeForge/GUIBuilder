@@ -46,6 +46,13 @@ class TGW_header_generator:
                 ret_str += "  int " + object["name"] + "Id = " + str(object["id"] + 1) + ";\n"
                 ret_str += "  bool " + object["name"] + "IsEnabled = " + str(object["enabled"]).lower() + ";\n"
         
+        ret_str += "\n"
+
+        for object in objects:
+
+            if object["type"] == "canvas":
+                ret_str += "  TGWBitmapWindow* " + object["name"] + "_bitmap;\n"
+        
         return ret_str
 
 
@@ -84,6 +91,9 @@ class TGW_header_generator:
 
                 if object.get("type", "") == "checkbox":
                     ret_str += "  void event_changed_" + object["name"] + "(int isChecked_1_0);\n"
+            
+            if object.get("type", "") == "canvas" and ret_str.find("  void eventShow();\n") == -1:
+                ret_str += "  void eventShow();\n"
 
             if object.get("type", "") == "timer":
                 ret_str += "  void event_timer_" + object["name"] + "();\n"
