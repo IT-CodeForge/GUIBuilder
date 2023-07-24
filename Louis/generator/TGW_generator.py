@@ -1,5 +1,4 @@
 import os.path
-from generator.TGW_cpp_generator import TGW_cpp_generator
 from generator.TGW_header_generator  import *
 from generator.TGW_cpp_generator     import *
 from generator.TGW_usercpp_generator import *
@@ -19,7 +18,7 @@ class TGW_Generator:
             "edit": "TGWEdit",
             "checkbox": "TGWCheckBox",
             "timer": "TGWTimer",
-            "canvas": "TGWBitmapWindow"}
+            "canvas": "TGWCanvas"}
 
         self.__my_tgw_header_generator = TGW_header_generator(self.__type_translation)
         self.__my_tgw_cpp_generator = TGW_cpp_generator(self.__type_translation)

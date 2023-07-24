@@ -36,12 +36,6 @@ class TGW_cpp_generator:
             if object["type"] == "window":
                 continue
             ret_str += "  " + object["name"] + " = " + self.__generate_cpp_object(object)
-
-        for object in objects:
-
-            if object["type"] == "canvas":
-               #erstmal gescrapt, bis die setBackgroundColor methode funktioniert | ret_str += self.offset + object["name"] + "->canvas->setBackgroundColor(0x" + self.__hex_color_converter(object["backgroundColor"][0]) + self.__hex_color_converter(object["backgroundColor"][1]) + self.__hex_color_converter(object["backgroundColor"][2]) + ");\n"
-                pass
         ret_str += "}\n"
 
         return ret_str
@@ -189,9 +183,9 @@ class TGW_cpp_generator:
 
     def __generate_canvas(self, object: dict[str, any]) -> str:
         ret_str: str  = ""
-        ret_str += "new " + self.__type_translation[object["type"]] + "(this, "
+        ret_str += "(new  TGWBitmapWindow(this, "
         ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
-        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ');\n'
+        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + '))->canvas;\n'
 
         return ret_str
 
