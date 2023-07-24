@@ -1,8 +1,8 @@
 import os.path
-from TGW_cpp_generator import TGW_cpp_generator
-from TGW_header_generator  import *
-from TGW_cpp_generator     import *
-from TGW_usercpp_generator import *
+from generator.TGW_cpp_generator import TGW_cpp_generator
+from generator.TGW_header_generator  import *
+from generator.TGW_cpp_generator     import *
+from generator.TGW_usercpp_generator import *
 
 
 class TGW_Generator:
