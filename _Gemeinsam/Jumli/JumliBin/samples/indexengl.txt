@@ -1,6 +1,0 @@
-Samples{
-Java Tour 1 "The first program":english\Java\QuickTour1\JavaTour_1.jum
-Java Tour 2 "A game":english\Java\QuickTour2\JavaTour_2.jum
-C# Tour 1 "An easy program":english\CSharp\CSharpTour_1\CSharpTour_1.jum
-C# Tour 2 "A nice game":english\CSharp\CSharpTour_2\CSharpXXtris.jum
-}

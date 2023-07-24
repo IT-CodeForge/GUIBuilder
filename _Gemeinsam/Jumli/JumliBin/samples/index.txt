@@ -1,8 +1,0 @@
-Samples{
-Java Tour 1 "Das erste Programm":deutsch\Java\QuickTour1\JavaTour_1.jum
-Java Tour 2 "Ein einfaches Spiel":deutsch\Java\QuickTour2\JavaTour_2.jum
-Java Tour 3 "Compiler und Debugger":deutsch\Java\CompilerUndDebugger\Compiler_Debugger.jum
-Java Tour 4 "Analyse bestehender Java-Projekte":deutsch\Java\Analyse\Analyse.jum
-C# Tour 1 "Ein einfaches Programm":deutsch\CSharp\CSharpTour_1\CSharpTour_1.jum
-C# Tour 2 "Ein schönes Spiel":deutsch\CSharp\CSharpTour_2\CSharpXXtris.jum
-}
