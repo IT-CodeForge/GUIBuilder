@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>8</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>712</y>
-      <w>288</w>
-      <h>208</h>
+      <x>0</x>
+      <y>364</y>
+      <w>252</w>
+      <h>147</h>
     </coordinates>
     <panel_attributes>Intermediary
 --
@@ -19,22 +19,18 @@
 +createObject(type: ObjectEnum): int
 +removeObject(id: int): None
 +getObject(id: int): GenericObject
-+loadObjects(objects: list[dict[str, any]]): None
++loadObjectsFromDictionaryList(objects: list[dict[str, any]]): None
 +getObjects(): list[GenericObject]
-+getObjectsAsDictionaryList(): list[dict[str, any]]
-+enableEvent(type: EventEnum): None
-+disableEvent(type: EventEnum): None
-+getEvents(): dict[str, bool]
-+loadEvents(events: dict[str, bool]): None</panel_attributes>
++getObjectsAsDictionaryList(): list[dict[str, any]]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>776</x>
-      <y>712</y>
-      <w>288</w>
-      <h>152</h>
+      <x>364</x>
+      <y>364</y>
+      <w>252</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>JSON
 --
@@ -47,10 +43,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>640</x>
-      <y>768</y>
-      <w>152</w>
-      <h>32</h>
+      <x>245</x>
+      <y>413</y>
+      <w>133</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -59,10 +55,10 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>384</x>
-      <y>496</y>
-      <w>240</w>
-      <h>104</h>
+      <x>21</x>
+      <y>175</y>
+      <w>210</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>GenericObject
 --
@@ -78,10 +74,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>496</x>
-      <y>592</y>
-      <w>40</w>
-      <h>136</h>
+      <x>119</x>
+      <y>259</y>
+      <w>35</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..n</panel_attributes>
@@ -90,10 +86,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>400</x>
-      <y>296</y>
-      <w>200</w>
-      <h>112</h>
+      <x>35</x>
+      <y>0</y>
+      <w>175</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>ObjectAttribute
 --
@@ -109,13 +105,191 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>496</x>
-      <y>400</y>
-      <w>40</w>
-      <h>112</h>
+      <x>119</x>
+      <y>91</y>
+      <w>35</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..n</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>42</x>
+      <y>623</y>
+      <w>301</w>
+      <h>343</h>
+    </coordinates>
+    <panel_attributes>_Steuerung_
+--
+_-__c_intermediary: Intermediary_
+_-__c_json: JSON_
+_-__c_generator: TGW_Generator_
+_-__c_window_id: int_
+_-__c_file: str_
+_-__c_additional_files_path: str_
+--
+__+init()_
+_+gui_init(): dict[str, any]_
+_-__resetData()_
+
+_-__convert_attribut_to_js_data(p_attribut: dict[str, any]): dict[str, any]_
+_-__convert_attribut_from_js_data(p_attribut: dict[str, any]): dict[str, any]_
+
+-__get_load_file_path(): str_
+_-__get_save_file_path(): str_
+_-__get_dir_path(): str_
+
+_+load_gui_elements(): list[dict[str, Any]]_
+_+save_gui_element(p_attributes: dict[str, any])_
+_+save()_
+
+_+delete_element()_
+_+create_btn(): dict[str, Any]_
+_+create_label(): dict[str, Any]_
+_+create_edit(): dict[str, Any]_
+_+create_checkbox(): dict[str, Any]_
+_+create_canvas(): dict[str, Any]_
+_+create_timer(): dict[str, Any]_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>105</x>
+      <y>504</y>
+      <w>28</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>308</x>
+      <y>490</y>
+      <w>196</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>250.0;10.0;250.0;140.0;10.0;140.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>567</x>
+      <y>686</y>
+      <w>693</w>
+      <h>847</h>
+    </coordinates>
+    <panel_attributes>_JS_
+--
+_-g_move_element: HTML_ELEMENT = null_
+_-g_active_gui_element: HTML_ELEMENT = null_
+_-g_move_mouse_x_offset: int = 0_
+_-g_move_mouse_y_offset: int = 0_
+_-gui_elements_main: HTML_ELEMENT_
+_-copy_elements: dict["str", HTML_ELEMENT]_
+_-menubar_elements: dict["str", HTML_ELEMENT]_
+_-element_attributes: dict["str", HTML_ELEMENT]_
+_-window_attributes: dict["str", HTML_ELEMENT]_
+--
+_-pause(time: int)_
+_-getElement(id): HTML_ELEMENT_
+_-toggleCollapsable(p_collapsable: HTML_ELEMENT)_
+_-init_element_variables()_
+_-setLanguage()_
+
+_-addListeners()_
+_-gui_elements_mousedown_event(e: HTML_EVENT)_
+_-gui_element_mousdown_event(e: HTML_EVENT)_
+_-gui_element_mouseup_event()_
+_-gui_element_mousemove_event(e: HTML_EVENT)_
+_-menubar_element_btn_mousedown_event(e: HTML_EVENT)_
+_-menubar_element_label_mousedown_event(e: HTML_EVENT)_
+_-menubar_element_edit_mousedown_event(e: HTML_EVENT)_
+_-menubar_element_checkbox_mousedown_event(e: HTML_EVENT)_
+_-menubar_element_canvas_mousedown_event(e: HTML_EVENT)_
+_-menubar_element_timer_mousedown_event(e: HTML_EVENT)_
+
+_-set_gui_element_translation(p_element: HTML_ELEMENT, p_x: int, p_x, int)_
+
+_-load_gui_elements_from_database()_
+_-save_gui_elements_to_database()_
+_-load_window(p_attributes: dict[str, Any])_
+_-load_gui_element(p_origin_element: HTML_ELEMENT, p_attributes: dict[str, Any]): HTML_ELEMENT_
+_-create_new_element(p_origin_element: HTML_ELEMENT, p_attributes: dict[str, Any], p_x: int, p_y: int): HTML_ELEMENT_
+
+_-start_move_element(p_element: HTML_ELEMENT, p_mouseX: int, p_mouseY: int, p_offset_element_override: HTML_ELEMENT = null)_
+_-end_move_element(p_element: HTML_ELEMENT)_
+
+_-set_active_gui_element(p_element: HTML_ELEMENT)_
+_-reset_active_gui_element()_
+
+_-attribut_delete_element()_
+_-attribut_set_name()_
+_-attribut_set_text()_
+_-attribut_set_pos_x()_
+_-attribut_set_pos_y()_
+_-attribut_set_size_x()_
+_-attribut_set_size_y()_
+_-attribut_set_text_color()_
+_-attribut_set_background_color()_
+_-attribut_set_interval()_
+_-attribut_set_multiple_lines()_
+_-attribut_set_checked()_
+_-attribut_set_enabled()_
+_-attribut_set_event_pressed()_
+_-attribut_set_event_hovered()_
+_-attribut_set_event_changed()_
+
+_-window_set_name()_
+_-window_set_text()_
+_-window_set_size_x()_
+_-window_set_size_y()_
+_-window_set_text_color()_
+_-window_set_background_color()_
+_-window_set_event_create()_
+_-window_set_event_destroy()_
+_-window_set_event_paint()_
+_-window_set_event_resize()_
+_-window_set_event_mouse_click()_
+_-window_set_event_mouse_move()_
+
+_-show_license_window()_
+_-hide_license_window()_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>735</y>
+      <w>245</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;330.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1281</x>
+      <y>686</y>
+      <w>392</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>Hinweise:
+JS ist keine Klasse, sondern die JS-Datei
+privat (-) bedeutet in diesem Context, dass die Python-Datei nicht draufgreifen kann.
+bg=yellow</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
