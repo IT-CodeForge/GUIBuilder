@@ -12,4 +12,6 @@ class ButtonObject(GenericObject):
         self.setAttribute("textColor", [0, 0, 0])
         self.setAttribute("backgroundColor", [255, 255, 255])
         self.setAttribute("eventPressed", True)
+        self.setAttribute("eventSinglePressed", False)
+        self.setAttribute("eventDoublePressed", False)
         self.setAttribute("eventHovered", False)

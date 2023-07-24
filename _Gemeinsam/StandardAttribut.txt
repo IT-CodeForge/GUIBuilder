@@ -21,6 +21,8 @@ type: "button":
 	textColor (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
 	backgroundColor (list[int, int, int], std: [255, 255, 255], N/A in TGWindowLib)
 	eventPressed (bool, std: True)
+	eventSinglePressed (bool, std: False)
+	eventDoublePressed (bool, std: False)
 	eventHovered (bool, std: False, N/A in TGWindowLib)
 
 type: "label":
