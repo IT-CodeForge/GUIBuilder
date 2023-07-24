@@ -80,10 +80,8 @@ class TGW_header_generator:
                 continue
 
             if object.get("eventPressed", False):
-                ret_str += "  void event_pressed_" + object["name"] + "(int event);\n"
+                ret_str += "  void event_pressed_" + object["name"] + "();\n"
             
-            if object.get("eventSinglePressed", False):
-                ret_str += "  void event_singlepressed_" + object["name"] + "();\n"
             
             if object.get("eventDoublePressed", False):
                 ret_str += "  void event_doublepressed_" + object["name"] + "();\n"
