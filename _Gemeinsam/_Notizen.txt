@@ -1,27 +1,24 @@
 ToDo:
 
-Load .h & .cpp files
-BGColor Canvas
-Text Color
-EventHover
-
-seperate Save & Export
-
-GUI-Elemente:
-  - Slider
-  - (Bild)
-
-Eigenschaften:
-Fenstereigenschaften:
-  - Größe -> Lock
-Elementeigenschaften:
-  - (Font)
-
 Events:
 Button:
   - DoublePressed
-KeyListener:
-  - KeyEvent
+Alle:
+  - EventHover
+
+Eigenschaften:
+Fenstereigenschaften:
+  - BackgroundColor
+  (- TitelColor)
+Elementeigenschaften:
+  - Textcolor
+  - Backgroundcolor
+  (- Font)
+
+GUI-Elemente:
+  - KeyListener
+  - Slider
+  - (Bild)
   
   
 
