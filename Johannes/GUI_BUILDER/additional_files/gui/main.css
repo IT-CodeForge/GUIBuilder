@@ -183,14 +183,18 @@ body {
 }
 
 #menubar-element-select-language {
-    right: 7rem;
+    right: 10.5rem;
 }
 
 #menubar-element-load {
-    right: 4rem;
+    right: 7.5rem;
 }
 
 #menubar-element-save {
+    right: 4.5rem;
+}
+
+#menubar-element-export {
     right: 1rem;
 }
 

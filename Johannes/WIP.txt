@@ -1,10 +1,7 @@
 s. global Notizen
 
-seperate Save & Export
 element resizer
 Farbselektor
-Fix: Btn outside, if am Rand dann Größenänderung
-Fix: Btn outside, wenn Window kleiner gemacht
 Fix: label, edit: Multiline
 
 Doku

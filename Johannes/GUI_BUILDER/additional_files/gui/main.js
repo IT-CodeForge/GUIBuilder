@@ -128,7 +128,7 @@ function gui_element_mouseup_event() {
 }
 
 function gui_element_mousemove_event(e) {
-    set_gui_element_translation(g_move_element, e.clientX, e.clientY)
+    set_gui_element_translation_from_abs_coords(g_move_element, e.clientX, e.clientY)
 }
 
 async function menubar_element_btn_mousedown_event(e) {
@@ -164,27 +164,31 @@ async function menubar_element_timer_mousedown_event(e) {
 
 // calculate and set GUI-Element Pos
 
-function set_gui_element_translation(p_element, p_x, p_y) {
+function set_gui_element_translation_from_abs_coords(p_element, p_x, p_y) {
     // Berechnet relative GUI-Position aus absoluten Mouse-Koordinaten
-    var t_leftTranslation = p_x - gui_elements_main.getBoundingClientRect().left - window.g_move_mouse_x_offset
-    var t_topTranslation = p_y - gui_elements_main.getBoundingClientRect().top - window.g_move_mouse_y_offset
+    var t_x = p_x - gui_elements_main.getBoundingClientRect().left - window.g_move_mouse_x_offset
+    var t_y = p_y - gui_elements_main.getBoundingClientRect().top - window.g_move_mouse_y_offset
 
+    set_gui_element_translation(p_element, t_x, t_y)
+}
+
+function set_gui_element_translation(p_element, p_x, p_y) {
     // Prüft, ob Mouse außerhalb des GUI-Bereiches
-    if (t_leftTranslation < 0)
-        t_leftTranslation = 0
-    else if (t_leftTranslation > (gui_elements_main.data.size_x - p_element.data.size_x))
-        t_leftTranslation = gui_elements_main.data.size_x - p_element.data.size_x
-    if (t_topTranslation < 0)
-        t_topTranslation = 0
-    else if (t_topTranslation > (gui_elements_main.data.size_y - p_element.data.size_y))
-        t_topTranslation = gui_elements_main.data.size_y - p_element.data.size_y
+    if (p_x < 0)
+    p_x = 0
+    else if (p_x > (gui_elements_main.data.size_x - p_element.data.size_x))
+    p_x = gui_elements_main.data.size_x - p_element.data.size_x
+    if (p_y < 0)
+    p_y = 0
+    else if (p_y > (gui_elements_main.data.size_y - p_element.data.size_y))
+    p_y = gui_elements_main.data.size_y - p_element.data.size_y
 
     // Rundet auf ganze Zahlen
-    t_leftTranslation = Math.round(t_leftTranslation)
-    t_topTranslation = Math.round(t_topTranslation)
+    p_x = Math.round(p_x)
+    p_y = Math.round(p_y)
 
-    p_element.data.pos_x = t_leftTranslation;
-    p_element.data.pos_y = t_topTranslation;
+    p_element.data.pos_x = p_x;
+    p_element.data.pos_y = p_y;
 
     // Aktuallisiert die Positionsanzeige im Element-Attribut-Editor, falls das verschobene Element auch das dort angezeigte ist.
     if (g_active_gui_element == p_element) {
@@ -193,8 +197,19 @@ function set_gui_element_translation(p_element, p_x, p_y) {
     }
 
     // setzt schlussendlich die Position
-    p_element.style.transform = "translate(" + t_leftTranslation + "px, " + t_topTranslation + "px)"
+    p_element.style.transform = "translate(" + p_x + "px, " + p_y + "px)"
 }
+
+function reprocess_element_translation(p_element) {
+    set_gui_element_translation(p_element, p_element.data.pos_x, p_element.data.pos_y);
+}
+
+function reprocess_all_elements_translation() {
+    t_gui_elements = document.getElementsByClassName("gui-element")
+    for (i=0; i<t_gui_elements.length; i++)
+    reprocess_element_translation(t_gui_elements[i])
+}
+
 
 
 // load or store Element to database
@@ -245,6 +260,10 @@ async function save_gui_elements_to_database() {
         await eel.save_gui_element(akt.data)()
     }
     await eel.save()()
+}
+
+async function export_gui_elements() {
+    await eel.export_to_cpp()()
 }
 
 
@@ -312,7 +331,7 @@ function create_new_element(p_origin_element, p_attributes, p_x, p_y, p_menubar_
 
     start_move_element(t_neu_element, p_x, p_y, p_menubar_element)
 
-    set_gui_element_translation(t_neu_element, p_x, p_y)
+    set_gui_element_translation_from_abs_coords(t_neu_element, p_x, p_y)
 
     set_active_gui_element(t_neu_element)
 
@@ -468,7 +487,7 @@ function attribut_set_pos_x() {
         return;
     }
     g_active_gui_element.data.pos_x = Math.round(Number(element_attributes.pos_x.value))
-    g_active_gui_element.style.transform = "translate(" + g_active_gui_element.data.pos_x + "px, " + g_active_gui_element.data.pos_y + "px)"
+    set_gui_element_translation(g_active_gui_element, g_active_gui_element.data.pos_x, g_active_gui_element.data.pos_y)
 }
 
 function attribut_set_pos_y() {
@@ -477,7 +496,7 @@ function attribut_set_pos_y() {
         return;
     }
     g_active_gui_element.data.pos_y = Math.round(Number(element_attributes.pos_y.value))
-    g_active_gui_element.style.transform = "translate(" + g_active_gui_element.data.pos_x + "px, " + g_active_gui_element.data.pos_y + "px)"
+    set_gui_element_translation(g_active_gui_element, g_active_gui_element.data.pos_x, g_active_gui_element.data.pos_y)
 }
 
 function attribut_set_size_x() {
@@ -487,6 +506,7 @@ function attribut_set_size_x() {
     }
     g_active_gui_element.data.size_x = Math.round(Number(element_attributes.size_x.value))
     g_active_gui_element.style.width = g_active_gui_element.data.size_x + "px"
+    reprocess_element_translation(g_active_gui_element)
 }
 
 function attribut_set_size_y() {
@@ -496,6 +516,7 @@ function attribut_set_size_y() {
     }
     g_active_gui_element.data.size_y = Math.round(Number(element_attributes.size_y.value))
     g_active_gui_element.style.height = g_active_gui_element.data.size_y + "px"
+    reprocess_element_translation(g_active_gui_element)
 }
 
 function attribut_set_text_color() {
@@ -556,6 +577,7 @@ function window_set_size_x() {
     }
     gui_elements_main.data.size_x = Math.round(Number(window_attributes.size_x.value))
     gui_elements_main.style.width = gui_elements_main.data.size_x + "px"
+    reprocess_all_elements_translation();
 }
 
 function window_set_size_y() {
@@ -565,6 +587,7 @@ function window_set_size_y() {
     }
     gui_elements_main.data.size_y = Math.round(Number(window_attributes.size_y.value))
     gui_elements_main.style.height = gui_elements_main.data.size_y + "px"
+    reprocess_all_elements_translation();
 }
 
 function window_set_text_color() {

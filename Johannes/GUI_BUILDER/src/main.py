@@ -1,4 +1,4 @@
-from os import devnull
+from os import devnull, stat
 import sys
 # sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
 
@@ -235,9 +235,20 @@ class Steuerung:
         if (t_path == ""):
             return None
         # print(t_path)
-        cls.__c_generator.write_files(t_path, t_data)  # NOTE
         cls.__c_json.save(t_path)
     eel.expose(save.__func__)
+
+    @staticmethod
+    def export_to_cpp():
+        cls = Steuerung
+        t_data = cls.__c_intermediary.getObjectsAsDictionaryList()
+        # print(t_data)
+        t_path = cls.__get_dir_path()
+        if (t_path == ""):
+            return None
+        # print(t_path)
+        cls.__c_generator.write_files(t_path, t_data)
+    eel.expose(export_to_cpp.__func__)
 
     @staticmethod
     def delete_element(p_id: int):
