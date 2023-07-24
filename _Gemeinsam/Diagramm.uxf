@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>364</y>
+      <x>126</x>
+      <y>413</y>
       <w>252</w>
       <h>147</h>
     </coordinates>
@@ -27,8 +27,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>364</x>
-      <y>364</y>
+      <x>490</x>
+      <y>413</y>
       <w>252</w>
       <h>133</h>
     </coordinates>
@@ -43,8 +43,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>245</x>
-      <y>413</y>
+      <x>371</x>
+      <y>462</y>
       <w>133</w>
       <h>28</h>
     </coordinates>
@@ -55,8 +55,8 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>21</x>
-      <y>175</y>
+      <x>147</x>
+      <y>224</y>
       <w>210</w>
       <h>91</h>
     </coordinates>
@@ -74,8 +74,8 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
-      <y>259</y>
+      <x>245</x>
+      <y>308</y>
       <w>35</w>
       <h>119</h>
     </coordinates>
@@ -86,8 +86,8 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>35</x>
-      <y>0</y>
+      <x>161</x>
+      <y>49</y>
       <w>175</w>
       <h>98</h>
     </coordinates>
@@ -105,8 +105,8 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
-      <y>91</y>
+      <x>245</x>
+      <y>140</y>
       <w>35</w>
       <h>98</h>
     </coordinates>
@@ -117,8 +117,8 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>42</x>
-      <y>623</y>
+      <x>168</x>
+      <y>672</y>
       <w>301</w>
       <h>343</h>
     </coordinates>
@@ -128,8 +128,8 @@ _-__c_intermediary: Intermediary_
 _-__c_json: JSON_
 _-__c_generator: TGW_Generator_
 _-__c_window_id: int_
-_-__c_file: str_
-_-__c_additional_files_path: str_
+_+c_file: str_
+_+c_additional_files_path: str_
 --
 __+init()_
 _+gui_init(): dict[str, any]_
@@ -158,8 +158,8 @@ _+create_timer(): dict[str, Any]_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>105</x>
-      <y>504</y>
+      <x>231</x>
+      <y>553</y>
       <w>28</w>
       <h>133</h>
     </coordinates>
@@ -170,8 +170,8 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>308</x>
-      <y>490</y>
+      <x>434</x>
+      <y>539</y>
       <w>196</w>
       <h>147</h>
     </coordinates>
@@ -182,8 +182,8 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>567</x>
-      <y>686</y>
+      <x>693</x>
+      <y>735</y>
       <w>693</w>
       <h>847</h>
     </coordinates>
@@ -268,8 +268,8 @@ _-hide_license_window()_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>735</y>
+      <x>462</x>
+      <y>784</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -281,8 +281,8 @@ m2=1</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1281</x>
-      <y>686</y>
+      <x>1407</x>
+      <y>735</y>
       <w>392</w>
       <h>49</h>
     </coordinates>
@@ -290,6 +290,149 @@ m2=1</panel_attributes>
 JS ist keine Klasse, sondern die JS-Datei
 privat (-) bedeutet in diesem Context, dass die Python-Datei nicht draufgreifen kann.
 bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>462</x>
+      <y>539</y>
+      <w>504</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>690.0;10.0;690.0;220.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>413</y>
+      <w>266</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>TGW_Generator
+--
+-__gui_h: str
+-__gui_cpp: str
+-__user_cpp: str
+-__type_translation: dict[str, str]
+-__my_tgw_header_generator: TGW_header_generator
+-__my_tgw_cpp_generator: TGW_cpp_generator
+-__my_tgw_usercpp_generator: TGW_usercpp_generator
+--
++write_files(path: str, objects: list[dict[str, any]])
+-__write_data(file: str, data: str)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>588</x>
+      <y>182</y>
+      <w>280</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>TGW_header_generator
+--
+-__typetranslation: dict[str, str]
+--
++__init(type_translation: dict[str, str])
++generate_header(objects: list[dict[str, any]]): str
+-__generate_attributes(objects: list[dict[str, any]]): str
+-__generate_event_declaration(objects: list[dict[str, any]]): str
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>833</x>
+      <y>259</y>
+      <w>28</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>945</x>
+      <y>259</y>
+      <w>28</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1071</x>
+      <y>259</y>
+      <w>189</w>
+      <h>231</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>240.0;10.0;240.0;310.0;10.0;310.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>910</x>
+      <y>63</y>
+      <w>252</w>
+      <h>203</h>
+    </coordinates>
+    <panel_attributes>TGW_cpp_generator
+--
+-__type_translation: dict[str, str]
+--
++__init__(type_translation: dict[str, str])
++generate_cpp(objects: list[dict[str, any]]): str
+-__generate_constructor(objects: list[dict[str, any]]): str
+-__generate_button_event(objects: list[dict[str, any]]): str
+-__generate_timer_event(objects: list[dict[str, any]]): str
+-__generate_changed_event(objects: list[dict[str, any]]): str
+-__generate_parsed_events(objects: list[dict[str, any]]): str
+-__generate_cpp_object(object: dict[str, any]): str
+-__generate_button(object: dict[str, any]): str
+-__generate_label(object: dict[str, any]): str
+-__generate_edit(object: dict[str, any]): str
+-__generate_checkbox(object: dict[str, any]): str
+-__generate_timer(object: dict[str, any]): str
+-__generate_canvas(object: dict[str, any]): str
+-__hex_color_converter(num: int): str</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1190</x>
+      <y>140</y>
+      <w>273</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>TGW_usercpp_generator
+--
+-__user_cpp: str
+-__type_translation: str
+--
++__init__(user_cpp: str, type_translation: str)
++generate_cpp_user(path: str, objects: list[dict[str, any]]): str
+-__remove_user_events(objects: list[dict[str, any]]): str
+-__add_user_events(objects: list[dict[str, any]]): str
+-__check_user_includes(object: list[dict[str, any]]): str
+-__read_data(file: str): str
+-__get_method_end(string_file: str): int
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
