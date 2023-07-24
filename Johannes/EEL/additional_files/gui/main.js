@@ -221,12 +221,15 @@ async function load_gui_elements_from_database() {
 
             case "checkbox":
                 load_gui_element(copy_elements.checkbox, t_akt)
+                break
 
             case "canvas":
                 load_gui_element(copy_elements.canvas, t_akt)
+                break
 
             case "timer":
                 load_gui_element(copy_elements.timer, t_akt)
+                break
 
             default:
                 break

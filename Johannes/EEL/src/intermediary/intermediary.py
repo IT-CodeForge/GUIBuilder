@@ -90,6 +90,8 @@ class Intermediary:
         self.__objects = []
         self.__count = 0
 
+        largest_id: int = 0
+
         for object in objects:
             object_type: type = self.__string_mapping.get(object["type"])
             object_id: int = object["id"]
@@ -100,6 +102,12 @@ class Intermediary:
             # Apply all available attributes to the object.
             for attribute in object:
                 new_object.setAttribute(attribute, object[attribute])
+
+            if object_id > largest_id:
+                largest_id = object_id
+
+        # Set the object count to the largest found id.
+        self.__count = largest_id
     
     def getObjects(self) -> list[GenericObject]:
         """Retrieves a list of objects in intermediate representation."""
