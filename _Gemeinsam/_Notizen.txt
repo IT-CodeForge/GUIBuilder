@@ -1,5 +1,10 @@
 ToDo:
 
+GUI:
+  - element resizer
+  - Farbselektor
+  - Fix: label, edit: Multiline
+
 Events:
 Alle:
   - EventHover
@@ -17,8 +22,13 @@ GUI-Elemente:
   - KeyListener
   - Slider
   - (Bild)
-  
-  
+
+
+logging
+
+
+
+
 
 Formalitäten:
 
