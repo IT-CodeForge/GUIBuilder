@@ -54,22 +54,14 @@ class TGW_usercpp_generator:
                     is_in_list = True
                     already_added_events.append([event_name, event_type])
 
-            print(temp_str[start_index:end_index])
-            #print(ret_str[start_index + offset:end_index + offset + 1], start_index + offset, end_index + offset)
             if not is_in_list:
-                del_str = temp_str[start_index:end_index]
+                del_str = temp_str[start_index:end_index + 2]
                 ret_str = ret_str.replace(del_str, "")
             
 
-            temp_str = temp_str[end_index:]
+            temp_str = temp_str[end_index + 2:]
             offset += end_index
-            #print()
-            #print(ret_str[end_index:].replace("\n", " "))
-            #print()
-            #print()
-            #print(temp_str.replace('\n', " "))
 
-        print(ret_str)
         return [ret_str, already_added_events]
 
     
