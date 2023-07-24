@@ -68,7 +68,7 @@ class TGW_cpp_generator:
     def __generate_changed_event(self, objects: list[dict[str, any]]) -> str:
         ret_str: str  = "void GUI::eventCheckBox(TGWCheckBox* eineCheckBox, int isChecked_1_0)\n{\n"
 
-        for object in objects:
+        for object in objects and object["eventChanged"]:
 
             if object["type"] == "checkbox":
                 ret_str += "  if(eineCheckBox == this->" + object["name"] + ")\n  {\n"
@@ -78,7 +78,7 @@ class TGW_cpp_generator:
 
         for object in objects:
 
-            if object["type"] == "edit":
+            if object["type"] == "edit" and object["eventChanged"]:
                 ret_str += "  if(einEdit == this->" + object["name"] + ")\n  {\n"
                 ret_str += "    event_changed_" + object["name"] + "();\n  }\n"
         ret_str += "}\n"
