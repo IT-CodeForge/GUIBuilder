@@ -5,6 +5,8 @@ BGColor Canvas
 Text Color
 EventHover
 
+seperate Save & Export
+
 GUI-Elemente:
   - Slider
   - (Bild)
