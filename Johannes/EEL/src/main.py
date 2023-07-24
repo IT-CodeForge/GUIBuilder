@@ -249,7 +249,7 @@ class Steuerung:
         t_id = cls.__c_intermediary.createObject(ObjectEnum.LABEL)
         t_data = cls.__convert_attribut_to_js_data(
             cls.__c_intermediary.getObject(t_id).getAttributesAsDictionary())
-        print(t_data)
+        # print(t_data)
         return t_data
     eel.expose(create_label.__func__)
 
