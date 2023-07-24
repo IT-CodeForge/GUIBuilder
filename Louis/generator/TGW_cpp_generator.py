@@ -50,6 +50,12 @@ class TGW_cpp_generator:
             if object["type"] == "button" and object["eventPressed"]:
                 ret_str += "  if(einButton == this->" + object["name"] + ")\n  {\n"
                 ret_str += "    event_pressed_" + object["name"] + "(event);\n  }\n"
+            if object.get("eventSinglePressed", False):
+                ret_str += "  if(einButton == this->" + object["name"] + " && event == 0)\n  {\n"
+                ret_str += "    event_singlepressed_" + object["name"] + "();\n  }\n"
+            if object.get("eventDoublePressed", False):
+                ret_str += "  if(einButton == this->" + object["name"] + " && event == 1)\n  {\n"
+                ret_str += "    event_doublepressed_" + object["name"] + "();\n  }\n"
         ret_str += "}\n"
         return ret_str
     

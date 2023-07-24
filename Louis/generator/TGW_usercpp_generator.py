@@ -89,8 +89,14 @@ class TGW_usercpp_generator:
                     ret_str += "void GUI::event_Move_Mouse(int posX, int posY)\n{\n}\n\n"
                 continue
 
-            if [object["name"], "pressed"] not in already_added_events and object.get("eventPressed", False):
+            if [object["name"], "pressed"] not in already_added_events and object.get("eventSinglePressed", False):
                     ret_str += "void GUI::event_pressed_" + object["name"] + "(int event)\n{\n}\n\n"
+            
+            if [object["name"], "singlepressed"] not in already_added_events and object.get("eventDoublePressed", False):
+                    ret_str += "void GUI::event_doublepressed_" + object["name"] + "()\n{\n}\n\n"
+            
+            if [object["name"], "doublepressed"] not in already_added_events and object.get("eventPressed", False):
+                    ret_str += "void GUI::event_singlepressed_" + object["name"] + "()\n{\n}\n\n"
 
             if [object["name"], "hovered"] not in already_added_events and object.get("eventHovered", False):
                     ret_str += "void GUI::event_hovered_" + object["name"] + "()\n{\n}\n\n"
