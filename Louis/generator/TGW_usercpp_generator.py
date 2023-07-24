@@ -55,10 +55,8 @@ class TGW_usercpp_generator:
                     already_added_events.append([event_name, event_type])
             
             if not is_in_list:
-                print(event_name, event_type)
                 ret_str = ret_str.replace(ret_str[start_index:end_index + start_index + 2], "")
             temp_str = temp_str[start_index + 24:]
-        print(already_added_events)
 
         return [ret_str, already_added_events]
 
