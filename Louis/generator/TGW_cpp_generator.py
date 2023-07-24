@@ -163,7 +163,7 @@ class TGW_cpp_generator:
         ret_str += "new " + self.__type_translation[object["type"]] + "(this, "
         ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
         ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ", "
-        ret_str += '"' + object["text"] + '", ' + str(object["multipleLines"]).lower() + ', false);\n'
+        ret_str += '"' + object["text"] + '", ' + str(object["multipleLines"]).lower() + ', true);\n'
 
         return ret_str
 

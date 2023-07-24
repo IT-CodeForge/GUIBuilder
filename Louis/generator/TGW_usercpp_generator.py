@@ -28,7 +28,6 @@ class TGW_usercpp_generator:
     def __remove_user_events(self, objects: list[dict[str, any]], ret_str: str) -> list[str, list[str, str]]:
         already_added_events: list[list[str, str]] = []
         temp_str: str = ret_str
-        print(temp_str)
 
         #finds all events and finds out, if they are stil implemented (e.g. Button event, got turned off)
         while temp_str.find("void GUI::event_") != -1:
