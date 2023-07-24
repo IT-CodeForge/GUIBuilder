@@ -12,7 +12,7 @@ class TGW_header_generator:
         ret_str += '#include "TGW_AllClassDeclarations.h"\n'
 
         #class head
-        ret_str += "\n\nclass GUI : public : TGWMainWindow"
+        ret_str += "\n\nclass GUI : public TGWMainWindow"
         ret_str += "\n{\n"
 
         #attribute
