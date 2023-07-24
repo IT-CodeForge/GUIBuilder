@@ -35,6 +35,9 @@ class TGW_cpp_generator:
 
             if object["type"] == "window":
                 continue
+            if object["type"] == "canvas":
+                ret_str += "  " + object["name"] + "_bitmap = " +self.__generate_cpp_object(object)
+                continue
             ret_str += "  " + object["name"] + " = " + self.__generate_cpp_object(object)
         ret_str += "}\n"
 
@@ -83,14 +86,25 @@ class TGW_cpp_generator:
 #Generate window Events (Mouse move, mouse Click, Create Window, etc.)    
     def __generate_parsed_events(self, objects: list[dict[str, any]]) -> str:
         ret_str: str = ""
+        hasCanvas = False
+
+        for object in objects:
+            if object.get("type","") == "canvas":
+                hasCanvas = True
 
         for object in objects:
 
             if object.get("type") != "window":
                 continue
 
-            if object.get("eventCreate") == True:
-                ret_str += "\nvoid GUI::eventShow()\n{\n  event_Create_Window();\n}\n"
+            if (object.get("eventCreate") == True or hasCanvas) and ret_str.find("void GUI::eventShow()") == -1:
+                ret_str += "\nvoid GUI::eventShow()\n{\n"
+                for object2 in objects:
+                    if object2["type"] == "canvas":
+                        ret_str += "  " + object2["name"] + " = " + object2["name"] + "_bitmap->canvas;\n"
+                    if object2.get("eventCreate", False) == True:
+                        ret_str += "  event_Create_Window();"
+                ret_str += "\n}\n"
 
             if object.get("eventPaint") == True:
                 ret_str += "\nvoid GUI::eventPaint(HDC hDeviceContext)\n{\n  event_Paint_Background(hDeviceContext);\n}\n"
@@ -183,9 +197,9 @@ class TGW_cpp_generator:
 
     def __generate_canvas(self, object: dict[str, any]) -> str:
         ret_str: str  = ""
-        ret_str += "(new  TGWBitmapWindow(this, "
+        ret_str += "new TGWBitmapWindow(this, "
         ret_str += str(object["position"][0]) + ", " + str(object["position"][1]) + ", "
-        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + '))->canvas;\n'
+        ret_str += str(object["size"][0]) + ", " + str(object["size"][1]) + ');\n'
 
         return ret_str
 
