@@ -1,6 +1,6 @@
 from os import devnull, stat
 import sys
-# sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
+sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
 
 from typing import Any
 from os import environ, path
@@ -37,8 +37,8 @@ class Steuerung:
 
         eel.init(f'{t_additional_files}\\gui')
         eel.brw.set_path('chrome', f'{t_additional_files}\\brave\\brave.exe')
-        # eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE: Realease-Mode
-        eel.start('main.html', mode="firefox")  # NOTE: Dev-Mode
+        eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE: Realease-Mode
+        # eel.start('main.html', mode="firefox")  # NOTE: Dev-Mode
 
     @classmethod
     def __resetData(cls):
