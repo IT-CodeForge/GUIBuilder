@@ -185,7 +185,7 @@ m1=1</panel_attributes>
       <x>567</x>
       <y>686</y>
       <w>693</w>
-      <h>847</h>
+      <h>861</h>
     </coordinates>
     <panel_attributes>_JS_
 --
@@ -245,6 +245,7 @@ _-attribut_set_multiple_lines()_
 _-attribut_set_checked()_
 _-attribut_set_enabled()_
 _-attribut_set_event_pressed()_
+_-attribut_set_event_double_pressed()_
 _-attribut_set_event_hovered()_
 _-attribut_set_event_changed()_
 
