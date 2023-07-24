@@ -23,6 +23,7 @@ GUI-Elemente:
   - Slider
   - (Bild)
 
+Python Code generator
 
 logging
 
