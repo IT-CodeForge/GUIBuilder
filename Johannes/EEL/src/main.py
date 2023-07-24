@@ -25,7 +25,8 @@ class Steuerung:
     @classmethod
     def init(cls):
         cls.__c_intermediary = Intermediary()
-        cls.__c_window_id = cls.__c_intermediary.createObject(ObjectEnum.WINDOW)
+        cls.__c_window_id = cls.__c_intermediary.createObject(
+            ObjectEnum.WINDOW)
 
         cls.__c_generator = TGW_Generator()
 
@@ -42,7 +43,8 @@ class Steuerung:
     @classmethod
     def __resetData(cls):
         cls.__c_intermediary = Intermediary()
-        cls.__c_window_id = cls.__c_intermediary.createObject(ObjectEnum.WINDOW)
+        cls.__c_window_id = cls.__c_intermediary.createObject(
+            ObjectEnum.WINDOW)
 
         cls.__c_generator = TGW_Generator()
 
@@ -54,6 +56,8 @@ class Steuerung:
         cls.__resetData()
         return cls.__convert_attribut_to_js_data(cls.__c_intermediary.getObject(cls.__c_window_id).getAttributesAsDictionary())
     eel.expose(gui_init.__func__)
+
+
 
     @staticmethod
     def __convert_attribut_to_js_data(p_attribut) -> dict[str, any]:
@@ -161,6 +165,9 @@ class Steuerung:
 
         return t_return
 
+
+    # Öffnet TKinter Fenster, um Filedialoge zu öffnen
+
     @staticmethod
     def __get_load_file_path() -> str:
         root = Tk()
@@ -186,6 +193,9 @@ class Steuerung:
         t_path = fd.askdirectory(initialdir=t_initialdir_path)
         return t_path
 
+
+
+    # Läd alle GUI-Elemente vom File
     @staticmethod
     def load_gui_elements() -> list[dict[str, Any]]:
         cls = Steuerung
@@ -201,6 +211,7 @@ class Steuerung:
         return t_objekts
     eel.expose(load_gui_elements.__func__)
 
+    # Speichert EIN GUI-Element in den Zwischenspeicher
     @staticmethod
     def save_gui_element(p_attributes: dict[str, any]):
         cls = Steuerung
@@ -214,6 +225,7 @@ class Steuerung:
             t_obj.setAttribute(n, w)
     eel.expose(save_gui_element.__func__)
 
+    # Speichert ALLE GUI-Elemente ins File
     @staticmethod
     def save():
         cls = Steuerung
@@ -232,6 +244,9 @@ class Steuerung:
         cls = Steuerung
         cls.__c_intermediary.removeObject(p_id)
     eel.expose(delete_element.__func__)
+
+
+    #Erstellt die Elemente
 
     @staticmethod
     def create_btn() -> dict[str, Any]:
@@ -294,7 +309,9 @@ class Steuerung:
     eel.expose(create_timer.__func__)
 
 
+
 if __name__ == "__main__":
+    # Prüft ob es in VS-Code oder als Binary vorliegt.
     if environ.get("DEV") != None:
         Steuerung.c_file = path.abspath(__file__)
         Steuerung.c_additional_files_path = "..\\additional_files"
