@@ -1,5 +1,9 @@
 ToDo:
 
+BGColor Canvas
+Text Color
+EventHover
+
 GUI-Elemente:
   - Slider
   - (Bild)

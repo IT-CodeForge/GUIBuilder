@@ -15,24 +15,24 @@ from intermediary.intermediary import *
 
 class Steuerung:
 
-    c_intermediary: Intermediary
-    c_generator: Generator
-    c_json: JSON
-    c_window_id: int
-    file: str
-    additional_files_path: str
+    __c_intermediary: Intermediary
+    __c_generator: Generator
+    __c_json: JSON
+    __c_window_id: int
+    c_file: str
+    c_additional_files_path: str
 
     @classmethod
     def init(cls):
-        cls.c_intermediary = Intermediary()
-        cls.c_window_id = cls.c_intermediary.createObject(ObjectEnum.WINDOW)
+        cls.__c_intermediary = Intermediary()
+        cls.__c_window_id = cls.__c_intermediary.createObject(ObjectEnum.WINDOW)
 
-        cls.c_generator = Generator()
+        cls.__c_generator = Generator()
 
-        cls.c_json = JSON(cls.c_intermediary)
+        cls.__c_json = JSON(cls.__c_intermediary)
 
         import os
-        t_additional_files = f"{os.path.split(__file__)[0]}\\{cls.additional_files_path}"
+        t_additional_files = f"{os.path.split(__file__)[0]}\\{cls.c_additional_files_path}"
 
         eel.init(f'{t_additional_files}\\gui')
         eel.brw.set_path('chrome', f'{t_additional_files}\\brave\\brave.exe')
@@ -40,23 +40,23 @@ class Steuerung:
         eel.start('main.html', mode="firefox")  # NOTE: Dev-Mode
 
     @classmethod
-    def resetData(cls):
-        cls.c_intermediary = Intermediary()
-        cls.c__window_id = cls.c_intermediary.createObject(ObjectEnum.WINDOW)
+    def __resetData(cls):
+        cls.__c_intermediary = Intermediary()
+        cls.__c_window_id = cls.__c_intermediary.createObject(ObjectEnum.WINDOW)
 
-        cls.c_generator = Generator()
+        cls.__c_generator = Generator()
 
-        cls.c_json = JSON(cls.c_intermediary)
+        cls.__c_json = JSON(cls.__c_intermediary)
 
     @staticmethod
     def gui_init() -> dict[str, Any]:
         cls = Steuerung
-        cls.resetData()
-        return cls.convert_attribut_to_js_data(cls.c_intermediary.getObject(cls.c__window_id).getAttributesAsDictionary())
+        cls.__resetData()
+        return cls.__convert_attribut_to_js_data(cls.__c_intermediary.getObject(cls.__c_window_id).getAttributesAsDictionary())
     eel.expose(gui_init.__func__)
 
     @staticmethod
-    def convert_attribut_to_js_data(p_attribut) -> dict[str, any]:
+    def __convert_attribut_to_js_data(p_attribut) -> dict[str, any]:
         t_type = p_attribut["type"]
         t_return = {}
         t_return["id"] = p_attribut["id"]
@@ -110,7 +110,7 @@ class Steuerung:
         return t_return
 
     @staticmethod
-    def convert_attribut_from_js_data(p_attribut) -> dict[str, any]:
+    def __convert_attribut_from_js_data(p_attribut) -> dict[str, any]:
         t_type = p_attribut["type"]
         t_return = {}
         t_return["id"] = p_attribut["id"]
@@ -162,7 +162,7 @@ class Steuerung:
         return t_return
 
     @staticmethod
-    def get_load_file_path() -> str:
+    def __get_load_file_path() -> str:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
@@ -170,7 +170,7 @@ class Steuerung:
         return file
 
     @staticmethod
-    def get_save_file_path() -> str:
+    def __get_save_file_path() -> str:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
@@ -178,24 +178,24 @@ class Steuerung:
         return file
 
     @classmethod
-    def get_dir_path(cls) -> str:
+    def __get_dir_path(cls) -> str:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
-        t_initialdir_path = f"{path.split(cls.file)[0]}"
+        t_initialdir_path = f"{path.split(cls.c_file)[0]}"
         t_path = fd.askdirectory(initialdir=t_initialdir_path)
         return t_path
 
     @staticmethod
     def load_gui_elements() -> list[dict[str, Any]]:
         cls = Steuerung
-        t_path = cls.get_dir_path()
+        t_path = cls.__get_dir_path()
         if (t_path == ""):
             return None
-        cls.c_json.load(t_path)
+        cls.__c_json.load(t_path)
         t_objekts = []
-        for o in cls.c_intermediary.getObjects():
-            t_objekts.append(cls.convert_attribut_to_js_data(
+        for o in cls.__c_intermediary.getObjects():
+            t_objekts.append(cls.__convert_attribut_to_js_data(
                 o.getAttributesAsDictionary()))
         # print(t_objekts)
         return t_objekts
@@ -205,9 +205,9 @@ class Steuerung:
     def save_gui_element(p_attributes: dict[str, any]):
         cls = Steuerung
         # print(p_attributes)
-        t_attributes = cls.convert_attribut_from_js_data(p_attributes)
+        t_attributes = cls.__convert_attribut_from_js_data(p_attributes)
         # print(t_attributes)
-        t_obj = cls.c_intermediary.getObject(p_attributes["id"])
+        t_obj = cls.__c_intermediary.getObject(p_attributes["id"])
         for n, w in t_attributes.items():
             if n in ("id", "type"):
                 continue
@@ -217,28 +217,28 @@ class Steuerung:
     @staticmethod
     def save():
         cls = Steuerung
-        t_data = cls.c_intermediary.getObjectsAsDictionaryList()
+        t_data = cls.__c_intermediary.getObjectsAsDictionaryList()
         # print(t_data)
-        t_path = cls.get_dir_path()
+        t_path = cls.__get_dir_path()
         if (t_path == ""):
             return None
         # print(t_path)
-        cls.c_generator.write_files(t_path, t_data)  # NOTE
-        cls.c_json.save(t_path)
+        cls.__c_generator.write_files(t_path, t_data)  # NOTE
+        cls.__c_json.save(t_path)
     eel.expose(save.__func__)
 
     @staticmethod
     def delete_element(p_id: int):
         cls = Steuerung
-        cls.c_intermediary.removeObject(p_id)
+        cls.__c_intermediary.removeObject(p_id)
     eel.expose(delete_element.__func__)
 
     @staticmethod
     def create_btn() -> dict[str, Any]:
         cls = Steuerung
-        t_id = cls.c_intermediary.createObject(ObjectEnum.BUTTON)
-        t_data = cls.convert_attribut_to_js_data(
-            cls.c_intermediary.getObject(t_id).getAttributesAsDictionary())
+        t_id = cls.__c_intermediary.createObject(ObjectEnum.BUTTON)
+        t_data = cls.__convert_attribut_to_js_data(
+            cls.__c_intermediary.getObject(t_id).getAttributesAsDictionary())
         # print(t_data)
         return t_data
     eel.expose(create_btn.__func__)
@@ -246,9 +246,9 @@ class Steuerung:
     @staticmethod
     def create_label() -> dict[str, Any]:
         cls = Steuerung
-        t_id = cls.c_intermediary.createObject(ObjectEnum.LABEL)
-        t_data = cls.convert_attribut_to_js_data(
-            cls.c_intermediary.getObject(t_id).getAttributesAsDictionary())
+        t_id = cls.__c_intermediary.createObject(ObjectEnum.LABEL)
+        t_data = cls.__convert_attribut_to_js_data(
+            cls.__c_intermediary.getObject(t_id).getAttributesAsDictionary())
         # print(t_data)
         return t_data
     eel.expose(create_label.__func__)
@@ -256,9 +256,9 @@ class Steuerung:
     @staticmethod
     def create_edit() -> dict[str, Any]:
         cls = Steuerung
-        t_id = cls.c_intermediary.createObject(ObjectEnum.EDIT)
-        t_data = cls.convert_attribut_to_js_data(
-            cls.c_intermediary.getObject(t_id).getAttributesAsDictionary())
+        t_id = cls.__c_intermediary.createObject(ObjectEnum.EDIT)
+        t_data = cls.__convert_attribut_to_js_data(
+            cls.__c_intermediary.getObject(t_id).getAttributesAsDictionary())
         # print(t_data)
         return t_data
     eel.expose(create_edit.__func__)
@@ -266,9 +266,9 @@ class Steuerung:
     @staticmethod
     def create_checkbox() -> dict[str, Any]:
         cls = Steuerung
-        t_id = cls.c_intermediary.createObject(ObjectEnum.CHECKBOX)
-        t_data = cls.convert_attribut_to_js_data(
-            cls.c_intermediary.getObject(t_id).getAttributesAsDictionary())
+        t_id = cls.__c_intermediary.createObject(ObjectEnum.CHECKBOX)
+        t_data = cls.__convert_attribut_to_js_data(
+            cls.__c_intermediary.getObject(t_id).getAttributesAsDictionary())
         # print(t_data)
         return t_data
     eel.expose(create_checkbox.__func__)
@@ -276,9 +276,9 @@ class Steuerung:
     @staticmethod
     def create_canvas() -> dict[str, Any]:
         cls = Steuerung
-        t_id = cls.c_intermediary.createObject(ObjectEnum.CANVAS)
-        t_data = cls.convert_attribut_to_js_data(
-            cls.c_intermediary.getObject(t_id).getAttributesAsDictionary())
+        t_id = cls.__c_intermediary.createObject(ObjectEnum.CANVAS)
+        t_data = cls.__convert_attribut_to_js_data(
+            cls.__c_intermediary.getObject(t_id).getAttributesAsDictionary())
         # print(t_data)
         return t_data
     eel.expose(create_canvas.__func__)
@@ -286,9 +286,9 @@ class Steuerung:
     @staticmethod
     def create_timer() -> dict[str, Any]:
         cls = Steuerung
-        t_id = cls.c_intermediary.createObject(ObjectEnum.TIMER)
-        t_data = cls.convert_attribut_to_js_data(
-            cls.c_intermediary.getObject(t_id).getAttributesAsDictionary())
+        t_id = cls.__c_intermediary.createObject(ObjectEnum.TIMER)
+        t_data = cls.__convert_attribut_to_js_data(
+            cls.__c_intermediary.getObject(t_id).getAttributesAsDictionary())
         # print(t_data)
         return t_data
     eel.expose(create_timer.__func__)
@@ -296,10 +296,10 @@ class Steuerung:
 
 if __name__ == "__main__":
     if environ.get("DEV") != None:
-        Steuerung.file = path.abspath(__file__)
-        Steuerung.additional_files_path = "..\\additional_files"
+        Steuerung.c_file = path.abspath(__file__)
+        Steuerung.c_additional_files_path = "..\\additional_files"
     else:
-        Steuerung.file = path.abspath(executable)
-        Steuerung.additional_files_path = "additional_files"
+        Steuerung.c_file = path.abspath(executable)
+        Steuerung.c_additional_files_path = "additional_files"
 
     Steuerung.init()

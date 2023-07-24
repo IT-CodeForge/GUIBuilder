@@ -1,4 +1,12 @@
 :root {
+    --background-color: #f0f0f0;
+
+    --collapsable-btn-font-size: 15px;
+    --collapsable-btn-text-color: #ffffff;
+    --collapsable-btn-background-color: #777777;
+    --collapsable-btn-background-color-hover: #555555;
+    --collapsable-content-background-color: #f1f1f1;
+    
     --menubar-elements-height: 3rem;
     --menubar-elements-outline-width: 3px;
     --menubar-elements-outline-color: #000000;
@@ -15,7 +23,7 @@
 }
 
 body {
-    background-color: #f0f0f0;
+    background-color: var(--background-color);
     user-select: none;
 }
 
@@ -32,19 +40,19 @@ body {
 
 
 .collapsible-btn {
-    background-color: #777;
-    color: white;
+    background-color: var(--collapsable-btn-background-color);
+    color: var(--collapsable-btn-text-color);
     cursor: pointer;
     padding: 18px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
-    font-size: 15px;
+    font-size: var(--collapsable-btn-font-size);
 }
 
 .collapsible-btn:hover {
-    background-color: #555;
+    background-color: var(--collapsable-btn-background-color-hover);
 }
 
 .collapsible-content {
@@ -52,7 +60,7 @@ body {
     min-height: 30%;
     padding: 0 18px;
     overflow: auto;
-    background-color: #f1f1f1;
+    background-color: var(--collapsable-content-background-color);
 }
 
 .collapsible-btn p, h1, h2, h3, h4 {
@@ -61,7 +69,7 @@ body {
 
 .collapsible-btn:after {
     content: '\002B';
-    color: white;
+    color: var(--collapsable-btn-text-color);
     font-weight: bold;
     float: right;
     margin-left: 5px;
@@ -80,7 +88,7 @@ body {
 }
 
 .collapsible-btn h3 a {
-    color: white
+    color: var(--collapsable-btn-text-color)
 }
 
 
@@ -328,7 +336,7 @@ body {
     height: 80%;
     width: 80%;
     overflow: auto;
-    background-color: #F0F0F0;
+    background-color: var(--background-color);
     padding: 2rem;
     border-radius: 2rem;
 }

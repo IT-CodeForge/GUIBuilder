@@ -1,10 +1,11 @@
-var g_move_element = null
-var g_move_mouse_x_offset = 0
-var g_move_mouse_y_offset = 0
-var g_active_gui_element = null
-var g_last_gui_element_mousedown_event = 0
-var g_prog_language = null
+var g_move_element = null // enthält das Element, welches aktuell vom User verschoben wird
+var g_move_mouse_x_offset = 0 // enthält mouse_offset der aktuellen Element-verschiebungs-Aktion.
+var g_move_mouse_y_offset = 0 // enthält mouse_offset der aktuellen Element-verschiebungs-Aktion.
+var g_active_gui_element = null // enthält das Element, welches aktuell ausgewält ist und im Attributeditor angezeigt wird.
+var g_last_gui_element_mousedown_event = 0 // Timestamp des letzten gui_element_mousedown_events
+var g_prog_language = null // enthält die ausgewählte Programmiersprache
 
+// Dictionary mit HTML-Elementen für vereinfachten Zugriff.
 var gui_elements_main = null
 var copy_elements = null
 var menubar_elements = null
@@ -12,14 +13,16 @@ var element_attributes = null
 var window_attributes = null
 
 
-//UTILITY:
+// UTILITY:
 
 const pause = (time) => new Promise(resolve => setTimeout(resolve, time))
 
+// shortcut to get ElementsById
 function getElement(id) {
     return document.getElementById(id)
 }
 
+// called by Collapsables to expand or hide content
 function toggleCollapsable(p_collapsable) {
     p_collapsable.classList.toggle("collapsible-active");
     var t_content = p_collapsable.nextElementSibling;
@@ -32,10 +35,12 @@ function toggleCollapsable(p_collapsable) {
 
 
 
+// Wird vor dem Schließen der Seite ausgeführt
 window.onbeforeunload = function (e) {
     return 'Unsaved changes!';
 };
 
+// Wird beim Laden der Seite ausgeführt
 window.onload = async function () {
     init_element_variables()
 
@@ -49,6 +54,7 @@ window.onload = async function () {
 
 
 
+// setzt alle element_variablen
 function init_element_variables() {
     window.gui_elements_main = getElement('gui-elements')
     window.copy_elements = { main: getElement("copy-elements"), btn: getElement("copy-element-btn"), label: getElement("copy-element-label"), edit: getElement("copy-element-edit"), checkbox: getElement("copy-element-checkbox"), canvas: getElement("copy-element-canvas"), timer: getElement("copy-element-timer") }
@@ -62,16 +68,14 @@ function init_element_variables() {
 function set_language() {
     g_prog_language = menubar_elements.select_language.value
 
-    if (g_prog_language == "C++")
-    {
+    if (g_prog_language == "C++") {
         element_attributes.text_color.disabled = true;
         element_attributes.background_color.disabled = true;
         element_attributes.event_hovered.disabled = true;
         window_attributes.text_color.disabled = true;
         window_attributes.background_color.disabled = true;
     }
-    else
-    {
+    else {
         element_attributes.text_color.disabled = false;
         element_attributes.background_color.disabled = false;
         element_attributes.event_hovered.disabled = false;
@@ -88,10 +92,13 @@ function addListeners() {
     window.addEventListener('mouseup', gui_element_mouseup_event, false)
     gui_elements_main.addEventListener('mousedown', gui_elements_mousedown_event, false)
 
+    // Fügt allen GUI-Elementen den Eventhandler hinzu.
     const t_elements = document.getElementsByClassName('gui-element')
     for (i = 0; i < t_elements.length; i++) {
         t_elements[i].addEventListener('mousedown', gui_element_mousedown_event, false)
     }
+    
+    // fügt alles Menubar-create-Elementen den Eventhandler hinzu.
     menubar_elements.btn.addEventListener('mousedown', menubar_element_btn_mousedown_event, false)
     menubar_elements.label.addEventListener('mousedown', menubar_element_label_mousedown_event, false)
     menubar_elements.edit.addEventListener('mousedown', menubar_element_edit_mousedown_event, false)
@@ -101,6 +108,7 @@ function addListeners() {
 }
 
 async function gui_elements_mousedown_event(e) {
+    // prüft, ob auf gui_elements_main geklickt wurde oder auf ein GUI_ELEMENT, da in diesem Fall beide funktionen aufgerufen werden.
     await pause(50)
     if (new Date().getTime() - g_last_gui_element_mousedown_event > 70)
         reset_active_gui_element()
@@ -157,9 +165,11 @@ async function menubar_element_timer_mousedown_event(e) {
 // calculate and set GUI-Element Pos
 
 function set_gui_element_translation(p_element, p_x, p_y) {
+    // Berechnet relative GUI-Position aus absoluten Mouse-Koordinaten
     var t_leftTranslation = p_x - gui_elements_main.getBoundingClientRect().left - window.g_move_mouse_x_offset
     var t_topTranslation = p_y - gui_elements_main.getBoundingClientRect().top - window.g_move_mouse_y_offset
 
+    // Prüft, ob Mouse außerhalb des GUI-Bereiches
     if (t_leftTranslation < 0)
         t_leftTranslation = 0
     else if (t_leftTranslation > (gui_elements_main.data.size_x - p_element.data.size_x))
@@ -169,17 +179,20 @@ function set_gui_element_translation(p_element, p_x, p_y) {
     else if (t_topTranslation > (gui_elements_main.data.size_y - p_element.data.size_y))
         t_topTranslation = gui_elements_main.data.size_y - p_element.data.size_y
 
+    // Rundet auf ganze Zahlen
     t_leftTranslation = Math.round(t_leftTranslation)
     t_topTranslation = Math.round(t_topTranslation)
 
     p_element.data.pos_x = t_leftTranslation;
     p_element.data.pos_y = t_topTranslation;
 
+    // Aktuallisiert die Positionsanzeige im Element-Attribut-Editor, falls das verschobene Element auch das dort angezeigte ist.
     if (g_active_gui_element == p_element) {
         element_attributes.pos_x.value = g_active_gui_element.data.pos_x
         element_attributes.pos_y.value = g_active_gui_element.data.pos_y
     }
 
+    // setzt schlussendlich die Position
     p_element.style.transform = "translate(" + t_leftTranslation + "px, " + t_topTranslation + "px)"
 }
 
@@ -187,7 +200,6 @@ function set_gui_element_translation(p_element, p_x, p_y) {
 // load or store Element to database
 async function load_gui_elements_from_database() {
     const t_gui_elements = await eel.load_gui_elements()()
-    window.temptest = t_gui_elements
     for (i = 0; i < t_gui_elements.length; i++) {
         const t_akt = t_gui_elements[i]
         switch (t_akt.type) {
@@ -238,10 +250,12 @@ async function save_gui_elements_to_database() {
 function load_window(p_attributes) {
     gui_elements_main.data = p_attributes
 
+    // wendet die window_attribute an
     gui_elements_main.style.width = gui_elements_main.data.size_x + "px"
     gui_elements_main.style.height = gui_elements_main.data.size_y + "px"
     gui_elements_main.style.backgroundColor = "#" + gui_elements_main.data.background_color
 
+    // schreibt die Window_attribute in den window-attribut-editor
     window_attributes.id.textContent = gui_elements_main.data.id
     window_attributes.name.value = gui_elements_main.data.name
     window_attributes.text.value = gui_elements_main.data.text
@@ -258,6 +272,7 @@ function load_window(p_attributes) {
 }
 
 function load_gui_element(p_origin_element, p_attributes) {
+    // clont das origin-Element
     t_neu_element = p_origin_element.cloneNode(true)
 
     t_neu_element.classList.add("gui-element")
@@ -266,6 +281,7 @@ function load_gui_element(p_origin_element, p_attributes) {
 
     t_neu_element.data = p_attributes
 
+    // Wendet die Attribute an
     if (p_attributes.type == "checkbox") {
         t_neu_element.children[1].textContent = p_attributes.text
         t_neu_element.children[0].checked = p_attributes.checked
@@ -282,6 +298,7 @@ function load_gui_element(p_origin_element, p_attributes) {
 
     gui_elements_main.append(t_neu_element)
 
+    // added den Event-Listener
     t_neu_element.addEventListener('mousedown', gui_element_mousedown_event, false)
 
     return t_neu_element
@@ -331,6 +348,7 @@ function set_active_gui_element(p_element) {
     g_active_gui_element = p_element
     g_active_gui_element.classList.add("active-gui-element")
 
+    // setzt aktuelle data Werte in den Element-Attribut-Editor
     element_attributes.id.textContent = g_active_gui_element.data.id
     element_attributes.name.value = g_active_gui_element.data.name
     element_attributes.text.value = g_active_gui_element.data.text
@@ -348,6 +366,8 @@ function set_active_gui_element(p_element) {
     element_attributes.event_hovered.checked = g_active_gui_element.data.event_hovered
     element_attributes.event_changed.checked = g_active_gui_element.data.event_changed
 
+    // Blendet die Teile des Attribut-Editors aus, welche nicht für das aktuelle Element unterstützt wird.
+    
     if (!(p_element.data.type == "timer")) {
         element_attributes.event_section.style.display = ""
         element_attributes.background_color_section.style.display = ""
@@ -411,7 +431,7 @@ function reset_active_gui_element() {
 }
 
 
-// Element-Attribut-Change-Events
+// Element-Attribut-Change-Events. Wird ausgeführt, wenn ein Wert im Element-Attribut-Editor geändert wird.
 
 function attribut_delete_element() {
     eel.delete_element(g_active_gui_element.data.id)
@@ -516,7 +536,7 @@ function attribut_set_event_changed() {
 }
 
 
-// Window-Attribut-Change-Events
+// Window-Attribut-Change-Events. Wird ausgeführt, wenn ein Wert im Window-Attribut-Editor geändert wird.
 
 function window_set_name() {
     gui_elements_main.data.name = window_attributes.name.value
@@ -579,11 +599,13 @@ function window_set_event_mouse_move() {
 
 
 
+// Blendet das license_window ein.
 function show_license_window() {
     getElement("license-window-main-outer").style.display = "flex"
     getElement("license-window-shadow").style.display = "block"
 }
 
+// Blendet das license_window aus.
 function hide_license_window() {
     getElement("license-window-main-outer").style.display = ""
     getElement("license-window-shadow").style.display = ""
