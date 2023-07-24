@@ -4,7 +4,7 @@
     --menubar-elements-outline-color: #000000;
     --menubar-elements-outline-offset: -2px;
 
-    --element-attributes-height: 20rem;
+    --element-attributes-height: 25rem;
 
     --attributes-width: 20rem;
 
@@ -289,6 +289,12 @@ body {
 #footer a {
     cursor: pointer;
     text-decoration: underline
+}
+
+
+
+.license-window-clearance {
+    padding: 2rem 0 0 0;
 }
 
 
