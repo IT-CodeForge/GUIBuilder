@@ -1,8 +1,6 @@
 ToDo:
 
 Events:
-Button:
-  - DoublePressed
 Alle:
   - EventHover
 
