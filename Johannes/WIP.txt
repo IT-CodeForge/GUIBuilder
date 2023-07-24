@@ -1,5 +1,6 @@
 s. global Notizen
 
+seperate Save & Export
 element resizer
 Farbselektor
 Fix: Btn outside, if am Rand dann Größenänderung
