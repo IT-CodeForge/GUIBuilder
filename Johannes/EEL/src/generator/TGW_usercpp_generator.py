@@ -1,4 +1,5 @@
 import os.path
+from signal import default_int_handler
 from turtle import st
 
 class TGW_usercpp_generator:
@@ -55,11 +56,22 @@ class TGW_usercpp_generator:
                     is_in_list = True
                     already_added_events.append([event_name, event_type])
 
+            print(temp_str[start_index:end_index])
+            #print(ret_str[start_index + offset:end_index + offset + 1], start_index + offset, end_index + offset)
             if not is_in_list:
-                ret_str = ret_str.replace(ret_str[start_index + offset:end_index + offset + 1], "")
-            temp_str = temp_str[end_index + 1 - start_index:]
-            offset += end_index + 1 - start_index
+                del_str = temp_str[start_index:end_index]
+                ret_str = ret_str.replace(del_str, "")
+            
 
+            temp_str = temp_str[end_index:]
+            offset += end_index
+            #print()
+            #print(ret_str[end_index:].replace("\n", " "))
+            #print()
+            #print()
+            #print(temp_str.replace('\n', " "))
+
+        print(ret_str)
         return [ret_str, already_added_events]
 
     
