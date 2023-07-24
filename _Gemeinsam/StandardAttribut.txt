@@ -1,7 +1,7 @@
 type: "window":
 	id (int)
-	name (str, std: Window)
-	text (str, std: Window)
+	name (str, std: "Window")
+	text (str, std: "Window")
 	size (list[int, int], std: [500, 500])
 	textColor (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
 	backgroundColor (list[int, int, int], std: [255, 255, 255], N/A in TGWindowLib)
@@ -14,8 +14,8 @@ type: "window":
 
 type: "button":
 	id (int)
-	name (str, std: Button{id})
-	text (str, std: Button)
+	name (str, std: f"Button{id}")
+	text (str, std: "Button")
 	position (list[int, int], std: [0, 0])
 	size (list[int, int], std: [70, 25])
 	textColor (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
@@ -25,8 +25,8 @@ type: "button":
 
 type: "label":
 	id (int)
-	name (str, std: Label{id})
-	text (str, std: Label)
+	name (str, std: f"Label{id}")
+	text (str, std: "Label")
 	position (list[int, int], std: [0, 0])
 	size (list[int, int], std: [75, 18])
 	textColor (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
@@ -35,8 +35,8 @@ type: "label":
 	
 type: "edit":
 	id (int)
-	name (str, std: Edit{id})
-	text (str, std: Edit)
+	name (str, std: f"Edit{id}")
+	text (str, std: "Edit")
 	position (list[int, int], std: [0, 0])
 	size size (list[int, int], std: [200, 100])
 	textColor (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
@@ -47,8 +47,8 @@ type: "edit":
 
 type: "checkbox":
 	id (int)
-	name (str, std: Checkbox{id})
-	text (str, std: Checkbox)
+	name (str, std: f"Checkbox{id}")
+	text (str, std: "Checkbox")
 	position (list[int, int], std: [0, 0])
 	size (list[int, int], std: [100, 25])
 	textColor (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
@@ -59,7 +59,7 @@ type: "checkbox":
 
 type: "timer":
 	id (int)
-	name (str, std: Timer{id})
+	name (str, std: f"Timer{id}")
 	position (list[int, int], std: [0, 0])
 	size (list[int, int], std: [40, 18])
 	interval (int, std: 1000)
@@ -67,7 +67,7 @@ type: "timer":
 
 type: "canvas":
 	id (int)
-	name (str, std: Canvas{id})
+	name (str, std: f"Canvas{id}")
 	position (list[int, int], std: [0, 0])
 	size (list[int, int], std: [100, 100])
 	backgroundColor (list[int, int, int], std: [255, 255, 255], N/A in TGWindowLib)
