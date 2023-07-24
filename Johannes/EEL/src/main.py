@@ -8,7 +8,7 @@ from sys import executable
 import eel
 from tkinter import Tk, filedialog as fd
 
-from generator.generator import *
+from generator.TGW_generator import *
 from intermediary.json import *
 from intermediary.intermediary import *
 
@@ -16,7 +16,7 @@ from intermediary.intermediary import *
 class Steuerung:
 
     __c_intermediary: Intermediary
-    __c_generator: Generator
+    __c_generator: TGW_Generator
     __c_json: JSON
     __c_window_id: int
     c_file: str
@@ -27,7 +27,7 @@ class Steuerung:
         cls.__c_intermediary = Intermediary()
         cls.__c_window_id = cls.__c_intermediary.createObject(ObjectEnum.WINDOW)
 
-        cls.__c_generator = Generator()
+        cls.__c_generator = TGW_Generator()
 
         cls.__c_json = JSON(cls.__c_intermediary)
 
@@ -44,7 +44,7 @@ class Steuerung:
         cls.__c_intermediary = Intermediary()
         cls.__c_window_id = cls.__c_intermediary.createObject(ObjectEnum.WINDOW)
 
-        cls.__c_generator = Generator()
+        cls.__c_generator = TGW_Generator()
 
         cls.__c_json = JSON(cls.__c_intermediary)
 

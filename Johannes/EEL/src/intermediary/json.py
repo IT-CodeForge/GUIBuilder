@@ -12,7 +12,7 @@ class JSON:
         with open(os.path.join(name, "gui_objects.json"), "r") as file:
             objects = json.loads(file.read())
 
-        self.__intermediary.loadObjects(objects)
+        self.__intermediary.loadObjectsFromDictionary(objects)
 
     def save(self, name: str) -> None:
         objects: list[dict[str, any]] = self.__intermediary.getObjectsAsDictionaryList()

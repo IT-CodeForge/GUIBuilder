@@ -10,6 +10,8 @@ from intermediary.object.timer_object import TimerObject
 from intermediary.object.canvas_object import CanvasObject
 
 class ObjectEnum(Enum):
+    """Enumeration of all possible object types."""
+
     WINDOW = 0
     BUTTON = 1
     LABEL = 2
@@ -18,15 +20,9 @@ class ObjectEnum(Enum):
     TIMER = 5
     CANVAS = 6
 
-class EventEnum(Enum):
-    TIMER = 0
-    KEY_UP = 1
-    KEY_DOWN = 2
-    MOUSE_MOVE = 3
-    MOUSE_CLICK = 4
-    PAINT = 5
-
 class Intermediary:
+    """A class which is used to handle communication between the client and generator. Intermediate representation of data."""
+
     def __init__(self) -> None:
         self.__enum_mapping: dict[ObjectEnum, type] = {
             ObjectEnum.WINDOW: WindowObject,
@@ -52,6 +48,8 @@ class Intermediary:
         self.__count: int = 0
     
     def createObject(self, type: ObjectEnum) -> int:
+        """Creates an intermediate representation of an object."""
+
         object_type: type = self.__enum_mapping.get(type)
 
         if object_type == None:
@@ -67,6 +65,8 @@ class Intermediary:
         return object_id
 
     def removeObject(self, id: int) -> None:
+        """Removes an intermediate representation of an object."""
+
         for object in self.__objects:
             if object.getAttribute("id") == id:
                 self.__objects.remove(object)
@@ -75,13 +75,17 @@ class Intermediary:
         print(f"Error: An object with the ID {id} could not be removed.")
 
     def getObject(self, id: int) -> GenericObject:
+        """Retrieves an intermediate representation of an object."""
+
         for object in self.__objects:
             if object.getAttribute("id") == id:
                 return object
 
         print(f"Error: An object with the ID {id} could not be retrieved.")
 
-    def loadObjects(self, objects: list[dict[str, any]]) -> None:
+    def loadObjectsFromDictionaryList(self, objects: list[dict[str, any]]) -> None:
+        """Loads a list of objects in dictionary format."""
+
         # Clear all objects.
         self.__objects = []
         self.__count = 0
@@ -98,9 +102,13 @@ class Intermediary:
                 new_object.setAttribute(attribute, object[attribute])
     
     def getObjects(self) -> list[GenericObject]:
+        """Retrieves a list of objects in intermediate representation."""
+
         return self.__objects
 
     def getObjectsAsDictionaryList(self) -> list[dict[str, any]]:
+        """Retrieves a list of objects in dictionary format."""
+
         objects: list[dict[str, any]] = []
 
         for object in self.__objects:
