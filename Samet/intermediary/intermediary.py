@@ -10,6 +10,8 @@ from intermediary.object.timer_object import TimerObject
 from intermediary.object.canvas_object import CanvasObject
 
 class ObjectEnum(Enum):
+    """Enumeration of all possible object types."""
+
     WINDOW = 0
     BUTTON = 1
     LABEL = 2
@@ -17,14 +19,6 @@ class ObjectEnum(Enum):
     CHECKBOX = 4
     TIMER = 5
     CANVAS = 6
-
-class EventEnum(Enum):
-    TIMER = 0
-    KEY_UP = 1
-    KEY_DOWN = 2
-    MOUSE_MOVE = 3
-    MOUSE_CLICK = 4
-    PAINT = 5
 
 class Intermediary:
     """A class which is used to handle communication between the client and generator. Intermediate representation of data."""
