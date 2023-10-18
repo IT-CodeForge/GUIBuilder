@@ -1,5 +1,7 @@
 ToDo:
 
+std json Dateiname: GUI.json
+
 GUI:
   - element resizer
   - Farbselektor
