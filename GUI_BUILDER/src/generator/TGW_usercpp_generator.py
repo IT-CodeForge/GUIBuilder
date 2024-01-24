@@ -4,10 +4,11 @@ class TGW_usercpp_generator:
     def __init__(self, user_cpp: str, type_translation: dict[str, str]) -> None:
         self.__user_cpp: str = user_cpp
         self.__type_translation: dict[str, str] = type_translation
+        self.temp_hold = ""
 
 
     def generate_cpp_user(self, path: str, objects: list[dict[str, any]]) -> str:
-        #reas old File, so it only changes the things it is allowed to change
+        #reads old File, so it only changes the things it is allowed to change
         ret_str: str = self.__read_data(os.path.join(path, self.__user_cpp))
 
         #includes
@@ -16,6 +17,7 @@ class TGW_usercpp_generator:
         ret_str = self.__check_user_includes(objects) + '#include "GUI.h"\n\n' + ret_str
 
         #deletes removed user Events
+        self.temp_hold = ret_str
         already_added_and_ret_str = self.__remove_user_events(objects, ret_str)
         ret_str = already_added_and_ret_str[0]
         
@@ -27,7 +29,7 @@ class TGW_usercpp_generator:
 
     def __remove_user_events(self, objects: list[dict[str, any]], ret_str: str) -> list[str, list[str, str]]:
         already_added_events: list[list[str, str]] = []
-        temp_str: str = ret_str
+        temp_str: str = (ret_str + ".")[:-1]
 
         #finds all events and finds out, if they are stil implemented (e.g. Button event, got turned off)
         offset = 0
@@ -40,17 +42,16 @@ class TGW_usercpp_generator:
 
             for object in objects:
                 #type_checking checks, if the object has a certain event
-                type_checking  =  (event_type == "pressed" and object.get("eventPressed", False)) or (event_type == "hovered" and object.get("eventHovered", False)) or (event_type == "changed" and object.get("eventChanged", False)) or (event_type == "timer" and object.get("type") == "timer")
+                type_checking  =  (event_type == "pressed" and object.get("eventPressed", False)) or (event_type == "hovered" and object.get("eventHovered", False)) or (event_type == "changed" and object.get("eventChanged", False)) or (event_type == "timer" and object.get("type", "") == "timer") or (event_type == "doublepressed" and object.get("eventDoublePressed", False))
                 type_checking  |= (event_type == "Create" and object.get("eventCreate", False)) or (event_type == "Resize" and object.get("eventResize", False)) or (event_type == "Paint" and object.get("eventPaint", False)) or (event_type == "Click" and object.get("eventMouseClicked", False)) or (event_type == "Move" and object.get("eventMouseMove", False))
                 
-                if object["type"] == "window":
+                if object.get("type", "") == "window":
                 
                     if type_checking:
                         is_in_list = True
                         already_added_events.append([event_name, event_type])
                     continue
-                
-                if event_name == object["name"] and (type_checking):
+                if event_name == object.get("name", "") and (type_checking):
                     is_in_list = True
                     already_added_events.append([event_name, event_type])
 
@@ -58,15 +59,14 @@ class TGW_usercpp_generator:
                 del_str = temp_str[start_index:end_index + 2]
                 ret_str = ret_str.replace(del_str, "")
             
-
             temp_str = temp_str[end_index + 2:]
             offset += end_index
-
+        
         return [ret_str, already_added_events]
 
     
     def __add_user_events(self, objects: list[dict[str, any]], already_added_events: list[list[str, str]]) -> str:
-        #checks all events, and if one is not already added, add it to the file 
+        #checks all events, and if one is not already added, add it to the file
         ret_str: str = ""
 
         for object in objects:
@@ -83,13 +83,13 @@ class TGW_usercpp_generator:
                     ret_str += "void GUI::event_Resize_Window()\n{\n}\n\n"
 
                 if ["Mouse", "Click"] not in already_added_events and object.get("eventMouseClick") == True:
-                    ret_str += "void GUI::event_Click_Mouse(int posX, int posY, TGWindow* affectedWindow)\n}\n\n"
+                    ret_str += "void GUI::event_Click_Mouse(int posX, int posY, TGWindow* affectedWindow){\n}\n\n"
 
                 if ["Mouse", "Move"] not in already_added_events and object.get("eventMouseMove") == True:
                     ret_str += "void GUI::event_Move_Mouse(int posX, int posY)\n{\n}\n\n"
                 continue
 
-            if [object["name"], "pressed"] not in already_added_events and object.get("eventSinglePressed", False):
+            if [object["name"], "pressed"] not in already_added_events and object.get("eventPressed", False):
                     ret_str += "void GUI::event_pressed_" + object["name"] + "()\n{\n}\n\n"
             
             if [object["name"], "doublepressed"] not in already_added_events and object.get("eventDoublePressed", False):
@@ -116,7 +116,8 @@ class TGW_usercpp_generator:
         #includes needed Classes
         ret_str: str = ""
         unique_type_list: list[str] = []
-
+        
+        #adds every unique Type in objects to the uique_type_list
         for object in objects:
 
             if object["type"] == "window":
@@ -124,7 +125,8 @@ class TGW_usercpp_generator:
 
             if self.__type_translation[object["type"]] not in unique_type_list:
                 unique_type_list.append(self.__type_translation[object["type"]])
-        
+    
+        #adds type include string to ret_str
         for type in unique_type_list:
             ret_str += '#include "' + type + '.h"\n'
             if type == "canvas":
@@ -145,6 +147,8 @@ class TGW_usercpp_generator:
     
     def __get_method_end(self, string_file: str) -> int:
         #finds endindex of a method
+        first_cbo_pos = string_file.find("{")
+        string_file = string_file[first_cbo_pos:]
         level: int = 0
 
         for i, char in enumerate(string_file):
@@ -155,5 +159,6 @@ class TGW_usercpp_generator:
             elif char == "}":
                 level -= 1
 
-                if level == 0:
-                    return i + 1
+            if level == 0:
+                return i + 1 + first_cbo_pos
+        raise BaseException("something went wrong")
