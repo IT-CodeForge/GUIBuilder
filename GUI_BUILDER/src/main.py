@@ -44,7 +44,7 @@ class Steuerung:
         # eel.start('main.html', mode="firefox")  # NOTE: Dev-Mode
 
     @classmethod
-    def __resetData(cls):
+    def __resetData(cls, reset_path = True):
         cls.__c_intermediary = Intermediary()
         cls.__c_window_id = cls.__c_intermediary.createObject(
             ObjectEnum.WINDOW)
@@ -53,7 +53,8 @@ class Steuerung:
 
         cls.__c_json = JSON(cls.__c_intermediary)
 
-        cls.__c_save_path = f"{path.split(cls.c_file)[0]}"
+        if reset_path:
+            cls.__c_save_path = f"{path.split(cls.c_file)[0]}"
 
     @staticmethod
     def gui_init() -> dict[str, Any]:
@@ -217,11 +218,14 @@ class Steuerung:
         t_path = cls.__get_load_file_path()
         if (t_path == ""):
             return None
+        cls.__resetData(False)
         cls.__c_json.load(t_path)
         t_objekts = []
+        # print("\n\n\n")
         for o in cls.__c_intermediary.getObjects():
             t_objekts.append(cls.__convert_attribut_to_js_data(
                 o.getAttributesAsDictionary()))
+            # print(o.getAttributesAsDictionary())
         # print(t_objekts)
         return t_objekts
     eel.expose(load_gui_elements.__func__)

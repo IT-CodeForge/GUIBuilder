@@ -97,7 +97,7 @@ function addListeners() {
     for (i = 0; i < t_elements.length; i++) {
         t_elements[i].addEventListener('mousedown', gui_element_mousedown_event, false)
     }
-    
+
     // fügt alles Menubar-create-Elementen den Eventhandler hinzu.
     menubar_elements.btn.addEventListener('mousedown', menubar_element_btn_mousedown_event, false)
     menubar_elements.label.addEventListener('mousedown', menubar_element_label_mousedown_event, false)
@@ -175,13 +175,13 @@ function set_gui_element_translation_from_abs_coords(p_element, p_x, p_y) {
 function set_gui_element_translation(p_element, p_x, p_y) {
     // Prüft, ob Mouse außerhalb des GUI-Bereiches
     if (p_x < 0)
-    p_x = 0
+        p_x = 0
     else if (p_x > (gui_elements_main.data.size_x - p_element.data.size_x))
-    p_x = gui_elements_main.data.size_x - p_element.data.size_x
+        p_x = gui_elements_main.data.size_x - p_element.data.size_x
     if (p_y < 0)
-    p_y = 0
+        p_y = 0
     else if (p_y > (gui_elements_main.data.size_y - p_element.data.size_y))
-    p_y = gui_elements_main.data.size_y - p_element.data.size_y
+        p_y = gui_elements_main.data.size_y - p_element.data.size_y
 
     // Rundet auf ganze Zahlen
     p_x = Math.round(p_x)
@@ -206,8 +206,8 @@ function reprocess_element_translation(p_element) {
 
 function reprocess_all_elements_translation() {
     t_gui_elements = document.getElementsByClassName("gui-element")
-    for (i=0; i<t_gui_elements.length; i++)
-    reprocess_element_translation(t_gui_elements[i])
+    for (i = 0; i < t_gui_elements.length; i++)
+        reprocess_element_translation(t_gui_elements[i])
 }
 
 
@@ -215,6 +215,14 @@ function reprocess_all_elements_translation() {
 // load or store Element to database
 async function load_gui_elements_from_database() {
     const t_gui_elements = await eel.load_gui_elements()()
+    if (t_gui_elements == null)
+        return
+
+    //deletes all old gui-elements
+    while (gui_elements_main.children.length != 0) {
+        gui_elements_main.removeChild(gui_elements_main.children[0])
+    }
+
     for (i = 0; i < t_gui_elements.length; i++) {
         const t_akt = t_gui_elements[i]
         switch (t_akt.type) {
@@ -390,7 +398,7 @@ function set_active_gui_element(p_element) {
     element_attributes.event_changed.checked = g_active_gui_element.data.event_changed
 
     // Blendet die Teile des Attribut-Editors aus, welche nicht für das aktuelle Element unterstützt wird.
-    
+
     if (!(p_element.data.type == "timer")) {
         element_attributes.event_section.style.display = ""
         element_attributes.background_color_section.style.display = ""
@@ -414,13 +422,11 @@ function set_active_gui_element(p_element) {
     else
         element_attributes.event_hovered_section.style.display = "none"
 
-    if (p_element.data.type == "button")
-    {
+    if (p_element.data.type == "button") {
         element_attributes.event_pressed_section.style.display = ""
         element_attributes.event_double_pressed_section.style.display = ""
     }
-    else
-    {
+    else {
         element_attributes.event_pressed_section.style.display = "none"
         element_attributes.event_double_pressed_section.style.display = "none"
     }

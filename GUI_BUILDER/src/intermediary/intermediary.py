@@ -107,7 +107,7 @@ class Intermediary:
                 largest_id = object_id
 
         # Set the object count to the largest found id.
-        self.__count = largest_id
+        self.__count = largest_id + 1
     
     def getObjects(self) -> list[GenericObject]:
         """Retrieves a list of objects in intermediate representation."""
