@@ -21,6 +21,7 @@ class Steuerung:
     __c_window_id: int
     c_file: str
     c_additional_files_path: str
+    __c_save_path: str
 
     @classmethod
     def init(cls):
@@ -31,6 +32,8 @@ class Steuerung:
         cls.__c_generator = TGW_Generator()
 
         cls.__c_json = JSON(cls.__c_intermediary)
+
+        cls.__c_save_path = f"{path.split(cls.c_file)[0]}"
 
         import os
         t_additional_files = f"{os.path.split(__file__)[0]}\\{cls.c_additional_files_path}"
@@ -49,6 +52,8 @@ class Steuerung:
         cls.__c_generator = TGW_Generator()
 
         cls.__c_json = JSON(cls.__c_intermediary)
+
+        cls.__c_save_path = f"{path.split(cls.c_file)[0]}"
 
     @staticmethod
     def gui_init() -> dict[str, Any]:
@@ -175,8 +180,10 @@ class Steuerung:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
-        t_initialdir_path = f"{path.split(cls.c_file)[0]}"
+        t_initialdir_path = cls.__c_save_path
         file = fd.askopenfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path)
+        if file != "":
+            cls.__c_save_path = path.split(file)[0]
         return file
 
     @classmethod
@@ -184,8 +191,10 @@ class Steuerung:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
-        t_initialdir_path = f"{path.split(cls.c_file)[0]}"
+        t_initialdir_path = cls.__c_save_path
         file = fd.asksaveasfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path, defaultextension=".json")
+        if file != "":
+            cls.__c_save_path = path.split(file)[0]
         return file
 
     @classmethod
@@ -193,8 +202,10 @@ class Steuerung:
         root = Tk()
         root.withdraw()
         root.wm_attributes('-topmost', 1)
-        t_initialdir_path = f"{path.split(cls.c_file)[0]}"
+        t_initialdir_path = cls.__c_save_path
         t_path = fd.askdirectory(initialdir=t_initialdir_path)
+        if t_path != "":
+            cls.__c_save_path = t_path
         return t_path
 
 
