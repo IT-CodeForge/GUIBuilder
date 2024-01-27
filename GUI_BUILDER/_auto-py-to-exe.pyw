@@ -10,7 +10,7 @@ if __name__ == "__main__":
     t_path = path.split(__file__)[0]
     t_config = ""
     
-    with open(r".\auto-py-to-exe.json", "r") as f:
+    with open(rf"{t_path}\auto-py-to-exe.json", "r") as f:
         t_config = f.read()
 
     t_config = t_config.replace("%path%", t_path.replace("\\", "/"))
@@ -18,6 +18,6 @@ if __name__ == "__main__":
     with open(t_temp_config_path, "w") as f:
         f.write(t_config)
 
-    command(rf'auto-py-to-exe -c "{t_temp_config_path}" -o .\output -lang de')
+    command(rf'auto-py-to-exe -c "{t_temp_config_path}" -o "{t_path}\output" -lang de')
 
     remove(t_temp_config_path)
