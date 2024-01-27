@@ -7,7 +7,7 @@
   },
   {
    "optionDest": "filenames",
-   "value": "C:/Users/Johannes/Arbeitsordner/Prog/___SVN/GUI-Builder/GUI_BUILDER/src/main.py"
+   "value": "%path%/src/main.py"
   },
   {
    "optionDest": "onefile",
@@ -19,7 +19,7 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "C:/Users/Johannes/Arbeitsordner/Prog/___SVN/GUI-Builder/GUI_BUILDER/favicon.ico"
+   "value": "%path%/favicon.ico"
   },
   {
    "optionDest": "name",
@@ -75,7 +75,7 @@
   },
   {
    "optionDest": "datas",
-   "value": "C:/Users/Johannes/Arbeitsordner/Prog/___SVN/GUI-Builder/GUI_BUILDER/additional_files;additional_files/"
+   "value": "%path%/additional_files;additional_files/"
   }
  ],
  "nonPyinstallerOptions": {
