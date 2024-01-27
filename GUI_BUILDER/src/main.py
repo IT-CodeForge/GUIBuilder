@@ -1,9 +1,10 @@
-from os import devnull, stat
+from os import devnull, environ
 import sys
-sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
+if environ.get("DEV") == None:
+    sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
 
 from typing import Any
-from os import environ, path
+from os import path
 from sys import executable
 import eel
 from tkinter import Tk, filedialog as fd
@@ -12,6 +13,13 @@ from generator.TGW_generator import *
 from intermediary.json import *
 from intermediary.intermediary import *
 
+class WindowModes(Enum):
+    default = None
+    app = 1
+    browser = 2
+
+g_window_mode: WindowModes = WindowModes.app
+g_dev_mode: bool
 
 class Steuerung:
 
@@ -40,8 +48,10 @@ class Steuerung:
 
         eel.init(f'{t_additional_files}\\gui')
         eel.brw.set_path('chrome', f'{t_additional_files}\\brave\\brave.exe')
-        eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE: Realease-Mode
-        # eel.start('main.html', mode="firefox")  # NOTE: Dev-Mode
+        if (not g_dev_mode and g_window_mode == WindowModes.default) or g_window_mode == WindowModes.app:
+            eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE: Realease-Mode
+        else:
+             eel.start('main.html', mode="firefox")  # NOTE: Dev-Mode
 
     @classmethod
     def __resetData(cls, reset_path = True):
@@ -345,8 +355,10 @@ if __name__ == "__main__":
     if environ.get("DEV") != None:
         Steuerung.c_file = path.abspath(__file__)
         Steuerung.c_additional_files_path = "..\\additional_files"
+        g_dev_mode = True
     else:
         Steuerung.c_file = path.abspath(executable)
         Steuerung.c_additional_files_path = "additional_files"
+        g_dev_mode = False
 
     Steuerung.init()
