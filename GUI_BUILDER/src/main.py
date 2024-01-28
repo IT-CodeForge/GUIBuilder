@@ -1,25 +1,43 @@
 from os import devnull, environ
 import sys
 if environ.get("DEV") == None:
-    sys.stdout = sys.stderr = open(devnull, 'w')  # NOTE: Release: Disables print(), etc
+    # NOTE: Release: Disables print(), etc
+    sys.stdout = sys.stderr = open(devnull, 'w')
 
 from typing import Any
-from os import path
+from os import path, mkdir
 from sys import executable
+import requests
+import shutil
 import eel
 from tkinter import Tk, filedialog as fd
 
+from MSGBox import MSGBox
 from generator.TGW_generator import *
 from intermediary.json import *
 from intermediary.intermediary import *
+
+"""
+MIN & MAX_RELEASE:
+MIN_RELEASE: release without browser -> browser will be downlaoded.
+MAX_RELEASE: release with browser inside of exe
+
+To enable MIN_RELEASE:
+  - comment everything with "MIN_Release" behind the code line in.
+  - comment everything with "MAX_RELEASE" behind the code line out.
+  - delete .\\additional_files\\brave
+"""
+
 
 class WindowModes(Enum):
     default = None
     app = 1
     browser = 2
 
+
 g_window_mode: WindowModes = WindowModes.app
 g_dev_mode: bool
+
 
 class Steuerung:
 
@@ -30,6 +48,13 @@ class Steuerung:
     c_file: str
     c_additional_files_path: str
     __c_save_path: str
+
+    application_name = "GUI-Builder"
+    protable_browser_dir_path = rf'{environ["appdata"]}\portable_brave_browser'
+    portable_brower_exe_path = rf'{protable_browser_dir_path}\Brave.exe'
+    protable_browser_download_url = "https://privat.kergerbw.de/public/Brave_Portable.zip"
+    temp_folder_path = rf'{environ["TMP"]}\{application_name}'
+    temp_portable_browser_zip_path = rf'{temp_folder_path}\Portable_Browser.zip'
 
     @classmethod
     def init(cls):
@@ -43,18 +68,25 @@ class Steuerung:
 
         cls.__c_save_path = f"{path.split(cls.c_file)[0]}"
 
+        # if g_window_mode == WindowModes.app: # MIN_Release -> see note above
+        # cls.__download_browser_if_not_installed() # MIN_Release -> see note above
+
         import os
         t_additional_files = f"{os.path.split(__file__)[0]}\\{cls.c_additional_files_path}"
 
         eel.init(f'{t_additional_files}\\gui')
+        # eel.brw.set_path('chrome', cls.portable_brower_exe_path) # MIN_Release -> see note above
+        # MAX_Release -> see note above
         eel.brw.set_path('chrome', f'{t_additional_files}\\brave\\brave.exe')
         if (not g_dev_mode and g_window_mode == WindowModes.default) or g_window_mode == WindowModes.app:
-            eel.start('main.html', cmdline_args=['--start-maximized']) #NOTE: Realease-Mode
+            # NOTE: Realease-Mode
+            eel.start('main.html', cmdline_args=['--start-maximized'])
         else:
-             eel.start('main.html', mode="firefox")  # NOTE: Dev-Mode
+            # NOTE: Dev-Mode
+            eel.start('main.html', mode="firefox")
 
     @classmethod
-    def __resetData(cls, reset_path = True):
+    def __resetData(cls, reset_path=True):
         cls.__c_intermediary = Intermediary()
         cls.__c_window_id = cls.__c_intermediary.createObject(
             ObjectEnum.WINDOW)
@@ -66,14 +98,26 @@ class Steuerung:
         if reset_path:
             cls.__c_save_path = f"{path.split(cls.c_file)[0]}"
 
+    @classmethod
+    def __download_browser_if_not_installed(cls):
+        if not path.isdir(cls.protable_browser_dir_path):
+            MSGBox.create_async_msg_box(f"{cls.application_name}: Browser Download",
+                                        "Der Browser wird nun heruntergeladen!\nDies kann etwas dauern.", MSGBox.STYLES.OK)
+            mkdir(cls.temp_folder_path)
+            r = requests.get(cls.protable_browser_download_url, verify=False)
+            with open(cls.temp_portable_browser_zip_path, "wb") as f:
+                f.write(r.content)
+            mkdir(cls.protable_browser_dir_path)
+            shutil.unpack_archive(
+                cls.temp_portable_browser_zip_path, cls.protable_browser_dir_path)
+            shutil.rmtree(cls.temp_folder_path)
+
     @staticmethod
     def gui_init() -> dict[str, Any]:
         cls = Steuerung
         cls.__resetData()
         return cls.__convert_attribut_to_js_data(cls.__c_intermediary.getObject(cls.__c_window_id).getAttributesAsDictionary())
     eel.expose(gui_init.__func__)
-
-
 
     @staticmethod
     def __convert_attribut_to_js_data(p_attribut) -> dict[str, any]:
@@ -183,7 +227,6 @@ class Steuerung:
 
         return t_return
 
-
     # Öffnet TKinter Fenster, um Filedialoge zu öffnen
 
     @classmethod
@@ -192,7 +235,8 @@ class Steuerung:
         root.withdraw()
         root.wm_attributes('-topmost', 1)
         t_initialdir_path = cls.__c_save_path
-        file = fd.askopenfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path)
+        file = fd.askopenfilename(
+            filetypes=[("JSON", ".json")], initialdir=t_initialdir_path)
         if file != "":
             cls.__c_save_path = path.split(file)[0]
         return file
@@ -203,7 +247,8 @@ class Steuerung:
         root.withdraw()
         root.wm_attributes('-topmost', 1)
         t_initialdir_path = cls.__c_save_path
-        file = fd.asksaveasfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path, defaultextension=".json")
+        file = fd.asksaveasfilename(filetypes=[(
+            "JSON", ".json")], initialdir=t_initialdir_path, defaultextension=".json")
         if file != "":
             cls.__c_save_path = path.split(file)[0]
         return file
@@ -219,9 +264,8 @@ class Steuerung:
             cls.__c_save_path = t_path
         return t_path
 
-
-
     # Läd alle GUI-Elemente vom File
+
     @staticmethod
     def load_gui_elements() -> list[dict[str, Any]]:
         cls = Steuerung
@@ -285,8 +329,7 @@ class Steuerung:
         cls.__c_intermediary.removeObject(p_id)
     eel.expose(delete_element.__func__)
 
-
-    #Erstellt die Elemente
+    # Erstellt die Elemente
 
     @staticmethod
     def create_btn() -> dict[str, Any]:
@@ -347,7 +390,6 @@ class Steuerung:
         # print(t_data)
         return t_data
     eel.expose(create_timer.__func__)
-
 
 
 if __name__ == "__main__":
