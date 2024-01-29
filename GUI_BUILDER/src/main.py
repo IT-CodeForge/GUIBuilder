@@ -35,10 +35,6 @@ class WindowModes(Enum):
     browser = 2
 
 
-g_window_mode: WindowModes = WindowModes.app
-g_dev_mode: bool
-
-
 class Steuerung:
 
     __c_intermediary: Intermediary
@@ -48,6 +44,8 @@ class Steuerung:
     c_file: str
     c_additional_files_path: str
     __c_save_path: str
+    c_window_mode: WindowModes = WindowModes.default
+    c_dev_mode: bool
 
     application_name = "GUI-Builder"
     protable_browser_dir_path = rf'{environ["appdata"]}\portable_brave_browser'
@@ -68,7 +66,7 @@ class Steuerung:
 
         cls.__c_save_path = f"{path.split(cls.c_file)[0]}"
 
-        # if g_window_mode == WindowModes.app: # MIN_Release -> see note above
+        # if cls.__c_window_mode == WindowModes.app: # MIN_Release -> see note above
         # cls.__download_browser_if_not_installed() # MIN_Release -> see note above
 
         import os
@@ -78,7 +76,7 @@ class Steuerung:
         # eel.brw.set_path('chrome', cls.portable_brower_exe_path) # MIN_Release -> see note above
         # MAX_Release -> see note above
         eel.brw.set_path('chrome', f'{t_additional_files}\\brave\\brave.exe')
-        if (not g_dev_mode and g_window_mode == WindowModes.default) or g_window_mode == WindowModes.app:
+        if (not cls.c_dev_mode and cls.c_window_mode == WindowModes.default) or cls.c_window_mode == WindowModes.app:
             # NOTE: Realease-Mode
             eel.start('main.html', cmdline_args=['--start-maximized'])
         else:
@@ -397,10 +395,10 @@ if __name__ == "__main__":
     if environ.get("DEV") != None:
         Steuerung.c_file = path.abspath(__file__)
         Steuerung.c_additional_files_path = "..\\additional_files"
-        g_dev_mode = True
+        Steuerung.c_dev_mode = True
     else:
         Steuerung.c_file = path.abspath(executable)
         Steuerung.c_additional_files_path = "additional_files"
-        g_dev_mode = False
+        Steuerung.c_dev_mode = False
 
     Steuerung.init()
