@@ -267,10 +267,15 @@ async function save_gui_elements_to_database() {
         const akt = t_gui_elements[i]
         await eel.save_gui_element(akt.data)()
     }
+}
+
+async function save_gui_elements_to_file() {
+    save_gui_elements_to_database()
     await eel.save()()
 }
 
 async function export_gui_elements() {
+    save_gui_elements_to_database()
     await eel.export_to_cpp()()
 }
 
