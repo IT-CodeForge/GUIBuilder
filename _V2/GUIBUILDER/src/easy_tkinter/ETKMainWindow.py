@@ -10,7 +10,7 @@ from .vector2d import vector2d
 from .ETKCanvas import ETKCanvas
 
 # this is for logging purposses, if you don't want it, set "log" to False
-Log = False
+LOG = True
 if LOG:
     my_logger = logging.getLogger("MainWindow_logger")
     my_logger.setLevel(logging.DEBUG)

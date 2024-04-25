@@ -6,7 +6,7 @@ from typing import Any, Callable
 import logging
 
 #this is for logging purposses, if you don't want it, set "log" to False
-Log = False
+LOG = True
 if LOG:
     my_logger = logging.getLogger("BaseObject_logger")
     my_logger.setLevel(logging.DEBUG)
@@ -27,6 +27,7 @@ class BaseEvents(Enum):
 class ETKBaseObject:
     def __init__(self) -> None:
         self.object_id
+        self._parent = None
         self._event_lib:dict[str, list[dict[str, Any]]] = {
             "<ButtonPress>":[],
             "<ButtonRelease>":[],
@@ -63,6 +64,13 @@ class ETKBaseObject:
             BaseEvents.CONFIGURED:lambda event, object_id : True
         }
     
+    @property
+    def parent(self)->Any:
+        """
+        READ-ONLY
+        """
+        return self._parent
+    
     def add_event(self, event_type:BaseEvents, eventhandler:Callable[...,None], sequence:str=None, truth_func:Callable[..., None]|None=None):
         if type(event_type) == str:
             sequence = event_type
@@ -80,7 +88,6 @@ class ETKBaseObject:
         self._event_lib[sequence].append(append_dict)
         if len(self._event_lib[sequence]) == 1 and type(event_type) != str:
             self.object_id.bind(sequence, self._eventhandler)
-        #print(self._event_lib)
 
     def remove_event(self, event_type:BaseEvents, eventhandler:Callable[..., None], sequence:str=None):
         if sequence == None:

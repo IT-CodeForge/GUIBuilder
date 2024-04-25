@@ -8,7 +8,6 @@ class ETKBitmap(ETKNoTKEventBase):
         self.object_id = PhotoImage(width=width,height=height)
         self.__container = Label(my_tk, text="", image=self.object_id)
         self.__object_pos = vector2d(pos_x, pos_y)
-        self.__anchor     = vector2d()
         self.__dimensions = vector2d(width, height)
         self.__place_object()
 
@@ -31,22 +30,24 @@ class ETKBitmap(ETKNoTKEventBase):
         color = "#%06x"%value
         self.object_id.put(color, index)
 
+    
     @property
-    def anchor(self)->vector2d:
-        return self.__anchor
-    
-    @anchor.setter
-    def anchor(self, value):
-        self.__anchor = value
-        self.__place_object()
-    
+    def abs_pos(self)->vector2d:
+        return self.__object_pos
+
     @property
     def pos(self)->vector2d:
+        if self.parent != None:
+            return self._parent._get_pos_in_parent(self)
         return self.__object_pos
     
     @pos.setter
     def pos(self, value:vector2d):
+        if self.parent != None and not self._parent._validate("move", self):
+            return
         self.__place_object(value)
+        if self.parent != None:
+            self._parent._element_changed(self)
     
     @property
     def width(self)->int:
@@ -54,8 +55,12 @@ class ETKBitmap(ETKNoTKEventBase):
     
     @width.setter
     def width(self, value:int):
+        if self.parent != None and not self._parent._validate("width", self):
+            return
         self.__dimensions.x = value
         self.__place_object()
+        if self.parent != None:
+            self._parent._element_changed(self)
     
     @property
     def height(self)->int:
@@ -63,8 +68,12 @@ class ETKBitmap(ETKNoTKEventBase):
     
     @height.setter
     def height(self, value:int):
+        if self.parent != None and not self._parent._validate("height", self):
+            return
         self.__dimensions.y = value
         self.__place_object()
+        if self.parent != None:
+            self._parent._element_changed(self)
     
     @property
     def visible(self)->bool:
@@ -74,10 +83,18 @@ class ETKBitmap(ETKNoTKEventBase):
     def visible(self, value:bool):
         if value:
             self.__visibility = True
+            if self.parent != None and not self._parent._validate("visible", self):
+                return
             self.__place_object()
+            self._eventhandler("<Visible>")
         else:
             self.__visibility = False
-            self.__container.place_forget()
+            if self.parent != None and not self._parent._validate("visible", self):
+                return
+            self.object_id.place_forget()
+            self._eventhandler("<Visible>")
+        if self.parent != None:
+            self._parent._element_changed(self)
 
     def move(self, mov_vec:vector2d):
         self.pos = self.__object_pos+mov_vec

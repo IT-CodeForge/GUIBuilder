@@ -20,7 +20,8 @@ class ETKContainer(ETKNoTKEventBase):
     def __init__(self, gui_object=None):
         super().__init__()
         self.__elements = []
-        self.__anchor = vector2d()
+        self.__visibility = True
+        self.__mov_flag = False
         if gui_object == None:
             self.__my_pos = vector2d()
             self.__dimensions = vector2d()
@@ -29,31 +30,31 @@ class ETKContainer(ETKNoTKEventBase):
         else:
             self.__my_pos = gui_object.pos
             self.__dimensions = vector2d(gui_object.width, gui_object.height)
-    
+
+    ######
+    ###properties###
+    ######    
     @property
-    def anchor(self)->vector2d:
-        return self.__anchor
-    
-    @anchor.setter
-    def anchor(self, value:vector2d):
-        my_anchor = self.__anchor
-        self.__anchor = value
-        if my_anchor != value:
-            self._eventhandler(BaseEvents.CONFIGURED)
-        self.__place_elements()
-        
+    def abs_pos(self)->vector2d:
+        return self.__my_pos
 
     @property
     def pos(self)->vector2d:
+        if self.parent != None:
+            return self._parent._get_pos_in_parent(self)
         return self.__my_pos
     
     @pos.setter
     def pos(self, value:vector2d):
+        if self.parent != None and not self._parent._validate("move", self):
+            return
         my_pos = self.__my_pos
         self.__my_pos = value
         if my_pos != value:
             self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
+        if self.parent != None:
+            self._parent._element_changed(self)
     
     @property
     def width(self)->int:
@@ -63,6 +64,8 @@ class ETKContainer(ETKNoTKEventBase):
     
     @width.setter
     def width(self, value:int):
+        if self.parent != None and not self._parent._validate("width",self):
+            return
         if type(value) == int and value < 0:
             raise ValueError("objects must have a positive width")
         if value == None:
@@ -72,6 +75,8 @@ class ETKContainer(ETKNoTKEventBase):
         if my_width != value:
             self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
+        if self.parent != None:
+            self._parent._element_changed(self)
     
     @property
     def height(self)->int:
@@ -81,6 +86,8 @@ class ETKContainer(ETKNoTKEventBase):
     
     @height.setter
     def height(self, value:int):
+        if self.parent != None and not self._parent._validate("height", self):
+            return
         if type(value) == int and value < 0:
             raise ValueError("objects must have a positive height")
         if value == None:
@@ -90,34 +97,54 @@ class ETKContainer(ETKNoTKEventBase):
         if my_height != value:
             self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
+        if self.parent != None:
+            self._parent._element_changed(self)
     
     @property
     def visible(self)->bool:
-        if True in [e[0].visible for e in self.__elements]:
-            return True
-        else:
-            return False
+        return self.__visibility
     
     @visible.setter
     def visible(self, value):
-        for element in self.__elements:
-            element[0].visible = True
-    
+        if self.parent != None and not self._parent._validate("visible", self):
+            self.__visibility = value
+            return
+        visibilities = []
+        for e in self.__elements:
+            visibilities.append(e[0].visible)
+            e[0].visible = False
+        self.__visibility = value
+        for index,e in enumerate(self.__elements):
+            e[0].visible = visibilities[index]
+        self._eventhandler("<Visible>")
+    ######
+    ######
+    ######
+
+    ######
+    ###manipulating elements###
+    ######
     def add_element(self, element, allignment:Alignments=Alignments.TOP_LEFT):
         self.__elements.append([element, vector2d(int(allignment.value[1]), int(allignment.value[0]))])
         self.__place_elements()
         element.add_event("<Detach>", self.__ev_element_detached, lambda event, object_id : True)
-        element.add_event(BaseEvents.CONFIGURED, self.__ev_element_configured)
+        element._parent = self
     
     def remove_element(self, element):
-        element.remove_event("<Detach>", self.__ev_element_detached, lambda event, object_id : True)
-        element.remove_event(BaseEvents.CONFIGURED)
-        element.anchor = vector2d(0,0)
         for my_element in self.__elements:
             if my_element[0] == element:
+                element.remove_event("<Detach>", self.__ev_element_detached, lambda event, object_id : True)
+                element.pos -= self.pos
+                element._parent = None
                 self.__elements.remove(my_element)
-                break
+                break   
+    ######
+    ######
+    ######
 
+    ######
+    ###calculate child positions###
+    ######
     def __place_elements(self):
         if len(self.__elements) == 0:
             return
@@ -130,12 +157,16 @@ class ETKContainer(ETKNoTKEventBase):
             if element[0].pos.x + element[0].width > self.__dimensions.x or element[0].pos.y + element[0].height > self.__dimensions.y:
                 continue 
             element_pos = (self.__dimensions - vector2d(element[0].width, element[0].height)) * element[1] / 2
-            element[0].anchor = self.__my_pos + self.anchor + element_pos + element[0].pos
+            self.__mov_flag == True
+            element[0].pos = self.__my_pos + element_pos + element[0].pos
         self.__dimensions = my_dim
-    
-    def __ev_element_configured(self):
-        self.__place_elements()
-    
+    ######
+    ######
+    ######
+
+    ######
+    ###Events###
+    ######    
     def __ev_element_detached(self, params):
         my_object = params.get("object_id")
         if type(my_object) == ETKBaseWidget:
@@ -147,9 +178,36 @@ class ETKContainer(ETKNoTKEventBase):
             if my_element[0] == element:
                 self.__elements.remove(my_element)
                 break
-        my_object.anchor = vector2d()
         my_object.pos = vector2d()
         my_object.visible = False
     
     def detach(self):
-        self._eventhandler("<Detach>")
+        self._eventhandler("<Detach>")  
+    ######
+    ######
+    ######
+
+    ######
+    ###methods as parent###
+    ######
+
+    def _get_pos_in_parent(self, child)->vector2d:    
+        return child.abs_pos - self.pos
+    
+    def _validate(self, action:str, child)->bool:
+        if action == "move":
+            if self.__mov_flag:
+                self.__mov_flag = False
+                return True
+            return False
+        
+        if action == "visible":
+            return self.visible
+        
+        return True
+    
+    def _element_changed(self, child):
+        self.__place_elements()
+    ######
+    ######
+    ######

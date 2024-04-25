@@ -43,7 +43,6 @@ class ObservableList(list):
         self.__send_event()
     
     def append(self, __object) -> None:
-        #print(__object)
         super().append(__object)
         self.__send_event()
 

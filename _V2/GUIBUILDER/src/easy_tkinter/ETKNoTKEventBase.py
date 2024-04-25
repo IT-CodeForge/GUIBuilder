@@ -1,8 +1,16 @@
-from typing import Callable
+from typing import Callable, Any
 
 class ETKNoTKEventBase:
     def __init__(self) -> None:
+        self._parent = None
         self._event_lib:dict[str,list] = {}
+    
+    @property
+    def parent(self)->Any:
+        """
+        READ-ONLY
+        """
+        return self._parent
 
     def add_event(self, event_type, eventhandler:Callable[...,None], truth_func:Callable[..., None]|None=None):
         if event_type not in self._event_lib:
