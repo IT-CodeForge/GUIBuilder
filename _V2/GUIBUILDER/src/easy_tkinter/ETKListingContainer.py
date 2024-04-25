@@ -55,7 +55,7 @@ class ETKListingContainer(ETKNoTKEventBase):
         if my_pos != value:
             self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
-        if self.parent != None:
+        if self.parent != None and self._parent._validate("move", self):
             self._parent._element_changed(self)
     
     @property
@@ -179,66 +179,59 @@ class ETKListingContainer(ETKNoTKEventBase):
     def __place_elements(self):
         if len(self.__elements) == 0:
             return
-        vec_mask, dynamic_dim = self.__get_mask_vec_and_dynamic_dim()
-
-        my_dim = self.__dimensions
-
-        self.__dimensions = vector2d(dynamic_dim.x if self.__dimensions.x == -1 else self.__dimensions.x,
-                                     dynamic_dim.y if self.__dimensions.y == -1 else self.__dimensions.y)
-
-        if (dynamic_dim * vec_mask.switch(False)).lenght > (self.__dimensions * vec_mask.switch(False)).lenght:
-            return #raise Error
         
-        if self.__listing_type in [ListingTypes.BOTTOM_TO_TOP, ListingTypes.RIGHT_TO_LEFT]:
-            self.__elements.reverse()
-        index = 0
-        visible_elements = []
-        for element in self.__elements:
-            if not element.visible:
-                continue
-            visible_elements.append(element)
-            new_pos = self.__calc_child_pos(index, dynamic_dim * vec_mask, vec_mask, visible_elements)
-            if new_pos == None:
-                break
-            element.pos = new_pos
-            index += 1
-        if self.__listing_type in [ListingTypes.BOTTOM_TO_TOP, ListingTypes.RIGHT_TO_LEFT]:
-            self.__elements.reverse()
-        
-        self.__dimensions = my_dim
+        if self.__listing_type in {ListingTypes.TOP_TO_BOTTOM, ListingTypes.BOTTOM_TO_TOP}:
+            t_mode = int(self.alignment.value[0])
+            t_sum = sum([e.height for e in self.__elements])
+            t_ori = self.abs_pos.y
+        else:
+            t_mode = int(self.alignment.value[1])
+            t_sum = sum([e.width for e in self.__elements])
+            t_ori = self.abs_pos.x
 
-    def __calc_child_pos(self, index:int, dynamic_dim:vector2d, vec_mask:vector2d, element_list:list)->vector2d:
-        my_element = element_list[-1]
-        #calculate the vector that defines the box,
-        #that the unary component of the child forms with the lenght of all the listed childs in the other axi
-        bounding_box_dim = dynamic_dim * vec_mask + vector2d(my_element.width,my_element.height) * vec_mask.switch(False)
-        #adds the widths and heigts of other elemts, to get the offset from the top left if 
-        listed_offset_by_index = self.__vector_sum([vector2d(event.width, event.height) for event in element_list[:-1]])
-        #apply the offset between the widgets
-        listed_offset_by_index += vector2d(1,1).normalize() * index * self.__offset * 2
-        #catch if element would be outside the container
-        if (self.__vector_sum([vector2d(event.width, event.height) for event in element_list]) * vec_mask).lenght + index * self.__offset > (self.__dimensions * vec_mask).lenght:
-            print(f"Warning, too many elements, were inputted in container, skipping all elemnts after element{index}")
-            return None
-        #calculate the vector that is dependent on the listing type of the Container
-        case_sensitive_vec = -1 * bounding_box_dim * self.__alignment_type + listed_offset_by_index * (vec_mask * 2)
-        #calculate the final position of the element
-        return self.__my_pos + (self.__dimensions * self.__alignment_type + case_sensitive_vec) / 2
+        t_akt_max = 0
+        match t_mode:
+            case 0:
+                t_akt_max = t_ori
+            case 2:
+                t_akt_max = t_ori + (self.height - t_sum)
+            case 1:
+                if self.__listing_type in {ListingTypes.TOP_TO_BOTTOM, ListingTypes.BOTTOM_TO_TOP}:
+                    t_akt_max = t_ori + (self.height - t_sum) / 2
+                else:
+                    t_akt_max = t_ori + (self.width - t_sum) / 2
+
+        for e in self.__elements:
+            if self.__listing_type in {ListingTypes.TOP_TO_BOTTOM, ListingTypes.BOTTOM_TO_TOP}:
+                cord_x = self.__calculate_1(int(self.alignment.value[1]), e.width, self.abs_pos.x, self.width)
+                cord_y = t_akt_max
+                t_akt_max = t_akt_max + e.height
+            else:
+                cord_y = self.__calculate_1(int(self.alignment.value[0]), e.height, self.abs_pos.y, self.height)
+                cord_x = t_akt_max
+                t_akt_max = t_akt_max + e.width
+
+            
+            
+            self.__mov_flag = True
+            e.pos = vector2d(cord_x, cord_y)
+
+            print(self.name, getattr(e, "name", None), (cord_x, cord_y), e.pos)
+
+            x = None
+        
+
+    def __calculate_1(self, mode, element_size, container_pos, container_size): # CHECK IF OUTSIDE CONTAINER
+        match mode:
+            case 0:
+                return container_pos
+            case 2:
+                return container_pos + container_size - element_size
+            case 1:
+                return container_pos + (container_size - element_size) / 2
+
+
     
-    def __get_mask_vec_and_dynamic_dim(self):
-        if self.__listing_type in [ListingTypes.TOP_TO_BOTTOM, ListingTypes.BOTTOM_TO_TOP]:
-            dim_max = max([event.width for event in self.__elements])
-            vec_mask = vector2d(0, 1)
-        if self.__listing_type in [ListingTypes.LEFT_TO_RIGHT, ListingTypes.RIGHT_TO_LEFT]:
-            dim_max = max([event.height for event in self.__elements])
-            vec_mask = vector2d(1, 0)
-        dim_vec_sum = self.__vector_sum([vector2d(e.width, e.height) for e in self.__elements if e.visible])
-        dim_sum = (dim_vec_sum * vec_mask).lenght + self.__offset * (len(self.__elements) - 1)
-
-        dynamic_dim = vector2d(dim_sum if vec_mask.x else dim_max,
-                               dim_sum if vec_mask.y else dim_max)
-        
-        return vec_mask, dynamic_dim
     ######
     ######
     ######

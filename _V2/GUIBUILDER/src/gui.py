@@ -22,11 +22,13 @@ class GUI(ETKMainWindow):
         self.main.pos = vector2d(0, 0)
         self.main.height = self.height
         self.main.width = self.width
+        self.main.name = "main"
 
         self.menubar = ETKContainer()
         self.menubar.pos = vector2d(0, 0)
         self.menubar.width = self.main.width
         self.menubar.height = self.MENUBAR_HEIGHT
+        self.menubar.name = "menubar"
         self.main.elements.append(self.menubar)  # type:ignore
 
         self.menubar_left = ETKListingContainer(
@@ -34,25 +36,30 @@ class GUI(ETKMainWindow):
         self.menubar_left.pos = vector2d(self.ATTRIBUTES_WIDTH, 0)
         self.menubar_left.width = 500
         self.menubar_left.height = self.MENUBAR_HEIGHT
+        self.menubar_left.name = "menubar_left"
         self.menubar.add_element(self.menubar_left)  # type:ignore
 
         self.main2 = ETKListingContainer(
             listing_type=ListingTypes.LEFT_TO_RIGHT)
         self.main2.width = self.width
         self.main2.height = self.height - self.menubar.height
+        self.main2.name = "main2"
         self.main.elements.append(self.main2)  # type:ignore
 
         self.attributes = ETKListingContainer()
         self.attributes.width = self.ATTRIBUTES_WIDTH
         self.attributes.height = self.main2.height
+        self.attributes.name = "attributes"
         self.main2.elements.append(self.attributes)  # type:ignore
 
-        # self.menubar.add_element(ETKLabel(self.object_id, width=self.menubar.width, height=self.menubar.height, fill=0xFF0000)) #type:ignore
+        self.menubar.add_element(ETKLabel(self.object_id, width=self.menubar.width, height=self.menubar.height, fill=0x0000FF)) #type:ignore
         self.menubar_left.elements.append(ETKLabel(  # type:ignore
-            self.object_id, width=self.menubar_left.width, height=self.menubar_left.height, fill=0xFF0000))
+             self.object_id, width=self.menubar_left.width, height=self.menubar_left.height, fill=0xFF0000))
         # self.main2.elements.append(ETKLabel(self.object_id, width=self.main2.width, height=self.main2.height, fill=0x00FF00)) #type:ignore
         self.attributes.elements.append(ETKLabel(  # type:ignore
             self.object_id, width=self.attributes.width, height=self.attributes.height, fill=0xFFFF00))
+
+        #print("DEBUG", self.menubar.abs_pos)
 
         return
 

@@ -40,7 +40,7 @@ class ETKBaseWidget(ETKBaseObject):
         if self.parent != None and not self._parent._validate("move", self):
             return
         self.__place_object(value)
-        if self.parent != None:
+        if self.parent != None and self._parent._validate("move", self):
             self._parent._element_changed(self)
     
     @property

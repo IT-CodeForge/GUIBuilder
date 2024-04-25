@@ -2,8 +2,13 @@ from .ETKBaseWidget import ETKBaseWidget
 from .ETKNoTKEventBase import ETKNoTKEventBase
 from .ETKBaseObject import BaseEvents
 from .vector2d     import vector2d
-from enum         import Enum
+from enum         import Enum, auto
 import logging
+
+class _Alignments(Enum):
+    TOP_LEFT      = auto()
+    MIDDLE_CENTER = auto()
+    BOTTOM_RIGHT  = auto()
 
 class Alignments(Enum):
     TOP_LEFT      = "00"
@@ -53,7 +58,7 @@ class ETKContainer(ETKNoTKEventBase):
         if my_pos != value:
             self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
-        if self.parent != None:
+        if self.parent != None and self._parent._validate("move", self):
             self._parent._element_changed(self)
     
     @property
@@ -154,12 +159,15 @@ class ETKContainer(ETKNoTKEventBase):
         self.__dimensions = vector2d(max_x if self.__dimensions.x == -1 else self.__dimensions.x,
                                      max_y if self.__dimensions.y == -1 else self.__dimensions.y)
         for element in self.__elements:
-            if element[0].pos.x + element[0].width > self.__dimensions.x or element[0].pos.y + element[0].height > self.__dimensions.y:
+            print(element[0].pos.x + element[0].width, element[0].pos.y + element[0].height)
+            if (element[0].pos.x + element[0].width) > self.__dimensions.x or (element[0].pos.y + element[0].height) > self.__dimensions.y:
+                print("ERROR")
                 continue 
             element_pos = (self.__dimensions - vector2d(element[0].width, element[0].height)) * element[1] / 2
             self.__mov_flag == True
             element[0].pos = self.__my_pos + element_pos + element[0].pos
         self.__dimensions = my_dim
+
     ######
     ######
     ######
