@@ -1,13 +1,13 @@
 from __future__ import annotations
 from tkinter    import Canvas
-from vector2d   import vector2d
+from .vector2d   import vector2d
 from ast        import literal_eval
-from Framework_utils import gen_col_from_int
+from .Framework_utils import gen_col_from_int
 import math
 
 #types: "line" "rectangle" "square" "oval" "circle" "polygon"
 
-class BCanvasItem:
+class ETKCanvasItem:
     def __init__(self, canvas:Canvas, item_type:str, *args) -> None:
         self.__temp_sort_vec = vector2d()
         self.__my_Canvas = canvas
@@ -141,7 +141,7 @@ class BCanvasItem:
         self.anchor = pos
         self.__my_Canvas.coords(self.item_id, self.__point_list)
     
-    def find_intersections(self, shape:BCanvasItem)->list[vector2d]:
+    def find_intersections(self, shape:ETKCanvasItem)->list[vector2d]:
         sol_list = []
         other_pointlist = shape.__point_list.copy()
         my_pointlist = self.__point_list.copy()
@@ -186,7 +186,8 @@ class BCanvasItem:
             return vector
         return (self.__temp_sort_vec - vector).lenght
     
-    def __raycast_not_through_poly_corner(self, point:vector2d, direction_vec:vector2d):
+    def __winding_numbers(self, point:vector2d):
+        direction_vec = vector2d(1,0)
         my_pointlist = self.__point_list.copy()
         my_pointlist += my_pointlist[:2]
         p3 = point
@@ -196,28 +197,30 @@ class BCanvasItem:
             max(x_list) if direction_vec.x else min(x_list),
             max(y_list) if direction_vec.y else min(y_list))
         
-        sol_list = []
+        retval = 0.0
 
         p4 = point + direction_vec.normalize() * distance_to_window_edge
         for i in range(len(self.__point_list) // 2):
             p1 = vector2d(my_pointlist[i *2], my_pointlist[i * 2 + 1])
             p2 = vector2d(my_pointlist[i * 2 + 2], my_pointlist[i * 2 + 3])
             sol = self.__find_intersection(p1,p2,p3,p4)
-            if sol in sol_list:
-                return None
             if sol == None:
                 continue
-            sol_list.append(sol)
-        return sol_list
+            poly_edge_dir = p2 - p1
+            sign = (poly_edge_dir*vector2d(0,1)).normalize().y
+            if sign not in [-1,1]:
+                #print((poly_edge_dir*vector2d(0,1)).normalize())
+                #print("sign:", sign)
+            if sol in [p1,p2]:
+                retval += 0.5 * sign
+            else:
+                retval += sign
+            
+        return retval
     
     def is_point_in_shape(self, point:vector2d)->bool:
-        intersections = None
-        my_dir = vector2d(1,0)
-        while intersections == None:
-            intersections = self.__raycast_not_through_poly_corner(point, my_dir)
-            my_dir.rotate(1.01)
-        num_of_intersections = len(intersections)
-        if num_of_intersections % 2:
+        w = self.__winding_numbers(point)
+        if w == 0:
             return False
         else:
             return True

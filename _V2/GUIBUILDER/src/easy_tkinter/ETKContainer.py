@@ -1,7 +1,9 @@
-from typing import overload
-from BBaseObject import BaseEvents
-from vector2d     import vector2d
+from .ETKBaseWidget import ETKBaseWidget
+from .ETKNoTKEventBase import ETKNoTKEventBase
+from .ETKBaseObject import BaseEvents
+from .vector2d     import vector2d
 from enum         import Enum
+import logging
 
 class Alignments(Enum):
     TOP_LEFT      = "00"
@@ -14,8 +16,9 @@ class Alignments(Enum):
     BOTTOM_CENTER = "21"
     BOTTOM_RIGHT  = "22"
 
-class BContainer:
+class ETKContainer(ETKNoTKEventBase):
     def __init__(self, gui_object=None):
+        super().__init__()
         self.__elements = []
         self.__anchor = vector2d()
         if gui_object == None:
@@ -33,8 +36,12 @@ class BContainer:
     
     @anchor.setter
     def anchor(self, value:vector2d):
+        my_anchor = self.__anchor
         self.__anchor = value
+        if my_anchor != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
+        
 
     @property
     def pos(self)->vector2d:
@@ -42,7 +49,10 @@ class BContainer:
     
     @pos.setter
     def pos(self, value:vector2d):
+        my_pos = self.__my_pos
         self.__my_pos = value
+        if my_pos != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
     
     @property
@@ -57,7 +67,10 @@ class BContainer:
             raise ValueError("objects must have a positive width")
         if value == None:
             value = -1
+        my_width = self.__dimensions.x
         self.__dimensions.x = value
+        if my_width != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
     
     @property
@@ -72,20 +85,37 @@ class BContainer:
             raise ValueError("objects must have a positive height")
         if value == None:
             value = -1
+        my_height = self.__dimensions.y
         self.__dimensions.y = value
+        if my_height != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
+    
+    @property
+    def visible(self)->bool:
+        if True in [e[0].visible for e in self.__elements]:
+            return True
+        else:
+            return False
+    
+    @visible.setter
+    def visible(self, value):
+        for element in self.__elements:
+            element[0].visible = True
     
     def add_element(self, element, allignment:Alignments=Alignments.TOP_LEFT):
         self.__elements.append([element, vector2d(int(allignment.value[1]), int(allignment.value[0]))])
         self.__place_elements()
+        element.add_event("<Detach>", self.__ev_element_detached, lambda event, object_id : True)
         element.add_event(BaseEvents.CONFIGURED, self.__ev_element_configured)
     
     def remove_element(self, element):
+        element.remove_event("<Detach>", self.__ev_element_detached, lambda event, object_id : True)
         element.remove_event(BaseEvents.CONFIGURED)
+        element.anchor = vector2d(0,0)
         for my_element in self.__elements:
             if my_element[0] == element:
                 self.__elements.remove(my_element)
-                self.__place_elements()
                 break
 
     def __place_elements(self):
@@ -103,5 +133,23 @@ class BContainer:
             element[0].anchor = self.__my_pos + self.anchor + element_pos + element[0].pos
         self.__dimensions = my_dim
     
-    def __ev_element_configured(self, params:dict):
+    def __ev_element_configured(self):
         self.__place_elements()
+    
+    def __ev_element_detached(self, params):
+        my_object = params.get("object_id")
+        if type(my_object) == ETKBaseWidget:
+            for element in self.__elements:
+                if element.object_id == my_object:
+                    my_object = element
+                    break
+        for my_element in self.__elements:
+            if my_element[0] == element:
+                self.__elements.remove(my_element)
+                break
+        my_object.anchor = vector2d()
+        my_object.pos = vector2d()
+        my_object.visible = False
+    
+    def detach(self):
+        self._eventhandler("<Detach>")

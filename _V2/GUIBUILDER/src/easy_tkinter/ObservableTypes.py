@@ -7,8 +7,9 @@ class ObservableList(list):
         super().__init__(*args)
     
     def __send_event(self):
+        self.__eventhandler(self)
         try:
-            self.__eventhandler(self)
+            
             return
         except:
             pass
@@ -42,7 +43,7 @@ class ObservableList(list):
         self.__send_event()
     
     def append(self, __object) -> None:
-        print(__object)
+        #print(__object)
         super().append(__object)
         self.__send_event()
 

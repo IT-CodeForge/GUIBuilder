@@ -6,7 +6,7 @@ from typing import Any, Callable
 import logging
 
 #this is for logging purposses, if you don't want it, set "log" to False
-LOG = True
+Log = False
 if LOG:
     my_logger = logging.getLogger("BaseObject_logger")
     my_logger.setLevel(logging.DEBUG)
@@ -21,10 +21,10 @@ class BaseEvents(Enum):
     MOUSE_DOWN   = auto()
     MOUSE_UP     = auto()
     HOVERED      = auto()
-    STOP_HOVERED = auto()
+    LEAVE        = auto()
     CONFIGURED   = auto()
 
-class BBaseObject:
+class ETKBaseObject:
     def __init__(self) -> None:
         self.object_id
         self._event_lib:dict[str, list[dict[str, Any]]] = {
@@ -52,14 +52,14 @@ class BBaseObject:
             BaseEvents.MOUSE_DOWN:"<ButtonPress>",
             BaseEvents.MOUSE_UP:"<ButtonRelease>",
             BaseEvents.HOVERED:"<Enter>",
-            BaseEvents.STOP_HOVERED:"<Leave>",
+            BaseEvents.LEAVE:"<Leave>",
             BaseEvents.CONFIGURED:"<Configure>"
         }
         self.__event_truth_funcs = {
             BaseEvents.MOUSE_DOWN:lambda event, object_id : True,
             BaseEvents.MOUSE_UP:lambda event, object_id : True,
             BaseEvents.HOVERED:lambda event, object_id : True,
-            BaseEvents.STOP_HOVERED:lambda event, object_id : True,
+            BaseEvents.LEAVE:lambda event, object_id : True,
             BaseEvents.CONFIGURED:lambda event, object_id : True
         }
     
@@ -98,16 +98,17 @@ class BBaseObject:
             event_type = self.__type_trans[event.type]
         else:
             event_type = event
-
+        if event_type not in self._event_lib.keys():
+            return
         for dict in self._event_lib[event_type]:
             if dict.get("truth_func", lambda event, object_id: False)(event, self.object_id):
                 try:
-                    dict.get("eventhandler")(self.object_id, dict.get("event_type"), event)
+                    dict.get("eventhandler")(self, dict.get("event_type"), event)
                     continue
                 except:
                     pass
                 try:
-                    params = {"object_id":self.object_id, "event_type":dict.get("event_typ"), "event":event}
+                    params = {"object":self, "event_type":dict.get("event_typ"), "event":event}
                     dict.get("eventhandler")(params)
                     continue
                 except:

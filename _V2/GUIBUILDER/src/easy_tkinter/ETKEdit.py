@@ -1,15 +1,15 @@
-from BBaseWidget import BBaseWidget
-from BBaseObject import BaseEvents
+from .ETKBaseWidget import ETKBaseWidget
+from .ETKBaseObject import BaseEvents
 from typing   import Any, Callable
 from enum     import Enum
-from vector2d import vector2d
+from .vector2d import vector2d
 from tkinter  import END, Text, Tk
-from Framework_utils import gen_col_from_int
+from .Framework_utils import gen_col_from_int
 
 class EditEvents(Enum):
     EV_CHANGED = 0
 
-class BEdit(BBaseWidget):
+class ETKEdit(ETKBaseWidget):
     def __init__(self, myTk:Tk, txt:str="", pos_x:int=0, pos_y:int=0, width:int=80, height:int=17, fill:int=0xFFFFFF, text_col:int=0x0) -> None:
         self.__bg_col = gen_col_from_int(fill)
         self.__text_col = gen_col_from_int(text_col)

@@ -1,11 +1,12 @@
 from typing import Any, Iterable
-from BBaseObject import BaseEvents, BBaseObject
-from BBaseWidget import BBaseWidget
-from vector2d     import vector2d
+from .ETKNoTKEventBase import ETKNoTKEventBase
+from .ETKBaseObject import BaseEvents, ETKBaseObject
+from .ETKBaseWidget import ETKBaseWidget
+from .vector2d     import vector2d
 from math         import pi
 from enum         import Enum, auto
-from ObservableTypes import ObservableList
-from BContainer  import Alignments
+from .ObservableTypes import ObservableList
+from .ETKContainer  import Alignments, ETKContainer
 
 class ListingTypes(Enum):
     TOP_TO_BOTTOM = auto()
@@ -13,8 +14,9 @@ class ListingTypes(Enum):
     LEFT_TO_RIGHT = auto()
     RIGHT_TO_LEFT = auto()
 
-class BListingContainer:
+class ETKListingContainer(ETKNoTKEventBase):
     def __init__(self, gui_object=None, offset:int = 10, alignment:Alignments=Alignments.MIDDLE_LEFT, listing_type:ListingTypes=ListingTypes.TOP_TO_BOTTOM):
+        super().__init__()
         self.__my_alignment = alignment
         self.__alignment_type = vector2d(float(alignment.value[1]), float(alignment.value[0]))
         self.__listing_type = listing_type
@@ -36,7 +38,10 @@ class BListingContainer:
     
     @anchor.setter
     def anchor(self, value:vector2d):
+        my_anchor = self.__anchor
         self.__anchor = value
+        if my_anchor != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
 
     @property
@@ -45,7 +50,10 @@ class BListingContainer:
     
     @pos.setter
     def pos(self, value:vector2d):
+        my_pos = self.__my_pos
         self.__my_pos = value
+        if my_pos != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
     
     @property
@@ -60,7 +68,10 @@ class BListingContainer:
             raise ValueError("objects must have a positive width")
         if value == None:
             value = -1
+        my_width = self.__dimensions.x
         self.__dimensions.x = value
+        if my_width != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
     
     @property
@@ -75,9 +86,24 @@ class BListingContainer:
             raise ValueError("objects must have a positive width")
         if value == None:
             value = -1
+        my_height = self.__dimensions.y
         self.__dimensions.y = value
+        if my_height != value:
+            self._eventhandler(BaseEvents.CONFIGURED)
         self.__place_elements()
     
+    @property
+    def visible(self)->bool:
+        if True in [e.visible for e in self.__elements]:
+            return True
+        else:
+            return False
+    
+    @visible.setter
+    def visible(self, value):
+        for element in self.__elements:
+            element.visible = True
+
     @property
     def alignment(self)->Alignments:
         return self.__my_alignment
@@ -140,6 +166,7 @@ class BListingContainer:
         index = 0
         visible_elements = []
         for element in self.__elements:
+            element.pos = vector2d(0,0)
             if not element.visible:
                 continue
             visible_elements.append(element)
@@ -147,7 +174,6 @@ class BListingContainer:
             if new_pos == None:
                 break
             element.anchor = new_pos
-            element.pos = vector2d(0,0)
             index += 1
         if self.__listing_type in [ListingTypes.BOTTOM_TO_TOP, ListingTypes.RIGHT_TO_LEFT]:
             self.__elements.reverse()
@@ -165,7 +191,7 @@ class BListingContainer:
         listed_offset_by_index += vector2d(1,1).normalize() * index * self.__offset * 2
         #catch if element would be outside the container
         if (self.__vector_sum([vector2d(event.width, event.height) for event in element_list]) * vec_mask).lenght + index * self.__offset > (self.__dimensions * vec_mask).lenght:
-            print(f"Warning, too many elements, were inputted in container, skipping all elemnts after element{index}")
+            #print(f"Warning, too many elements, were inputted in container, skipping all elemnts after element{index}")
             return None
         #calculate the vector that is dependent on the listing type of the Container
         case_sensitive_vec = -1 * bounding_box_dim * self.__alignment_type + listed_offset_by_index * (vec_mask * 2)
@@ -191,12 +217,14 @@ class BListingContainer:
         self.__place_elements()
     
     def __ev_elements_changed(self, my_list):
-        element: BBaseWidget
+        element: ETKBaseWidget
         for element in [e for e in my_list if e not in self.__elements]:
             element.add_event("<Visible>", self.__ev_visibility_changed, lambda event, object_id : True)
+            element.add_event("<Detach>", self.__ev_element_detached, lambda event, object_id : True)
             element.add_event(BaseEvents.CONFIGURED, self.__ev_element_configured)
         for element in [e for e in self.__elements if e not in my_list]:
             element.remove_event("<Visible>", self.__ev_visibility_changed)
+            element.remove_event("<Detach>", self.__ev_element_detached, lambda event, object_id : True)
             element.remove_event(BaseEvents.CONFIGURED, self.__ev_element_configured)
             element.anchor = vector2d(0, 0)
             element.pos = vector2d(0, 0)
@@ -204,5 +232,20 @@ class BListingContainer:
         self.__elements = my_list
         self.__place_elements()
     
+    def __ev_element_detached(self, params):
+        my_object = params.get("object_id")
+        if type(my_object) not in [ETKListingContainer, ETKContainer]:
+            for element in self.__elements:
+                if element.object_id == my_object:
+                    my_object = element
+                    break
+        self.__elements.remove(my_object)
+        my_object.anchor = vector2d()
+        my_object.pos = vector2d()
+        my_object.visible = False
+    
     def __ev_element_configured(self):
         self.__place_elements()
+    
+    def detach(self):
+        self._eventhandler("<Detach>")

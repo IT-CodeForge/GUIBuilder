@@ -1,10 +1,10 @@
 from typing import Any
-from vector2d  import vector2d
-from BBaseObject import BBaseObject
+from .vector2d  import vector2d
+from .ETKBaseObject import ETKBaseObject
 import logging
 
 #this is for logging purposses, if you don't want it, set "log" to False
-LOG = True
+Log = False
 if LOG:
     my_logger = logging.getLogger("BaseWidget_logger")
     my_logger.setLevel(logging.DEBUG)
@@ -15,7 +15,7 @@ if LOG:
     my_logger.addHandler(handler)
 #-------------------------------------------------------------------------
 
-class BBaseWidget(BBaseObject):
+class ETKBaseWidget(ETKBaseObject):
     def __init__(self, pos:vector2d, dim:vector2d) -> None:
         self.object_id: Any
         self.__visibility = True
@@ -83,7 +83,7 @@ class BBaseWidget(BBaseObject):
     @enabled.setter
     def enabled(self, value):
         self.__state = value
-        print("dis")
+        #print("dis")
         if self.__state:
             self.object_id["state"] = "normal"
         else:
@@ -102,3 +102,6 @@ class BBaseWidget(BBaseObject):
         else:
             self.__dimensions = dim
         self.object_id.place(x=pos.x + self.__anchor.x, y=pos.y + self.__anchor.y, width=dim.x, height=dim.y)
+    
+    def detach(self):
+        self._eventhandler("<Detach>")

@@ -1,12 +1,14 @@
 from typing import Iterable
-from vector2d import vector2d
+from .vector2d import vector2d
 from tkinter  import Label, PhotoImage, Tk
+from .ETKNoTKEventBase import ETKNoTKEventBase
 
-class BBitmap:
+class ETKBitmap(ETKNoTKEventBase):
     def __init__(self, my_tk:Tk, pos_x:int=0, pos_y:int=0, width:int=100, height:int=100) -> None:
         self.object_id = PhotoImage(width=width,height=height)
         self.__container = Label(my_tk, text="", image=self.object_id)
         self.__object_pos = vector2d(pos_x, pos_y)
+        self.__anchor     = vector2d()
         self.__dimensions = vector2d(width, height)
         self.__place_object()
 
@@ -29,6 +31,15 @@ class BBitmap:
         color = "#%06x"%value
         self.object_id.put(color, index)
 
+    @property
+    def anchor(self)->vector2d:
+        return self.__anchor
+    
+    @anchor.setter
+    def anchor(self, value):
+        self.__anchor = value
+        self.__place_object()
+    
     @property
     def pos(self)->vector2d:
         return self.__object_pos
@@ -80,7 +91,7 @@ class BBitmap:
             dim = self.__dimensions
         else:
             self.__dimensions = dim
-        self.__container.place(x=pos.x, y=pos.y, width=dim.x, height=dim.y)
+        self.__container.place(x=pos.x + self.anchor.x, y=pos.y + self.anchor.y, width=dim.x, height=dim.y)
         #self.object_id.configure(width=dim.x,height=dim.y)
     
     def draw_rect(self, top_left:vector2d, bottom_right:vector2d, color:int):
