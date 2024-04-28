@@ -1,4 +1,7 @@
-def gen_col_from_int(col:int)->str:
+from typing import Optional
+
+
+def gen_col_from_int(col: Optional[int]) -> str:
     if col == None:
         return ""
     hold_str = hex(col)[2:]

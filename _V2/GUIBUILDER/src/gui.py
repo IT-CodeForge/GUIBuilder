@@ -1,93 +1,141 @@
 from typing import Final
-from easy_tkinter.ETKButton import ETKButton
-from easy_tkinter.ETKCheckbox import ETKCheckbox
-from easy_tkinter.ETKContainer import ETKContainer
-from easy_tkinter.ETKLabel import ETKLabel
-from easy_tkinter.ETKMainWindow import ETKMainWindow
-from easy_tkinter.ETKListingContainer import ETKListingContainer, ListingTypes
-from easy_tkinter.vector2d import vector2d
+from ETK import *
 
 
 class GUI(ETKMainWindow):
-    def init(self) -> None:
-        super().__init__(pos_x=0, pos_y=0, width=1540, height=768)
+    def __init__(self) -> None:
+        super().__init__(size=vector2d(1920, 1015))
 
+    LANGUAGES: Final = ["Python (ETK)", "C++ (TGW)"]
     MENUBAR_PADDING: Final = 10
     MENUBAR_HEIGHT: Final = 40
     MENUBAR_ELEMENT_HEIGHT: Final = 20
-    ATTRIBUTES_WIDTH: Final = 100
+    ATTRIBUTES_WIDTH: Final = 300
+    ATTRIBUTES_ELEMENT_HEIGHT: Final = 20
 
-    def add_elements(self):
-        self.main = ETKListingContainer(offset=0)
-        self.main.pos = vector2d(0, 0)
-        self.main.height = self.height
-        self.main.width = self.width
-        self.main.name = "main"
+    def _add_elements(self):
+        self.main = ETKListingContainer(self._tk_object, size=ETKContainerSize.from_vector2d(
+            self.size), offset=0)
 
-        self.menubar = ETKContainer()
-        self.menubar.pos = vector2d(0, 0)
-        self.menubar.width = self.main.width
-        self.menubar.height = self.MENUBAR_HEIGHT
-        self.menubar.name = "menubar"
-        self.main.elements.append(self.menubar)  # type:ignore
+        self.menubar_outer = ETKContainer(self._tk_object, size=ETKContainerSize(
+            self.main.size.x, self.MENUBAR_HEIGHT))
+        self.main.add_element(self.menubar_outer)
 
-        self.menubar_left = ETKListingContainer(
-            listing_type=ListingTypes.LEFT_TO_RIGHT, offset=self.MENUBAR_PADDING)
-        self.menubar_left.pos = vector2d(self.ATTRIBUTES_WIDTH, 0)
-        self.menubar_left.width = 500
-        self.menubar_left.height = self.MENUBAR_HEIGHT
-        self.menubar_left.name = "menubar_left"
-        self.menubar.add_element(self.menubar_left)  # type:ignore
+        self.menubar_inner = ETKContainer(self._tk_object, vector2d(self.ATTRIBUTES_WIDTH, 0), size=ETKContainerSize(
+            self.menubar_outer.size.x - self.ATTRIBUTES_WIDTH, self.MENUBAR_HEIGHT), outline_thickness=2)
+        self.menubar_outer.add_element(self.menubar_inner)
 
-        self.main2 = ETKListingContainer(
-            listing_type=ListingTypes.LEFT_TO_RIGHT)
-        self.main2.width = self.width
-        self.main2.height = self.height - self.menubar.height
-        self.main2.name = "main2"
-        self.main.elements.append(self.main2)  # type:ignore
+        self.menubar_left = ETKListingContainer(self._tk_object, vector2d(0, 0), ETKContainerSize(0, self.MENUBAR_HEIGHT, True, False, self.MENUBAR_PADDING,
+                                                self.MENUBAR_PADDING), listing_type=ETKListingTypes.LEFT_TO_RIGHT, alignment=ETKAlignments.MIDDLE_CENTER, offset=self.MENUBAR_PADDING, outline_thickness=2)
+        self.menubar_inner.add_element(self.menubar_left)
 
-        self.attributes = ETKListingContainer()
-        self.attributes.width = self.ATTRIBUTES_WIDTH
-        self.attributes.height = self.main2.height
-        self.attributes.name = "attributes"
-        self.main2.elements.append(self.attributes)  # type:ignore
+        self.menubar_right = ETKListingContainer(self._tk_object, vector2d(0, 0), ETKContainerSize(0, self.MENUBAR_HEIGHT, True, False, self.MENUBAR_PADDING,
+                                                 self.MENUBAR_PADDING), listing_type=ETKListingTypes.RIGHT_TO_LEFT, alignment=ETKAlignments.MIDDLE_CENTER, offset=self.MENUBAR_PADDING, outline_thickness=2)
+        self.menubar_inner.add_element(self.menubar_right, ETKAlignments.TOP_RIGHT)
 
-        self.menubar.add_element(ETKLabel(self.object_id, width=self.menubar.width, height=self.menubar.height, fill=0x0000FF)) #type:ignore
-        self.menubar_left.elements.append(ETKLabel(  # type:ignore
-             self.object_id, width=self.menubar_left.width, height=self.menubar_left.height, fill=0xFF0000))
-        # self.main2.elements.append(ETKLabel(self.object_id, width=self.main2.width, height=self.main2.height, fill=0x00FF00)) #type:ignore
-        self.attributes.elements.append(ETKLabel(  # type:ignore
-            self.object_id, width=self.attributes.width, height=self.attributes.height, fill=0xFFFF00))
+        self.main2 = ETKListingContainer(self._tk_object, size=ETKContainerSize(
+            self.size.x, self.size.y-self.menubar_outer.size.y), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=0)
+        self.main.add_element(self.main2)
 
-        #print("DEBUG", self.menubar.abs_pos)
+        self.attributes = ETKListingContainer(self._tk_object, size=ETKContainerSize(
+            self.ATTRIBUTES_WIDTH, self.main2.size.y), offset=0)
+        self.main2.add_element(self.attributes)
 
-        return
+        self.attributes_element = ETKListingContainer(self._tk_object, size=ETKContainerSize(
+            self.attributes.size.x, self.attributes.size.y/2, paddings_x_l=2, paddings_x_r=2, paddings_y_o=2, paddings_y_u=2), outline_thickness=2)
+        self.attributes.add_element(self.attributes_element)
+
+        self.attributes_window = ETKListingContainer(self._tk_object, size=ETKContainerSize(
+            self.attributes.size.x, self.attributes.size.y/2, paddings_x_l=2, paddings_x_r=2, paddings_y_o=0, paddings_y_u=2), outline_thickness=2)
+        self.attributes.add_element(self.attributes_window)
+
+        self.element_area = ETKContainer(self._tk_object, size=ETKContainerSize(500, 500), background_color=0xFFFFFF)
+        self.main2.add_element(self.element_area)
+
+        # region Menubar_left Elemente
 
         self.menubar_button = ETKButton(
-            self.object_id, "BUTTON", width=50, height=self.MENUBAR_ELEMENT_HEIGHT)
+            self._tk_object, "BUTTON", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_button.enabled = False
-        self.menubar_left.elements.append(self.menubar_button)  # type:ignore
+        self.menubar_left.add_element(self.menubar_button)
 
         self.menubar_label = ETKLabel(
-            self.object_id, "LABEL", width=50, height=self.MENUBAR_ELEMENT_HEIGHT)
-        self.menubar_left.elements.append(self.menubar_label)  # type:ignore
+            self._tk_object, "LABEL", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_left.add_element(self.menubar_label)
 
         self.menubar_edit = ETKLabel(
-            self.object_id, "EDIT", width=50, height=self.MENUBAR_ELEMENT_HEIGHT)
-        self.menubar_left.elements.append(self.menubar_edit)  # type:ignore
+            self._tk_object, "EDIT", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_left.add_element(self.menubar_edit)
 
         self.menubar_checkbox = ETKCheckbox(
-            self.object_id, "CHECKBOX", width=100, height=self.MENUBAR_ELEMENT_HEIGHT)
+            self._tk_object, "CHECKBOX", size=vector2d(100, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_checkbox.enabled = False
-        self.menubar_left.elements.append(self.menubar_checkbox)  # type:ignore
+        self.menubar_left.add_element(self.menubar_checkbox)
 
         self.menubar_canvas = ETKLabel(
-            self.object_id, "CANVAS", width=70, height=self.MENUBAR_ELEMENT_HEIGHT)
-        self.menubar_left.elements.append(self.menubar_canvas)  # type:ignore
+            self._tk_object, "CANVAS", size=vector2d(70, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_left.add_element(self.menubar_canvas)
 
         self.menubar_timer = ETKLabel(
-            self.object_id, "TIMER", width=50, height=self.MENUBAR_ELEMENT_HEIGHT)
-        self.menubar_left.elements.append(self.menubar_timer)  # type:ignore
+            self._tk_object, "TIMER", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_left.add_element(self.menubar_timer)
+
+        # endregion
+        # region Menubar_right Elemente
+
+        self.menubar_export = ETKButton(
+            self._tk_object, "Export", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_export.add_event(
+            ETKButtonEvents.PRESSED, lambda: None)  # TODO
+        self.menubar_right.add_element(self.menubar_export)
+
+        self.menubar_save = ETKButton(
+            self._tk_object, "Save", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_save.add_event(
+            ETKButtonEvents.PRESSED, lambda: None)  # TODO
+        self.menubar_right.add_element(self.menubar_save)
+
+        self.menubar_load = ETKButton(
+            self._tk_object, "Load", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_load.add_event(
+            ETKButtonEvents.PRESSED, lambda: None)  # TODO
+        self.menubar_right.add_element(self.menubar_load)
+
+        self.language_selector = ETKDropdownMenu(self._tk_object, self.LANGUAGES, size=vector2d(130, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_right.add_element(self.language_selector)
+        
+        # self.language_selector = ETKLabel(self._tk_object, "LANGUAGE_SELECTOR", size=vector2d(
+        #     150, self.MENUBAR_ELEMENT_HEIGHT))  # TODO
+        # self.menubar_right.add_element(self.language_selector)
+
+        # endregion
+        # region attributes_element Elemente
+
+        self.attributes_element_title_container = ETKContainer(self._tk_object, size=ETKContainerSize(
+            self.attributes_element.size.x-4, self.ATTRIBUTES_ELEMENT_HEIGHT))
+        self.attributes_element.add_element(
+            self.attributes_element_title_container)
+
+        self.attributes_element_title = ETKLabel(self._tk_object, "Element-Eigenschaften:", size=vector2d(
+            180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
+        self.attributes_element_title_container.add_element(
+            self.attributes_element_title, ETKAlignments.MIDDLE_CENTER)
+
+        # endregion
+
+        #region window_element Elemente
+
+        self.attributes_window_title_container = ETKContainer(self._tk_object, size=ETKContainerSize(
+            self.attributes_window.size.x-4, self.ATTRIBUTES_ELEMENT_HEIGHT))
+        self.attributes_window.add_element(
+            self.attributes_window_title_container)
+
+        self.attributes_window_title = ETKLabel(self._tk_object, "Fenster-Eigenschaften:", size=vector2d(
+            180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_window.background_color)
+        self.attributes_window_title_container.add_element(
+            self.attributes_window_title, ETKAlignments.MIDDLE_CENTER)
+
+        # endregion
 
 
 if __name__ == "__main__":
