@@ -27,11 +27,12 @@ class ETKMainWindow(ETKBaseTkObject):
         self.__topmost = False
         self.exit_locked = False
         self.__fullscreen = False
-        self.fullscreen = fullscreen
         self.canvas = ETKCanvas(self._tk_object, vector2d(), vector2d())
         self.canvas.outline_color = 0x0
         self.canvas.outline_thickness = 2
-        ETKBaseTkObject.__init__(self, pos, vector2d(), background_color)
+        ETKBaseTkObject.__init__(
+            self, pos, vector2d(1920, 1080), background_color)
+        self.fullscreen = fullscreen
         self.size = size
         self._tk_object.protocol("WM_DELETE_WINDOW", self.exit)
         self._event_lib.update({e: [] for e in ETKWindowEvents})
@@ -53,14 +54,16 @@ class ETKMainWindow(ETKBaseTkObject):
     @ETKBaseTkObject.size.setter
     def size(self, value: Optional[vector2d]) -> None:
         if type(value) == NoneType:
+            old_state = self._tk_object.state()
             self._tk_object.state("zoomed")
-            self._tk_object.update_idletasks()
-            value = vector2d(self._tk_object.winfo_width(),
-                             self._tk_object.winfo_height())
-            if not self.fullscreen:
-                self._tk_object.state("normal")
-        ETKBaseTkObject.size.fset(self, value)  # type:ignore
-        self.canvas.size = value
+            self._tk_object.update()
+            t_value = vector2d(self._tk_object.winfo_width(),
+                               self._tk_object.winfo_height())
+            self._tk_object.state(old_state)
+        else:
+            t_value = value
+        ETKBaseTkObject.size.fset(self, t_value)  # type:ignore
+        self.canvas.size = t_value
         self.__place_object()
 
     @property
