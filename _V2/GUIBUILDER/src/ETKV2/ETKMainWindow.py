@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from enum import auto
 from tkinter import Event, Tk, EventType
+from types import NoneType
 from typing import Any, Callable, Optional
 
 from .ETKCanvas import ETKCanvas
@@ -20,15 +21,22 @@ class ETKWindowEvents(ETKEvents):
 
 
 class ETKMainWindow(ETKBaseTkObject):
-    def __init__(self, pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(2048, 512), caption: str = "Tk", background_color: int = 0xAAAAAA) -> None:
+    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Tk", fullscreen: bool = True, background_color: int = 0xAAAAAA) -> None:
         self._tk_object: Tk = Tk()
         self.caption = caption
         self.__topmost = False
         self.exit_locked = False
-        self.canvas = ETKCanvas(self._tk_object, vector2d(), size)
-        ETKBaseTkObject.__init__(self, pos, size, background_color)
+        self.__fullscreen = False
+        self.fullscreen = fullscreen
+        self.canvas = ETKCanvas(self._tk_object, vector2d(), vector2d())
+        self.canvas.outline_color = 0x0
+        self.canvas.outline_thickness = 2
+        ETKBaseTkObject.__init__(self, pos, vector2d(), background_color)
+        self.size = size
         self._tk_object.protocol("WM_DELETE_WINDOW", self.exit)
         self._event_lib.update({e: [] for e in ETKWindowEvents})
+        self._tk_object.bind(
+            "<Configure>", self.__resize_event_handler)  # type:ignore
 
         self._tk_object.after(0, self._handle_event, ETKWindowEvents.START)
         self._on_init()
@@ -39,13 +47,33 @@ class ETKMainWindow(ETKBaseTkObject):
 
     @ETKBaseTkObject.pos.setter
     def pos(self, value: vector2d) -> None:
-        ETKBaseTkObject.pos.fset(self, value) #type:ignore
+        ETKBaseTkObject.pos.fset(self, value)  # type:ignore
         self.__place_object()
 
     @ETKBaseTkObject.size.setter
-    def size(self, value: vector2d) -> None:
-        ETKBaseTkObject.size.fset(self, value) #type:ignore
+    def size(self, value: Optional[vector2d]) -> None:
+        if type(value) == NoneType:
+            self._tk_object.state("zoomed")
+            self._tk_object.update_idletasks()
+            value = vector2d(self._tk_object.winfo_width(),
+                             self._tk_object.winfo_height())
+            if not self.fullscreen:
+                self._tk_object.state("normal")
+        ETKBaseTkObject.size.fset(self, value)  # type:ignore
+        self.canvas.size = value
         self.__place_object()
+
+    @property
+    def fullscreen(self) -> bool:
+        return self.__fullscreen
+
+    @fullscreen.setter
+    def fullscreen(self, value: bool) -> None:
+        self.__fullscreen = value
+        if value:
+            self._tk_object.state("zoomed")
+        else:
+            self._tk_object.state("normal")
 
     @property
     def caption(self) -> str:
@@ -53,7 +81,7 @@ class ETKMainWindow(ETKBaseTkObject):
 
     @ETKBaseTkObject.visibility.setter
     def visibility(self, value: bool) -> None:
-        ETKBaseTkObject.visibility.fset(self, value) #type: ignore
+        ETKBaseTkObject.visibility.fset(self, value)  # type: ignore
         if not value:
             self._tk_object.withdraw()
         else:
@@ -101,9 +129,13 @@ class ETKMainWindow(ETKBaseTkObject):
         self._tk_object.attributes('-topmost', 1)  # type:ignore
         self._tk_object.focus_force()
         self._tk_object.attributes('-topmost', self.__topmost)  # type:ignore
-    
+
     def exec_gui_function(self, function: Callable[..., Any], *args: Any, **kwargs: Any) -> None:
         self._tk_object.after(0, lambda: function(*args, **kwargs))
+
+    def __resize_event_handler(self, event: Event):  # type:ignore
+        if self.fullscreen:
+            self.fullscreen = True
 
     def __place_object(self) -> None:
         self._tk_object.geometry(

@@ -12,6 +12,7 @@ class ETKLabel(ETKBaseTkWidgetText):
         self._tk_object["state"] = "disabled"
         self._send_button_event_break = True
         self.add_event(ETKBaseEvents.MOUSE_DOWN, lambda: None)
+        self._tk_object.configure(cursor="")
 
     # region Properties
 

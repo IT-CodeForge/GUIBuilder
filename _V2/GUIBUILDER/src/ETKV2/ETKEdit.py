@@ -27,8 +27,10 @@ class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
         ETKBaseTkWidgetDisableable.enabled.fset(self, value) #type:ignore
         if value:
             self._send_button_event_break = False
+            self._tk_object.configure(cursor="xterm")
         else:
             self._send_button_event_break = True
+            self._tk_object.configure(cursor="")
 
     #endregion
     # region Methods
