@@ -2,20 +2,25 @@ from typing import Any, Final, Optional
 from ETK import *
 from steuerung import Steuerung
 
+#TODO: disable non implmented features
 
 class GUI(ETKMainWindow):
     def __init__(self, steuerung: Steuerung) -> None:
-        super().__init__()
         self.__steuerung = steuerung
+        self.__mouse_pos = vector2d()
+        super().__init__()
 
     LANGUAGES: Final = ["Python (ETK)", "C++ (TGW)"]
     MENUBAR_PADDING: Final = 10
     MENUBAR_HEIGHT: Final = 40
     MENUBAR_ELEMENT_HEIGHT: Final = 20
-    ATTRIBUTES_WIDTH: Final = 300
+    ATTRIBUTES_WIDTH: Final = 360
     ATTRIBUTES_ELEMENT_HEIGHT: Final = 20
 
     def _add_elements(self):
+        self.__move_timer = ETKTimer(self._tk_object, 10, self.__update_element_pos)
+
+
         self.add_event(ETKBaseEvents.MOUSE_UP, self.__mouse_up_event_handler)
         self.add_event(ETKBaseEvents.MOUSE_MOVED,
                        self.__mouse_moved_event_handler)
@@ -50,16 +55,17 @@ class GUI(ETKMainWindow):
         self.main2.add_element(self.attributes)
 
         self.attributes_element = ETKListingContainer(self._tk_object, size=ETKContainerSize(
-            self.attributes.size.x, self.attributes.size.y/2, paddings_x_l=2, paddings_x_r=2, paddings_y_o=2, paddings_y_u=2), outline_thickness=2)
+            self.attributes.size.x, self.attributes.size.y/2, paddings_x_l=2, paddings_x_r=2, paddings_y_o=2, paddings_y_u=2), outline_thickness=2, offset=3)
         self.attributes.add_element(self.attributes_element)
 
         self.attributes_window = ETKListingContainer(self._tk_object, size=ETKContainerSize(
-            self.attributes.size.x, self.attributes.size.y/2, paddings_x_l=2, paddings_x_r=2, paddings_y_o=0, paddings_y_u=2), outline_thickness=2)
+            self.attributes.size.x, self.attributes.size.y/2, paddings_x_l=2, paddings_x_r=2, paddings_y_o=0, paddings_y_u=2), outline_thickness=2, offset=3)
         self.attributes.add_element(self.attributes_window)
 
         self.element_area = ETKContainer(
             self._tk_object, size=ETKContainerSize(500, 500), background_color=0xFFFFFF)
         self.main2.add_element(self.element_area)
+        self.element_area.add_event(ETKBaseEvents.MOUSE_DOWN, self.__element_area_mousedown_handler)
 
         # region Menubar_left Elemente
 
@@ -138,9 +144,128 @@ class GUI(ETKMainWindow):
             180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
         self.attributes_element_title_container.add_element(
             self.attributes_element_title, ETKAlignments.MIDDLE_CENTER)
+        
+        self.attributes_element_inner = ETKListingContainer(self._tk_object, size=ETKContainerSize(
+            0, 0, True, True), offset=3)
+        self.attributes_element.add_element(self.attributes_element_inner)
+        self.attributes_element_inner.visibility = False
+        
+        self.attributes_element_delete = ETKButton(self._tk_object, "Delete", background_color=0xFF0000, text_color=0xFFFFFF) #TODO
+        self.attributes_element_inner.add_element(self.attributes_element_delete)
+
+        self.attributes_element_id_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=0)
+        self.attributes_element_id_const = ETKLabel(self._tk_object, "ID: ", size=vector2d(30, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_id_container.add_element(self.attributes_element_id_const)
+        self.attributes_element_id_var = ETKLabel(self._tk_object, "-", background_color=self.attributes_element.background_color)
+        self.attributes_element_id_container.add_element(self.attributes_element_id_var)
+        self.attributes_element_inner.add_element(self.attributes_element_id_container)
+
+        self.attributes_element_name_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_name_const = ETKLabel(self._tk_object, "Name: ", size=vector2d(45, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_name_container.add_element(self.attributes_element_name_const)
+        self.attributes_element_name_var = ETKEdit(self._tk_object, "-", size=vector2d(200 ,17))
+        self.attributes_element_name_container.add_element(self.attributes_element_name_var)
+        self.attributes_element_inner.add_element(self.attributes_element_name_container)
+        self.attributes_element_name_var.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_text_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_text_const = ETKLabel(self._tk_object, "Text: ", size=vector2d(45, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_text_container.add_element(self.attributes_element_text_const)
+        self.attributes_element_text_var = ETKEdit(self._tk_object, "-", size=vector2d(200 ,17))
+        self.attributes_element_text_container.add_element(self.attributes_element_text_var)
+        self.attributes_element_inner.add_element(self.attributes_element_text_container)
+        self.attributes_element_text_var.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_pos_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_pos_const = ETKLabel(self._tk_object, "Pos: ", size=vector2d(45, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_pos_container.add_element(self.attributes_element_pos_const)
+        self.attributes_element_pos_var_x = ETKEdit(self._tk_object, "-", size=vector2d(70 ,17))
+        self.attributes_element_pos_container.add_element(self.attributes_element_pos_var_x)
+        self.attributes_element_pos_var_y = ETKEdit(self._tk_object, "-", size=vector2d(70 ,17))
+        self.attributes_element_pos_container.add_element(self.attributes_element_pos_var_y)
+        self.attributes_element_inner.add_element(self.attributes_element_pos_container)
+        self.attributes_element_pos_var_x.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+        self.attributes_element_pos_var_y.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_size_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_size_const = ETKLabel(self._tk_object, "Size: ", size=vector2d(45, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_size_container.add_element(self.attributes_element_size_const)
+        self.attributes_element_size_var_x = ETKEdit(self._tk_object, "-", size=vector2d(70 ,17))
+        self.attributes_element_size_container.add_element(self.attributes_element_size_var_x)
+        self.attributes_element_size_var_y = ETKEdit(self._tk_object, "-", size=vector2d(70 ,17))
+        self.attributes_element_size_container.add_element(self.attributes_element_size_var_y)
+        self.attributes_element_inner.add_element(self.attributes_element_size_container)
+        self.attributes_element_size_var_x.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+        self.attributes_element_size_var_y.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_text_color_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_text_color_const = ETKLabel(self._tk_object, "Text-Color (RGB 24bit): ", size=vector2d(190, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_text_color_container.add_element(self.attributes_element_text_color_const)
+        self.attributes_element_text_color_var_r = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_element_text_color_container.add_element(self.attributes_element_text_color_var_r)
+        self.attributes_element_text_color_var_g = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_element_text_color_container.add_element(self.attributes_element_text_color_var_g)
+        self.attributes_element_text_color_var_b = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_element_text_color_container.add_element(self.attributes_element_text_color_var_b)
+        self.attributes_element_inner.add_element(self.attributes_element_text_color_container)
+        self.attributes_element_text_color_var_r.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+        self.attributes_element_text_color_var_g.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+        self.attributes_element_text_color_var_b.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_background_color_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_background_color_const = ETKLabel(self._tk_object, "BG-Color (RGB 24bit): ", size=vector2d(190, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_background_color_container.add_element(self.attributes_element_background_color_const)
+        self.attributes_element_background_color_var_r = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_element_background_color_container.add_element(self.attributes_element_background_color_var_r)
+        self.attributes_element_background_color_var_g = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_element_background_color_container.add_element(self.attributes_element_background_color_var_g)
+        self.attributes_element_background_color_var_b = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_element_background_color_container.add_element(self.attributes_element_background_color_var_b)
+        self.attributes_element_inner.add_element(self.attributes_element_background_color_container)
+        self.attributes_element_background_color_var_r.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+        self.attributes_element_background_color_var_g.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+        self.attributes_element_background_color_var_b.add_event(ETKEditEvents.CHANGED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_spacing_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 30, True, False), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_inner.add_element(self.attributes_element_spacing_container)
+
+        self.attributes_element_event_title = ETKLabel(self._tk_object, "Events:", size=vector2d(
+            180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
+        self.attributes_element_inner.add_element(self.attributes_element_event_title)
+
+        self.attributes_element_event_pressed_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_event_pressed_const = ETKLabel(self._tk_object, "Event pressed: ", size=vector2d(120, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_pressed_container.add_element(self.attributes_element_event_pressed_const)
+        self.attributes_element_event_pressed_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_pressed_container.add_element(self.attributes_element_event_pressed_var)
+        self.attributes_element_inner.add_element(self.attributes_element_event_pressed_container)
+        self.attributes_element_event_pressed_var.add_event(ETKCheckboxEvents.CHECKED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_event_double_pressed_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_event_double_pressed_const = ETKLabel(self._tk_object, "Event double pressed: ", size=vector2d(170, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_double_pressed_container.add_element(self.attributes_element_event_double_pressed_const)
+        self.attributes_element_event_double_pressed_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_double_pressed_container.add_element(self.attributes_element_event_double_pressed_var)
+        self.attributes_element_inner.add_element(self.attributes_element_event_double_pressed_container)
+        self.attributes_element_event_double_pressed_var.add_event(ETKCheckboxEvents.CHECKED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_event_changed_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_event_changed_const = ETKLabel(self._tk_object, "Event changed: ", size=vector2d(120, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_changed_container.add_element(self.attributes_element_event_changed_const)
+        self.attributes_element_event_changed_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_changed_container.add_element(self.attributes_element_event_changed_var)
+        self.attributes_element_inner.add_element(self.attributes_element_event_changed_container)
+        self.attributes_element_event_changed_var.add_event(ETKCheckboxEvents.CHECKED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_event_hovered_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_event_hovered_const = ETKLabel(self._tk_object, "Event hovered: ", size=vector2d(120, 17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_hovered_container.add_element(self.attributes_element_event_hovered_const)
+        self.attributes_element_event_hovered_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_element.background_color)
+        self.attributes_element_event_hovered_container.add_element(self.attributes_element_event_hovered_var)
+        self.attributes_element_inner.add_element(self.attributes_element_event_hovered_container)
+        self.attributes_element_event_hovered_var.add_event(ETKCheckboxEvents.CHECKED, self.__element_attribut_changed_handler)
 
         # endregion
-
         # region attributes_window Elemente
 
         self.attributes_window_title_container = ETKContainer(self._tk_object, size=ETKContainerSize(
@@ -152,15 +277,137 @@ class GUI(ETKMainWindow):
             180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_window.background_color)
         self.attributes_window_title_container.add_element(
             self.attributes_window_title, ETKAlignments.MIDDLE_CENTER)
+        
+        self.attributes_window_id_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=0)
+        self.attributes_window_id_const = ETKLabel(self._tk_object, "ID: ", size=vector2d(30, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_id_container.add_element(self.attributes_window_id_const)
+        self.attributes_window_id_var = ETKLabel(self._tk_object, "-", background_color=self.attributes_window.background_color)
+        self.attributes_window_id_container.add_element(self.attributes_window_id_var)
+        self.attributes_window.add_element(self.attributes_window_id_container)
+
+        self.attributes_window_name_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_name_const = ETKLabel(self._tk_object, "Name: ", size=vector2d(45, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_name_container.add_element(self.attributes_window_name_const)
+        self.attributes_window_name_var = ETKEdit(self._tk_object, "-", size=vector2d(200 ,17))
+        self.attributes_window_name_container.add_element(self.attributes_window_name_var)
+        self.attributes_window.add_element(self.attributes_window_name_container)
+        self.attributes_window_name_var.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_title_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_title_const = ETKLabel(self._tk_object, "Titel: ", size=vector2d(45, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_title_container.add_element(self.attributes_window_title_const)
+        self.attributes_window_title_var = ETKEdit(self._tk_object, "-", size=vector2d(200 ,17))
+        self.attributes_window_title_container.add_element(self.attributes_window_title_var)
+        self.attributes_window.add_element(self.attributes_window_title_container)
+        self.attributes_window_title_var.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_size_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_size_const = ETKLabel(self._tk_object, "Size: ", size=vector2d(45, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_size_container.add_element(self.attributes_window_size_const)
+        self.attributes_window_size_var_x = ETKEdit(self._tk_object, "-", size=vector2d(70 ,17))
+        self.attributes_window_size_container.add_element(self.attributes_window_size_var_x)
+        self.attributes_window_size_var_y = ETKEdit(self._tk_object, "-", size=vector2d(70 ,17))
+        self.attributes_window_size_container.add_element(self.attributes_window_size_var_y)
+        self.attributes_window.add_element(self.attributes_window_size_container)
+        self.attributes_window_size_var_x.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+        self.attributes_window_size_var_y.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_title_color_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_title_color_const = ETKLabel(self._tk_object, "Title-Color (RGB 24bit): ", size=vector2d(195, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_title_color_container.add_element(self.attributes_window_title_color_const)
+        self.attributes_window_title_color_var_r = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_window_title_color_container.add_element(self.attributes_window_title_color_var_r)
+        self.attributes_window_title_color_var_g = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_window_title_color_container.add_element(self.attributes_window_title_color_var_g)
+        self.attributes_window_title_color_var_b = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_window_title_color_container.add_element(self.attributes_window_title_color_var_b)
+        self.attributes_window.add_element(self.attributes_window_title_color_container)
+        self.attributes_window_title_color_var_r.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+        self.attributes_window_title_color_var_g.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+        self.attributes_window_title_color_var_b.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_background_color_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_background_color_const = ETKLabel(self._tk_object, "BG-Color (RGB 24bit): ", size=vector2d(190, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_background_color_container.add_element(self.attributes_window_background_color_const)
+        self.attributes_window_background_color_var_r = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_window_background_color_container.add_element(self.attributes_window_background_color_var_r)
+        self.attributes_window_background_color_var_g = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_window_background_color_container.add_element(self.attributes_window_background_color_var_g)
+        self.attributes_window_background_color_var_b = ETKEdit(self._tk_object, "-", size=vector2d(50 ,17))
+        self.attributes_window_background_color_container.add_element(self.attributes_window_background_color_var_b)
+        self.attributes_window.add_element(self.attributes_window_background_color_container)
+        self.attributes_window_background_color_var_r.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+        self.attributes_window_background_color_var_g.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+        self.attributes_window_background_color_var_b.add_event(ETKEditEvents.CHANGED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_spacing_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 30, True, False), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window.add_element(self.attributes_window_spacing_container)
+
+        self.attributes_window_event_title = ETKLabel(self._tk_object, "Events:", size=vector2d(
+            180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_window.background_color)
+        self.attributes_window.add_element(self.attributes_window_event_title)
+
+        self.attributes_window_event_create_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_event_create_const = ETKLabel(self._tk_object, "Event create: ", size=vector2d(110, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_create_container.add_element(self.attributes_window_event_create_const)
+        self.attributes_window_event_create_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_create_container.add_element(self.attributes_window_event_create_var)
+        self.attributes_window.add_element(self.attributes_window_event_create_container)
+        self.attributes_window_event_create_var.add_event(ETKCheckboxEvents.CHECKED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_event_destroy_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_event_destroy_const = ETKLabel(self._tk_object, "Event destroy: ", size=vector2d(115, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_destroy_container.add_element(self.attributes_window_event_destroy_const)
+        self.attributes_window_event_destroy_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_destroy_container.add_element(self.attributes_window_event_destroy_var)
+        self.attributes_window.add_element(self.attributes_window_event_destroy_container)
+        self.attributes_window_event_destroy_var.add_event(ETKCheckboxEvents.CHECKED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_event_paint_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_event_paint_const = ETKLabel(self._tk_object, "Event paint: ", size=vector2d(100, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_paint_container.add_element(self.attributes_window_event_paint_const)
+        self.attributes_window_event_paint_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_paint_container.add_element(self.attributes_window_event_paint_var)
+        self.attributes_window.add_element(self.attributes_window_event_paint_container)
+        self.attributes_window_event_paint_var.add_event(ETKCheckboxEvents.CHECKED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_event_resize_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_event_resize_const = ETKLabel(self._tk_object, "Event resize: ", size=vector2d(110, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_resize_container.add_element(self.attributes_window_event_resize_const)
+        self.attributes_window_event_resize_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_resize_container.add_element(self.attributes_window_event_resize_var)
+        self.attributes_window.add_element(self.attributes_window_event_resize_container)
+        self.attributes_window_event_resize_var.add_event(ETKCheckboxEvents.CHECKED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_event_mouse_click_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_event_mouse_click_const = ETKLabel(self._tk_object, "Event mouse_click: ", size=vector2d(147, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_mouse_click_container.add_element(self.attributes_window_event_mouse_click_const)
+        self.attributes_window_event_mouse_click_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_mouse_click_container.add_element(self.attributes_window_event_mouse_click_var)
+        self.attributes_window.add_element(self.attributes_window_event_mouse_click_container)
+        self.attributes_window_event_mouse_click_var.add_event(ETKCheckboxEvents.CHECKED, self.__window_attribut_changed_handler)
+
+        self.attributes_window_event_mouse_move_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_window_event_mouse_move_const = ETKLabel(self._tk_object, "Event mouse_move: ", size=vector2d(140, 17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_mouse_move_container.add_element(self.attributes_window_event_mouse_move_const)
+        self.attributes_window_event_mouse_move_var = ETKCheckbox(self._tk_object, "", size=vector2d(17 ,17), background_color=self.attributes_window.background_color)
+        self.attributes_window_event_mouse_move_container.add_element(self.attributes_window_event_mouse_move_var)
+        self.attributes_window.add_element(self.attributes_window_event_mouse_move_container)
+        self.attributes_window_event_mouse_move_var.add_event(ETKCheckboxEvents.CHECKED, self.__window_attribut_changed_handler)
+
+        self.__steuerung.on_gui_init()
 
         # endregion
 
-    def __mouse_up_event_handler(self):
+    def __mouse_up_event_handler(self) -> None:
         if self.__moving_element != None:
             self.__moving_element = None
 
-    def __mouse_moved_event_handler(self, event: tuple[ETKBaseObject, ETKEvents, Any]):
-        mouse_pos = vector2d(event[2].x_root, event[2].y_root) - self.abs_pos
+    def __mouse_moved_event_handler(self, event: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
+        self.__mouse_pos = vector2d(event[2].x_root, event[2].y_root)
+    
+    def __update_element_pos(self) -> None:
+        mouse_pos = self.__mouse_pos - self.abs_pos
         if self.__moving_element != None:
             element_pos = mouse_pos - self.__moving_element_rel_click_pos
             rel_mouse_pos = element_pos - self.element_area.abs_pos
@@ -175,33 +422,40 @@ class GUI(ETKMainWindow):
                 rel_mouse_pos.y = self.element_area.size.y - self.__moving_element.size.y
             self.__moving_element.pos = rel_mouse_pos
 
-    def __element_mouse_down_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]):
+    def __element_mouse_down_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
         self.__start_moving_element(
             event_data[0], vector2d(event_data[2].x, event_data[2].y))
+        self.__steuerung.update_element_attributes_gui(event_data[0])
+    
+    def __element_attribut_changed_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None: #TODO
+        pass
 
-    def __menubar_left_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]):
-        match event_data[0]:
-            case self.menubar_button:
-                new_element = ETKButton(self._tk_object)
-                new_element.enabled = False
-            case self.menubar_label:
-                new_element = ETKLabel(self._tk_object)
-            case self.menubar_edit:
-                new_element = ETKLabel(self._tk_object)
-            case self.menubar_checkbox:
-                new_element = ETKCheckbox(self._tk_object)
-                new_element.enabled = False
-            case self.menubar_canvas:
-                new_element = ETKLabel(self._tk_object)
-            case self.menubar_timer:
-                new_element = ETKLabel(self._tk_object)
-            case _:
-                return
+    def __window_attribut_changed_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None: #TODO
+        pass
+
+    def __menubar_left_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
+        new_element = self.__steuerung.create_new_element_event(event_data[0])
+        self.__start_moving_element(new_element)
+        self.__steuerung.update_element_attributes_gui(new_element)
+
+    def __element_area_mousedown_handler(self, ev_data: Any) -> None:
+        if ev_data[3] == self.element_area and self.attributes_element_inner.visibility:
+            self.attributes_element_inner.visibility = False
+
+    def create_new_element(self, type: Any) -> ETKBaseTkWidgetText:
+        new_element = type(self._tk_object)
+        new_element.outline_color = 0x0
+        new_element.outline_thickness = 2
+
+        try:
+            new_element.enabled = False
+        except AttributeError:
+            pass
 
         new_element.add_event(ETKBaseEvents.MOUSE_DOWN,
                               self.__element_mouse_down_handler)
         self.element_area.add_element(new_element)
-        self.__start_moving_element(new_element)
+        return new_element
 
     def __start_moving_element(self, element: ETKBaseObject, rel_click_pos: vector2d = vector2d()):
         self.__moving_element = element

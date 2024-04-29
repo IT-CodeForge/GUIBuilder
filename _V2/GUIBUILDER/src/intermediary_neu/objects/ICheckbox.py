@@ -3,7 +3,7 @@ from .IBaseObject import IBaseObject
 
 
 class ICheckbox(IBaseObject):
-    def __init__(self, id: int, name: Optional[str] = None, text: str = "Checkbox", pos: tuple[int, int] = (0, 0), size: tuple[int, int] = (75, 18), text_color: tuple[int, int, int] = (0x00, 0x00, 0x00), background_color: tuple[int, int, int] = (0xEE, 0xEE, 0xEE), checked: bool = False, event_changed: bool = True, event_hovered: bool = False) -> None:
+    def __init__(self, id: int, name: Optional[str] = None, text: str = "Checkbox", pos: tuple[int, int] = (0, 0), size: tuple[int, int] = (100, 25), text_color: tuple[int, int, int] = (0x00, 0x00, 0x00), background_color: tuple[int, int, int] = (0xEE, 0xEE, 0xEE), checked: bool = False, event_changed: bool = True, event_hovered: bool = False) -> None:
         super().__init__(id)
         if name == None:
             name = f"{id}_checkbox"
@@ -16,3 +16,6 @@ class ICheckbox(IBaseObject):
         self.checked: bool = checked
         self.event_changed: bool = event_changed
         self.event_hovered: bool = event_hovered
+
+    def __str__(self) -> str:
+        return f'ICheckbox<id="{self.id}"; name="{self.name}"; text="{self.text}"; pos="{self.pos}"; size="{self.size}"; text_color="{self.text_color}"; background_color="{self.background_color}"; checked="{self.checked}"; event_changed="{self.event_changed}"; event_hovered="{self.event_hovered}">'

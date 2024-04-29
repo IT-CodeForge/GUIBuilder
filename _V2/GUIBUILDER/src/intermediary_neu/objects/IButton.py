@@ -16,3 +16,6 @@ class IButton(IBaseObject):
         self.event_pressed: bool = event_pressed
         self.event_double_pressed: bool = event_double_pressed
         self.event_hovered: bool = event_hovered
+
+    def __str__(self) -> str:
+        return f'IButton<id="{self.id}"; name="{self.name}"; text="{self.text}"; pos="{self.pos}"; size="{self.size}"; text_color="{self.text_color}"; background_color="{self.background_color}"; event_pressed="{self.event_pressed}"; event_double_pressed="{self.event_double_pressed}"; event_hovered="{self.event_hovered}">'

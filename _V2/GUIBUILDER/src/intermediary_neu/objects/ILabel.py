@@ -14,3 +14,6 @@ class ILabel(IBaseObject):
         self.text_color: tuple[int, int, int] = text_color
         self.background_color: tuple[int, int, int] = background_color
         self.event_hovered: bool = event_hovered
+
+    def __str__(self) -> str:
+        return f'ILabel<id="{self.id}"; name="{self.name}"; text="{self.text}"; pos="{self.pos}"; size="{self.size}"; text_color="{self.text_color}"; background_color="{self.background_color}"; event_hovered="{self.event_hovered}">'
