@@ -1,5 +1,4 @@
-from gui import GUI
+from steuerung import Steuerung
 
 if __name__ == "__main__":
-    g = GUI()
-    g.run()
+    s = Steuerung()
