@@ -97,11 +97,14 @@ class ETKBaseObject:
             try:
                 c((self, event, *event_data))
                 continue
-            except:
-                pass
+            except TypeError as ex:
+                if str(ex).find("takes 1 positional argument") == 0:
+                    raise ex
             try:
                 c()
-            except:
+            except TypeError as ex:
+                if str(ex).find("positional argument") == 0:
+                    raise ex
                 ret_val = c.__code__.co_varnames
                 name = c.__name__  # type:ignore
                 raise TypeError(
