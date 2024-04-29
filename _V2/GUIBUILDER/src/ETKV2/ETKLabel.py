@@ -22,8 +22,11 @@ class ETKLabel(ETKBaseTkWidgetText):
 
     @text.setter
     def text(self, value: str) -> None:
+        state = self._tk_object["state"]
+        self._tk_object["state"] = "normal"
         self._tk_object.delete(1.0, END)
         self._tk_object.insert(1.0, value)
+        self._tk_object["state"] = state
     
 
     def _handle_tk_event(self, event: Event) -> str|None:  # type:ignore
