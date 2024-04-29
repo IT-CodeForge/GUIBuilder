@@ -1,4 +1,4 @@
-class BaseObject:
+class IBaseObject:
     def __init__(self, id: int) -> None:
         self.__id = id
 
