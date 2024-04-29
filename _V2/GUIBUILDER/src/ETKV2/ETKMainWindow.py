@@ -50,6 +50,11 @@ class ETKMainWindow(ETKBaseTkObject):
     def pos(self, value: vector2d) -> None:
         ETKBaseTkObject.pos.fset(self, value)  # type:ignore
         self.__place_object()
+    
+    @property
+    def abs_pos(self) -> vector2d:
+        """READ-ONLY"""
+        return vector2d(self._tk_object.winfo_rootx(), self._tk_object.winfo_rooty())
 
     @ETKBaseTkObject.size.setter
     def size(self, value: Optional[vector2d]) -> None:
