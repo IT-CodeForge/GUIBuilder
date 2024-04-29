@@ -6,7 +6,6 @@ from ..vector2d import vector2d
 from .ETKBaseWidget import ETKBaseWidget
 from .ETKBaseTkObject import ETKBaseTkObject
 
-
 class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
     def __init__(self, pos: vector2d, size: vector2d, background_color: int) -> None:
@@ -52,13 +51,17 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
         # region update event methods
 
     def _update_pos(self) -> None:
-        self.__place_object()
+        if self.abs_visibility:
+            self.__place_object()
+        else:
+            self._tk_object.place_forget()
+            self._tk_object.update()
 
     def _update_visibility(self) -> None:
         if self.abs_visibility:
             self.__place_object()
         else:
             self._tk_object.place_forget()
-
+            self._tk_object.update()
     # endregion
     # endregion

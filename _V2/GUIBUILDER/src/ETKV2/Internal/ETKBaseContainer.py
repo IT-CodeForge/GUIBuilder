@@ -286,6 +286,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         self.__background.pos = self.abs_pos
 
     def _update_visibility(self) -> None:
+        self._update_all_element_pos()
         for e in self._element_rel_pos.keys():
             e._update_visibility()
         self.__background.visibility = self.abs_visibility

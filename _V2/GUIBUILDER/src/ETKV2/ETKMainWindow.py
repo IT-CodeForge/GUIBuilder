@@ -39,10 +39,9 @@ class ETKMainWindow(ETKBaseTkObject):
         self._tk_object.bind(
             "<Configure>", self.__resize_event_handler)  # type:ignore
 
-        self._tk_object.after(0, self._handle_event, ETKWindowEvents.START)
+        self._tk_object.after(0, self._add_elements)
+        self._tk_object.after(1, self._handle_event, ETKWindowEvents.START)
         self._on_init()
-
-        self._add_elements()
 
     # region Properties
 
