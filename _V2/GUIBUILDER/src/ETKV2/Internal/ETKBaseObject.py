@@ -98,17 +98,18 @@ class ETKBaseObject:
                 c((self, event, *event_data))
                 continue
             except TypeError as ex:
-                if str(ex).find("takes 1 positional argument") == 0:
+                if str(ex).find("positional argument") == -1:
                     raise ex
             try:
                 c()
             except TypeError as ex:
-                if str(ex).find("positional argument") == 0:
+                if str(ex).find("positional argument") == -1:
                     raise ex
                 ret_val = c.__code__.co_varnames
                 name = c.__name__  # type:ignore
                 raise TypeError(
                     f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
+                
 
     # endregion
     # endregion
