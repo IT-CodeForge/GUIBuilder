@@ -1,7 +1,7 @@
 """Diese Datei hat alle vom Endnutzer benötigten Module von ETK importiert. Der Endnutzer kann diese von dieser Datei einzeln oder mit * alle existierenden importieren."""
 
 
-from ETKV2.Internal.ETKBaseObject import ETKBaseEvents, ETKBaseObject
+from ETKV2.Internal.ETKBaseObject import ETKBaseEvents, ETKEvents, ETKBaseObject
 from ETKV2.Internal.ETKBaseWidget import ETKBaseWidget
 from ETKV2.Internal.ETKBaseTkObject import ETKBaseTkObject
 from ETKV2.Internal.ETKBaseTkWidget import ETKBaseTkWidget, ETKBaseWidget
@@ -66,3 +66,4 @@ if __name__ == "__main__":
     ETKBaseWidgetDisableable.abs_enabled
     ETKBaseTkWidgetDisableable.abs_enabled
     ETKBaseTkWidgetText.abs_enabled
+    ETKEvents.mro
