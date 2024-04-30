@@ -4,9 +4,10 @@ from typing import Any, Type, Optional
 class IBaseObject:
     ATTRIBUTES: dict[str, Type[Any]] = {"id": int, "name": Optional[str], "size": tuple[int, int]}
 
-    def __init__(self, id: int, name: Optional[str], size: tuple[int, int]) -> None:
-        if name == None:
-            name = f"{id}_button"
+    def __init__(self, id: int, name: str, size: tuple[int, int]) -> None:
+        if IBaseObject in getattr(self, "_initialized", []):
+            return
+        self._initialized: list[Type[IBaseObject]] = [IBaseObject]
         self.__id: int = id
         self.name: str = name
         self.size: tuple[int, int] = size
@@ -22,6 +23,12 @@ class IBaseObject:
             ad.update({a: getattr(self, a)})
         return ad
 
+    def load_attributes_from_dict(self, attr: dict[str, Any]):
+        for an, av in attr.items():
+            if an == "id":
+                continue
+            setattr(self, an, av)
+
     def __str__(self) -> str:
         ad = self.get_attributes_as_dict().items()
         s = [f"{a}: {repr(v)}" for a, v in ad]
@@ -30,5 +37,5 @@ class IBaseObject:
 
     def __repr__(self) -> str:
         st = self.__str__()
-        st = st[:st.find("<") + 1] + f"self: {super().__repr__()}; " + st[st.find("<") + 1:]
+        st = st[:st.find("<") + 1] + f"self: {object.__repr__(self)}; " + st[st.find("<") + 1:]
         return st

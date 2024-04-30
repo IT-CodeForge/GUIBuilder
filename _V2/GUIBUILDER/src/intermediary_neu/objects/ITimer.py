@@ -7,6 +7,8 @@ class ITimer(IBaseObjectWidget):
     ATTRIBUTES.update({"interval": int, "enabled": bool})
 
     def __init__(self, id: int, name: Optional[str] = None, pos: tuple[int, int] = (0, 0), size: tuple[int, int] = (50, 18), interval: int = 1000, enabled: bool = True) -> None:
-        super().__init__(id, name, pos, size)
+        if name == None:
+            name = f"{id}_timer"
+        IBaseObjectWidget.__init__(self, id, name, pos, size)
         self.interval: int = interval
         self.enabled: bool = enabled

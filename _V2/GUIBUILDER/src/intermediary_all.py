@@ -1,6 +1,6 @@
 from intermediary_neu.Intermediary import Intermediary
 from intermediary_neu.objects.IBaseObject import IBaseObject
-from intermediary_neu.objects.IBaseObjectWidget import IBaseObject
+from intermediary_neu.objects.IBaseObjectWidget import IBaseObjectWidget
 from intermediary_neu.objects.IBaseObjectWidgetText import IBaseObjectWidgetText
 from intermediary_neu.objects.IBaseObjectWidgetVisible import IBaseObjectWidgetVisible
 from intermediary_neu.objects.IBaseObjectWidgetVisibleEVChanged import IBaseObjectWidgetVisibleEVChanged
@@ -23,6 +23,7 @@ if __name__ == "__main__":
     ILabel.id
     ITimer.id
     IWindow.id
+    IBaseObjectWidget.ATTRIBUTES
     IBaseObjectWidgetText.ATTRIBUTES
     IBaseObjectWidgetVisible.ATTRIBUTES
     IBaseObjectWidgetVisibleEVChanged.ATTRIBUTES
