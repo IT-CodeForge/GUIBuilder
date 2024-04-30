@@ -1,5 +1,9 @@
-from intermediary_neu.intermediary import Intermediary
+from intermediary_neu.Intermediary import Intermediary
 from intermediary_neu.objects.IBaseObject import IBaseObject
+from intermediary_neu.objects.IBaseObjectWidget import IBaseObject
+from intermediary_neu.objects.IBaseObjectWidgetText import IBaseObjectWidgetText
+from intermediary_neu.objects.IBaseObjectWidgetVisible import IBaseObjectWidgetVisible
+from intermediary_neu.objects.IBaseObjectWidgetVisibleEVChanged import IBaseObjectWidgetVisibleEVChanged
 from intermediary_neu.objects.IButton import IButton
 from intermediary_neu.objects.ICanvas import ICanvas
 from intermediary_neu.objects.ICheckbox import ICheckbox
@@ -19,3 +23,6 @@ if __name__ == "__main__":
     ILabel.id
     ITimer.id
     IWindow.id
+    IBaseObjectWidgetText.ATTRIBUTES
+    IBaseObjectWidgetVisible.ATTRIBUTES
+    IBaseObjectWidgetVisibleEVChanged.ATTRIBUTES

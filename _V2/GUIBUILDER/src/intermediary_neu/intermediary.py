@@ -1,7 +1,8 @@
 from typing import Any, Type
 from .objects.IBaseObject import IBaseObject
 
-#TODO: save, load
+# TODO: save, load
+
 
 class Intermediary:
     def __init__(self) -> None:
@@ -14,10 +15,10 @@ class Intermediary:
         return tuple(self.__objects.values())
 
     def create_object(self, type: Type[IBaseObject], *args: tuple[Any], **kwargs: dict[str, Any]) -> Any:
-        object = type(self.__next_id, *args, **kwargs)
+        object = type(self.__next_id, *args, **kwargs)  # type:ignore
         self.__next_id += 1
         self.__objects.update({object.id: object})
         return object
 
-    def delete_object(self, *, object: IBaseObject) -> None:
-            self.__objects.pop(object.id)
+    def delete_object(self, object: IBaseObject) -> None:
+        self.__objects.pop(object.id)
