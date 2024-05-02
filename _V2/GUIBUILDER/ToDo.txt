@@ -1,2 +1,0 @@
-UML-Diagramm
-auto-py-to-exe

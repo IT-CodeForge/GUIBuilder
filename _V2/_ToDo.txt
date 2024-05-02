@@ -1,5 +1,8 @@
 ToDo:
 
+UML-Diagramm
+auto-py-to-exe
+
 GUI:
   - element resizer
   - Farbselektor
