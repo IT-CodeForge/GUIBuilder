@@ -300,7 +300,7 @@ class Steuerung:
         root.withdraw()
         root.wm_attributes('-topmost', 1)  # type:ignore
         t_initialdir_path = self.__save_path
-        file: str = fd.asksaveasfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path, defaultextension=".json")
+        file: str = fd.asksaveasfilename(filetypes=[("JSON", ".json")], initialdir=t_initialdir_path, initialfile="GUI", defaultextension=".json")
         if file != "":
             self.__save_path = path.split(file)[0]
         return file  # type:ignore
