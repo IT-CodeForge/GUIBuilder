@@ -1,7 +1,9 @@
 ToDo:
 
-UML-Diagramm
+disable language based features
+implement generators
 auto-py-to-exe
+UML-Diagramm
 
 GUI:
   - element resizer
