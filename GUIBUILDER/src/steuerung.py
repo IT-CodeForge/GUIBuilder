@@ -1,4 +1,5 @@
-from os import path
+from os import environ, path
+from sys import executable
 from tkinter import Tk, filedialog as fd
 from typing import Any
 from intermediary_all import *
@@ -8,7 +9,14 @@ from ETK import *
 class Steuerung:
     def __init__(self) -> None:
         self.__objects: dict[ETKBaseObject, IBaseObject] = {}
-        self.__save_path: str = f"{path.split(__file__)[0]}"  # TODO: check if .exe
+
+        # Prüft ob es in VS-Code oder als Binary vorliegt.
+        if environ.get("DEV") != None:
+            self.__file = path.abspath(__file__)
+        else:
+            self.__file = path.abspath(executable)
+        self.__save_path: str = f"{path.split(self.__file)[0]}"
+
         self.__intermediary = Intermediary()
         self.__gui = GUI(self)
 

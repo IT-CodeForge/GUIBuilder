@@ -2,7 +2,6 @@ ToDo:
 
 disable language based features
 implement generators
-auto-py-to-exe
 UML-Diagramm
 
 GUI:
