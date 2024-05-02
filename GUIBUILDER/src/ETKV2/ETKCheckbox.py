@@ -5,24 +5,26 @@ from .Internal.ETKBaseObject import ETKEvents
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .Internal.ETKBaseTkWidgetText import ETKBaseTkWidgetText
 from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
-from tkinter import Checkbutton, IntVar, Event, Tk, EventType
+from tkinter import Checkbutton, IntVar, Tk
 
 
 class ETKCheckboxEvents(ETKEvents):
-    CHECKED = ("<ButtonPress>", auto())
-    UNCHECKED = ("<ButtonPress>", auto())
-    TOGGLED = ("<ButtonPress>", auto())
+    CHECKED = ("<Custom>", auto())
+    UNCHECKED = ("<Custom>", auto())
+    TOGGLED = ("<Custom>", auto())
 
 
 class ETKCheckbox(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
     def __init__(self, tk: Tk, text: str = "", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(70, 18), state: bool = False, background_color: int = 0xEEEEEE, text_color: int = 0x0) -> None:
         self.__state = IntVar()
+        self.__ignore_next_change_event: bool = False
         self._tk_object: Checkbutton = Checkbutton(  # type:ignore
             tk, variable=self.__state)
         ETKBaseTkWidgetDisableable.__init__(self, pos, size, background_color)
         ETKBaseTkWidgetText.__init__(
             self, text, pos, size, background_color, text_color)
         self._event_lib.update({e: [] for e in ETKCheckboxEvents})
+        self.__state.trace_add("write", self.__checkbox_event_handler)
         self.state = state
 
     # region Properties
@@ -33,25 +35,20 @@ class ETKCheckbox(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
 
     @state.setter
     def state(self, value: bool) -> None:
+        self.__ignore_next_change_event = True
         self.__state.set(value)
 
     # endregion
     # region Methods
-
-    def _handle_tk_event(self, event: Event) -> None:  # type:ignore
-        match event.type:
-            case EventType.ButtonPress:
-                if self.enabled:
-                    self._handle_event(
-                        ETKCheckboxEvents.TOGGLED, [event])  # type:ignore
-                    if self.state:
-                        self._handle_event(
-                            ETKCheckboxEvents.CHECKED, [event])  # type:ignore
-                    else:
-                        self._handle_event(
-                            ETKCheckboxEvents.UNCHECKED, [event])  # type:ignore
-            case _:
-                pass
-        ETKBaseTkWidgetText._handle_tk_event(self, event)  # type:ignore
+        
+    def __checkbox_event_handler(self, *args: str) -> None:
+        if self.__ignore_next_change_event:
+            self.__ignore_next_change_event = False
+            return
+        self._handle_event(ETKCheckboxEvents.TOGGLED)
+        if self.state:
+            self._handle_event(ETKCheckboxEvents.CHECKED)
+        else:
+            self._handle_event(ETKCheckboxEvents.UNCHECKED)
 
     # endregion

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from enum import Enum, auto
+import traceback
 from typing import Any, Callable, Optional
 
 from ..vector2d import vector2d
@@ -93,11 +94,13 @@ class ETKBaseObject:
     def _handle_event(self, event: ETKEvents, event_data: Optional[list[Any]] = None) -> None:
         if event_data == None:
             event_data = []
+        err_1 = ""
         for c in self._event_lib[event]:
             try:
                 c((self, event, *event_data))
                 continue
             except TypeError as ex:
+                err_1 = traceback.format_exc()
                 if str(ex).find("positional argument") == -1:
                     raise ex
             try:
@@ -107,6 +110,8 @@ class ETKBaseObject:
                     raise ex
                 ret_val = c.__code__.co_varnames
                 name = c.__name__  # type:ignore
+                print(err_1)
+                print(traceback.format_exc())
                 raise TypeError(
                     f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
                 
