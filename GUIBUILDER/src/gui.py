@@ -25,6 +25,7 @@ class GUI(ETKMainWindow):
         self.add_event(ETKBaseEvents.MOUSE_MOVED, self.__mouse_moved_event_handler)
         self.__moving_element: Optional[ETKBaseObject] = None
         self.active_attributes_element: Optional[ETKBaseObject] = None
+        self.last_active_attributes_element: Optional[ETKBaseObject] = None
 
         self.main = ETKListingContainer(self._tk_object, size=ETKContainerSize.from_vector2d(
             self.size), offset=0)

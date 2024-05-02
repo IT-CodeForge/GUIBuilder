@@ -225,10 +225,10 @@ class Steuerung:
         setattr(object, attr_name, value)
 
     def set_element_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:        
-        if self.__gui.active_attributes_element == None:
+        if self.__gui.last_active_attributes_element == None:
             raise RuntimeError
         
-        object = self.__objects[self.__gui.active_attributes_element]
+        object = self.__objects[self.__gui.last_active_attributes_element]
         self.__set_attribute_event(caller, object, self.__EL_GUI_TO_GEN_ATTR)
         
         if isinstance(object, IBaseObjectWidget):
@@ -278,6 +278,7 @@ class Steuerung:
         if self.__gui.active_attributes_element == element:
             return
         self.__gui.active_attributes_element = element
+        self.__gui.last_active_attributes_element = element
 
         self.__load_element_attributes_in_editor(element)
 

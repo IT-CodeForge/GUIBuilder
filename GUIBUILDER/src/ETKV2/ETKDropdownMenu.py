@@ -1,4 +1,4 @@
-from ETKV2.vector2d import vector2d
+from .vector2d import vector2d
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .Internal.ETKBaseObject import ETKEvents
 from enum import auto

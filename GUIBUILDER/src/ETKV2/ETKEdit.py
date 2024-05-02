@@ -14,7 +14,7 @@ class ETKEditEvents(ETKEvents):
 
 
 class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
-    def __init__(self, tk: Tk, text: str = "", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0) -> None:
+    def __init__(self, tk: Tk, text: str = "Edit", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0) -> None:
         self.__old_text: str = ""
         self.__delay_cycles: int = -1
         ETKLabel.__init__(self, tk, text, pos, size,

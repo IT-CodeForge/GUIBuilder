@@ -5,7 +5,7 @@ from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKLabel(ETKBaseTkWidgetText):
-    def __init__(self, tk: Tk, text: str = "", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0) -> None:
+    def __init__(self, tk: Tk, text: str = "Label", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0) -> None:
         self._tk_object: Text = Text(tk)  # type:ignore
         ETKBaseTkWidgetText.__init__(
             self, text, pos, size, background_color, text_color)

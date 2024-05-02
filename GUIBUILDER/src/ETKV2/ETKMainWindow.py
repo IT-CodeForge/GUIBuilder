@@ -21,7 +21,7 @@ class ETKWindowEvents(ETKEvents):
 
 
 class ETKMainWindow(ETKBaseTkObject):
-    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Tk", fullscreen: bool = True, background_color: int = 0xAAAAAA) -> None:
+    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, background_color: int = 0xAAAAAA) -> None:
         self._tk_object: Tk = Tk()
         self.caption = caption
         self.__topmost = False
