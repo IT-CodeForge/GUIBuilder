@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from enum import auto
+import sys
 from tkinter import Event, Tk, EventType
 from types import NoneType
 from typing import Any, Callable, Optional
@@ -130,7 +131,7 @@ class ETKMainWindow(ETKBaseTkObject):
     def exit(self) -> None:
         self._handle_event(ETKWindowEvents.EXIT)
         if not self.exit_locked:
-            exit()
+            sys.exit()
 
     def force_focus(self) -> None:
         self._tk_object.attributes('-topmost', 1)  # type:ignore
