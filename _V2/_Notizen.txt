@@ -1,7 +1,5 @@
 ToDo:
 
-std json Dateiname: GUI.json
-
 GUI:
   - element resizer
   - Farbselektor
@@ -24,8 +22,6 @@ GUI-Elemente:
   - KeyListener
   - Slider
   - (Bild)
-
-Python Code generator
 
 logging
 
