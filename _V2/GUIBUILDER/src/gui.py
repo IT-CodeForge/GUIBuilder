@@ -61,7 +61,7 @@ class GUI(ETKMainWindow):
         self.attributes.add_element(self.attributes_window)
 
         self.element_area = ETKContainer(
-            self._tk_object, size=ETKContainerSize(500, 500), background_color=0xFFFFFF)
+            self._tk_object, size=ETKContainerSize(500, 500), outline_thickness=2)
         self.main2.add_element(self.element_area)
         self.element_area.add_event(ETKBaseEvents.MOUSE_DOWN, self.__element_area_mousedown_handler)
 
