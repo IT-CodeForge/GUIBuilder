@@ -2,8 +2,6 @@ import json
 from typing import Any, Type
 from .objects.IBaseObject import IBaseObject
 
-# TODO: save, load
-
 
 class Intermediary:
     def __init__(self) -> None:
