@@ -4,6 +4,7 @@ from typing import Any
 from intermediary_all import *
 from ETK import *
 
+
 class Steuerung:
     def __init__(self) -> None:
         self.__objects: dict[ETKBaseObject, IBaseObject] = {}
@@ -30,6 +31,7 @@ class Steuerung:
 
         self.__load_window_attributes_in_editor()
         self.__apply_window_attributes_to_gui()
+        self.change_language_event()
 
     def create_new_element_event(self, caller: ETKBaseObject) -> ETKBaseObject:
         match caller:
@@ -50,7 +52,7 @@ class Steuerung:
 
     def __create_new_element(self, type: type[IBaseObject]) -> ETKBaseObject:
         object: Any = self.__intermediary.create_object(type)
-        
+
         gui_element = self.__create_new_gui_element(type)
 
         self.__objects.update({gui_element: object})
@@ -58,7 +60,7 @@ class Steuerung:
         self.__apply_object_attributes_to_gui(object)
 
         return gui_element
-    
+
     def __create_new_gui_element(self, type: type[IBaseObject]) -> ETKBaseObject:
         match type:
             case t if t == IButton:
@@ -76,7 +78,7 @@ class Steuerung:
             gui_element.text = "Canvas"
 
         return gui_element
-    
+
     def __verify_element_pos_size(self, pos: tuple[int, int], size: tuple[int, int]) -> tuple[tuple[int, int], tuple[int, int]]:
         r_pos = list(pos)
         r_size = list(size)
@@ -89,7 +91,7 @@ class Steuerung:
             r_size[0] = 1
         if r_size[1] <= 0:
             r_size[1] = 1
-        
+
         if r_size[0] > self.__gui.element_area.size.x:
             r_size[0] = self.__gui.element_area.size.x
         if r_size[1] > self.__gui.element_area.size.y:
@@ -110,7 +112,7 @@ class Steuerung:
 
         min_x = max(space_x) if max(space_x) >= 100 else 100
         min_y = max(space_y) if max(space_y) >= 100 else 100
-        
+
         if r_size[0] < min_x:
             r_size[0] = int(min_x)
         if r_size[1] < min_y:
@@ -121,7 +123,7 @@ class Steuerung:
             r_size[1] = self.__gui.main2.size.y
 
         return r_size[0], r_size[1]
-    
+
     @staticmethod
     def __convert_to_int(st: Any, fallback: int = 0) -> int:
         try:
@@ -129,7 +131,7 @@ class Steuerung:
         except ValueError:
             ret = fallback
         return ret
-    
+
     def __get_attribute_value(self, attr_name: str, object: IBaseObject) -> str:
         try:
             if attr_name[-2:] == "_x":
@@ -164,7 +166,7 @@ class Steuerung:
 
     def __load_window_attributes_in_editor(self) -> None:
         self.__load_attributes_in_editor(self.__gui, self.__WIN_GUI_TO_GEN_ATTR)
-    
+
     def __load_element_attributes_in_editor(self, element: ETKBaseObject) -> None:
         self.__load_attributes_in_editor(element, self.__EL_GUI_TO_GEN_ATTR)
         object = self.__objects[element]
@@ -173,14 +175,14 @@ class Steuerung:
                 self.__GEN_ATTR_TO_EL_GUI_CONT[a].visibility = True
             else:
                 self.__GEN_ATTR_TO_EL_GUI_CONT[a].visibility = False
-    
+
     def __apply_window_attributes_to_gui(self) -> None:
         object = self.__objects[self.__gui]
         if type(object) != IWindow:
             raise RuntimeError
         self.__gui.element_area.size = vector2d(object.size[0], object.size[1])
         self.__gui.element_area.background_color = object.background_color[0] << 16 | object.background_color[1] << 8 | object.background_color[2]
-    
+
     def __apply_object_attributes_to_gui(self, object: IBaseObjectWidget):
         gui_element = {o: g for g, o in self.__objects.items()}[object]
         gui_element.pos = vector2d(object.pos[0], object.pos[1])
@@ -221,16 +223,16 @@ class Steuerung:
             value = (ob_data[0], ob_data[1], self.__convert_to_int(value))
         elif attr_name in ["interval"]:
             value = self.__convert_to_int(value, 100)
-        
+
         setattr(object, attr_name, value)
 
-    def set_element_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:        
+    def set_element_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:
         if self.__gui.last_active_attributes_element == None:
             raise RuntimeError
-        
+
         object = self.__objects[self.__gui.last_active_attributes_element]
         self.__set_attribute_event(caller, object, self.__EL_GUI_TO_GEN_ATTR)
-        
+
         if isinstance(object, IBaseObjectWidget):
             pos = object.pos
             size = object.size
@@ -241,7 +243,7 @@ class Steuerung:
             self.__GEN_ATTR_TO_EL_GUI["pos_y"].text = str(pos[1])
             self.__GEN_ATTR_TO_EL_GUI["size_x"].text = str(size[0])
             self.__GEN_ATTR_TO_EL_GUI["size_y"].text = str(size[1])
-        
+
         if not isinstance(object, IBaseObjectWidget):
             raise RuntimeError
         self.__apply_object_attributes_to_gui(object)
@@ -253,8 +255,6 @@ class Steuerung:
         object.pos = (int(element.pos.x), int(element.pos.y))
         self.__GEN_ATTR_TO_EL_GUI["pos_x"].text = str(int(element.pos.x))
         self.__GEN_ATTR_TO_EL_GUI["pos_y"].text = str(int(element.pos.y))
-        
-        
 
     def set_window_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:
         object = self.__objects[self.__gui]
@@ -284,6 +284,25 @@ class Steuerung:
 
         if not self.__gui.attributes_element_inner.visibility:
             self.__gui.attributes_element_inner.visibility = True
+
+    def change_language_event(self):
+        match self.__gui.language_selector.selected:
+            case "Python (ETK)":
+                pass  # TODO
+            case "C++ (TGW)":
+                self.__gui.attributes_window_title_color_container.enabled = False
+                self.__gui.attributes_window_title_color_const.background_color = 0xFF0000
+                self.__gui.attributes_window_background_color_container.enabled = False
+                self.__gui.attributes_window_background_color_const.background_color = 0xFF0000
+
+                self.__gui.attributes_element_text_color_container.enabled = False
+                self.__gui.attributes_element_text_color_const.background_color = 0xFF0000
+                self.__gui.attributes_element_background_color_container.enabled = False
+                self.__gui.attributes_element_background_color_const.background_color = 0xFF0000
+                self.__gui.attributes_element_event_hovered_container.enabled = False
+                self.__gui.attributes_element_event_hovered_const.background_color = 0xFF0000
+            case _:
+                raise ValueError
 
     def __get_load_file_path(self) -> str:
         root = Tk()
@@ -326,13 +345,13 @@ class Steuerung:
         path = self.__get_load_file_path()
         if path == "":
             return
-        
+
         for e in self.__objects.keys():
             if e == self.__gui:
                 continue
             e.visibility = False  # NOTE
         self.__objects = {}
-        
+
         self.__intermediary = Intermediary()
         self.__intermediary.load_from_file(path)
 
@@ -341,7 +360,6 @@ class Steuerung:
                 self.__objects.update({self.__gui: e})
                 continue
             self.__objects.update({self.__create_new_gui_element(type(e)): e})
-            
 
         self.__load_window_attributes_in_editor()
         self.__apply_window_attributes_to_gui()
@@ -353,6 +371,18 @@ class Steuerung:
                 raise RuntimeError
             self.__load_element_attributes_in_editor(e)
             self.__apply_object_attributes_to_gui(o)
+
+    def export(self) -> None:
+        path = self.__get_dir_path()
+        if path == "":
+            return
+        match self.__gui.language_selector.selected:
+            case "Python (ETK)":
+                pass  # TODO
+            case "C++ (TGW)":
+                pass  # TODO
+            case _:
+                raise ValueError
 
     def run(self) -> None:
         self.__gui.run()

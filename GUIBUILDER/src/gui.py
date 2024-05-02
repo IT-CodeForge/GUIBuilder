@@ -34,6 +34,9 @@ class GUI(ETKMainWindow):
             self.main.size.x, self.MENUBAR_HEIGHT))
         self.main.add_element(self.menubar_outer)
 
+        self.attributes_text = ETKLabel(self._tk_object, "ROT hinterlegte Attribute sind in der\nausgewählten Sprache nicht verfügbar!", size=vector2d(500, self.ATTRIBUTES_ELEMENT_HEIGHT*2), background_color=self.menubar_outer.background_color, text_color=0xFF0000)
+        self.menubar_outer.add_element(self.attributes_text)
+
         self.menubar_inner = ETKContainer(self._tk_object, vector2d(self.ATTRIBUTES_WIDTH, 0), size=ETKContainerSize(
             self.menubar_outer.size.x - self.ATTRIBUTES_WIDTH, self.MENUBAR_HEIGHT), outline_thickness=2)
         self.menubar_outer.add_element(self.menubar_inner)
@@ -112,8 +115,9 @@ class GUI(ETKMainWindow):
         self.menubar_export = ETKButton(
             self._tk_object, "Export", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_export.add_event(
-            ETKButtonEvents.PRESSED, lambda: None)  # TODO
+            ETKButtonEvents.PRESSED, lambda: None)
         self.menubar_right.add_element(self.menubar_export)
+        self.menubar_export.add_event(ETKButtonEvents.PRESSED, self.__steuerung.export)
 
         self.menubar_save = ETKButton(
             self._tk_object, "Save", size=vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
@@ -132,6 +136,7 @@ class GUI(ETKMainWindow):
         self.language_selector = ETKDropdownMenu(
             self._tk_object, self.LANGUAGES, self.LANGUAGES[0], size=vector2d(130, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_right.add_element(self.language_selector)
+        self.language_selector.add_event(ETKDropdownMenuEvents.CHANGED, self.__steuerung.change_language_event)
 
         # endregion
         # region attributes_element Elemente
