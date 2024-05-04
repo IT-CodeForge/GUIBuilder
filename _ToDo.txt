@@ -2,7 +2,7 @@ ToDo:
 
 disable language based features
 implement generators
-UML-Diagramm
+UML-Diagramm: Generatoren, GUI: Elemente
 
 GUI:
   - element resizer
