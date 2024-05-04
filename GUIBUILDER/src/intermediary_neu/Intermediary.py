@@ -5,7 +5,7 @@ from .objects.IBaseObject import IBaseObject
 
 class Intermediary:
     def __init__(self) -> None:
-        self.__next_id = 0
+        self.__next_id: int = 0
         self.__objects: dict[int, IBaseObject] = {}
 
     @property

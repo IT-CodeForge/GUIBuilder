@@ -1,4 +1,4 @@
-from typing import Any, Final, Optional
+from typing import Any, Final, Optional, Type
 from ETK import *
 from steuerung import Steuerung
 
@@ -240,7 +240,7 @@ class GUI(ETKMainWindow):
         self.attributes_element_interval_container.add_element(self.attributes_element_interval_var)
         self.attributes_element_inner.add_element(self.attributes_element_interval_container)
         self.attributes_element_interval_var.add_event(ETKEditEvents.CHANGED_DELAYED, self.__element_attribut_changed_handler)
-        
+
         self.attributes_element_enabled_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
         self.attributes_element_enabled_const = ETKLabel(self._tk_object, "Enabled: ", size=vector2d(67, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
         self.attributes_element_enabled_container.add_element(self.attributes_element_enabled_const)
@@ -473,7 +473,7 @@ class GUI(ETKMainWindow):
         self.__start_moving_element(new_element)
         self.__steuerung.update_element_attributes_gui(new_element)
 
-    def __delete_element_event(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
+    def __delete_element_event(self) -> None:
         if self.active_attributes_element == None:
             raise RuntimeError
         self.__steuerung.delete_element(self.active_attributes_element)
@@ -483,15 +483,16 @@ class GUI(ETKMainWindow):
             self.attributes_element_inner.visibility = False
             self.active_attributes_element = None
 
-    def create_new_element(self, type: Any) -> ETKBaseTkWidgetText:
-        new_element = type(self._tk_object)
+    def create_new_element(self, type: Type[ETKBaseTkWidgetText]) -> ETKBaseTkWidgetText:
+        new_element = type(self._tk_object)  # type:ignore
         new_element.outline_color = 0x0
         new_element.outline_thickness = 2
 
-        try:
-            new_element.enabled = False
-        except AttributeError:
-            pass
+        if isinstance(new_element, ETKBaseWidgetDisableable):
+            try:
+                new_element.enabled = False
+            except AttributeError:
+                pass
 
         new_element.add_event(ETKBaseEvents.MOUSE_DOWN, self.__element_mouse_down_handler)
         self.element_area.add_element(new_element)

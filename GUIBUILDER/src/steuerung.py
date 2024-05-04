@@ -191,7 +191,7 @@ class Steuerung:
         self.__gui.element_area.size = vector2d(object.size[0], object.size[1])
         self.__gui.element_area.background_color = object.background_color[0] << 16 | object.background_color[1] << 8 | object.background_color[2]
 
-    def __apply_object_attributes_to_gui(self, object: IBaseObjectWidget):
+    def __apply_object_attributes_to_gui(self, object: IBaseObjectWidget) -> None:
         gui_element = {o: g for g, o in self.__objects.items()}[object]
         gui_element.pos = vector2d(object.pos[0], object.pos[1])
         gui_element.size = vector2d(object.size[0], object.size[1])
@@ -201,7 +201,7 @@ class Steuerung:
             gui_element.text = object.text
             gui_element.text_color = object.text_color[0] << 16 | object.text_color[1] << 8 | object.text_color[2]
 
-    def __set_attribute_event(self, caller: ETKEdit | ETKCheckbox, object: IBaseObject, translation_dict: dict[ETKEdit | ETKCheckbox, str]):
+    def __set_attribute_event(self, caller: ETKEdit | ETKCheckbox, object: IBaseObject, translation_dict: dict[ETKEdit | ETKCheckbox, str]) -> None:
         if type(caller) == ETKEdit:
             value = caller.text
         elif type(caller) == ETKCheckbox:
@@ -256,7 +256,7 @@ class Steuerung:
             raise RuntimeError
         self.__apply_object_attributes_to_gui(object)
 
-    def update_element_pos_event(self, element: ETKBaseObject):
+    def update_element_pos_event(self, element: ETKBaseObject) -> None:
         object = self.__objects[element]
         if not isinstance(object, IBaseObjectWidget):
             raise RuntimeError
@@ -276,13 +276,13 @@ class Steuerung:
 
         self.__apply_window_attributes_to_gui()
 
-    def delete_element(self, element: ETKBaseObject):
+    def delete_element(self, element: ETKBaseObject) -> None:
         self.__intermediary.delete_object(self.__objects[element])
         self.__objects.pop(element)
         element.visibility = False  # NOTE
         self.__gui.attributes_element_inner.visibility = False
 
-    def update_element_attributes_gui(self, element: ETKBaseObject):
+    def update_element_attributes_gui(self, element: ETKBaseObject) -> None:
         if self.__gui.active_attributes_element == element:
             return
         self.__gui.active_attributes_element = element
@@ -293,7 +293,7 @@ class Steuerung:
         if not self.__gui.attributes_element_inner.visibility:
             self.__gui.attributes_element_inner.visibility = True
 
-    def change_language_event(self):
+    def change_language_event(self) -> None:
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
                 pass  # TODO
