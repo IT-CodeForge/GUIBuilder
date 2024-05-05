@@ -26,8 +26,8 @@ class ETKTimer:
     # region Methods
 
     def __trigger(self) -> None:
-        self.__timer_function()
         if self.__is_running:
+            self.__timer_function()
             self.__my_Tk.after(self.interval_in_ms, self.__trigger)
 
     # endregion
