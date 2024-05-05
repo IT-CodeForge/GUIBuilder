@@ -7,8 +7,8 @@ type: IWindow:
 	background_color (list[int, int, int], std: [170, 170, 170], N/A in TGWindowLib)
 	event_create (bool, std: False)
 	event_destroy (bool, std: False)
-	event_paint (bool, std: False)
-	event_resize (bool, std: False)
+	event_paint (bool, std: False, N/A in ETK)
+	event_resize (bool, std: False, N/A in ETK)
 	event_mouse_click (bool, std: False)
 	event_mouse_move (bool, std: False)
 
@@ -21,7 +21,7 @@ type: IButton:
 	text_color (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
 	background_color (list[int, int, int], std: [238, 238, 238], N/A in TGWindowLib)
 	event_pressed (bool, std: True)
-	event_double_pressed (bool, std: False)
+	event_double_pressed (bool, std: False, N/A in ETK)
 	event_hovered (bool, std: False, N/A in TGWindowLib)
 
 type: ILabel:
@@ -54,7 +54,7 @@ type: ICheckbox:
 	size (list[int, int], std: [100, 25])
 	text_color (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
 	background_color (list[int, int, int], std: [238, 238, 238], N/A in TGWindowLib)
-	checked (bool, std: False)
+	checked (bool, std: False, N/A in ETK)
 	event_changed (bool, std: True)
 	event_hovered (bool, std: False, N/A in TGWindowLib)
 

@@ -4,7 +4,7 @@ from steuerung import Steuerung
 
 if __name__ == "__main__":
     if environ.get("DEV") == None:
-        # NOTE: Release: Disables print(), etc
+        # Release: Disables print(), etc
         sys.stdout = sys.stderr = open(devnull, 'w')
 
     print("\n"*20)

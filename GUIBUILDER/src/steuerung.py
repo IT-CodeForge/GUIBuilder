@@ -22,7 +22,7 @@ class Steuerung:
 
     def on_gui_init(self) -> None:
         # ElementAttributeGui to generic Attributename
-        self.__EL_GUI_TO_GEN_ATTR: dict[ETKEdit | ETKCheckbox, str] = {self.__gui.attributes_element_name_var: "name", self.__gui.attributes_element_text_var: "text", self.__gui.attributes_element_pos_var_x: "pos_x", self.__gui.attributes_element_pos_var_y: "pos_y", self.__gui.attributes_element_size_var_x: "size_x", self.__gui.attributes_element_size_var_y: "size_y", self.__gui.attributes_element_text_color_var_r: "text_color_r", self.__gui.attributes_element_text_color_var_g: "text_color_g", self.__gui.attributes_element_text_color_var_b: "text_color_b", self.__gui.attributes_element_background_color_var_r: "background_color_r", self.__gui.attributes_element_background_color_var_g: "background_color_g", self.__gui.attributes_element_background_color_var_b: "background_color_b", self.__gui.attributes_element_interval_var: "interval", self.__gui.attributes_element_enabled_var: "enabled", self.__gui.attributes_element_checked_var: "checked", self.__gui.attributes_element_event_pressed_var: "event_pressed", self.__gui.attributes_element_event_double_pressed_var: "event_double_pressed", self.__gui.attributes_element_event_changed_var: "event_changed", self.__gui.attributes_element_event_hovered_var: "event_hovered"}
+        self.__EL_GUI_TO_GEN_ATTR: dict[ETKEdit | ETKCheckbox, str] = {self.__gui.attributes_element_name_var: "name", self.__gui.attributes_element_text_var: "text", self.__gui.attributes_element_pos_var_x: "pos_x", self.__gui.attributes_element_pos_var_y: "pos_y", self.__gui.attributes_element_size_var_x: "size_x", self.__gui.attributes_element_size_var_y: "size_y", self.__gui.attributes_element_text_color_var_r: "text_color_r", self.__gui.attributes_element_text_color_var_g: "text_color_g", self.__gui.attributes_element_text_color_var_b: "text_color_b", self.__gui.attributes_element_background_color_var_r: "background_color_r", self.__gui.attributes_element_background_color_var_g: "background_color_g", self.__gui.attributes_element_background_color_var_b: "background_color_b", self.__gui.attributes_element_interval_var: "interval", self.__gui.attributes_element_enabled_var: "enabled", self.__gui.attributes_element_checked_var: "checked", self.__gui.attributes_element_multiple_lines_var: "multiple_lines", self.__gui.attributes_element_event_pressed_var: "event_pressed", self.__gui.attributes_element_event_double_pressed_var: "event_double_pressed", self.__gui.attributes_element_event_changed_var: "event_changed", self.__gui.attributes_element_event_hovered_var: "event_hovered"}
         self.__GEN_ATTR_TO_EL_GUI: dict[str, ETKEdit | ETKCheckbox] = {v: k for k, v in self.__EL_GUI_TO_GEN_ATTR.items()}
 
         # WindowAttributeGui to generic Attributename
@@ -30,7 +30,7 @@ class Steuerung:
         self.__GEN_ATTR_TO_WIN_GUI: dict[str, ETKEdit | ETKCheckbox] = {v: k for k, v in self.__WIN_GUI_TO_GEN_ATTR.items()}
 
         # generic Attributename to ElementAttributeGuiContainer
-        self.__GEN_ATTR_TO_EL_GUI_CONT: dict[str, ETKListingContainer] = {"name": self.__gui.attributes_element_name_container, "text": self.__gui.attributes_element_text_container, "pos": self.__gui.attributes_element_pos_container, "size": self.__gui.attributes_element_size_container, "text_color": self.__gui.attributes_element_text_color_container, "background_color": self.__gui.attributes_element_background_color_container, "interval": self.__gui.attributes_element_interval_container, "enabled": self.__gui.attributes_element_enabled_container, "checked": self.__gui.attributes_element_checked_container, "event_pressed": self.__gui.attributes_element_event_pressed_container, "event_double_pressed": self.__gui.attributes_element_event_double_pressed_container, "event_changed": self.__gui.attributes_element_event_changed_container, "event_hovered": self.__gui.attributes_element_event_hovered_container}
+        self.__GEN_ATTR_TO_EL_GUI_CONT: dict[str, ETKListingContainer] = {"name": self.__gui.attributes_element_name_container, "text": self.__gui.attributes_element_text_container, "pos": self.__gui.attributes_element_pos_container, "size": self.__gui.attributes_element_size_container, "text_color": self.__gui.attributes_element_text_color_container, "background_color": self.__gui.attributes_element_background_color_container, "interval": self.__gui.attributes_element_interval_container, "enabled": self.__gui.attributes_element_enabled_container, "checked": self.__gui.attributes_element_checked_container, "multiple_lines": self.__gui.attributes_element_multiple_lines_container, "event_pressed": self.__gui.attributes_element_event_pressed_container, "event_double_pressed": self.__gui.attributes_element_event_double_pressed_container, "event_changed": self.__gui.attributes_element_event_changed_container, "event_hovered": self.__gui.attributes_element_event_hovered_container}
 
         # create window object
         object: IWindow = self.__intermediary.create_object(IWindow)
@@ -178,7 +178,7 @@ class Steuerung:
     def __load_element_attributes_in_editor(self, element: ETKBaseObject) -> None:
         self.__load_attributes_in_editor(element, self.__EL_GUI_TO_GEN_ATTR)
         object = self.__objects[element]
-        for a in ["text", "text_color", "background_color", "interval", "enabled", "checked", "event_pressed", "event_double_pressed", "event_changed", "event_hovered"]:
+        for a in ["text", "text_color", "background_color", "interval", "enabled", "checked", "multiple_lines", "event_pressed", "event_double_pressed", "event_changed", "event_hovered"]:
             if hasattr(object, a):
                 self.__GEN_ATTR_TO_EL_GUI_CONT[a].visibility = True
             else:
@@ -279,7 +279,7 @@ class Steuerung:
     def delete_element(self, element: ETKBaseObject) -> None:
         self.__intermediary.delete_object(self.__objects[element])
         self.__objects.pop(element)
-        element.visibility = False  # NOTE
+        element.visibility = False  # NOTE: delete Element
         self.__gui.attributes_element_inner.visibility = False
 
     def update_element_attributes_gui(self, element: ETKBaseObject) -> None:
@@ -294,20 +294,36 @@ class Steuerung:
             self.__gui.attributes_element_inner.visibility = True
 
     def change_language_event(self) -> None:
+        self.__gui.attributes_element_multiple_lines_const.background_color = 0xAAAAAA
+
+        self.__gui.attributes_window_title_color_const.background_color = 0xAAAAAA
+        self.__gui.attributes_window_background_color_const.background_color = 0xAAAAAA
+
+        self.__gui.attributes_element_text_color_const.background_color = 0xAAAAAA
+        self.__gui.attributes_element_background_color_const.background_color = 0xAAAAAA
+        self.__gui.attributes_element_event_hovered_const.background_color = 0xAAAAAA
+
+        self.__gui.attributes_element_event_double_pressed_const.background_color = 0xAAAAAA
+
+        self.__gui.attributes_window_event_paint_const.background_color = 0xAAAAAA
+
+        self.__gui.attributes_window_event_resize_const.background_color = 0xAAAAAA
+
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
-                pass  # TODO
+                self.__gui.attributes_element_multiple_lines_const.background_color = 0xFF0000
+
+                self.__gui.attributes_element_event_double_pressed_const.background_color = 0xFF0000
+
+                self.__gui.attributes_window_event_paint_const.background_color = 0xFF0000
+
+                self.__gui.attributes_window_event_resize_const.background_color = 0xFF0000
             case "C++ (TGW)":
-                self.__gui.attributes_window_title_color_container.enabled = False
                 self.__gui.attributes_window_title_color_const.background_color = 0xFF0000
-                self.__gui.attributes_window_background_color_container.enabled = False
                 self.__gui.attributes_window_background_color_const.background_color = 0xFF0000
 
-                self.__gui.attributes_element_text_color_container.enabled = False
                 self.__gui.attributes_element_text_color_const.background_color = 0xFF0000
-                self.__gui.attributes_element_background_color_container.enabled = False
                 self.__gui.attributes_element_background_color_const.background_color = 0xFF0000
-                self.__gui.attributes_element_event_hovered_container.enabled = False
                 self.__gui.attributes_element_event_hovered_const.background_color = 0xFF0000
             case _:
                 raise ValueError
@@ -357,7 +373,7 @@ class Steuerung:
         for e in self.__objects.keys():
             if e == self.__gui:
                 continue
-            e.visibility = False  # NOTE
+            e.visibility = False  # NOTE: delete Element
         self.__objects = {}
 
         self.__intermediary = Intermediary()

@@ -2,8 +2,6 @@ from typing import Any, Final, Optional, Type
 from ETK import *
 from steuerung import Steuerung
 
-# TODO: disable non implmented features
-
 
 class GUI(ETKMainWindow):
     def __init__(self, steuerung: Steuerung) -> None:
@@ -256,6 +254,14 @@ class GUI(ETKMainWindow):
         self.attributes_element_checked_container.add_element(self.attributes_element_checked_var)
         self.attributes_element_inner.add_element(self.attributes_element_checked_container)
         self.attributes_element_checked_var.add_event(ETKCheckboxEvents.TOGGLED, self.__element_attribut_changed_handler)
+
+        self.attributes_element_multiple_lines_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 0, True, True), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
+        self.attributes_element_multiple_lines_const = ETKLabel(self._tk_object, "Multiline: ", size=vector2d(83, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
+        self.attributes_element_multiple_lines_container.add_element(self.attributes_element_multiple_lines_const)
+        self.attributes_element_multiple_lines_var = ETKCheckbox(self._tk_object, "", size=vector2d(17, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
+        self.attributes_element_multiple_lines_container.add_element(self.attributes_element_multiple_lines_var)
+        self.attributes_element_inner.add_element(self.attributes_element_multiple_lines_container)
+        self.attributes_element_multiple_lines_var.add_event(ETKCheckboxEvents.TOGGLED, self.__element_attribut_changed_handler)
 
         self.attributes_element_spacing_container = ETKListingContainer(self._tk_object, size=ETKContainerSize(0, 30, True, False), listing_type=ETKListingTypes.LEFT_TO_RIGHT, offset=3)
         self.attributes_element_inner.add_element(self.attributes_element_spacing_container)
