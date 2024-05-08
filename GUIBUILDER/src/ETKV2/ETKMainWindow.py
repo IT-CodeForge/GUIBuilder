@@ -22,17 +22,18 @@ class ETKWindowEvents(ETKEvents):
 
 
 class ETKMainWindow(ETKBaseTkObject):
-    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, background_color: int = 0xAAAAAA) -> None:
+    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
         self._tk_object: Tk = Tk()
-        self.caption = caption
         self.__topmost = False
         self.exit_locked = False
         self.__fullscreen = False
         self.canvas = ETKCanvas(self._tk_object, vector2d(), vector2d())
+
+        super().__init__(pos=pos, size=vector2d(1920, 1080), background_color=background_color, **kwargs)
+
         self.canvas.outline_color = 0x0
         self.canvas.outline_thickness = 2
-        ETKBaseTkObject.__init__(
-            self, pos, vector2d(1920, 1080), background_color)
+        self.caption = caption
         self.fullscreen = fullscreen
         self.size = size
         self._tk_object.protocol("WM_DELETE_WINDOW", self.exit)
@@ -50,7 +51,7 @@ class ETKMainWindow(ETKBaseTkObject):
     def pos(self, value: vector2d) -> None:
         ETKBaseTkObject.pos.fset(self, value)  # type:ignore
         self.__place_object()
-    
+
     @property
     def abs_pos(self) -> vector2d:
         """READ-ONLY"""
@@ -169,6 +170,6 @@ class ETKMainWindow(ETKBaseTkObject):
                 return
             case _:
                 pass
-        ETKBaseTkObject._handle_tk_event(self, event)  # type:ignore
+        super()._handle_tk_event(event)  # type:ignore
 
     # endregion

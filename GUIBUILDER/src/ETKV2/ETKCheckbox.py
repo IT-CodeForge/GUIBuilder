@@ -1,4 +1,5 @@
 from enum import auto
+from typing import Any
 
 from .Internal.ETKUtils import gen_col_from_int
 
@@ -17,14 +18,12 @@ class ETKCheckboxEvents(ETKEvents):
 
 
 class ETKCheckbox(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
-    def __init__(self, tk: Tk, text: str = "Checkbox", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(70, 18), state: bool = False, background_color: int = 0xEEEEEE, text_color: int = 0x0) -> None:
+    def __init__(self, tk: Tk, text: str = "Checkbox", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(70, 18), state: bool = False, background_color: int = 0xEEEEEE, text_color: int = 0x0, **kwargs: Any) -> None:
         self.__state = IntVar()
         self.__ignore_next_change_event: bool = False
         self._tk_object: Checkbutton = Checkbutton(  # type:ignore
             tk, variable=self.__state)
-        ETKBaseTkWidgetDisableable.__init__(self, pos, size, background_color)
-        ETKBaseTkWidgetText.__init__(
-            self, text, pos, size, background_color, text_color)
+        super().__init__(text=text, pos=pos, size=size, background_color=background_color, text_color=text_color, **kwargs)
         self._event_lib.update({e: [] for e in ETKCheckboxEvents})
         self.__state.trace_add("write", self.__checkbox_event_handler)
         self.state = state

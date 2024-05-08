@@ -1,4 +1,5 @@
 from tkinter import Widget as tk_widget
+from typing import Any
 
 from .ETKUtils import gen_col_from_int
 
@@ -6,12 +7,14 @@ from ..vector2d import vector2d
 from .ETKBaseWidget import ETKBaseWidget
 from .ETKBaseTkObject import ETKBaseTkObject
 
+
 class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
-    def __init__(self, pos: vector2d, size: vector2d, background_color: int) -> None:
+    def __init__(self, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
         self._tk_object: tk_widget
-        ETKBaseWidget.__init__(self, pos, size, background_color)
-        ETKBaseTkObject.__init__(self, pos, size, background_color)
+
+        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+
         self.__place_object()
 
     # region Properties

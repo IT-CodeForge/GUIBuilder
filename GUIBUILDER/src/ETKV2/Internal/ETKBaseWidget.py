@@ -1,15 +1,16 @@
 from __future__ import annotations
 from abc import abstractmethod
-from typing import Optional
+from typing import Any, Optional
 from ..vector2d import vector2d
 from .ETKBaseObject import ETKBaseObject
 
 
 class ETKBaseWidget(ETKBaseObject):
-    def __init__(self, pos: vector2d, size: vector2d, background_color: int) -> None:
+    def __init__(self, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
         self._parent: Optional[ETKBaseWidget] = None
         self._enabled: bool = True
-        ETKBaseObject.__init__(self, pos, size, background_color)
+
+        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
 
     # region Properties
 
@@ -45,7 +46,7 @@ class ETKBaseWidget(ETKBaseObject):
 
     @ETKBaseObject.visibility.setter
     def visibility(self, value: bool) -> None:
-        ETKBaseObject.visibility.fset(self, value) #type:ignore
+        ETKBaseObject.visibility.fset(self, value)  # type:ignore
         self._update_visibility()
         if self._parent != None:
             self._parent._validate_visibility(self)

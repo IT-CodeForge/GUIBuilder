@@ -1,5 +1,6 @@
 from enum import Enum, auto
 from tkinter import Tk
+from typing import Any
 
 from .Internal.ETKBaseObject import ETKBaseObject
 from .Internal.ETKBaseContainer import ETKAlignments
@@ -21,12 +22,12 @@ class ETKListingTypes(Enum):
 
 
 class ETKListingContainer(ETKBaseContainer):
-    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), alignment: ETKAlignments = ETKAlignments.TOP_LEFT, listing_type: ETKListingTypes = ETKListingTypes.TOP_TO_BOTTOM, offset: int = 10, background_color: int = 0xAAAAAA, outline_thickness: int = 0, outline_color: int = 0x0) -> None:
+    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), alignment: ETKAlignments = ETKAlignments.TOP_LEFT, listing_type: ETKListingTypes = ETKListingTypes.TOP_TO_BOTTOM, offset: int = 10, background_color: int = 0xAAAAAA, outline_thickness: int = 0, outline_color: int = 0x0, **kwargs: Any) -> None:
         self.__alignment = alignment
         self.__listing_type = listing_type
         self.__offset = offset
-        ETKBaseContainer.__init__(
-            self, tk, pos, size, background_color, outline_thickness, outline_color)
+
+        super().__init__(tk=tk, pos=pos, size=size, background_color=background_color, outline_thickness=outline_thickness, outline_color=outline_color, **kwargs)
 
     # region Properties
 
@@ -90,7 +91,7 @@ class ETKListingContainer(ETKBaseContainer):
             pos[listing_dir_index] = listing_dir_pos
             pos[non_listing_dir_index] = non_listing_dir_pos
             self._element_rel_pos[e] = pos
-            ETKBaseObject.pos.fset(e, pos) #type:ignore
+            ETKBaseObject.pos.fset(e, pos)  # type:ignore
             e._update_pos()
             listing_dir_pos += e.size[listing_dir_index] + self.__offset
 

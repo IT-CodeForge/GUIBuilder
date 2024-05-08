@@ -8,11 +8,13 @@ from .ETKBaseObject import ETKBaseObject, ETKEvents, ETKBaseEvents
 
 
 class ETKBaseTkObject(ETKBaseObject):
-    def __init__(self, pos: vector2d, size: vector2d, background_color: int) -> None:
-        ETKBaseObject.__init__(self, pos, size, background_color)
+    def __init__(self, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
         self._tk_object: Any
-        self._tk_object.configure(borderwidth=0)
         self._outline_color: str = ""
+
+        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+
+        self._tk_object.configure(borderwidth=0)
 
     # region Properties
 
@@ -30,10 +32,10 @@ class ETKBaseTkObject(ETKBaseObject):
             if len(self._event_lib[event_type]) == 0:
                 self._tk_object.bind(
                     event_type.value[0], self._handle_tk_event)  # type:ignore
-        ETKBaseObject.add_event(self, event_type, eventhandler)
+        super().add_event(event_type, eventhandler)
 
     def remove_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
-        ETKBaseObject.remove_event(self, event_type, eventhandler)
+        super().remove_event(event_type, eventhandler)
         if event_type.value[0] != "<Custom>":
             if len(self._event_lib[event_type]) == 0:
                 self._tk_object.unbind(event_type.value[0])

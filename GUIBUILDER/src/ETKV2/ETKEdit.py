@@ -1,5 +1,6 @@
 from enum import auto
 from tkinter import Event, Tk, EventType
+from typing import Any
 
 from .Internal.ETKBaseObject import ETKEvents
 from .vector2d import vector2d
@@ -14,13 +15,14 @@ class ETKEditEvents(ETKEvents):
 
 
 class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
-    def __init__(self, tk: Tk, text: str = "Edit", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0) -> None:
+    def __init__(self, tk: Tk, text: str = "Edit", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0, **kwargs: Any) -> None:
         self.__old_text: str = ""
         self.__delay_cycles: int = -1
-        ETKLabel.__init__(self, tk, text, pos, size,
-                          background_color, text_color)
+
+        super().__init__(tk=tk, text=text, pos=pos, size=size,
+                         background_color=background_color, text_color=text_color, **kwargs)
+
         self._tk_object["state"] = "normal"
-        ETKBaseTkWidgetDisableable.__init__(self, pos, size, background_color)
         self._event_lib.update({e: [] for e in ETKEditEvents})
 
     # region Properties
@@ -61,7 +63,6 @@ class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
                 return
             case _:
                 pass
-        return ETKLabel._handle_tk_event(  # type:ignore
-            self, event)
+        return super()._handle_tk_event(event)  # type:ignore
 
     # endregion

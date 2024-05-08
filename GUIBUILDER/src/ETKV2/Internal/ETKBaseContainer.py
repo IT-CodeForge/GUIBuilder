@@ -55,7 +55,7 @@ class ETKContainerSize():
     @x.setter
     def x(self, value: int | float) -> None:
         self.__x = int(value)
-    
+
     @property
     def y(self) -> int:
         return self.__y
@@ -153,15 +153,15 @@ class PosError(ValueError):
 
 
 class ETKBaseContainer(ETKBaseWidgetDisableable):
-    def __init__(self, tk: Tk, pos: vector2d, size: ETKContainerSize, background_color: int, outline_thickness: int, outline_color: int) -> None:
-        self.__background = ETKCanvas(
-            tk, pos, size.vec, background_color)
+    def __init__(self, tk: Tk, pos: vector2d, size: ETKContainerSize, background_color: int, outline_thickness: int, outline_color: int, **kwargs: Any) -> None:
+        self.__background = ETKCanvas(tk, pos, size.vec, background_color)
+        self._container_size: ETKContainerSize = ETKContainerSize(0, 0)
+        self._element_rel_pos: dict[ETKBaseWidget, vector2d] = {}
+
+        super().__init__(pos=pos, size=size.vec, background_color=background_color, **kwargs)
+
         self.outline_color = outline_color
         self.outline_thickness = outline_thickness
-        self._element_rel_pos: dict[ETKBaseWidget, vector2d] = {}
-        ETKBaseWidgetDisableable.__init__(
-            self, pos, size.vec, background_color)
-        self._container_size: ETKContainerSize = ETKContainerSize(0, 0)
         self.size = size
 
     # region properties
@@ -183,7 +183,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         else:
             self._container_size = ETKContainerSize(int(value.x), int(value.y))
             vec = value
-        ETKBaseWidgetDisableable.size.fset(self, vec) # type:ignore
+        ETKBaseWidgetDisableable.size.fset(self, vec)  # type:ignore
         self.__background.size = self.size.vec
 
     @property
@@ -261,13 +261,13 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         self._update_all_element_pos()
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
-        ETKBaseWidgetDisableable.add_event(self, event_type, eventhandler)
+        super().add_event(event_type, eventhandler)
         self.__background.add_event(event_type, self.__event_handler)
         for e in self._element_rel_pos.keys():
             e.add_event(event_type, self.__event_handler)
 
     def remove_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
-        ETKBaseWidgetDisableable.remove_event(self, event_type, eventhandler)
+        super().remove_event(event_type, eventhandler)
         self.__background.remove_event(event_type, self.__event_handler)
         for e in self._element_rel_pos.keys():
             e.remove_event(event_type, self.__event_handler)

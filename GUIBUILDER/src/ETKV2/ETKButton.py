@@ -1,4 +1,5 @@
 from enum import auto
+from typing import Any
 
 from .Internal.ETKUtils import gen_col_from_int
 from .Internal.ETKBaseObject import ETKEvents
@@ -15,11 +16,9 @@ class ETKButtonEvents(ETKEvents):
 
 
 class ETKButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
-    def __init__(self, tk: Tk, text: str = "Button", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(70, 18), background_color: int = 0xEEEEEE, text_color: int = 0x0) -> None:
+    def __init__(self, tk: Tk, text: str = "Button", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(70, 18), background_color: int = 0xEEEEEE, text_color: int = 0x0, **kwargs: Any) -> None:
         self._tk_object: Button = Button(tk)  # type:ignore
-        ETKBaseTkWidgetDisableable.__init__(self, pos, size, background_color)
-        ETKBaseTkWidgetText.__init__(
-            self, text, pos, size, background_color, text_color)
+        super().__init__(text=text, pos=pos, size=size, background_color=background_color, text_color=text_color, **kwargs)
         self._event_lib.update({e: [] for e in ETKButtonEvents})
 
     # region Properties
@@ -44,6 +43,6 @@ class ETKButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
                         ETKButtonEvents.RELEASED, [event])  # type:ignore
             case _:
                 pass
-        return ETKBaseTkWidgetText._handle_tk_event(self, event)  # type:ignore
+        return super()._handle_tk_event(event)  # type:ignore
 
     # endregion

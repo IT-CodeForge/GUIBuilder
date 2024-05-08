@@ -1,16 +1,18 @@
 from tkinter import END, Event, EventType, Text, Tk
+from typing import Any
 from .vector2d import vector2d
 from .Internal.ETKBaseTkWidgetText import ETKBaseTkWidgetText
 from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKLabel(ETKBaseTkWidgetText):
-    def __init__(self, tk: Tk, text: str = "Label", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0) -> None:
+    def __init__(self, tk: Tk, text: str = "Label", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0, **kwargs: Any) -> None:
         self._tk_object: Text = Text(tk)  # type:ignore
-        ETKBaseTkWidgetText.__init__(
-            self, text, pos, size, background_color, text_color)
-        self._tk_object["state"] = "disabled"
         self._send_button_event_break = True
+
+        super().__init__(text=text, pos=pos, size=size, background_color=background_color, text_color=text_color, **kwargs)
+
+        self._tk_object["state"] = "disabled"
         self.add_event(ETKBaseEvents.MOUSE_DOWN, lambda: None)
         self._tk_object.configure(cursor="")
 
@@ -27,10 +29,9 @@ class ETKLabel(ETKBaseTkWidgetText):
         self._tk_object.delete(1.0, END)
         self._tk_object.insert(1.0, value)
         self._tk_object["state"] = state
-    
 
-    def _handle_tk_event(self, event: Event) -> str|None:  # type:ignore
-        ETKBaseTkWidgetText._handle_tk_event(self, event)  # type:ignore
+    def _handle_tk_event(self, event: Event) -> str | None:  # type:ignore
+        super()._handle_tk_event(event)  # type:ignore
         match event.type:
             case EventType.ButtonPress:
                 if self._send_button_event_break:

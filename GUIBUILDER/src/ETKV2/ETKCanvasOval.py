@@ -1,16 +1,17 @@
 import math
 from tkinter import Canvas
+from typing import Any
 from .vector2d import vector2d
 from .ETKCanvasItem import ETKCanvasItem
 
 
 class ETKCanvasOval(ETKCanvasItem):
-    def __init__(self, canvas: Canvas, center: vector2d, radius_x: int, radius_y: int, background_color: int, outline_color: int) -> None:
+    def __init__(self, canvas: Canvas, center: vector2d, radius_x: int, radius_y: int, background_color: int, outline_color: int, **kwargs: Any) -> None:
         self._center = center
         temp_pointlist: list[vector2d] = self.__poly_oval(
             center, radius_x, radius_y)
-        ETKCanvasItem.__init__(self, canvas, temp_pointlist,
-                               background_color, outline_color)
+        super().__init__(canvas, temp_pointlist,
+                               background_color, outline_color, **kwargs)
         self._item_type = "oval"
 
     # region Properties

@@ -114,7 +114,6 @@ class ETKBaseObject:
                 print(traceback.format_exc())
                 raise TypeError(
                     f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
-                
 
     # endregion
     # endregion

@@ -1,6 +1,7 @@
+from typing import Any
 from .vector2d import vector2d
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
-from .Internal.ETKBaseTkObject import ETKBaseEvents #type:ignore
+from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from .ETKCanvasItem import ETKCanvasItem
 from .ETKCanvasRectangle import ETKCanvasRectangle
 from .ETKCanvasSquare import ETKCanvasSquare
@@ -11,18 +12,18 @@ from tkinter import Canvas, Tk
 
 
 class ETKCanvas(ETKBaseTkWidgetDisableable):
-    def __init__(self, tk: Tk, pos: vector2d, size: vector2d, background_color: int = 0xFFFFFF) -> None:
+    def __init__(self, tk: Tk, pos: vector2d, size: vector2d, background_color: int = 0xFFFFFF, **kwargs: Any) -> None:
         self._tk_object: Canvas = Canvas(tk, highlightthickness=0)  # type:ignore
         self.__canvas_items: list[ETKCanvasItem] = []
-        ETKBaseTkWidgetDisableable.__init__(self, pos, size, background_color)
-    
+        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+
     # region Properties
 
     @property
-    def canvas_items(self)->list[ETKCanvasItem]:
+    def canvas_items(self) -> list[ETKCanvasItem]:
         """READ-ONLY"""
         return self.__canvas_items.copy()
-    
+
     # endregion
 
     # region Methods
@@ -51,19 +52,19 @@ class ETKCanvas(ETKBaseTkWidgetDisableable):
         self.__canvas_items.append(ETKCanvasLine(self._tk_object, start_point, end_point, thickness, background_color, outline_color))
         return self.__canvas_items[-1]
 
-    def delete_item(self, item: ETKCanvasItem)->None:
+    def delete_item(self, item: ETKCanvasItem) -> None:
         for index, canvas_item in enumerate(self.__canvas_items):
             if canvas_item == item:
                 self.delete_item_at_index(index)
                 break
 
-    def delete_item_at_index(self, index: int)->None:
-        self.__canvas_items[index]._isdeleted = True #type:ignore
+    def delete_item_at_index(self, index: int) -> None:
+        self.__canvas_items[index]._isdeleted = True  # type:ignore
         del self.__canvas_items[index]
-    
-    def clear(self)->None:
+
+    def clear(self) -> None:
         for index, canvasitem in enumerate(self.__canvas_items):
-            canvasitem._isdeleted = True #type:ignore
+            canvasitem._isdeleted = True  # type:ignore
             del self.__canvas_items[index]
 
     # endregion

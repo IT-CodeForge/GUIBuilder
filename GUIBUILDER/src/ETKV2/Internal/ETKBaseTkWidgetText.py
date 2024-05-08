@@ -1,3 +1,4 @@
+from typing import Any
 from ..vector2d import vector2d
 from .ETKBaseTkWidget import ETKBaseTkWidget
 from .ETKUtils import gen_col_from_int
@@ -5,8 +6,9 @@ from .ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKBaseTkWidgetText(ETKBaseTkWidget):
-    def __init__(self, text: str, pos: vector2d, size: vector2d, background_color: int, text_color: int) -> None:
-        ETKBaseTkWidget.__init__(self, pos, size, background_color)
+    def __init__(self, text: str, pos: vector2d, size: vector2d, background_color: int, text_color: int, **kwargs: Any) -> None:
+        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+
         self.text_color = text_color
         self.text = text
 

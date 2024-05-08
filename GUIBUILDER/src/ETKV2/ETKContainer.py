@@ -1,6 +1,6 @@
 from __future__ import annotations
 from tkinter import Tk
-from typing import Literal
+from typing import Any, Literal
 from .Internal.ETKBaseWidget import ETKBaseWidget
 from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
@@ -11,9 +11,8 @@ from .Internal.ETKBaseContainer import ETKAlignments, ETKContainerSize, SizeErro
 
 
 class ETKContainer(ETKBaseContainer):
-    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), background_color: int = 0xAAAAAA, outline_thickness: int = 0, outline_color: int = 0x0) -> None:
-        ETKBaseContainer.__init__(
-            self, tk, pos, size, background_color, outline_thickness, outline_color)
+    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), background_color: int = 0xAAAAAA, outline_thickness: int = 0, outline_color: int = 0x0, **kwargs: Any) -> None:
+        super().__init__(tk=tk, pos=pos, size=size, background_color=background_color, outline_thickness=outline_thickness, outline_color=outline_color, **kwargs)
         self.__element_alignments: dict[ETKBaseWidget, ETKAlignments] = {}
 
     # region Properties
@@ -91,10 +90,10 @@ class ETKContainer(ETKBaseContainer):
 
     def add_element(self, element: ETKBaseWidget, alignment: ETKAlignments = ETKAlignments.TOP_LEFT) -> None:
         self.__element_alignments.update({element: alignment})
-        ETKBaseContainer.add_element(self, element)
+        super().add_element(element)
 
     def remove_element(self, element: ETKBaseWidget) -> None:
-        ETKBaseContainer.remove_element(self, element)
+        super().remove_element(element)
         self.__element_alignments.pop(element)
 
     # endregion

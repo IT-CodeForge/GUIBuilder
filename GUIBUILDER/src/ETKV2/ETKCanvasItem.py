@@ -68,9 +68,9 @@ class ETKCanvasItem:
         self.__check_if_deleted()
         self._outline_color = gen_col_from_int(value)
         self.__redraw_shape()
-    
+
     @property
-    def canvasitem_type(self)->str:
+    def canvasitem_type(self) -> str:
         "READ-ONLY"
         return self._item_type
 
