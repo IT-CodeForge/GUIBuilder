@@ -4,10 +4,7 @@ from typing import Any, Type, Optional
 class IBaseObject:
     ATTRIBUTES: dict[str, Type[Any]] = {"id": int, "name": Optional[str], "size": tuple[int, int]}
 
-    def __init__(self, id: int, name: str, size: tuple[int, int]) -> None:
-        if IBaseObject in getattr(self, "_initialized", []):
-            return
-        self._initialized: list[Type[IBaseObject]] = [IBaseObject]
+    def __init__(self, *, id: int, name: str, size: tuple[int, int]) -> None:
         self.__id: int = id
         self.name: str = name
         self.size: tuple[int, int] = size

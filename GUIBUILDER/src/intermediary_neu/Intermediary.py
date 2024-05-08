@@ -13,8 +13,8 @@ class Intermediary:
         """READ-ONLY"""
         return tuple(self.__objects.values())
 
-    def create_object(self, type: Type[IBaseObject], *args: Any, **kwargs: Any) -> Any:
-        object = type(self.__next_id, *args, **kwargs)
+    def create_object(self, type: Type[IBaseObject], **kwargs: Any) -> Any:
+        object = type(id=self.__next_id, **kwargs)
         self.__next_id += 1
         self.__objects.update({object.id: object})
         return object
