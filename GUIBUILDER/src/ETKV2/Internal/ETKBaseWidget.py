@@ -6,7 +6,7 @@ from .ETKBaseObject import ETKBaseObject
 
 
 class ETKBaseWidget(ETKBaseObject):
-    def __init__(self, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
         self._parent: Optional[ETKBaseWidget] = None
         self._enabled: bool = True
 

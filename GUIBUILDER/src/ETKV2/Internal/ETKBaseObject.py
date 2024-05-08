@@ -19,7 +19,7 @@ class ETKBaseEvents(ETKEvents):
 
 
 class ETKBaseObject:
-    def __init__(self, pos: vector2d, size: vector2d, background_color: int) -> None:
+    def __init__(self, *, pos: vector2d, size: vector2d, background_color: int) -> None:
         self.__pos: vector2d = vector2d()
         self.__size: vector2d = vector2d()
         self.__background_color: int = 0x0
