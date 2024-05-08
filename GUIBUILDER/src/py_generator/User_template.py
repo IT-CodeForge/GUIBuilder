@@ -1,4 +1,4 @@
-#region generated code
+# region generated code
 
 from static_GUI import static_GUI
 from ETK import *
@@ -10,12 +10,12 @@ class GUI(static_GUI):
 
     #tag:event_funcs#
 
-#endregion
-#region User-Code:
+# endregion
+# region User-Code:
 
 
 
-#endregion
+# endregion
 
 # NICHT VERÄNDERN!:
 if __name__ == '__main__':
