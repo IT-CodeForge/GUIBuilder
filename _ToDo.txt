@@ -2,6 +2,7 @@ ToDo:
 
 implement generators
 UML-Diagramm: Generatoren, GUI: Elemente
+handle exceptions: py_gen: syntaxerror, etc.
 
 GUI:
   - element resizer
