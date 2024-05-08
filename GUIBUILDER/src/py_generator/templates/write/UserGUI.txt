@@ -1,8 +1,5 @@
 # region generated code
 
-from ETK import *
-from SystemGUI import SystemGUI
-
 #tag:generated_code#
 
 # endregion

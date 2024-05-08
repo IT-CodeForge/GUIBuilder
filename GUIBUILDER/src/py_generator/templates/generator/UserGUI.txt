@@ -1,0 +1,6 @@
+from ETK import *
+from SystemGUI import SystemGUI
+
+class UserGUI(SystemGUI):
+    def _on_init(self) -> None:
+        pass
