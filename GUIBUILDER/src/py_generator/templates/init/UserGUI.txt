@@ -1,0 +1,4 @@
+class UserGUI(SystemGUI):
+    def _on_init(self) -> None:
+        pass
+        #TEST
