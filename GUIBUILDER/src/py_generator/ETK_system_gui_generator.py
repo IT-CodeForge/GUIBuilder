@@ -15,13 +15,13 @@ from . import ast_generator as ast_gen
 class ETK_system_gui_generator:
     def __init__(self) -> None:
         self.__event_trans: dict[str, dict[type, str]] = {
-            "event_create":{IBaseObject:"START"},
-            "event_destroy":{IBaseObject:"EXIT"},
+            "event_create":{IWindow:"START"},
+            "event_destroy":{IWindow:"EXIT"},
             "event_mouse_click":{IBaseObject:"MOUSE_DOWN"},
             "event_mouse_move":{IBaseObject:"MOUSE_MOVED"},
             "event_hovered":{IBaseObject:"ENTER"},
             "event_changed":{ICheckbox:"TOGGLED", IEdit:"CHANGED"},
-            "event_pressed":{IBaseObject:"PRESSED"}
+            "event_pressed":{IButton:"PRESSED"}
         }
         self.__generator_trans: dict[type, Callable[[Any], stmt]] = {
             IButton:ast_gen.button,
@@ -115,7 +115,14 @@ class ETK_system_gui_generator:
     def __generate_event_binds(self, event_list: list[tuple[IBaseObject, str, str]]) -> list[stmt]:
         retval: list[stmt] = []
         for etk_object, etk_event_typ, intermediary_event_type in event_list:
-            etk_event_typ = "ETK" + str(type(etk_object).__name__)[1:] + "Events." + etk_event_typ
+            etk_event_enum: str = ""
+            if IBaseObject in self.__event_trans.get(intermediary_event_type, {}).keys():
+                etk_event_enum = "Base"
+            elif self.__event_trans.get(intermediary_event_type, {}) != {}:
+                etk_event_enum = str(type(etk_object).__name__)[1:]
+            else:
+                raise ValueError("incompatible event list")
+            etk_event_typ = "ETK" + etk_event_enum + "Events." + etk_event_typ
             retval.append(ast_gen.generate_event_bind(etk_object, etk_event_typ, intermediary_event_type))
         return retval
 
