@@ -1,4 +1,5 @@
 from ETK import *
 from typing import Any
+from abc import abstractmethod
 
 #tag:generated_code#
