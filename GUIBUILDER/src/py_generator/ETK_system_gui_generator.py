@@ -33,7 +33,7 @@ class ETK_system_gui_generator:
 
     def generate_file(self, etk_objects: tuple[IBaseObject, ...]) -> str:
         template: Module
-        with open(self.join_relative_path("./templates/generator/SystemGUI.txt"), "r") as f:
+        with open(self.__join_relative_path("./templates/generator/SystemGUI.txt"), "r") as f:
             template = parse(f.read())
         
         my_class_body: list[stmt] = template.body[0].body # type:ignore
@@ -126,5 +126,5 @@ class ETK_system_gui_generator:
             retval.append(ast_gen.generate_event_bind(etk_object, etk_event_typ, intermediary_event_type))
         return retval
 
-    def join_relative_path(self, relative_path: str) -> str:
+    def __join_relative_path(self, relative_path: str) -> str:
         return os.path.join(os.path.split(__file__)[0], relative_path)
