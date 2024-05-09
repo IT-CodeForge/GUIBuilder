@@ -4,6 +4,7 @@ from tkinter import Tk, filedialog as fd
 from typing import Any
 from intermediary_all import *
 from ETK import *
+from py_generator.ETK_system_gui_generator import ETK_system_gui_generator
 
 
 class Steuerung:
@@ -18,6 +19,7 @@ class Steuerung:
         self.__save_path: str = f"{path.split(self.__file)[0]}"
 
         self.__intermediary = Intermediary()
+        self.__py_generator = ETK_system_gui_generator()
         self.__gui = GUI(self)
 
     def on_gui_init(self) -> None:
@@ -402,7 +404,9 @@ class Steuerung:
             return
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
-                pass  # TODO
+                c = self.__py_generator.generate_file(tuple(self.__objects.values()))  # TODO
+                with open("test.py", "w") as f:
+                    f.write(c)
             case "C++ (TGW)":
                 pass  # TODO
             case _:

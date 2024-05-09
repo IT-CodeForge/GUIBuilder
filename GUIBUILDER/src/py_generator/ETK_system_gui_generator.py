@@ -1,16 +1,16 @@
-from ..intermediary_neu.objects.IBaseObject import IBaseObject
-from ..intermediary_neu.objects.IButton import IButton
-from ..intermediary_neu.objects.ICanvas import ICanvas
-from ..intermediary_neu.objects.ICheckbox import ICheckbox
-from ..intermediary_neu.objects.IEdit import IEdit
-from ..intermediary_neu.objects.ILabel import ILabel
-from ..intermediary_neu.objects.ITimer import ITimer
-from ..intermediary_neu.objects.IWindow import IWindow
+from intermediary_neu.objects.IBaseObject import IBaseObject
+from intermediary_neu.objects.IButton import IButton
+from intermediary_neu.objects.ICanvas import ICanvas
+from intermediary_neu.objects.ICheckbox import ICheckbox
+from intermediary_neu.objects.IEdit import IEdit
+from intermediary_neu.objects.ILabel import ILabel
+from intermediary_neu.objects.ITimer import ITimer
+from intermediary_neu.objects.IWindow import IWindow
 from ast import Module, stmt, FunctionDef, parse
 from astor import to_source # type:ignore
 from typing import Optional, Callable, Any
 import os
-import ast_generator as ast_gen
+from . import ast_generator as ast_gen
 
 class ETK_system_gui_generator:
     def __init__(self) -> None:
@@ -31,7 +31,7 @@ class ETK_system_gui_generator:
             ILabel:ast_gen.label
         }
 
-    def generate_file(self, etk_objects: tuple[IBaseObject]) -> str:
+    def generate_file(self, etk_objects: tuple[IBaseObject, ...]) -> str:
         template: Module
         with open(self.join_relative_path("./templates/generator/SystemGUI.txt"), "r") as f:
             template = parse(f.read())
@@ -56,7 +56,7 @@ class ETK_system_gui_generator:
         return code
     
 
-    def __generate_event_list(self, etk_objects: tuple[IBaseObject]) -> list[tuple[IBaseObject, str, str]]:
+    def __generate_event_list(self, etk_objects: tuple[IBaseObject, ...]) -> list[tuple[IBaseObject, str, str]]:
         retval: list[tuple[IBaseObject, str, str]] = []
         #go throug every object
         for etk_object in etk_objects:
@@ -86,7 +86,7 @@ class ETK_system_gui_generator:
 
         return retval
 
-    def __generate_init_body(self, etk_objects: tuple[IBaseObject]) -> stmt:
+    def __generate_init_body(self, etk_objects: tuple[IBaseObject, ...]) -> stmt:
         for etk_object in etk_objects:
             if type(etk_object) == IWindow:
                 return ast_gen.generate_gui_init(etk_object)
@@ -98,7 +98,7 @@ class ETK_system_gui_generator:
             retval.append(ast_gen.generate_event_definition(etk_object, intermediary_event_type))
         return retval
 
-    def __generate_attribute_creation(self, etk_objects: tuple[IBaseObject]) -> list[stmt]:
+    def __generate_attribute_creation(self, etk_objects: tuple[IBaseObject, ...]) -> list[stmt]:
         retval: list[stmt] = []
         for etk_object in etk_objects:
             if type(etk_object) == IWindow:
