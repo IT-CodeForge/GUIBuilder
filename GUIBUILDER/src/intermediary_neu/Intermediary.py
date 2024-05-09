@@ -1,19 +1,30 @@
 import json
-from typing import Any, Type
+from typing import Any, Type, TypeVar, Union
+
+from .objects.ICanvas import ICanvas
+from .objects.ICheckbox import ICheckbox
+from .objects.IEdit import IEdit
+from .objects.ILabel import ILabel
+from .objects.ITimer import ITimer
+from .objects.IButton import IButton
+from .objects.IWindow import IWindow
 from .objects.IBaseObject import IBaseObject
 
+IObjectWidgets = Union[IButton, ICanvas, ICheckbox, IEdit, ILabel, ITimer]
+IObjects = Union[IWindow, IObjectWidgets]
 
 class Intermediary:
     def __init__(self) -> None:
         self.__next_id: int = 0
-        self.__objects: dict[int, IBaseObject] = {}
+        self.__objects: dict[int, IObjects] = {}
 
     @property
-    def objects(self) -> tuple[IBaseObject, ...]:
+    def objects(self) -> tuple[IObjects, ...]:
         """READ-ONLY"""
         return tuple(self.__objects.values())
 
-    def create_object(self, type: Type[IBaseObject], **kwargs: Any) -> Any:
+    __T = TypeVar("__T", bound=IObjects)
+    def create_object(self, type: Type[__T], **kwargs: Any) -> __T:
         object = type(id=self.__next_id, **kwargs)
         self.__next_id += 1
         self.__objects.update({object.id: object})
@@ -35,6 +46,6 @@ class Intermediary:
         for c, d in data["objects"].items():
             import intermediary_all
             type = getattr(intermediary_all, c)
-            object: IBaseObject = type(d["id"])
+            object: IObjects = type(d["id"])
             object.load_attributes_from_dict(d)
             self.__objects.update({object.id: object})

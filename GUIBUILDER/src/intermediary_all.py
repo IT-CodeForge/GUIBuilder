@@ -1,4 +1,4 @@
-from intermediary_neu.Intermediary import Intermediary
+from intermediary_neu.Intermediary import Intermediary, IObjects, IObjectWidgets
 from intermediary_neu.objects.IBaseObject import IBaseObject
 from intermediary_neu.objects.IBaseObjectWidget import IBaseObjectWidget
 from intermediary_neu.objects.IBaseObjectWidgetText import IBaseObjectWidgetText
@@ -27,3 +27,5 @@ if __name__ == "__main__":
     IBaseObjectWidgetText.ATTRIBUTES
     IBaseObjectWidgetVisible.ATTRIBUTES
     IBaseObjectWidgetVisibleEVChanged.ATTRIBUTES
+    x: IObjects
+    y: IObjectWidgets

@@ -8,7 +8,7 @@ from ETK import *
 
 class Steuerung:
     def __init__(self) -> None:
-        self.__objects: dict[ETKBaseObject, IBaseObject] = {}
+        self.__objects: dict[ETKBaseObject, IObjects] = {}
 
         # Prüft ob es in VS-Code oder als Binary vorliegt.
         if environ.get("DEV") != None:
@@ -58,8 +58,8 @@ class Steuerung:
             case _:
                 raise ValueError
 
-    def __create_new_element(self, type: type[IBaseObject]) -> ETKBaseObject:
-        object: Any = self.__intermediary.create_object(type)
+    def __create_new_element(self, type: type[IObjectWidgets]) -> ETKBaseObject:
+        object = self.__intermediary.create_object(type)
 
         gui_element = self.__create_new_gui_element(type)
 
@@ -191,7 +191,7 @@ class Steuerung:
         self.__gui.element_area.size = vector2d(object.size[0], object.size[1])
         self.__gui.element_area.background_color = object.background_color[0] << 16 | object.background_color[1] << 8 | object.background_color[2]
 
-    def __apply_object_attributes_to_gui(self, object: IBaseObjectWidget) -> None:
+    def __apply_object_attributes_to_gui(self, object: IObjectWidgets) -> None:
         gui_element = {o: g for g, o in self.__objects.items()}[object]
         gui_element.pos = vector2d(object.pos[0], object.pos[1])
         gui_element.size = vector2d(object.size[0], object.size[1])
