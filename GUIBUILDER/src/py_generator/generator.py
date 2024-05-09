@@ -13,13 +13,12 @@ class generator:
         self.__system_gui_name_etk: str = "SystemGUI.py"
         pass
 
-    def write_files(self, path: str, etk_objects:list[IBaseObject], framework: SupportedFrameworks):
+    def write_files(self, path: str, etk_objects:tuple[IBaseObject], framework: SupportedFrameworks):
         if framework == SupportedFrameworks.ETK:
             old_user_gui: Optional[str] = None
-            if os.path.exists(path):
-                old_user_gui = self.read_file(path)
-            else:
-                pass
+            if os.path.exists(self.join_paths(path, self.__user_gui_name_etk)):
+                old_user_gui = self.read_file(self.join_paths(path, self.__user_gui_name_etk))
+            
         elif framework == SupportedFrameworks.TGW:
             pass
         else:

@@ -1,11 +1,7 @@
-from enum import Enum
+from ast import parse, dump
 
-class TEST(Enum):
-    A = 1
-    B = 2
-
-def temp(val:TEST):
-    print(str(val.name))
+def test(x: int, y: int):
+    print(x,y)
 
 if __name__ == "__main__":
-    temp(TEST.A)
+    print(dump(parse(f"def e{1}_knopf_pressed(self, params: tuple[ETKBaseObject, ETKEvents, Any]):\n   pass").body[0], indent=2))

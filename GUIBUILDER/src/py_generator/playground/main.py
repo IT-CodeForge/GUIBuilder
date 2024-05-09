@@ -4,6 +4,10 @@ import os
 import ast
 import astor #type: ignore
 
+def temp(temp: ast.Module):
+    temp.body[2].body[0].body = [ast.Pass()] # type:ignore
+
+
 if __name__ == "__main__":
     myfile: str
     mypath = os.path.join(os.path.split(__file__)[0], "code1.py")
@@ -21,7 +25,8 @@ if __name__ == "__main__":
         raise ValueError("No class found")
     
     funcs_with_content: dict[str, list[ast.stmt]] = {e.name: e.body for e in cls.body if type(e) == ast.FunctionDef}
-        
+    
+    #temp(ast_module)
 
     mypath = os.path.join(os.path.split(__file__)[0], "ast_list.txt")
 

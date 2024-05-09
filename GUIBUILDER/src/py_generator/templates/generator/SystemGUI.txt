@@ -1,6 +1,6 @@
 class SystemGUI(ETKMainWindow):
     def __init__(self) -> None:
-        super().__init__()
+        pass
 
     def _add_elements(self) -> None:
         pass
