@@ -23,7 +23,7 @@ __event_func_name: Callable[[IBaseObject, str], str] = lambda obj, intermediary_
 # region generate stuff
 __visible_object: Callable[[IBaseObjectWidgetVisible], str] = lambda obj: f"pos={__arr_to_vec(obj.pos)}, size={__arr_to_vec(obj.size)}, background_color={__col_arr_to_col(obj.background_color)}"
 
-__text_object: Callable[[IBaseObjectWidgetText], str] = lambda obj: f"text={obj.text}, text_color={__col_arr_to_col(obj.text_color)}"
+__text_object: Callable[[IBaseObjectWidgetText], str] = lambda obj: f"text='{obj.text}', text_color={__col_arr_to_col(obj.text_color)}"
 
 button: Callable[[IButton], stmt]     = lambda obj: parse(f"self.e{obj.id}_{obj.name} = ETKButton(tk=self._tk_object, {__text_object(obj)}, {__visible_object(obj)})").body[0]
 checkbox: Callable[[ICheckbox], stmt] = lambda obj: parse(f"self.e{obj.id}_{obj.name} = ETKCheckbox(tk=self._tk_object, {__text_object(obj)}, {__visible_object(obj)})").body[0]
@@ -31,7 +31,7 @@ label: Callable[[ILabel], stmt]       = lambda obj: parse(f"self.e{obj.id}_{obj.
 edit: Callable[[IEdit], stmt]         = lambda obj: parse(f"self.e{obj.id}_{obj.name} = ETKEdit(tk=self._tk_object, {__text_object(obj)}, {__visible_object(obj)})").body[0]
 
 canvas: Callable[[ICanvas], stmt] = lambda obj: parse(f"self.e{obj.id}_{obj.name} = ETKCanvas(tk=self._tk_object, {__visible_object(obj)})").body[0]
-timer: Callable[[ITimer, str], stmt] = lambda obj, intermediary_event_type: parse(f"self.e{obj.id}_{obj.name} = ETKTimer(tk=self._tk_object, intervall_in_ms={obj.interval}, timer_function={__event_func_name(obj, intermediary_event_type)})").body[0]
+timer: Callable[[ITimer, str], stmt] = lambda obj, intermediary_event_type: parse(f"self.e{obj.id}_{obj.name} = ETKTimer(tk=self._tk_object, intervall_in_ms={obj.interval}, timer_function=self.{__event_func_name(obj, intermediary_event_type)})").body[0]
 
 
 generate_event_definition: Callable[[IBaseObject, str], stmt] = lambda obj, intermediary_event_type: parse(f"def {__event_func_name(obj, intermediary_event_type)}(self, params: tuple[ETKBaseObject, ETKEvents, Any]):\n   pass").body[0]

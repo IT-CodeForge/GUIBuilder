@@ -115,6 +115,7 @@ class ETK_system_gui_generator:
     def __generate_event_binds(self, event_list: list[tuple[IBaseObject, str, str]]) -> list[stmt]:
         retval: list[stmt] = []
         for etk_object, etk_event_typ, intermediary_event_type in event_list:
+            etk_event_typ = "ETK" + str(type(etk_object))[1:] + "Events." + etk_event_typ
             retval.append(ast_gen.generate_event_bind(etk_object, etk_event_typ, intermediary_event_type))
         return retval
 
