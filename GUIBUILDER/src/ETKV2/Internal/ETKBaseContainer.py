@@ -227,6 +227,8 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
         self._element_rel_pos.update({element: vector2d()})
 
+        element._update_visibility()
+
         self._update_all_element_pos()
 
     def _prepare_element_add(self, element: ETKBaseWidget) -> None:

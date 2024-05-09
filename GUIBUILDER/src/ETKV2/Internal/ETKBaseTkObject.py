@@ -10,7 +10,6 @@ from .ETKBaseObject import ETKBaseObject, ETKEvents, ETKBaseEvents
 class ETKBaseTkObject(ETKBaseObject):
     def __init__(self, *, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
         self._tk_object: Any
-        self._outline_color: str = ""
 
         super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
 
@@ -25,6 +24,10 @@ class ETKBaseTkObject(ETKBaseObject):
 
     # endregion
     # region Methods
+
+    def __del__(self) -> None:
+        self.visibility = False
+
     # region Eventhandling Methods
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:

@@ -12,17 +12,21 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
     def __init__(self, *, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
         self._tk_object: tk_widget
+        self._outline_color: str = ""
+        self._outline_thickness: int = 0
 
         super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
 
-        self.__place_object()
+        self._place_object()
+        self.outline_thickness = 0
+        self.outline_color = 0
 
     # region Properties
 
     @ETKBaseWidget.size.setter
     def size(self, value: vector2d) -> None:
         ETKBaseWidget.size.fset(self, value)  # type:ignore
-        self.__place_object()
+        self._place_object()
 
     @property
     def outline_color(self) -> int:
@@ -46,7 +50,7 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
     # endregion
     # region Methods
 
-    def __place_object(self) -> None:
+    def _place_object(self) -> None:
         pos = self.abs_pos
         self._tk_object.place(
             x=pos.x, y=pos.y, width=self.size.x, height=self.size.y)
@@ -55,14 +59,14 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
     def _update_pos(self) -> None:
         if self.abs_visibility:
-            self.__place_object()
+            self._place_object()
         else:
             self._tk_object.place_forget()
             self._tk_object.update()
 
     def _update_visibility(self) -> None:
         if self.abs_visibility:
-            self.__place_object()
+            self._place_object()
         else:
             self._tk_object.place_forget()
             self._tk_object.update()
