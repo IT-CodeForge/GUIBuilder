@@ -34,7 +34,11 @@ canvas: Callable[[ICanvas], stmt] = lambda obj: parse(f"self.e{obj.id}_{obj.name
 timer: Callable[[ITimer, str], stmt] = lambda obj, intermediary_event_type: parse(f"self.e{obj.id}_{obj.name} = ETKTimer(tk=self._tk_object, intervall_in_ms={obj.interval}, timer_function=self.{__event_func_name(obj, intermediary_event_type)})").body[0]
 
 
-generate_event_definition: Callable[[IBaseObject, str], stmt] = lambda obj, intermediary_event_type: parse(f"def {__event_func_name(obj, intermediary_event_type)}(self, params: tuple[ETKBaseObject, ETKEvents, Any]):\n   pass").body[0]
+def generate_event_definition(obj: IBaseObject, intermediary_event_type: str) -> stmt:
+    params = "self"
+    if type(obj) != ITimer:
+        params += ", params: tuple[ETKBaseObject, ETKEvents, Any]"
+    return parse(f"def {__event_func_name(obj, intermediary_event_type)}({params}):\n   pass").body[0]
 
 generate_gui_init:Callable[[IWindow], stmt] = lambda window: parse(f"super().__init__(size={__arr_to_vec(window.size)}, caption='{window.title}', background_color={__col_arr_to_col(window.background_color)})").body[0]
 
