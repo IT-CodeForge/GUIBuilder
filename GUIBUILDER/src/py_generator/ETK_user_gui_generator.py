@@ -49,8 +49,10 @@ class ETK_user_gui_generator:
                         if type(ast_object2) == ClassDef:
                             ast_object2.body[0].body = class_object.body # type:ignore
                             break
-            else:
-                raise ValueError("Somebody deleted the UserGui class")
+                    else:
+                        raise ValueError("Somebody deleted the UserGui class")
+                    break
+                break
         
         my_event_list: list[tuple[IBaseObject, Optional[str],
                                   str]] = self.__generate_event_list(etk_objects)

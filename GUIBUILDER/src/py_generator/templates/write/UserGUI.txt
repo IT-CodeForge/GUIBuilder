@@ -11,5 +11,5 @@
 
 # NICHT VERÄNDERN!:
 if __name__ == '__main__':
-    w = GUI()
-    w.run()
+    g = UserGUI()
+    g.run()
