@@ -61,7 +61,7 @@ class generator:
                 fix_code(all_removed_events)
                 self.__write_file(self.__join_paths(path, self.__removed_events_etk), all_removed_events)
             
-            system_template: str = self.__read_file(self.__join_relative_path("./templates/write/UserGUI.txt"))
+            system_template: str = self.__read_file(self.__join_relative_path("./templates/write/SystemGUI.txt"))
             system_gui = system_template.replace("#tag:generated_code#", system_gui)
             fix_code(system_gui)
             self.__write_file(self.__join_paths(path, self.__system_gui_name_etk), system_gui)

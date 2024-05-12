@@ -33,7 +33,7 @@ class ETK_user_gui_generator:
 
     def generate_file(self, etk_objects: tuple[IBaseObject, ...], old_file:Optional[str]) -> tuple[str, str]:
         template: Module
-        with open(self.__join_relative_path("./templates/generator/SystemGUI.txt"), "r") as f:
+        with open(self.__join_relative_path("./templates/generator/UserGUI.txt"), "r") as f:
             template = parse(f.read())
 
         ast_old_file: Optional[Module] = None
@@ -143,6 +143,7 @@ class ETK_user_gui_generator:
     
     def __removed_events_dict_to_ast(self, removed_events: dict[str, list[stmt]], ast_old_file: Optional[Module]) -> Module:
         retval: Module = Module()
+        retval.body = []
         if ast_old_file == None:
             return retval
         for ast_object in ast_old_file.body:
