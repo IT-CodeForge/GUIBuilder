@@ -85,7 +85,7 @@ class ETK_user_gui_generator:
                 # check if the attribut is an event
                 if attribute.startswith("event_"):
                     # if the event is inactive skip said event
-                    if not attributes.get(attribute, False):
+                    if not getattr(etk_object, attribute):
                         continue
                     intermediary_event = attribute
                     etk_events = self.__event_trans.get(attribute)
@@ -138,6 +138,12 @@ class ETK_user_gui_generator:
             if type(ast_object) == ClassDef and ast_object.name == "UserGUI":
                 for class_object in ast_object.body:
                     if type(class_object) == FunctionDef:
+                        if class_object.name == "_on_init":
+                            continue
+                        if len(class_object.body) == 0:
+                            continue
+                        if len(class_object.body) == 1 and type(class_object.body[0]) == Pass:
+                            continue
                         retval[class_object.name] = class_object.body
                 return retval
         else:

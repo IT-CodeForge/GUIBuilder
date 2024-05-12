@@ -70,7 +70,7 @@ class ETK_system_gui_generator:
                 # check if the attribut is an event
                 if attribute.startswith("event_"):
                     # if the event is inactive skip said event
-                    if not attributes.get(attribute, False):
+                    if not getattr(etk_object, attribute):
                         continue
                     intermediary_event = attribute
                     etk_events = self.__event_trans.get(attribute)
