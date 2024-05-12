@@ -5,6 +5,11 @@ Module(
             names=[
                 alias(name='pi')],
             level=0),
+        ImportFrom(
+            module='abc',
+            names=[
+                alias(name='abstractmethod')],
+            level=0),
         ClassDef(
             name='Test2',
             bases=[],
@@ -134,6 +139,19 @@ Module(
                                     Constant(value='bar'),
                                     Name(id='val', ctx=Load())],
                                 keywords=[]))],
-                    decorator_list=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='temp',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[
+                        Name(id='abstractmethod', ctx=Load())])],
             decorator_list=[])],
     type_ignores=[])

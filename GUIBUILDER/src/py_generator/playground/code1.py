@@ -1,4 +1,5 @@
 from math import pi
+from abc import abstractmethod
 
 class Test2:
     def __init__(self) -> None:
@@ -19,3 +20,7 @@ class Test:
 
     def bar(self, val: str):
         print("bar", val)
+
+    @abstractmethod
+    def temp(self):
+        pass
