@@ -10,16 +10,16 @@ from .ETKBaseTkObject import ETKBaseTkObject
 
 class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
-    def __init__(self, *, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._tk_object: tk_widget
         self._outline_color: str = ""
         self._outline_thickness: int = 0
 
-        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+        super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
         self._place_object()
-        self.outline_thickness = 0
-        self.outline_color = 0
+        self.outline_thickness = outline_thickness
+        self.outline_color = outline_color
 
     # region Properties
 

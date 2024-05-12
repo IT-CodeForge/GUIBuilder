@@ -15,12 +15,12 @@ class ETKEditEvents(ETKEvents):
 
 
 class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
-    def __init__(self, tk: Tk, text: str = "Edit", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), text: str = "Edit", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__old_text: str = ""
         self.__delay_cycles: int = -1
 
-        super().__init__(tk=tk, text=text, pos=pos, size=size,
-                         background_color=background_color, text_color=text_color, **kwargs)
+        super().__init__(tk=tk, pos=pos, size=size, text=text, visibility=visibility, enabled=enabled,
+                         background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self._tk_object["state"] = "normal"
         self._event_lib.update({e: [] for e in ETKEditEvents})

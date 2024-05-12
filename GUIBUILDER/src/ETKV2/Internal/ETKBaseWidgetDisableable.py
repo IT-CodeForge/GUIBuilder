@@ -4,10 +4,10 @@ from .ETKBaseWidget import ETKBaseWidget
 
 
 class ETKBaseWidgetDisableable(ETKBaseWidget):
-    def __init__(self, *, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
-        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, enabled: bool, background_color: int, **kwargs: Any) -> None:
+        super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
-        self.enabled = self._enabled
+        self.enabled = enabled
 
     # region Properties
 

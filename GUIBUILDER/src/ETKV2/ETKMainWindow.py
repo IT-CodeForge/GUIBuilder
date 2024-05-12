@@ -22,14 +22,14 @@ class ETKWindowEvents(ETKEvents):
 
 
 class ETKMainWindow(ETKBaseTkObject):
-    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
+    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
         self._tk_object: Tk = Tk()
         self.__topmost = False
         self.exit_locked = False
         self.__fullscreen = False
         self.canvas = ETKCanvas(self._tk_object, vector2d(), vector2d())
 
-        super().__init__(pos=pos, size=vector2d(1920, 1080), background_color=background_color, **kwargs)
+        super().__init__(pos=pos, size=vector2d(1920, 1080), background_color=background_color, visibility=visibility, **kwargs)
 
         self.canvas.outline_color = 0x0
         self.canvas.outline_thickness = 2

@@ -6,11 +6,11 @@ from .ETKBaseObject import ETKBaseObject
 
 
 class ETKBaseWidget(ETKBaseObject):
-    def __init__(self, *, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
         self._parent: Optional[ETKBaseWidget] = None
         self._enabled: bool = True
 
-        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+        super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
     # region Properties
 

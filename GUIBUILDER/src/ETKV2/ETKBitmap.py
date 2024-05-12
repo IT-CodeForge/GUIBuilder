@@ -7,11 +7,11 @@ from typing import Any, Iterable
 
 
 class ETKBitmap(ETKBaseTkWidgetDisableable):
-    def __init__(self, tk: Tk, pos: vector2d, size: vector2d, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: vector2d, size: vector2d, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__bitmap = PhotoImage(width=int(size.x), height=int(size.y))
         self._tk_object: Label = Label(  # type:ignore
             tk, text="", image=self.__bitmap)
-        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+        super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Properties
 

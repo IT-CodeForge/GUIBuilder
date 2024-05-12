@@ -6,11 +6,11 @@ from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKLabel(ETKBaseTkWidgetText):
-    def __init__(self, tk: Tk, text: str = "Label", pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), background_color: int = 0xEEEEEE, text_color: int = 0, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), text: str = "Label", *, visibility: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self._tk_object: Text = Text(tk)  # type:ignore
         self._send_button_event_break = True
 
-        super().__init__(text=text, pos=pos, size=size, background_color=background_color, text_color=text_color, **kwargs)
+        super().__init__(pos=pos, size=size, text=text, visibility=visibility, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self._tk_object["state"] = "disabled"
         self.add_event(ETKBaseEvents.MOUSE_DOWN, lambda: None)

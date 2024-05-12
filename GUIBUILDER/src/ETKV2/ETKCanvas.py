@@ -12,10 +12,10 @@ from tkinter import Canvas, Tk
 
 
 class ETKCanvas(ETKBaseTkWidgetDisableable):
-    def __init__(self, tk: Tk, pos: vector2d, size: vector2d, background_color: int = 0xFFFFFF, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: vector2d, size: vector2d, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xFFFFFF, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self._tk_object: Canvas = Canvas(tk, highlightthickness=0)  # type:ignore
         self.__canvas_items: list[ETKCanvasItem] = []
-        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+        super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Properties
 

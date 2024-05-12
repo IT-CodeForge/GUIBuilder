@@ -8,11 +8,11 @@ from .ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from ..vector2d import vector2d
 
 
-class ETKBaseTkButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
-    def __init__(self, text: str, pos: vector2d, size: vector2d, background_color: int, text_color: int, **kwargs: Any) -> None:
+class ETKBaseTkWidgetButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
+    def __init__(self, *, pos: vector2d, size: vector2d, text: str, visibility: bool, enabled: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._outline: LabelFrame
 
-        super().__init__(text=text, pos=pos, size=size, background_color=background_color, text_color=text_color, **kwargs)
+        super().__init__(text=text, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Properties
 

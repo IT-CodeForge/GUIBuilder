@@ -1,14 +1,15 @@
 from tkinter import Tk
-from typing import Callable
+from typing import Any, Callable
 
 
 class ETKTimer:
-    def __init__(self, tk: Tk, interval_in_ms: int, timer_function: Callable[[], None]) -> None:
+    def __init__(self, tk: Tk, interval_in_ms: int, timer_function: Callable[[], None], running: bool = True, **kwargs: Any) -> None:
         self.__my_Tk: Tk = tk
         self.__timer_function: Callable[[], None] = timer_function
         self.interval_in_ms: int = interval_in_ms
-        self.__is_running = True
-        self.__my_Tk.after(self.interval_in_ms, self.__trigger)
+        self.__is_running = running
+        if running:
+            self.__my_Tk.after(self.interval_in_ms, self.__trigger)
 
     # region Properties
 

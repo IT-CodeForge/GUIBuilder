@@ -8,10 +8,10 @@ from .ETKBaseObject import ETKBaseObject, ETKEvents, ETKBaseEvents
 
 
 class ETKBaseTkObject(ETKBaseObject):
-    def __init__(self, *, pos: vector2d, size: vector2d, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
         self._tk_object: Any
 
-        super().__init__(pos=pos, size=size, background_color=background_color, **kwargs)
+        super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
         self._tk_object.configure(borderwidth=0)
 
