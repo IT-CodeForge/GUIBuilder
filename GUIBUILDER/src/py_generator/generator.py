@@ -1,9 +1,9 @@
-from ..intermediary_neu.objects.IBaseObject import IBaseObject
+from intermediary_neu.objects.IBaseObject import IBaseObject
 import os
 from enum import Enum, auto
 from typing import Optional
-from ETK_system_gui_generator import ETK_system_gui_generator
-from ETK_user_gui_generator import ETK_user_gui_generator
+from .ETK_system_gui_generator import ETK_system_gui_generator
+from .ETK_user_gui_generator import ETK_user_gui_generator
 from autopep8 import fix_code # type:ignore
 
 class SupportedFrameworks(Enum):
@@ -19,7 +19,7 @@ class generator:
         self.__user_gui_gen_etk = ETK_user_gui_generator()
         pass
 
-    def write_files(self, path: str, etk_objects:tuple[IBaseObject], framework: SupportedFrameworks):
+    def write_files(self, path: str, etk_objects:tuple[IBaseObject, ...], framework: SupportedFrameworks):
         if framework == SupportedFrameworks.ETK:
             old_user_gui: Optional[str] = None
             if os.path.exists(self.__join_paths(path, self.__user_gui_name_etk)):
