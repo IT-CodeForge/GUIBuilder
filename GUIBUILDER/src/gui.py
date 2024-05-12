@@ -15,6 +15,7 @@ class GUI(ETKMainWindow):
     MENUBAR_ELEMENT_HEIGHT: Final = 20
     ATTRIBUTES_WIDTH: Final = 360
     ATTRIBUTES_ELEMENT_HEIGHT: Final = 20
+    CC_NOTICE_HEIGHT: Final = 35
 
     def _add_elements(self):
         self.__move_timer = ETKTimer(self._tk_object, 10, self.__update_element_pos)
@@ -59,8 +60,12 @@ class GUI(ETKMainWindow):
         self.attributes.add_element(self.attributes_element)
 
         self.attributes_window = ETKListingContainer(self._tk_object, size=ETKContainerSize(
-            self.attributes.size.x, self.attributes.size.y/2, paddings_x_l=2, paddings_x_r=2, paddings_y_o=0, paddings_y_u=2), outline_thickness=2, offset=3)
+            self.attributes.size.x, self.attributes.size.y/2 - self.CC_NOTICE_HEIGHT, paddings_x_l=2, paddings_x_r=2, paddings_y_o=0, paddings_y_u=2), outline_thickness=2, offset=3)
         self.attributes.add_element(self.attributes_window)
+
+        self.cc_notice = ETKLabel(self._tk_object, text="\u00A9 2024 Johannes Kerger, Louis Sailer\r\nLicense: MIT-License", background_color=self.attributes.background_color, size=vector2d(self.attributes.size.x, self.CC_NOTICE_HEIGHT))
+        self.cc_notice.outline_thickness = 2
+        self.attributes.add_element(self.cc_notice)
 
         self.element_area = ETKContainer(
             self._tk_object, size=ETKContainerSize(500, 500), outline_thickness=2)
