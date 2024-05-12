@@ -165,4 +165,4 @@ class ETK_user_gui_generator:
         
     
     def __join_relative_path(self, relative_path: str) -> str:
-        return os.path.join(os.path.split(__file__)[0], relative_path)
+        return os.path.abspath(os.path.join(os.path.split(__file__)[0], relative_path))

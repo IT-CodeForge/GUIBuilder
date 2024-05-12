@@ -404,6 +404,7 @@ class Steuerung:
             return
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
+                print(self.__objects.values())
                 self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.ETK)  # TODO
             case "C++ (TGW)":
                 pass  # TODO

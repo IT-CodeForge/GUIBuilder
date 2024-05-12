@@ -109,6 +109,6 @@ class generator:
             f.write(data)
     
     def __join_paths(self, starting_path: str, following_path: str) -> str:
-        return os.path.join(starting_path, following_path)
+        return os.path.abspath(os.path.join(starting_path, following_path))
     def __join_relative_path(self, relative_path: str) -> str:
-        return os.path.join(os.path.split(__file__)[0], relative_path)
+        return os.path.abspath(os.path.join(os.path.split(__file__)[0], relative_path))
