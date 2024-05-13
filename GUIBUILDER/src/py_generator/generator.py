@@ -1,4 +1,5 @@
 from intermediary_neu.objects.IBaseObject import IBaseObject
+from .BaseGenerator import BaseGenerator
 import os
 from enum import Enum, auto
 from typing import Optional
@@ -10,7 +11,7 @@ class SupportedFrameworks(Enum):
     ETK = auto()
     TGW = auto()
 
-class generator:
+class generator(BaseGenerator):
     def __init__(self) -> None:
         self.__removed_events_etk: str = "RemovedEvents.py"
         self.__user_gui_name_etk: str = "UserGUI.py"
@@ -22,8 +23,8 @@ class generator:
     def write_files(self, path: str, etk_objects:tuple[IBaseObject, ...], framework: SupportedFrameworks):
         if framework == SupportedFrameworks.ETK:
             old_user_gui: Optional[str] = None
-            if os.path.exists(self.__join_paths(path, self.__user_gui_name_etk)):
-                old_user_gui = self.__read_file(self.__join_paths(path, self.__user_gui_name_etk))
+            if os.path.exists(self._join_paths(path, self.__user_gui_name_etk)):
+                old_user_gui = self._read_file(self._join_paths(path, self.__user_gui_name_etk))
             
             generated_user_gui: Optional[str] = None
             if old_user_gui != None:
@@ -41,30 +42,30 @@ class generator:
             user_gui, removed_events = self.__user_gui_gen_etk.generate_file(etk_objects, generated_user_gui)
 
             if old_user_gui == None:
-                user_template: str = self.__read_file(self.__join_relative_path("./templates/write/UserGUI.txt"))
+                user_template: str = self._read_file(self._join_relative_path("./templates/write/UserGUI.txt"))
                 user_gui = user_template.replace("#tag:generated_code#", user_gui)
                 fix_code(user_gui)
-                self.__write_file(self.__join_paths(path, self.__user_gui_name_etk), user_gui)
+                self.__write_file(self._join_paths(path, self.__user_gui_name_etk), user_gui)
             else:
                 old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"# region generated code\n\n" + user_gui + "\n") # type:ignore
                 fix_code(old_user_gui)
-                self.__write_file(self.__join_paths(path, self.__user_gui_name_etk), old_user_gui)
+                self.__write_file(self._join_paths(path, self.__user_gui_name_etk), old_user_gui)
 
             if removed_events != "":
                 old_removed_events: str = ""
-                if os.path.exists(self.__join_paths(path, self.__removed_events_etk)):
-                    old_removed_events = self.__read_file(self.__join_paths(path, self.__removed_events_etk))
+                if os.path.exists(self._join_paths(path, self.__removed_events_etk)):
+                    old_removed_events = self._read_file(self._join_paths(path, self.__removed_events_etk))
             
                 all_removed_events: str = old_removed_events
 
                 all_removed_events += "\n" + removed_events
                 fix_code(all_removed_events)
-                self.__write_file(self.__join_paths(path, self.__removed_events_etk), all_removed_events)
+                self.__write_file(self._join_paths(path, self.__removed_events_etk), all_removed_events)
             
-            system_template: str = self.__read_file(self.__join_relative_path("./templates/write/SystemGUI.txt"))
+            system_template: str = self._read_file(self._join_relative_path("./templates/write/SystemGUI.txt"))
             system_gui = system_template.replace("#tag:generated_code#", system_gui)
             fix_code(system_gui)
-            self.__write_file(self.__join_paths(path, self.__system_gui_name_etk), system_gui)
+            self.__write_file(self._join_paths(path, self.__system_gui_name_etk), system_gui)
             
         elif framework == SupportedFrameworks.TGW:
             pass
@@ -97,18 +98,7 @@ class generator:
             if indent == 0:
                 return i
             index = i+1 
-
-    def __read_file(self, path: str) -> str:
-        retval: str = ""
-        with open(path, "r") as f:
-            retval = f.read()
-        return retval
     
     def __write_file(self, path: str, data: str):
         with open(path, "w") as f:
             f.write(data)
-    
-    def __join_paths(self, starting_path: str, following_path: str) -> str:
-        return os.path.abspath(os.path.join(starting_path, following_path))
-    def __join_relative_path(self, relative_path: str) -> str:
-        return os.path.abspath(os.path.join(os.path.split(__file__)[0], relative_path))

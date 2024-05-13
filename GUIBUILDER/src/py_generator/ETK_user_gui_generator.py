@@ -11,25 +11,11 @@ from astor import to_source  # type:ignore
 from typing import Optional, Callable, Any
 import os
 from . import ast_generator as ast_gen
+from .BaseETKGenerator import BaseETKGenerator
 
 class ETK_user_gui_generator:
     def __init__(self) -> None:
-        self.__event_trans: dict[str, dict[type, str]] = {
-            "event_create": {IWindow: "START"},
-            "event_destroy": {IWindow: "EXIT"},
-            "event_mouse_click": {IBaseObject: "MOUSE_DOWN"},
-            "event_mouse_move": {IBaseObject: "MOUSE_MOVED"},
-            "event_hovered": {IBaseObject: "ENTER"},
-            "event_changed": {ICheckbox: "TOGGLED", IEdit: "CHANGED"},
-            "event_pressed": {IButton: "PRESSED"}
-        }
-        self.__generator_trans: dict[type, Callable[[Any], stmt]] = {
-            IButton: ast_gen.button,
-            ICanvas: ast_gen.canvas,
-            ICheckbox: ast_gen.checkbox,
-            IEdit: ast_gen.edit,
-            ILabel: ast_gen.label
-        }
+        super().__init__()
 
     def generate_file(self, etk_objects: tuple[IBaseObject, ...], old_file:Optional[str]) -> tuple[str, str]:
         template: Module
@@ -55,11 +41,11 @@ class ETK_user_gui_generator:
                 break
         
         my_event_list: list[tuple[IBaseObject, Optional[str],
-                                  str]] = self.__generate_event_list(etk_objects)
+                                  str]] = self._generate_event_list(etk_objects)
         
         previous_functions: dict[str, list[stmt]] = self.__generate_previous_funcs_dict(ast_old_file)
         
-        my_event_funcs, removed_events = self.__generate_event_funcs(my_event_list, previous_functions)
+        my_event_funcs, removed_events = self._generate_event_funcs(my_event_list, previous_functions)
 
         for ast_object in template.body:
             if type(ast_object) == ClassDef and ast_object.name == "UserGUI":
@@ -72,63 +58,6 @@ class ETK_user_gui_generator:
 
         code: str = to_source(template)
         return code, to_source(ast_removed_events)
-    
-    def __generate_event_list(self, etk_objects: tuple[IBaseObject, ...]) -> list[tuple[IBaseObject, Optional[str], str]]:
-        retval: list[tuple[IBaseObject, Optional[str], str]] = []
-        # go throug every object
-        for etk_object in etk_objects:
-            if type(etk_object) == ITimer:
-                retval.append((etk_object, None, "event_timer"))
-            attributes = etk_object.ATTRIBUTES
-            # go through the attributes of every object
-            for attribute in attributes:
-                # check if the attribut is an event
-                if attribute.startswith("event_"):
-                    # if the event is inactive skip said event
-                    if not getattr(etk_object, attribute):
-                        continue
-                    intermediary_event = attribute
-                    etk_events = self.__event_trans.get(attribute)
-                    # get the correct representation of the event in the ETK Framework
-                    if etk_events == None:
-                        continue
-                    my_etk_event: Optional[str] = None
-                    for etk_event in etk_events:
-                        if etk_event == IBaseObject:
-                            my_etk_event = etk_events.get(IBaseObject)
-                        if etk_event == type(etk_object):
-                            my_etk_event = etk_events.get(type(etk_object))
-                    if my_etk_event == None:
-                        continue
-                    # add all the necessary information to the return list
-                    retval.append(
-                        (etk_object, my_etk_event, intermediary_event))
-
-        return retval
-    
-    def __generate_event_funcs(self, event_list: list[tuple[IBaseObject, Optional[str], str]], previous_events: dict[str, list[stmt]]) -> tuple[list[stmt], dict[str, list[stmt]]]:
-        retval: list[stmt] = []
-        for etk_object, _, intermediary_event_type in event_list:
-            my_function: FunctionDef = ast_gen.generate_event_definition( # type:ignore
-                etk_object, intermediary_event_type)
-            for previous_event in previous_events.keys():
-                if self.__compare_event_funcs(my_function.name, intermediary_event_type, previous_event):
-                    my_function.body = previous_events.pop(previous_event, [Pass()])
-                    break
-            retval.append(my_function)
-        return retval, previous_events
-    
-    def __compare_event_funcs(self, generated_func_name: str, generated_intermediary_event: str, read_func_name: str) -> bool:
-        if generated_func_name[0] != "e":
-            raise ValueError("the event function was not generated correctly, missing e in the beginning")
-        if read_func_name[0] != "e" or read_func_name.count("_") < 2:
-            return False
-        generated_func_id: int = int(generated_func_name[1:generated_func_name.find("_")])
-        read_func_id: int = int(read_func_name[1:read_func_name.find("_")])
-        if generated_func_id == read_func_id and read_func_name.endswith(generated_intermediary_event):
-            return True
-        else:
-            return False
 
     def __generate_previous_funcs_dict(self, ast_old_file: Optional[Module]) -> dict[str, list[stmt]]:
         retval: dict[str, list[stmt]] = {}

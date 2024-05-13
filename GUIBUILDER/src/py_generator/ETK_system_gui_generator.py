@@ -60,7 +60,7 @@ class ETK_system_gui_generator:
 
     def __generate_event_list(self, etk_objects: tuple[IBaseObject, ...]) -> list[tuple[IBaseObject, Optional[str], str]]:
         retval: list[tuple[IBaseObject, Optional[str], str]] = []
-        # go throug every object
+        # go throuhg every object
         for etk_object in etk_objects:
             if type(etk_object) == ITimer:
                 retval.append((etk_object, None, "event_timer"))

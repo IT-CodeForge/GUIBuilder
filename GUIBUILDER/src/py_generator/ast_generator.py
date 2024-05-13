@@ -48,4 +48,5 @@ def generate_event_bind(obj: IBaseObject, etk_event_type: str, intermediary_even
         return parse(f"self.add_event({etk_event_type}, self.{__event_func_name(obj, intermediary_event_type)})").body[0]
     else:
         return parse(f"self.e{obj.id}_{obj.name}.add_event({etk_event_type}, self.{__event_func_name(obj, intermediary_event_type)})").body[0]
+
 # endregion
