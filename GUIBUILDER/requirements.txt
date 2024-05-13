@@ -1,4 +1,4 @@
 eel
 requests
 astor
-auto-py-to-exe
+autopep8
