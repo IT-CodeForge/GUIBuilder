@@ -1,30 +1,31 @@
 from intermediary_neu.objects.IBaseObject import IBaseObject
 from intermediary_neu.objects.IButton import IButton
-from intermediary_neu.objects.ICanvas import ICanvas
 from intermediary_neu.objects.ICheckbox import ICheckbox
 from intermediary_neu.objects.IEdit import IEdit
-from intermediary_neu.objects.ILabel import ILabel
 from intermediary_neu.objects.ITimer import ITimer
 from intermediary_neu.objects.IWindow import IWindow
+#ILabe and ICanvas not needed, since they don't have events
 from typing import Optional
 from .BaseGenerator import BaseGenerator
 from ast import stmt, Pass, FunctionDef
 from . import ast_generator as ast_gen
 
 class BaseETKGenerator(BaseGenerator):
-    def __init__(self) -> None:
-        self._event_trans: dict[str, dict[type, str]] = {
-            "event_create": {IWindow: "START"},
-            "event_destroy": {IWindow: "EXIT"},
-            "event_mouse_click": {IBaseObject: "MOUSE_DOWN"},
-            "event_mouse_move": {IBaseObject: "MOUSE_MOVED"},
-            "event_hovered": {IBaseObject: "ENTER"},
-            "event_changed": {ICheckbox: "TOGGLED", IEdit: "CHANGED"},
-            "event_pressed": {IButton: "PRESSED"}
-        }
+    _EVENT_TRANS: dict[str, dict[type, str]] = {
+        "event_create": {IWindow: "START"},
+        "event_destroy": {IWindow: "EXIT"},
+        "event_mouse_click": {IBaseObject: "MOUSE_DOWN"},
+        "event_mouse_move": {IBaseObject: "MOUSE_MOVED"},
+        "event_hovered": {IBaseObject: "ENTER"},
+        "event_changed": {ICheckbox: "TOGGLED", IEdit: "CHANGED"},
+        "event_pressed": {IButton: "PRESSED"}
+    }
+
+    def __init__(self) -> None:        
         super().__init__()
     
-    def _generate_event_list(self, etk_objects: tuple[IBaseObject, ...]) -> list[tuple[IBaseObject, Optional[str], str]]:
+    @classmethod
+    def _generate_event_list(cls, etk_objects: tuple[IBaseObject, ...]) -> list[tuple[IBaseObject, Optional[str], str]]:
         retval: list[tuple[IBaseObject, Optional[str], str]] = []
         # go throug every object
         for etk_object in etk_objects:
@@ -39,7 +40,7 @@ class BaseETKGenerator(BaseGenerator):
                     if not getattr(etk_object, attribute):
                         continue
                     intermediary_event = attribute
-                    etk_events = self.__event_trans.get(attribute)
+                    etk_events = cls._EVENT_TRANS.get(attribute)
                     # get the correct representation of the event in the ETK Framework
                     if etk_events == None:
                         continue
@@ -57,7 +58,8 @@ class BaseETKGenerator(BaseGenerator):
 
         return retval
 
-    def _generate_event_funcs(self, event_list: list[tuple[IBaseObject, Optional[str], str]], previous_events: Optional[dict[str, list[stmt]]]) -> tuple[list[stmt], dict[str, list[stmt]]]:
+    @classmethod
+    def _generate_event_funcs(cls, event_list: list[tuple[IBaseObject, Optional[str], str]], previous_events: Optional[dict[str, list[stmt]]] = None) -> tuple[list[stmt], dict[str, list[stmt]]]:
         if previous_events == None:
             previous_events = {}
         retval: list[stmt] = []
@@ -65,13 +67,14 @@ class BaseETKGenerator(BaseGenerator):
             my_function: FunctionDef = ast_gen.generate_event_definition( # type:ignore
                 etk_object, intermediary_event_type)
             for previous_event in previous_events.keys():
-                if self.__compare_event_funcs(my_function.name, intermediary_event_type, previous_event):
+                if cls.__compare_event_funcs(my_function.name, intermediary_event_type, previous_event):
                     my_function.body = previous_events.pop(previous_event, [Pass()])
                     break
             retval.append(my_function)
         return retval, previous_events
     
-    def __compare_event_funcs(self, generated_func_name: str, generated_intermediary_event: str, read_func_name: str) -> bool:
+    @staticmethod
+    def __compare_event_funcs(generated_func_name: str, generated_intermediary_event: str, read_func_name: str) -> bool:
         if generated_func_name[0] != "e":
             raise ValueError("the event function was not generated correctly, missing e in the beginning")
         if read_func_name[0] != "e" or read_func_name.count("_") < 2:

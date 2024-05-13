@@ -12,19 +12,20 @@ class SupportedFrameworks(Enum):
     TGW = auto()
 
 class generator(BaseGenerator):
+    __REMOVED_EVENTS_ETK: str = "RemovedEvents.py"
+    __USER_GUI_NAME_ETK: str = "UserGUI.py"
+    __SYSTEM_GUI_NAME_ETK: str = "SystemGUI.py"
+
     def __init__(self) -> None:
-        self.__removed_events_etk: str = "RemovedEvents.py"
-        self.__user_gui_name_etk: str = "UserGUI.py"
-        self.__system_gui_name_etk: str = "SystemGUI.py"
-        self.__system_gui_gen_etk = ETK_system_gui_generator()
-        self.__user_gui_gen_etk = ETK_user_gui_generator()
-        pass
+        self.__SYSTEM_GUI_GEN_ETK = ETK_system_gui_generator()
+        self.__USER_GUI_GEN_ETK = ETK_user_gui_generator()
+        super().__init__()
 
     def write_files(self, path: str, etk_objects:tuple[IBaseObject, ...], framework: SupportedFrameworks):
         if framework == SupportedFrameworks.ETK:
             old_user_gui: Optional[str] = None
-            if os.path.exists(self._join_paths(path, self.__user_gui_name_etk)):
-                old_user_gui = self._read_file(self._join_paths(path, self.__user_gui_name_etk))
+            if os.path.exists(self._join_paths(path, self.__USER_GUI_NAME_ETK)):
+                old_user_gui = self._read_file(self._join_paths(path, self.__USER_GUI_NAME_ETK))
             
             generated_user_gui: Optional[str] = None
             if old_user_gui != None:
@@ -37,42 +38,43 @@ class generator(BaseGenerator):
 
                 generated_user_gui = old_user_gui[user_gui_region_start:user_gui_region_end]
             
-            system_gui: str = self.__system_gui_gen_etk.generate_file(etk_objects)
+            system_gui: str = self.__SYSTEM_GUI_GEN_ETK.generate_file(etk_objects)
 
-            user_gui, removed_events = self.__user_gui_gen_etk.generate_file(etk_objects, generated_user_gui)
+            user_gui, removed_events = self.__USER_GUI_GEN_ETK.generate_file(etk_objects, generated_user_gui)
 
             if old_user_gui == None:
                 user_template: str = self._read_file(self._join_relative_path("./templates/write/UserGUI.txt"))
                 user_gui = user_template.replace("#tag:generated_code#", user_gui)
                 fix_code(user_gui)
-                self.__write_file(self._join_paths(path, self.__user_gui_name_etk), user_gui)
+                self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_ETK), user_gui)
             else:
                 old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"# region generated code\n\n" + user_gui + "\n") # type:ignore
                 fix_code(old_user_gui)
-                self.__write_file(self._join_paths(path, self.__user_gui_name_etk), old_user_gui)
+                self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_ETK), old_user_gui)
 
             if removed_events != "":
                 old_removed_events: str = ""
-                if os.path.exists(self._join_paths(path, self.__removed_events_etk)):
-                    old_removed_events = self._read_file(self._join_paths(path, self.__removed_events_etk))
+                if os.path.exists(self._join_paths(path, self.__REMOVED_EVENTS_ETK)):
+                    old_removed_events = self._read_file(self._join_paths(path, self.__REMOVED_EVENTS_ETK))
             
                 all_removed_events: str = old_removed_events
 
                 all_removed_events += "\n" + removed_events
                 fix_code(all_removed_events)
-                self.__write_file(self._join_paths(path, self.__removed_events_etk), all_removed_events)
+                self.__write_file(self._join_paths(path, self.__REMOVED_EVENTS_ETK), all_removed_events)
             
             system_template: str = self._read_file(self._join_relative_path("./templates/write/SystemGUI.txt"))
             system_gui = system_template.replace("#tag:generated_code#", system_gui)
             fix_code(system_gui)
-            self.__write_file(self._join_paths(path, self.__system_gui_name_etk), system_gui)
+            self.__write_file(self._join_paths(path, self.__SYSTEM_GUI_NAME_ETK), system_gui)
             
         elif framework == SupportedFrameworks.TGW:
             pass
         else:
             raise ValueError(f"Selected framework ({framework.name}) is not supported")
     
-    def __find_next(self, st: str, searches: tuple[str, ...], start: int = 0, end: Optional[int] = None):
+    @staticmethod
+    def __find_next(st: str, searches: tuple[str, ...], start: int = 0, end: Optional[int] = None):
         if end == None:
             end = len(st)
         erg: dict[str, int] = {}
@@ -82,13 +84,13 @@ class generator(BaseGenerator):
         return min(erg.items(), key=lambda v: v[1])
 
 
-
-    def __find_region_end(self, st: str, start: int) -> int:
+    @classmethod
+    def __find_region_end(cls, st: str, start: int) -> int:
         index = start
         indent = 0
         while True:
             try:
-                v, i = self.__find_next(st, ("# region", "#region", "# endregion", "#endregion"), index)
+                v, i = cls.__find_next(st, ("# region", "#region", "# endregion", "#endregion"), index)
             except ValueError:
                 raise ValueError("regionend not found")
             if v in ["# region", "#region"]:
@@ -99,6 +101,7 @@ class generator(BaseGenerator):
                 return i
             index = i+1 
     
-    def __write_file(self, path: str, data: str):
+    @staticmethod
+    def __write_file(path: str, data: str):
         with open(path, "w") as f:
             f.write(data)

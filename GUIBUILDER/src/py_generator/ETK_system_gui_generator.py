@@ -6,108 +6,64 @@ from intermediary_neu.objects.IEdit import IEdit
 from intermediary_neu.objects.ILabel import ILabel
 from intermediary_neu.objects.ITimer import ITimer
 from intermediary_neu.objects.IWindow import IWindow
-from ast import Module, stmt, FunctionDef, Name, Load, parse
+from ast import ClassDef, Module, stmt, FunctionDef, parse
 from astor import to_source  # type:ignore
 from typing import Optional, Callable, Any
-import os
 from . import ast_generator as ast_gen
+from .BaseETKGenerator import BaseETKGenerator
 
 
-class ETK_system_gui_generator:
+class ETK_system_gui_generator(BaseETKGenerator):
+    __GENERATOR_TRANS: dict[type, Callable[[Any], stmt]] = {
+        IButton: ast_gen.button,
+        ICanvas: ast_gen.canvas,
+        ICheckbox: ast_gen.checkbox,
+        IEdit: ast_gen.edit,
+        ILabel: ast_gen.label
+    }
+    
     def __init__(self) -> None:
-        self.__event_trans: dict[str, dict[type, str]] = {
-            "event_create": {IWindow: "START"},
-            "event_destroy": {IWindow: "EXIT"},
-            "event_mouse_click": {IBaseObject: "MOUSE_DOWN"},
-            "event_mouse_move": {IBaseObject: "MOUSE_MOVED"},
-            "event_hovered": {IBaseObject: "ENTER"},
-            "event_changed": {ICheckbox: "TOGGLED", IEdit: "CHANGED"},
-            "event_pressed": {IButton: "PRESSED"}
-        }
-        self.__generator_trans: dict[type, Callable[[Any], stmt]] = {
-            IButton: ast_gen.button,
-            ICanvas: ast_gen.canvas,
-            ICheckbox: ast_gen.checkbox,
-            IEdit: ast_gen.edit,
-            ILabel: ast_gen.label
-        }
+        super().__init__()
 
-    def generate_file(self, etk_objects: tuple[IBaseObject, ...]) -> str:
+    @classmethod
+    def generate_file(cls, etk_objects: tuple[IBaseObject, ...]) -> str:
         template: Module
-        with open(self.__join_relative_path("./templates/generator/SystemGUI.txt"), "r") as f:
-            template = parse(f.read())
+        template = parse(cls._read_file(cls._join_relative_path("./templates/generator/SystemGUI.txt")))
+        
+        for e in template.body:
+            if type(e) == ClassDef and e.name == "SystemGUI":
+                template_class = e
 
-        my_class_body: list[stmt] = template.body[0].body  # type:ignore
+        my_class_body: list[stmt] = template_class.body  # type:ignore
 
         my_event_list: list[tuple[IBaseObject, Optional[str],
-                                  str]] = self.__generate_event_list(etk_objects)
+                                  str]] = cls._generate_event_list(etk_objects)
 
         for ast_object in my_class_body:  # type:ignore
             if type(ast_object) == FunctionDef:  # type:ignore
                 if ast_object.name == "__init__":
-                    ast_object.body = [self.__generate_init_body(etk_objects)]
+                    ast_object.body = [cls.__generate_init_body(etk_objects)]
                 if ast_object.name == "_add_elements":
-                    ast_object.body = self.__generate_attribute_creation(
-                        etk_objects) + self.__generate_event_binds(my_event_list)
+                    ast_object.body = cls.__generate_attribute_creation(
+                        etk_objects) + cls.__generate_event_binds(my_event_list)
 
-        my_class_body += self.__generate_event_funcs(my_event_list) # type:ignore
+        my_class_body += cls._generate_event_funcs(my_event_list)[0] 
 
-        template.body[0].body = my_class_body  # type:ignore
+        template_class.body = my_class_body  # type:ignore
 
         code: str = to_source(template)
 
         return code
 
-    def __generate_event_list(self, etk_objects: tuple[IBaseObject, ...]) -> list[tuple[IBaseObject, Optional[str], str]]:
-        retval: list[tuple[IBaseObject, Optional[str], str]] = []
-        # go throuhg every object
-        for etk_object in etk_objects:
-            if type(etk_object) == ITimer:
-                retval.append((etk_object, None, "event_timer"))
-            attributes = etk_object.ATTRIBUTES
-            # go through the attributes of every object
-            for attribute in attributes:
-                # check if the attribut is an event
-                if attribute.startswith("event_"):
-                    # if the event is inactive skip said event
-                    if not getattr(etk_object, attribute):
-                        continue
-                    intermediary_event = attribute
-                    etk_events = self.__event_trans.get(attribute)
-                    # get the correct representation of the event in the ETK Framework
-                    if etk_events == None:
-                        continue
-                    my_etk_event: Optional[str] = None
-                    for etk_event in etk_events:
-                        if etk_event == IBaseObject:
-                            my_etk_event = etk_events.get(IBaseObject)
-                        if etk_event == type(etk_object):
-                            my_etk_event = etk_events.get(type(etk_object))
-                    if my_etk_event == None:
-                        continue
-                    # add all the necessary information to the return list
-                    retval.append(
-                        (etk_object, my_etk_event, intermediary_event))
-
-        return retval
-
-    def __generate_init_body(self, etk_objects: tuple[IBaseObject, ...]) -> stmt:
+    @staticmethod
+    def __generate_init_body(etk_objects: tuple[IBaseObject, ...]) -> stmt:
         for etk_object in etk_objects:
             if type(etk_object) == IWindow:
                 return ast_gen.generate_gui_init(etk_object)
         raise ValueError("List of baseobjects, doesn't contain Mainwindow")
 
-    def __generate_event_funcs(self, event_list: list[tuple[IBaseObject, Optional[str], str]]) -> list[stmt]:
-        retval: list[stmt] = []
-        for etk_object, _, intermediary_event_type in event_list:
-            my_function: FunctionDef = ast_gen.generate_event_definition( # type:ignore
-                etk_object, intermediary_event_type)
-            my_function.decorator_list = [ 
-                Name(id='abstractmethod', ctx=Load())]  
-            retval.append(my_function)
-        return retval
-
-    def __generate_attribute_creation(self, etk_objects: tuple[IBaseObject, ...]) -> list[stmt]:
+    @classmethod
+    def __generate_attribute_creation(cls, etk_objects: tuple[IBaseObject, ...]) -> list[stmt]:
         retval: list[stmt] = []
         for etk_object in etk_objects:
             if type(etk_object) == IWindow:
@@ -115,21 +71,22 @@ class ETK_system_gui_generator:
             if type(etk_object) == ITimer:
                 retval.append(ast_gen.timer(etk_object, "event_timer"))
                 continue
-            my_func = self.__generator_trans.get(type(etk_object))
+            my_func = cls.__GENERATOR_TRANS.get(type(etk_object))
             if my_func == None:
                 continue
             retval.append(my_func(etk_object))
         return retval
 
-    def __generate_event_binds(self, event_list: list[tuple[IBaseObject, Optional[str], str]]) -> list[stmt]:
+    @classmethod
+    def __generate_event_binds(cls, event_list: list[tuple[IBaseObject, Optional[str], str]]) -> list[stmt]:
         retval: list[stmt] = []
         for etk_object, etk_event_typ, intermediary_event_type in event_list:
             etk_event_enum: str = ""
             if etk_event_typ == None:
                 continue
-            if IBaseObject in self.__event_trans.get(intermediary_event_type, {}).keys():
+            if IBaseObject in cls._EVENT_TRANS.get(intermediary_event_type, {}).keys():
                 etk_event_enum = "Base"
-            elif self.__event_trans.get(intermediary_event_type, {}) != {}:
+            elif cls._EVENT_TRANS.get(intermediary_event_type, {}) != {}:
                 etk_event_enum = str(type(etk_object).__name__)[1:]
             else:
                 raise ValueError("incompatible event list")
@@ -137,6 +94,3 @@ class ETK_system_gui_generator:
             retval.append(ast_gen.generate_event_bind(
                 etk_object, etk_event_typ, intermediary_event_type))
         return retval
-
-    def __join_relative_path(self, relative_path: str) -> str:
-        return os.path.abspath(os.path.join(os.path.split(__file__)[0], relative_path))
