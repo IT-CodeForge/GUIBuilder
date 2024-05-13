@@ -9,7 +9,7 @@ class GUI(ETKMainWindow):
         self.__mouse_pos = vector2d()
         super().__init__()
 
-    LANGUAGES: Final = ["Python (ETK)", "C++ (TGW)"]
+    LANGUAGES: Final = ["C++ (TGW)", "Python (ETK)"]
     MENUBAR_PADDING: Final = 10
     MENUBAR_HEIGHT: Final = 40
     MENUBAR_ELEMENT_HEIGHT: Final = 20
