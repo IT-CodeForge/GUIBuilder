@@ -1,4 +1,4 @@
-from os import environ, path, remove
+from os import environ, path, remove, system
 def command(p_cmd: str) -> None:
     import subprocess
     startupinfo = subprocess.STARTUPINFO()
@@ -17,6 +17,8 @@ if __name__ == "__main__":
 
     with open(t_temp_config_path, "w") as f:
         f.write(t_config)
+    
+    system("pip install --upgrade --upgrade-strategy eager auto-py-to-exe && pip install --upgrade --upgrade-strategy eager -r requirements.txt") # executed with system instead of command to open a cmd window that shows the update process if executed in pythonw
 
     command(rf'auto-py-to-exe -c "{t_temp_config_path}" -o "{t_path}\output" -lang de')
 
