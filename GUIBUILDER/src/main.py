@@ -2,6 +2,8 @@ from os import devnull, environ
 import sys
 from steuerung import Steuerung
 
+version = "0.1"
+
 # from io import TextIOWrapper
 # from os import fsync, path
 

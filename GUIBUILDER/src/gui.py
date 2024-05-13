@@ -1,13 +1,14 @@
 from typing import Any, Final, Optional, Type
 from ETK import *
 from steuerung import Steuerung
+from main import version
 
 
 class GUI(ETKMainWindow):
     def __init__(self, steuerung: Steuerung) -> None:
         self.__steuerung = steuerung
         self.__mouse_pos = vector2d()
-        super().__init__()
+        super().__init__(caption=f"GUI-Builder V{version}")
 
     LANGUAGES: Final = ["C++ (TGW)", "Python (ETK)"]
     MENUBAR_PADDING: Final = 10
