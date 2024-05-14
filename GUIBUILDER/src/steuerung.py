@@ -276,7 +276,7 @@ class Steuerung:
     def delete_element(self, element: ETKBaseObject) -> None:
         self.__intermediary.delete_object(self.__objects[element])
         self.__objects.pop(element)
-        element.visibility = False  # NOTE: delete Element
+        element.visibility = False
         self.__gui.attributes_element_inner.visibility = False
 
     def update_element_attributes_gui(self, element: ETKBaseObject) -> None:
@@ -370,7 +370,7 @@ class Steuerung:
         for e in self.__objects.keys():
             if e == self.__gui:
                 continue
-            e.visibility = False  # NOTE: delete Element
+            e.visibility = False
         self.__objects = {}
 
         self.__intermediary = Intermediary()

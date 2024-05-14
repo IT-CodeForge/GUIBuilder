@@ -1,5 +1,7 @@
 from os import devnull, path
 import sys
+from threading import Thread
+import time
 from steuerung import Steuerung
 
 version = "0.1"
@@ -10,23 +12,30 @@ additional_files_path: str
 # from io import TextIOWrapper
 # from os import fsync, path
 
-# class FileAutoSave(TextIOWrapper):
-#     @property
-#     def path(self) -> str:
-#         return path.abspath(self._path)
+class MSGBoxStream():
+    def __init__(self):
+        self.t = Thread()
+        self.msg = ""
 
-#     def __init__(self, path: str):
-#         super().__init__(open(path, "a").detach())
-#         self._path: str = path
+    def __send(self):
+        time.sleep(0.25)
+        from jk import msgbox
+        msgbox.create_msg_box(
+            f"GUI-Builder - FEHLER", self.msg, msgbox.BUTTON_STYLES.OK)
+        self.msg = ""
+        
 
-#     def __del__(self):
-#         self.close()
+    def write(self, text: str) -> int:
+        self.msg += text
+        if not self.t.is_alive():
+            self.t = Thread(target=self.__send)
+            self.t.start()
+            import ctypes
+            ctypes.windll.shcore.SetProcessDpiAwareness(0) # NOTE
+        return len(text)
 
-#     def write(self, text: str) -> int:
-#         t_return = super().write(text)
-#         self.flush()
-#         fsync(self.fileno())
-#         return t_return
+    def flush(self) -> None:
+        return
 
 if __name__ == "__main__":
     import main
@@ -37,7 +46,8 @@ if __name__ == "__main__":
         main.internal_dir_root = main.dir_root
     else:
         # Release: Disables print(), etc
-        sys.stdout = sys.stderr = open(devnull, 'w')
+        sys.stdout = open(devnull, 'w')
+        sys.stderr = MSGBoxStream()
         # sys.stdout = FileAutoSave(r"C:\jk\out.log")
         # sys.stderr = FileAutoSave(r"C:\jk\err.log")
         main.dir_root = path.split(path.abspath(sys.executable))[0]
