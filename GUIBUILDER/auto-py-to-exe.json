@@ -71,7 +71,7 @@
   },
   {
    "optionDest": "datas",
-   "value": "%path%/src/py_generator/templates;py_generator/templates/"
+   "value": "%path%/additional_files/templates;additional_files/templates/"
   },
   {
    "optionDest": "argv_emulation",

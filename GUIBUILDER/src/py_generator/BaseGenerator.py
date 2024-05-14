@@ -14,4 +14,5 @@ class BaseGenerator:
 
     @classmethod
     def _join_relative_path(cls, relative_path: str) -> str:
-        return cls._join_paths(os.path.split(__file__)[0], relative_path)
+        from main import additional_files_path
+        return cls._join_paths(additional_files_path, relative_path)

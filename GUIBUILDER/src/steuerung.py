@@ -1,5 +1,4 @@
-from os import environ, path
-from sys import executable
+from os import path
 from tkinter import Tk, filedialog as fd
 from typing import Any
 from intermediary_all import *
@@ -11,12 +10,8 @@ class Steuerung:
     def __init__(self) -> None:
         self.__objects: dict[ETKBaseObject, IObjects] = {}
 
-        # Prüft ob es in VS-Code oder als Binary vorliegt.
-        if environ.get("DEV") != None:
-            self.__file = path.abspath(__file__)
-        else:
-            self.__file = path.abspath(executable)
-        self.__save_path: str = f"{path.split(self.__file)[0]}"
+        from main import dir_root
+        self.__save_path: str = dir_root
 
         self.__intermediary = Intermediary()
         self.__generator = generator()
@@ -404,7 +399,6 @@ class Steuerung:
             return
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
-                print(self.__objects.values())
                 self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.ETK)  # TODO
             case "C++ (TGW)":
                 pass  # TODO
