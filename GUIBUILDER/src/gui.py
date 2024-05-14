@@ -1,3 +1,4 @@
+from sys import executable
 from typing import Any, Final, Optional, Type
 from ETK import *
 from steuerung import Steuerung
@@ -19,6 +20,8 @@ class GUI(ETKMainWindow):
     CC_NOTICE_HEIGHT: Final = 35
 
     def _add_elements(self):
+        self._tk_object.iconbitmap(executable) # type:ignore
+
         self.__move_timer = ETKTimer(self._tk_object, 10, self.__update_element_pos)
 
         self.add_event(ETKBaseEvents.MOUSE_UP, self.__mouse_up_event_handler)
