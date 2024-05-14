@@ -12,7 +12,7 @@ class SupportedFrameworks(Enum):
     TGW = auto()
 
 class generator(BaseGenerator):
-    __REMOVED_EVENTS_ETK: str = "RemovedEvents.py"
+    __REMOVED_EVENTS_ETK: str = "RemovedEvents.txt"
     __USER_GUI_NAME_ETK: str = "UserGUI.py"
     __SYSTEM_GUI_NAME_ETK: str = "SystemGUI.py"
 
