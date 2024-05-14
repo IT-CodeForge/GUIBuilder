@@ -3,7 +3,7 @@ from enum import Enum, auto
 import traceback
 from typing import Any, Callable, Optional
 
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 
 
 class ETKEvents(Enum):
@@ -19,9 +19,9 @@ class ETKBaseEvents(ETKEvents):
 
 
 class ETKBaseObject:
-    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, background_color: int) -> None:
-        self.__pos: vector2d = vector2d()
-        self.__size: vector2d = vector2d()
+    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int) -> None:
+        self.__pos: Vector2d = Vector2d()
+        self.__size: Vector2d = Vector2d()
         self.__background_color: int = 0x0
         self.__visibility: bool = True
         self._event_lib: dict[ETKEvents, list[Callable[..., Any]]] = {
@@ -35,24 +35,24 @@ class ETKBaseObject:
     # region Properties
 
     @property
-    def pos(self) -> vector2d:
+    def pos(self) -> Vector2d:
         return self.__pos.copy()
 
     @pos.setter
-    def pos(self, value: vector2d) -> None:
+    def pos(self, value: Vector2d) -> None:
         self.__pos = value
 
     @property
-    def abs_pos(self) -> vector2d:
+    def abs_pos(self) -> Vector2d:
         """READ-ONLY"""
         return self.__pos.copy()
 
     @property
-    def size(self) -> vector2d:
+    def size(self) -> Vector2d:
         return self.__size.copy()
 
     @size.setter
-    def size(self, value: vector2d) -> None:
+    def size(self, value: Vector2d) -> None:
         self.__size = value
 
     @property

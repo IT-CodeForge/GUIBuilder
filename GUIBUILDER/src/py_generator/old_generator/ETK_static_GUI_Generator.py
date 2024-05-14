@@ -47,8 +47,8 @@ class ETK_static_GUI_Generator:
         object_name: str = gui_object.name
         retval: str = object_name + ": ETK" + str(type(gui_object))[1:] + " = "
         if type(gui_object) in [IButton, ICheckbox, IEdit, ILabel, ICanvas]:
-            parameters += ", pos=" + self.__generate_vector2d_from_tuple(gui_object.pos)
-            parameters += ", size=" + self.__generate_vector2d_from_tuple(gui_object.size)
+            parameters += ", pos=" + self.__generate_Vector2d_from_tuple(gui_object.pos)
+            parameters += ", size=" + self.__generate_Vector2d_from_tuple(gui_object.size)
             parameters += ", background_color=" + self.__generate_color_from_tuple(gui_object.background_color)
             if type(gui_object) in [IButton, ICheckbox, IEdit, ILabel]:
                 parameters += ", text_color=" + self.__generate_color_from_tuple(gui_object.text_color)
@@ -60,7 +60,7 @@ class ETK_static_GUI_Generator:
     
     def __generate_init_params(self, gui_object: IWindow)->str:
         parameters: str = ""
-        parameters += ", size=" + self.__generate_vector2d_from_tuple(gui_object.size)
+        parameters += ", size=" + self.__generate_Vector2d_from_tuple(gui_object.size)
         parameters += ", background_color=" + self.__generate_color_from_tuple(gui_object.background_color)
         parameters += ", caption=" + gui_object.title
         return parameters
@@ -144,8 +144,8 @@ class ETK_static_GUI_Generator:
     def __generate_base_event_bind_func(self, object_name: str, event_type: str, eventhandler: str)->str:
         return "self." + object_name + ".add_event(" + "ETKBaseEvents." + event_type + ", " + eventhandler[:-2] + ")\r\n"
 
-    def __generate_vector2d_from_tuple(self, input_tuple: tuple[int, int])->str:
-        return "vector2d(" + str(input_tuple[0]) + ", " + str(input_tuple[1]) + ")"
+    def __generate_Vector2d_from_tuple(self, input_tuple: tuple[int, int])->str:
+        return "Vector2d(" + str(input_tuple[0]) + ", " + str(input_tuple[1]) + ")"
     
     def __generate_color_from_tuple(self, input_tuple: tuple[int,int,int])->str:
         return str((input_tuple[0] << 8) + (input_tuple[1] << 4) + input_tuple[0])

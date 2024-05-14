@@ -6,7 +6,7 @@ from .Internal.ETKBaseObject import ETKBaseObject
 from .Internal.ETKBaseContainer import ETKAlignments
 from .Internal.ETKBaseWidget import ETKBaseWidget
 from .ETKContainer import ETKContainerSize
-from .vector2d import vector2d
+from .Vector2d import Vector2d
 from .Internal.ETKBaseContainer import ETKBaseContainer, _ETKSubAlignments, SizeError  # type:ignore
 
 
@@ -22,7 +22,7 @@ class ETKListingTypes(Enum):
 
 
 class ETKListingContainer(ETKBaseContainer):
-    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), alignment: ETKAlignments = ETKAlignments.TOP_LEFT, listing_type: ETKListingTypes = ETKListingTypes.TOP_TO_BOTTOM, offset: int = 10, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), alignment: ETKAlignments = ETKAlignments.TOP_LEFT, listing_type: ETKListingTypes = ETKListingTypes.TOP_TO_BOTTOM, offset: int = 10, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__alignment = alignment
         self.__listing_type = listing_type
         self.__offset = offset
@@ -32,7 +32,7 @@ class ETKListingContainer(ETKBaseContainer):
     # region Properties
 
     @ETKBaseContainer.size.setter
-    def size(self, value: ETKContainerSize | vector2d) -> None:
+    def size(self, value: ETKContainerSize | Vector2d) -> None:
         ETKBaseContainer.size.fset(self, value)  # type:ignore
         self._update_all_element_pos()
 
@@ -57,7 +57,7 @@ class ETKListingContainer(ETKBaseContainer):
                                for s in sizes]) + self.__offset * (len(sizes) - 1)
         non_listing_dir_size = max([s[non_listing_dir_index] for s in sizes])
 
-        needed_size = vector2d()
+        needed_size = Vector2d()
         needed_size[listing_dir_index] = listing_dir_size
         needed_size[non_listing_dir_index] = non_listing_dir_size
 
@@ -87,7 +87,7 @@ class ETKListingContainer(ETKBaseContainer):
         for e in elements:
             non_listing_dir_pos = self.__calculate_pos_part(
                 non_listing_dir_index, e.size[non_listing_dir_index], (self.size[4+2*non_listing_dir_index], self.size[5+2*non_listing_dir_index]))
-            pos = vector2d()
+            pos = Vector2d()
             pos[listing_dir_index] = listing_dir_pos
             pos[non_listing_dir_index] = non_listing_dir_pos
             self._element_rel_pos[e] = pos
@@ -108,7 +108,7 @@ class ETKListingContainer(ETKBaseContainer):
         self._prepare_element_add(element)
 
         element_list = list(self._element_rel_pos.items())
-        element_list.insert(index, (element, vector2d()))
+        element_list.insert(index, (element, Vector2d()))
         self._element_rel_pos = dict(element_list)
 
         self._update_all_element_pos()

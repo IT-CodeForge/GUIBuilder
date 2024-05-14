@@ -6,7 +6,7 @@ from types import NoneType
 from typing import Any, Callable, Optional
 
 from .ETKCanvas import ETKCanvas
-from .vector2d import vector2d
+from .Vector2d import Vector2d
 from .Internal.ETKBaseTkObject import ETKBaseTkObject
 from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from .Internal.ETKBaseObject import ETKEvents
@@ -22,14 +22,14 @@ class ETKWindowEvents(ETKEvents):
 
 
 class ETKMainWindow(ETKBaseTkObject):
-    def __init__(self, pos: vector2d = vector2d(0, 0), size: Optional[vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
+    def __init__(self, pos: Vector2d = Vector2d(0, 0), size: Optional[Vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
         self._tk_object: Tk = Tk()
         self.__topmost = False
         self.exit_locked = False
         self.__fullscreen = False
-        self.canvas = ETKCanvas(self._tk_object, vector2d(), vector2d())
+        self.canvas = ETKCanvas(self._tk_object, Vector2d(), Vector2d())
 
-        super().__init__(pos=pos, size=vector2d(1920, 1080), background_color=background_color, visibility=visibility, **kwargs)
+        super().__init__(pos=pos, size=Vector2d(1920, 1080), background_color=background_color, visibility=visibility, **kwargs)
 
         self.canvas.outline_color = 0x0
         self.canvas.outline_thickness = 2
@@ -48,22 +48,22 @@ class ETKMainWindow(ETKBaseTkObject):
     # region Properties
 
     @ETKBaseTkObject.pos.setter
-    def pos(self, value: vector2d) -> None:
+    def pos(self, value: Vector2d) -> None:
         ETKBaseTkObject.pos.fset(self, value)  # type:ignore
         self.__place_object()
 
     @property
-    def abs_pos(self) -> vector2d:
+    def abs_pos(self) -> Vector2d:
         """READ-ONLY"""
-        return vector2d(self._tk_object.winfo_rootx(), self._tk_object.winfo_rooty())
+        return Vector2d(self._tk_object.winfo_rootx(), self._tk_object.winfo_rooty())
 
     @ETKBaseTkObject.size.setter
-    def size(self, value: Optional[vector2d]) -> None:
+    def size(self, value: Optional[Vector2d]) -> None:
         if type(value) == NoneType:
             old_state = self._tk_object.state()
             self._tk_object.state("zoomed")
             self._tk_object.update()
-            t_value = vector2d(self._tk_object.winfo_width(),
+            t_value = Vector2d(self._tk_object.winfo_width(),
                                self._tk_object.winfo_height())
             self._tk_object.state(old_state)
         else:

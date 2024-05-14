@@ -3,13 +3,13 @@ import math
 from .Internal.ETKUtils import gen_col_from_int
 from tkinter import Canvas
 from typing import Callable, Optional
-from .vector2d import vector2d
+from .Vector2d import Vector2d
 
 
 class ETKCanvasItem:
-    def __init__(self, canvas: Canvas, pointlist: list[vector2d], background_color: int, outline_color: int) -> None:
+    def __init__(self, canvas: Canvas, pointlist: list[Vector2d], background_color: int, outline_color: int) -> None:
         self._tk_object: Canvas = canvas
-        self._pointlist: list[vector2d] = pointlist
+        self._pointlist: list[Vector2d] = pointlist
         self._rotation: float = 0
         self._isdeleted = False
         self._background_color: str = gen_col_from_int(background_color)
@@ -23,11 +23,11 @@ class ETKCanvasItem:
     # region Properties
 
     @property
-    def pos(self) -> vector2d:
+    def pos(self) -> Vector2d:
         return self._pointlist[0].copy()
 
     @pos.setter
-    def pos(self, value: vector2d) -> None:
+    def pos(self, value: Vector2d) -> None:
         self.__check_if_deleted()
         move_vec = value - self.pos
         for index, point in enumerate(self._pointlist):
@@ -77,8 +77,8 @@ class ETKCanvasItem:
     # endregion
     # region Methods
 
-    def find_intersections(self, shape: ETKCanvasItem) -> list[vector2d]:
-        solution_list: list[vector2d] = []
+    def find_intersections(self, shape: ETKCanvasItem) -> list[Vector2d]:
+        solution_list: list[Vector2d] = []
         other_pointlist = shape._pointlist + [shape._pointlist[0]]
         my_pointlist = self._pointlist + [self._pointlist[0]]
         for i in range(len(my_pointlist) - 1):
@@ -92,32 +92,32 @@ class ETKCanvasItem:
                     solution_list.append(intersection)
         return solution_list
 
-    def is_point_in_shape(self, point: vector2d) -> bool:
+    def is_point_in_shape(self, point: Vector2d) -> bool:
         solution = self. __winding_numbers(point)
         if solution == 0:
             return False
         else:
             return True
 
-    def __winding_numbers(self, point: vector2d) -> float:
-        direction_vec: vector2d = vector2d(1, 0)
+    def __winding_numbers(self, point: Vector2d) -> float:
+        direction_vec: Vector2d = Vector2d(1, 0)
         p3 = point
         x_list = [vector.x for vector in self._pointlist]
         y_list = [vector.y for vector in self._pointlist]
-        distance_to_bounding_box = vector2d(max(x_list), min(y_list))
+        distance_to_bounding_box = Vector2d(max(x_list), min(y_list))
 
         retval = 0.0
 
         p4 = point + direction_vec.normalize() * distance_to_bounding_box
         for index in range(len(self._pointlist)):
-            p1 = vector2d(self._pointlist[index].x, self._pointlist[index].y)
-            p2 = vector2d(self._pointlist[index + 1].x,
+            p1 = Vector2d(self._pointlist[index].x, self._pointlist[index].y)
+            p2 = Vector2d(self._pointlist[index + 1].x,
                           self._pointlist[index + 1].y)
             sol = self.__find_intersection(p1, p2, p3, p4)
             if sol == None:
                 continue
             poly_edge_dir = p2 - p1
-            sign = (poly_edge_dir*vector2d(0, 1)).normalize().y
+            sign = (poly_edge_dir*Vector2d(0, 1)).normalize().y
             if sol in [p1, p2]:
                 retval += 0.5 * sign
             else:
@@ -125,7 +125,7 @@ class ETKCanvasItem:
 
         return retval
 
-    def __find_intersection(self, p1: vector2d, p2: vector2d, p3: vector2d, p4: vector2d) -> Optional[vector2d]:
+    def __find_intersection(self, p1: Vector2d, p2: Vector2d, p3: Vector2d, p4: Vector2d) -> Optional[Vector2d]:
         s1 = p2 - p1
         s2 = p4 - p3
 
@@ -156,8 +156,8 @@ class ETKCanvasItem:
             tkinter_pointlist, fill=self._background_color, outline=self._outline_color)
 
     def __get_tkinter_pointlist(self) -> list[float]:
-        getx: Callable[[vector2d], float] = lambda vector: vector.x
-        gety: Callable[[vector2d], float] = lambda vector: vector.y
+        getx: Callable[[Vector2d], float] = lambda vector: vector.x
+        gety: Callable[[Vector2d], float] = lambda vector: vector.y
         return [f(point) for point in self._pointlist for f in (getx, gety)]
 
     def __check_if_deleted(self) -> None:

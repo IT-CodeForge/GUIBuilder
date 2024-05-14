@@ -1,12 +1,12 @@
 from typing import Any
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 from .ETKBaseTkWidget import ETKBaseTkWidget
 from .ETKBaseWidgetDisableable import ETKBaseWidgetDisableable
 from .ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKBaseTkWidgetDisableable(ETKBaseWidgetDisableable, ETKBaseTkWidget):
-    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, enabled: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, enabled: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Methods

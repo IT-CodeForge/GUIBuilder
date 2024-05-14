@@ -1,12 +1,12 @@
 from typing import Any
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 from .ETKBaseTkWidget import ETKBaseTkWidget
 from .ETKUtils import gen_col_from_int
 from .ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKBaseTkWidgetText(ETKBaseTkWidget):
-    def __init__(self, *, text: str, pos: vector2d, size: vector2d, visibility: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+    def __init__(self, *, text: str, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self.text_color = text_color

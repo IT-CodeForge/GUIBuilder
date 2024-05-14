@@ -15,7 +15,7 @@ from intermediary_neu.objects.IWindow import IWindow
 # region utils
 __col_arr_to_col: Callable[[tuple[int, int, int]], int] = lambda arr: arr[0] << 16 | arr[1] << 8 | arr[2]
 
-__arr_to_vec: Callable[[tuple[int, int]], str] = lambda arr: f"vector2d({arr[0]}, {arr[1]})"
+__arr_to_vec: Callable[[tuple[int, int]], str] = lambda arr: f"Vector2d({arr[0]}, {arr[1]})"
 
 __event_func_name: Callable[[IBaseObject, str], str] = lambda obj, intermediary_event_type: f"e{obj.id}_{obj.name}_{intermediary_event_type}"
 # endregion

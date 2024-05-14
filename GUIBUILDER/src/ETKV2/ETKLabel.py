@@ -1,12 +1,12 @@
 from tkinter import END, Event, EventType, Text, Tk
 from typing import Any
-from .vector2d import vector2d
+from .Vector2d import Vector2d
 from .Internal.ETKBaseTkWidgetText import ETKBaseTkWidgetText
 from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKLabel(ETKBaseTkWidgetText):
-    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), text: str = "Label", *, visibility: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(80, 17), text: str = "Label", *, visibility: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self._tk_object: Text = Text(tk)  # type:ignore
         self._send_button_event_break = True
 

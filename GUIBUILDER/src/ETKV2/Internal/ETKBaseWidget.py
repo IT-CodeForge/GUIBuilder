@@ -1,12 +1,12 @@
 from __future__ import annotations
 from abc import abstractmethod
 from typing import Any, Optional
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 from .ETKBaseObject import ETKBaseObject
 
 
 class ETKBaseWidget(ETKBaseObject):
-    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
         self._parent: Optional[ETKBaseWidget] = None
         self._enabled: bool = True
 
@@ -15,7 +15,7 @@ class ETKBaseWidget(ETKBaseObject):
     # region Properties
 
     @ETKBaseObject.pos.setter
-    def pos(self, value: vector2d) -> None:
+    def pos(self, value: Vector2d) -> None:
         ETKBaseObject.pos.fset(self, value)  # type:ignore
         if self.parent != None:
             self.parent._validate_pos(self)
@@ -28,13 +28,13 @@ class ETKBaseWidget(ETKBaseObject):
         self._update_pos()
 
     @ETKBaseObject.size.setter
-    def size(self, value: vector2d) -> None:
+    def size(self, value: Vector2d) -> None:
         ETKBaseObject.size.fset(self, value)  # type:ignore
         if self.parent != None:
             self.parent._validate_size(self)
 
     @property
-    def abs_pos(self) -> vector2d:
+    def abs_pos(self) -> Vector2d:
         """READ-ONLY"""
         if self._parent != None:
             return self._parent._get_childs_abs_pos(self)
@@ -94,7 +94,7 @@ class ETKBaseWidget(ETKBaseObject):
     # endregion
     # region child validation methods
 
-    def _get_childs_abs_pos(self, child: ETKBaseWidget) -> vector2d:
+    def _get_childs_abs_pos(self, child: ETKBaseWidget) -> Vector2d:
         return self.abs_pos + child.pos
 
     def _detach_child(self, element: ETKBaseWidget) -> None:

@@ -3,7 +3,7 @@ import math
 from typing import Optional, overload
 
 
-class vector2d:
+class Vector2d:
     @overload
     def __init__(self, x: float = 0, y: float = 0) -> None:
         pass
@@ -40,120 +40,120 @@ class vector2d:
         self.normalize()
         self *= value
 
-    def __add__(self, other: vector2d) -> vector2d:  # defines behaviour on + operand
+    def __add__(self, other: Vector2d) -> Vector2d:  # defines behaviour on + operand
         try:
-            return vector2d(self.x + other.x, self.y + other.y)
+            return Vector2d(self.x + other.x, self.y + other.y)
         except:
             raise ValueError("You can only add a vector2 to a vector2")
 
-    def __iadd__(self, other: vector2d) -> vector2d:  # defines behaviour on += operand
+    def __iadd__(self, other: Vector2d) -> Vector2d:  # defines behaviour on += operand
         try:
-            return vector2d(self.x + other.x, self.y + other.y)
+            return Vector2d(self.x + other.x, self.y + other.y)
         except:
             raise ValueError("You can only add a vector2d to a vector2d")
 
-    def __sub__(self, other: vector2d) -> vector2d:  # defines behaviour on - operand
+    def __sub__(self, other: Vector2d) -> Vector2d:  # defines behaviour on - operand
         try:
-            return vector2d(self.x - other.x, self.y - other.y)
+            return Vector2d(self.x - other.x, self.y - other.y)
         except:
             raise ValueError("You can only subtract a vector2d to a vector2d")
 
-    def __isub__(self, other: vector2d) -> vector2d:  # defines behaviour on -= operand
+    def __isub__(self, other: Vector2d) -> Vector2d:  # defines behaviour on -= operand
         try:
-            return vector2d(self.x - other.x, self.y - other.y)
+            return Vector2d(self.x - other.x, self.y - other.y)
         except:
             raise ValueError("You can only subtract a vector2d to a vector2d")
 
-    def __mul__(self, other: int | float | vector2d) -> vector2d:  # defines behaviour on * operand
+    def __mul__(self, other: int | float | Vector2d) -> Vector2d:  # defines behaviour on * operand
         if type(other) == float or type(other) == int:
-            return vector2d(self.x * other, self.y * other)
-        elif type(other) == vector2d:
-            return vector2d(self.x * other.x, self.y * other.y)
+            return Vector2d(self.x * other, self.y * other)
+        elif type(other) == Vector2d:
+            return Vector2d(self.x * other.x, self.y * other.y)
         raise ValueError("incompatible types")
 
-    def __rmul__(self, other: int | float | vector2d) -> vector2d:  # defines behaviour on * operand
+    def __rmul__(self, other: int | float | Vector2d) -> Vector2d:  # defines behaviour on * operand
         if type(other) == float or type(other) == int:
-            return vector2d(self.x * other, self.y * other)
-        elif type(other) == vector2d:
-            return vector2d(self.x * other.x, self.y * other.y)
+            return Vector2d(self.x * other, self.y * other)
+        elif type(other) == Vector2d:
+            return Vector2d(self.x * other.x, self.y * other.y)
         raise ValueError("incompatible types")
 
     # defines behaviour on *= operand
-    def __imul__(self, other: int | float | vector2d) -> vector2d:
+    def __imul__(self, other: int | float | Vector2d) -> Vector2d:
         if type(other) == float or type(other) == int:
-            return vector2d(self.x * other, self.y * other)
-        elif type(other) == vector2d:
-            return vector2d(self.x * other.x, self.y * other.y)
+            return Vector2d(self.x * other, self.y * other)
+        elif type(other) == Vector2d:
+            return Vector2d(self.x * other.x, self.y * other.y)
         raise ValueError("incompatible types")
 
     # defines behaviour on / operand
-    def __truediv__(self, other: int | float | vector2d) -> vector2d:
+    def __truediv__(self, other: int | float | Vector2d) -> Vector2d:
         if type(other) == float or type(other) == int:
-            return vector2d(self.x / other, self.y / other)
-        elif type(other) == vector2d:
-            return vector2d(self.x / other.x, self.y / other.y)
+            return Vector2d(self.x / other, self.y / other)
+        elif type(other) == Vector2d:
+            return Vector2d(self.x / other.x, self.y / other.y)
         raise ValueError("incompatible types")
 
     # defines behaviour on /= operand
-    def __idiv__(self, other: int | float | vector2d) -> vector2d:
+    def __idiv__(self, other: int | float | Vector2d) -> Vector2d:
         if type(other) == float or type(other) == int:
-            return vector2d(self.x / other, self.y / other)
-        elif type(other) == vector2d:
-            return vector2d(self.x / other.x, self.y / other.y)
+            return Vector2d(self.x / other, self.y / other)
+        elif type(other) == Vector2d:
+            return Vector2d(self.x / other.x, self.y / other.y)
         raise ValueError("incompatible types")
 
-    def __mod__(self, other: int) -> vector2d:  # defines behaviour on % operand
+    def __mod__(self, other: int) -> Vector2d:  # defines behaviour on % operand
         if type(other) == int:
-            return vector2d(self.x % other, self.y % other)
+            return Vector2d(self.x % other, self.y % other)
         raise ValueError("incompatible types")
 
-    def __imod__(self, other: int) -> vector2d:  # defines behaviour on %= operand
+    def __imod__(self, other: int) -> Vector2d:  # defines behaviour on %= operand
         if type(other) == int:
-            return vector2d(self.x % other, self.y % other)
+            return Vector2d(self.x % other, self.y % other)
         raise ValueError("incompatible types")
 
-    def __pow__(self, other: int) -> vector2d:  # defines behaviour on ** operand
+    def __pow__(self, other: int) -> Vector2d:  # defines behaviour on ** operand
         if type(other) == int:
-            return vector2d(self.x ** other, self.y ** other)
+            return Vector2d(self.x ** other, self.y ** other)
         raise ValueError("incompatible types")
 
-    def __ipow__(self, other: int) -> vector2d:  # defines behaviour on **= operand
+    def __ipow__(self, other: int) -> Vector2d:  # defines behaviour on **= operand
         if type(other) == int:
-            return vector2d(self.x ** other, self.y ** other)
+            return Vector2d(self.x ** other, self.y ** other)
         raise ValueError("incompatible types")
 
     def __eq__(self, other: object) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() == other
-        elif type(other) == vector2d:
+        elif type(other) == Vector2d:
             return self.x == other.x and self.y == other.y
         raise ValueError("incompatible compare types")
 
-    def __lt__(self, other: int | float | vector2d) -> bool:
+    def __lt__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() < other
-        elif type(other) == vector2d:
+        elif type(other) == Vector2d:
             return self.x < other.x and self.y < other.y
         raise ValueError("incompatible compare types")
 
-    def __le__(self, other: int | float | vector2d) -> bool:
+    def __le__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() <= other
-        elif type(other) == vector2d:
+        elif type(other) == Vector2d:
             return self.x <= other.x and self.y <= other.y
         raise ValueError("incompatible compare types")
 
-    def __gt__(self, other: int | float | vector2d) -> bool:
+    def __gt__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() > other
-        elif type(other) == vector2d:
+        elif type(other) == Vector2d:
             return self.x > other.x and self.y > other.y
         raise ValueError("incompatible compare types")
 
-    def __ge__(self, other: int | float | vector2d) -> bool:
+    def __ge__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() >= other
-        elif type(other) == vector2d:
+        elif type(other) == Vector2d:
             return self.x >= other.x and self.y >= other.y
         raise ValueError("incompatible compare types")
 
@@ -184,36 +184,36 @@ class vector2d:
             return math.acos(self.x/self.__get_lenght())
         return 2 * math.pi - math.acos(self.x/self.__get_lenght())
 
-    def normalize(self) -> vector2d:
+    def normalize(self) -> Vector2d:
         lenght = self.__get_lenght()
         if not lenght:
             return self
         return self / lenght
 
-    def rotate(self, radians: float) -> vector2d:
+    def rotate(self, radians: float) -> Vector2d:
         tempx = round(self.x*math.cos(radians) - self.y*math.sin(radians), 10)
         tempy = round(self.x*math.sin(radians) + self.y*math.cos(radians), 10)
-        return vector2d(tempx, tempy)
+        return Vector2d(tempx, tempy)
 
-    def switch(self) -> vector2d:
-        return vector2d(self.y, self.x)
+    def switch(self) -> Vector2d:
+        return Vector2d(self.y, self.x)
 
-    def get_angle_to_vec(self, vector: vector2d) -> float:
+    def get_angle_to_vec(self, vector: Vector2d) -> float:
         calc_vec_self = self.normalize()
         calc_vec_other = vector.normalize()
         return math.acos(calc_vec_self.dotproduct(calc_vec_other))
 
-    def dotproduct(self, vector: vector2d) -> float:
+    def dotproduct(self, vector: Vector2d) -> float:
         try:
             return self.x * vector.x + self.y * vector.y
         except:
             raise ValueError("You can only do a dotproduct of two vectors")
 
-    def crossproduct(self, vector: vector2d) -> float:
+    def crossproduct(self, vector: Vector2d) -> float:
         try:
             return self.x*vector.y - self.y*vector.x
         except:
             raise ValueError("You can only do a crossproduct of two vectors")
 
-    def copy(self) -> vector2d:
-        return vector2d(self.x, self.y)
+    def copy(self) -> Vector2d:
+        return Vector2d(self.x, self.y)

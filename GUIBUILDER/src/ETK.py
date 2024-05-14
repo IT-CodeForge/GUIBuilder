@@ -25,7 +25,7 @@ from ETKV2.ETKLabel import ETKLabel
 from ETKV2.ETKListingContainer import ETKListingContainer, ETKListingTypes
 from ETKV2.ETKMainWindow import ETKMainWindow, ETKWindowEvents
 from ETKV2.ETKTimer import ETKTimer
-from ETKV2.vector2d import vector2d
+from ETKV2.Vector2d import Vector2d
 from ETKV2.ETKDropdownMenu import ETKDropdownMenu, ETKDropdownMenuEvents
 
 
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     ETKMainWindow.abs_pos
     ETKWindowEvents.EXIT
     ETKTimer.mro
-    vector2d.mro
+    Vector2d.mro
     ETKDropdownMenu.abs_enabled
     ETKDropdownMenuEvents.CHANGED
     ETKBaseContainer.abs_enabled

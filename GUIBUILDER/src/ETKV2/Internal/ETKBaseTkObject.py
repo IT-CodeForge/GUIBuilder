@@ -3,12 +3,12 @@ from typing import Any, Callable, Optional
 
 from .ETKUtils import gen_col_from_int
 
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 from .ETKBaseObject import ETKBaseObject, ETKEvents, ETKBaseEvents
 
 
 class ETKBaseTkObject(ETKBaseObject):
-    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
         self._tk_object: Any
 
         super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)

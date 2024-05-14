@@ -6,7 +6,7 @@ from typing import Any, Callable, Optional
 from .ETKBaseObject import ETKEvents, ETKBaseObject
 
 from .ETKBaseWidget import ETKBaseWidget
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 from .ETKBaseWidgetDisableable import ETKBaseWidgetDisableable
 from ..ETKCanvas import ETKCanvas
 
@@ -65,16 +65,16 @@ class ETKContainerSize():
         self.__y = int(value)
 
     @staticmethod
-    def from_vector2d(vec: vector2d) -> ETKContainerSize:
+    def from_vector2d(vec: Vector2d) -> ETKContainerSize:
         return ETKContainerSize(vec.x, vec.y)
 
     def copy(self) -> ETKContainerSize:
         return ETKContainerSize(self.x, self.y, self.dynamic_x, self.dynamic_y, self.padding_x_l, self.padding_x_r, self.padding_y_o, self.padding_y_u)
 
     @property
-    def vec(self) -> vector2d:
+    def vec(self) -> Vector2d:
         """READ-ONLY"""
-        return vector2d(self.x, self.y)
+        return Vector2d(self.x, self.y)
 
     def __str__(self) -> str:
         return f"<{self.x}, {self.y}, {self.dynamic_x}, {self.dynamic_y}, {self.padding_x_l}, {self.padding_x_r}, {self.padding_y_o}, {self.padding_y_u}>"
@@ -153,10 +153,10 @@ class PosError(ValueError):
 
 
 class ETKBaseContainer(ETKBaseWidgetDisableable):
-    def __init__(self, *, tk: Tk, pos: vector2d, size: ETKContainerSize, visibility: bool, enabled: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+    def __init__(self, *, tk: Tk, pos: Vector2d, size: ETKContainerSize, visibility: bool, enabled: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self.__background = ETKCanvas(tk, pos, size.vec, background_color=background_color)
         self._container_size: ETKContainerSize = ETKContainerSize(0, 0)
-        self._element_rel_pos: dict[ETKBaseWidget, vector2d] = {}
+        self._element_rel_pos: dict[ETKBaseWidget, Vector2d] = {}
 
         super().__init__(pos=pos, size=size.vec, visibility=visibility, enabled=enabled, background_color=background_color, **kwargs)
 
@@ -167,7 +167,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
     # region properties
 
     @ETKBaseWidgetDisableable.pos.setter
-    def pos(self, value: vector2d) -> None:
+    def pos(self, value: Vector2d) -> None:
         ETKBaseWidgetDisableable.pos.fset(self, value)  # type:ignore
         self.__background.pos = self.abs_pos
 
@@ -176,7 +176,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         return self._container_size.copy()
 
     @size.setter
-    def size(self, value: ETKContainerSize | vector2d) -> None:
+    def size(self, value: ETKContainerSize | Vector2d) -> None:
         if type(value) == ETKContainerSize:
             self._container_size = value
             vec = value.vec
@@ -225,7 +225,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
     def add_element(self, element: ETKBaseWidget) -> None:
         self._prepare_element_add(element)
 
-        self._element_rel_pos.update({element: vector2d()})
+        self._element_rel_pos.update({element: Vector2d()})
 
         element._update_visibility()
 
@@ -252,7 +252,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
                 f"element {element} is not in container {self}")
         self._element_rel_pos.pop(element)
         element._parent = None
-        element.pos = vector2d(0, 0)
+        element.pos = Vector2d(0, 0)
 
         events = [ev for ev in self._event_lib.keys() if len(
             self._event_lib[ev]) != 0]
@@ -300,12 +300,12 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
     # endregion
     # region child validation methods
 
-    def _get_childs_abs_pos(self, child: ETKBaseWidget) -> vector2d:
+    def _get_childs_abs_pos(self, child: ETKBaseWidget) -> Vector2d:
         if child not in self._element_rel_pos.keys():
             raise ElementNotPartOfContainerError(
                 f"element {child} is not in container {self}")
         pos = self._element_rel_pos[child]
-        return vector2d(pos.x + self.abs_pos.x, pos.y + self.abs_pos.y)
+        return Vector2d(pos.x + self.abs_pos.x, pos.y + self.abs_pos.y)
 
     def _detach_child(self, element: ETKBaseWidget) -> None:
         self.remove_element(element)

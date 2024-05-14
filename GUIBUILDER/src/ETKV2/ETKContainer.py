@@ -4,21 +4,21 @@ from typing import Any, Literal
 from .Internal.ETKBaseWidget import ETKBaseWidget
 from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
-from .vector2d import vector2d
+from .Vector2d import Vector2d
 
 from .Internal.ETKBaseContainer import _ETKSubAlignments  # type:ignore
 from .Internal.ETKBaseContainer import ETKAlignments, ETKContainerSize, SizeError, PosError, ETKBaseContainer
 
 
 class ETKContainer(ETKBaseContainer):
-    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         super().__init__(tk=tk, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
         self.__element_alignments: dict[ETKBaseWidget, ETKAlignments] = {}
 
     # region Properties
 
     @ETKBaseContainer.size.setter
-    def size(self, value: ETKContainerSize | vector2d) -> None:
+    def size(self, value: ETKContainerSize | Vector2d) -> None:
         ETKBaseContainer.size.fset(self, value)  # type:ignore
         try:
             self._update_all_element_pos()
@@ -61,12 +61,12 @@ class ETKContainer(ETKBaseContainer):
             self.__validate_size_pos(self._element_rel_pos[e], e.size)
             e._update_pos()
 
-    def _calculate_rel_element_pos(self, element: ETKBaseWidget) -> vector2d:
+    def _calculate_rel_element_pos(self, element: ETKBaseWidget) -> Vector2d:
         x = self._calculate_rel_element_pos_part(
             element, 0, self.size.padding_x_r)
         y = self._calculate_rel_element_pos_part(
             element, 1, self.size.padding_y_u)
-        return vector2d(x, y)
+        return Vector2d(x, y)
 
     def _calculate_rel_element_pos_part(self, element: ETKBaseWidget, index: Literal[0, 1], padding_part: float) -> float:
         match self.__element_alignments[element].value[index]:
@@ -77,7 +77,7 @@ class ETKContainer(ETKBaseContainer):
             case _ETKSubAlignments.MAX:
                 return self.size[index] - element.size[index] + element.pos[index] - padding_part
 
-    def __validate_size_pos(self, rel_pos: vector2d, size: vector2d) -> None:
+    def __validate_size_pos(self, rel_pos: Vector2d, size: Vector2d) -> None:
         s_size = self.size
 
         if s_size.x > self.size.x or s_size.y > self.size.y:

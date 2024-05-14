@@ -3,14 +3,14 @@ from typing import Any
 
 from .ETKUtils import gen_col_from_int
 
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 from .ETKBaseWidget import ETKBaseWidget
 from .ETKBaseTkObject import ETKBaseTkObject
 
 
 class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
-    def __init__(self, *, pos: vector2d, size: vector2d, visibility: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._tk_object: tk_widget
         self._outline_color: str = ""
         self._outline_thickness: int = 0
@@ -24,7 +24,7 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
     # region Properties
 
     @ETKBaseWidget.size.setter
-    def size(self, value: vector2d) -> None:
+    def size(self, value: Vector2d) -> None:
         ETKBaseWidget.size.fset(self, value)  # type:ignore
         self._place_object()
 

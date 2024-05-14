@@ -3,7 +3,7 @@ from tkinter import Event, Tk, EventType
 from typing import Any
 
 from .Internal.ETKBaseObject import ETKEvents
-from .vector2d import vector2d
+from .Vector2d import Vector2d
 from .ETKLabel import ETKLabel
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
@@ -15,7 +15,7 @@ class ETKEditEvents(ETKEvents):
 
 
 class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
-    def __init__(self, tk: Tk, pos: vector2d = vector2d(0, 0), size: vector2d = vector2d(80, 17), text: str = "Edit", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+    def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(80, 17), text: str = "Edit", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__old_text: str = ""
         self.__delay_cycles: int = -1
 

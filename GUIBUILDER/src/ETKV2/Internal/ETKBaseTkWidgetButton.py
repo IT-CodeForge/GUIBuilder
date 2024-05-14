@@ -5,11 +5,11 @@ from .ETKUtils import gen_col_from_int
 from .ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .ETKBaseTkWidgetText import ETKBaseTkWidgetText
 from .ETKBaseTkObject import ETKBaseEvents  # type:ignore
-from ..vector2d import vector2d
+from ..Vector2d import Vector2d
 
 
 class ETKBaseTkWidgetButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
-    def __init__(self, *, pos: vector2d, size: vector2d, text: str, visibility: bool, enabled: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+    def __init__(self, *, pos: Vector2d, size: Vector2d, text: str, visibility: bool, enabled: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._outline: LabelFrame
 
         super().__init__(text=text, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
