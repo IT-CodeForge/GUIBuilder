@@ -1,4 +1,4 @@
-from os import devnull, environ, path
+from os import devnull, path
 import sys
 from steuerung import Steuerung
 
@@ -6,7 +6,6 @@ version = "0.1"
 dir_root: str
 internal_dir_root: str
 additional_files_path: str
-dev_mode: bool
 
 # from io import TextIOWrapper
 # from os import fsync, path
@@ -31,10 +30,11 @@ dev_mode: bool
 
 if __name__ == "__main__":
     import main
-    if environ.get("DEV") != None:
+
+    # Überprüft ob es als exe oder als py-script vorliegt
+    if path.split(sys.executable)[1] in ["python.exe", "pythonw.exe"]:
         main.dir_root = path.abspath(path.join(path.split(path.abspath(__file__))[0], ".."))
         main.internal_dir_root = main.dir_root
-        main.dev_mode = True
     else:
         # Release: Disables print(), etc
         sys.stdout = sys.stderr = open(devnull, 'w')
@@ -42,7 +42,6 @@ if __name__ == "__main__":
         # sys.stderr = FileAutoSave(r"C:\jk\err.log")
         main.dir_root = path.split(path.abspath(sys.executable))[0]
         main.internal_dir_root = path.split(path.abspath(__file__))[0]
-        main.dev_mode = False
     main.additional_files_path = path.abspath(f"{main.internal_dir_root}\\additional_files")
 
     print("\n"*20)
