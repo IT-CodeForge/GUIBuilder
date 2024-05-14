@@ -27,7 +27,7 @@ class GUI(ETKMainWindow):
         self.active_attributes_element: Optional[ETKBaseObject] = None
         self.last_active_attributes_element: Optional[ETKBaseObject] = None
 
-        self.main = ETKListingContainer(self._tk_object, size=ETKContainerSize.from_Vector2d(
+        self.main = ETKListingContainer(self._tk_object, size=ETKContainerSize.from_vector2d(
             self.size), offset=0)
 
         self.menubar_outer = ETKContainer(self._tk_object, size=ETKContainerSize(
