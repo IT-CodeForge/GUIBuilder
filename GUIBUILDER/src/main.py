@@ -1,3 +1,4 @@
+from multiprocessing import freeze_support
 from os import devnull, path
 import sys
 from threading import Thread
@@ -39,6 +40,7 @@ class MSGBoxStream():
 
 if __name__ == "__main__":
     import main
+    freeze_support()
 
     # Überprüft ob es als exe oder als py-script vorliegt
     if path.split(sys.executable)[1] in ["python.exe", "pythonw.exe"]:
