@@ -96,8 +96,8 @@ class TGW_user_generator(BaseTGWGenerator):
                     retval += old_file[func_definition_start:func_definition_end]
                     old_functions.pop(i)
                     break
-            else:
-                retval += "\n"
+        else:
+            retval += "\n"
         retval += "}\n\n\n"
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
