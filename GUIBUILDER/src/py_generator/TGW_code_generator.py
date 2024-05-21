@@ -92,7 +92,7 @@ def generate_if_clause(condition: str, content: str, indent: str, starting_inden
     retval += f"{string_times_n(indent, starting_indent_level)}if({condition})\n"
     retval += string_times_n(indent, starting_indent_level) + "{\n"
     for line in content.splitlines():
-        retval += string_times_n(indent, starting_indent_level + 1) + line
+        retval += string_times_n(indent, starting_indent_level + 1) + line + "\n"
     retval += string_times_n(indent, starting_indent_level) + "}\n"
     return retval
 
