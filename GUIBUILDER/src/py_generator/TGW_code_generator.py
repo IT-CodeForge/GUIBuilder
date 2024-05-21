@@ -82,7 +82,7 @@ def generate_event_head_own(event: str, obj: IBaseObject) ->str:
         return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event, ('',''))[0]})"
     if type(obj) == ICheckbox:
         return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event, ('',''))[1]})"
-    return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event)})"
+    return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event, '')})"
 
 def generate_event_head_tgw(tgw_event: str) ->str:
     return f"{__TGW_EVENT_FUNC_NAMES.get(tgw_event)}"
