@@ -35,14 +35,13 @@ class TGW_user_generator(BaseTGWGenerator):
         retval: str = ""
         for index, _ in remaining_funcs:
             start_of_function: int = index - 1
-            status: str = "NotFound"
-            while status != "Finished":
+            status = "NotFound"
+            while True:
                 character: str = old_file[start_of_function]
                 if status == "NotFound" and character in cls.__VALID_FUNC_NAME_CHARACTER:
                     status = "Found"
                 if status == "Found" and character not in cls.__VALID_FUNC_NAME_CHARACTER:
-                    status = "Finished"
-                    continue
+                    break
                 if start_of_function < 0:
                     raise ValueError("Unable to find return type of function")
                 start_of_function -= 1
@@ -71,7 +70,9 @@ class TGW_user_generator(BaseTGWGenerator):
         retval: list[tuple[int, str]] = []
         while True:
             try:
-                func_candidate_index: int = cls.__find_next(file, tuple(("GUI::")), temp_index)[1]
+                func_candidate_index: int = file.find("GUI::", temp_index)
+                if func_candidate_index == -1:
+                    raise ValueError
                 temp_index = func_candidate_index + 5
                 my_char = file[func_candidate_index]
                 while my_char != "(":
@@ -90,7 +91,7 @@ class TGW_user_generator(BaseTGWGenerator):
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
             for file_index, name in old_functions:
                 if name == "on_construction":
-                    func_definition_start: int = cls.__find_next(old_file, tuple("{"), file_index)[1] + 1
+                    func_definition_start: int = old_file.find("{", file_index) + 1
                     func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                     retval += old_file[func_definition_start:func_definition_end]
                     old_functions.pop(file_index)
@@ -101,7 +102,7 @@ class TGW_user_generator(BaseTGWGenerator):
                 retval += "\n{\n"
                 for list_index, (file_index, name) in enumerate(old_functions):
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
-                        func_definition_start: int = cls.__find_next(old_file, tuple("{"), file_index)[1] + 1
+                        func_definition_start: int = old_file.find("{", file_index) + 1
                         func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                         retval += old_file[func_definition_start + 1:func_definition_end]
                         old_functions.pop(list_index)
@@ -123,13 +124,13 @@ class TGW_user_generator(BaseTGWGenerator):
             elif next_key == "}":
                 counter -= 1
             elif next_key == "\"":
-                end_of_cpp_str: int = cls.__find_next(file, tuple("\""), end_index + 1)[1]
+                end_of_cpp_str: int = file.find("\"", end_index + 1)
                 end_index = end_of_cpp_str
             elif next_key == "//":
-                end_of_cpp_comment: int = cls.__find_next(file, tuple("\n"), end_index + 1)[1]
+                end_of_cpp_comment: int = file.find("\n", end_index + 1)
                 end_index = end_of_cpp_comment
             elif next_key == "/*":
-                end_of_cpp_comment: int = cls.__find_next(file, tuple("*/"), end_index + 1)[1]
+                end_of_cpp_comment: int = file.find("*/", end_index + 1)
                 end_index = end_of_cpp_comment
         return end_index
     
