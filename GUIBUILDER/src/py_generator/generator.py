@@ -80,7 +80,7 @@ class generator(BaseGenerator):
             
         elif framework == SupportedFrameworks.TGW:
             old_user_gui: Optional[str] = None
-            if os.path.exists(self._join_paths(path, self.__USER_GUI_NAME_ETK)):
+            if os.path.exists(self._join_paths(path, self.__USER_GUI_NAME_TGW)):
                 old_user_gui = self._read_file(self._join_paths(path, self.__USER_GUI_NAME_TGW))
             
             read_user_gui: Optional[str] = None
