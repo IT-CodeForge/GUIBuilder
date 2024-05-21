@@ -95,6 +95,7 @@ class TGW_user_generator(BaseTGWGenerator):
                     func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                     retval += old_file[func_definition_start:func_definition_end]
                     old_functions.pop(i)
+                    break
             else:
                 retval += "\n"
         retval += "}\n\n"
