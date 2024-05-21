@@ -102,11 +102,11 @@ class generator(BaseGenerator):
                 user_template: str = self._read_file(self._join_relative_path("./templates/TGWwrite/UserGUI.txt"))
                 user_gui = user_template.replace("#tag:generated_code#", user_gui)
                 fix_code(user_gui)
-                self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_ETK), user_gui)
+                self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_TGW), user_gui)
             else:
                 old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"# region generated code\n\n" + user_gui + "\n") # type:ignore
                 fix_code(old_user_gui)
-                self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_ETK), old_user_gui)
+                self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_TGW), old_user_gui)
             
             if removed_events != "":
                 old_removed_events: str = ""
@@ -121,7 +121,7 @@ class generator(BaseGenerator):
             
             system_template: str = self._read_file(self._join_relative_path("./templates/TGWwrite/SystemGUI.txt"))
             system_gui: str = system_template.replace("#tag:main_window_params#", system_gui_params).replace("#tag:constructor_definition#", system_gui_constructor).replace("#tag:event_funcs_definition#", system_gui_event_binds)
-            self.__write_file(self._join_paths(path, self.__SYSTEM_GUI_NAME_ETK), system_gui)
+            self.__write_file(self._join_paths(path, self.__SYSTEM_GUI_NAME_TGW), system_gui)
 
             header_template: str = self._read_file(self._join_relative_path("./templates/TGWwrite/HeaderGUI.txt"))
             header_gui: str = header_template.replace("#tag:attributes#", header_gui_attributes).replace("#tag:function_declarations#", header_gui_func_declarations)

@@ -13,22 +13,21 @@ from intermediary_neu.objects.IWindow import IWindow
 TYPE_TRANS: dict[type, str] = {
     IButton: "TGWButton",
     ICanvas: "TGWBitmapWindow",
-    ICheckbox: "TGWCheckbox",
+    ICheckbox: "TGWCheckBox",
     IEdit: "TGWEdit",
     ILabel: "TGWEdit",
     ITimer: "TGWTimer"
 }
 
 __TGW_EVENT_FUNC_NAMES: dict[str, str | tuple[str, str]] = {
-    "event_pressed":"eventButton(TGWButton* einButton, int event)",
-    "event_double_pressed":"eventButton(TGWButton* einButton, int event)",
-    "event_changed":("eventCheckBox(TGWCheckBox* eineCheckBox, int isChecked_1_0)", "eventEditChanged(TGWEdit* einEdit)"),
-    "event_create":"eventShow()",
-    "event_destroy":"", #not found in old generator
-    "event_paint":"eventPaint(HDC hDeviceContext)",
-    "event_resize":"eventResize()",
-    "event_mouse_click":"eventMouseClick(int posX, int posY, TGWindow* affectedWindow)",
-    "event_mouse_move":"eventMouseMove(int posX, int posY)"
+    "eventButton":"eventButton(TGWButton* einButton, int event)",
+    "eventShow":"eventShow()",
+    "eventPaint":"eventPaint(HDC hDeviceContext)",
+    "eventResize":"eventResize()",
+    "eventMouseClick":"eventMouseClick(int posX, int posY, TGWindow* affectedWindow)",
+    "eventMouseMove":"eventMouseMove(int posX, int posY)",
+    "eventCheckBox":"eventCheckBox(TGWCheckBox* eineCheckBox, int isChecked_1_0)",
+    "eventEditChanged":"eventEditChanged(TGWEdit* einEdit)"
 }
 
 __EVENT_FUNCS_HEAD_OWN_PARAMS: dict[str, str | tuple[str, str]] = {
@@ -79,6 +78,10 @@ window_params: Callable[[IWindow], str] = lambda obj : f'10, 10, {obj.size[0]}, 
 # region funcs heads
 
 def generate_event_head_own(event: str, obj: IBaseObject) ->str:
+    if type(obj) == IEdit:
+        return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event, ('',''))[0]})"
+    if type(obj) == ICheckbox:
+        return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event, ('',''))[1]})"
     return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event)})"
 
 def generate_event_head_tgw(event: str, obj: IBaseObject) ->str:
@@ -91,11 +94,11 @@ def generate_event_head_tgw(event: str, obj: IBaseObject) ->str:
 
 def generate_if_clause(condition: str, content: str, indent: str, starting_indent_level: int) -> str:
     retval: str = ""
-    retval += f"{string_times_n(indent, starting_indent_level)}if({condition})\r\n"
-    retval += string_times_n(indent, starting_indent_level) + "{\n\r"
+    retval += f"{string_times_n(indent, starting_indent_level)}if({condition})\n"
+    retval += string_times_n(indent, starting_indent_level) + "{\n"
     for line in content.splitlines():
         retval += string_times_n(indent, starting_indent_level + 1) + line
-    retval += string_times_n(indent, starting_indent_level) + "}\n\r"
+    retval += string_times_n(indent, starting_indent_level) + "\n}\n"
     return retval
 
 # endregion

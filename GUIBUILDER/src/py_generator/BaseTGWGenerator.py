@@ -7,15 +7,15 @@ from intermediary_neu.objects.IEdit import IEdit
 class BaseTGWGenerator(BaseGenerator):
     _INDENT = "  "
     __EVENT_TRANS: dict[str, str] = {
-        "event_pressed":"eventButton",
-        "event_double_pressed":"eventButton",
         #"event_changed":("eventCheckBox", "eventEditChanged"), only here in spirit
-        "event_create":"eventShow",
-        "event_destroy":"", #not found in old generator
-        "event_paint":"eventPaint",
-        "event_resize":"eventResize",
-        "event_mouse_click":"eventMouseClick",
-        "event_mouse_move":"eventMouseMove"
+        "event_pressed":       "eventButton",
+        "event_double_pressed":"eventButton",
+        "event_create":        "eventShow",
+        "event_destroy":       "", #not found in old generator
+        "event_paint":         "eventPaint",
+        "event_resize":        "eventResize",
+        "event_mouse_click":   "eventMouseClick",
+        "event_mouse_move":    "eventMouseMove"
     }
     def __init__(self) -> None:
         super().__init__()

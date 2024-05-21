@@ -23,7 +23,7 @@ class TGW_user_generator(BaseTGWGenerator):
             pass
         else:
             old_functions = self.__find_functions(old_file)
-        retval += "\r\n"
+        retval += "\n"
         tempval, remaining_funcs = self.__generate_user_func_definition(event_dict, list(old_functions), "" if old_file == None else old_file)
         retval += tempval
         deleted_funcs: str = self.__remainig_funcs_to_string(remaining_funcs, "" if old_file == None else old_file)
@@ -46,20 +46,20 @@ class TGW_user_generator(BaseTGWGenerator):
                     raise ValueError("Unable to find return type of function")
                 start_of_function -= 1
             end_of_function: int = cls.__find_func_end(cls.__find_next(old_file, tuple("{"), index)[1], old_file)
-            retval += old_file[start_of_function:end_of_function] + "\r\n\r\n"
+            retval += old_file[start_of_function:end_of_function] + "\n\n"
         return retval
     
     @staticmethod
     def __generate_includes(tgw_objects: tuple[IBaseObject, ...])-> str:
-        retval: str = '#include "GUI.h"\r\n'
+        retval: str = '#include "GUI.h"\n'
         for tgw_object in tgw_objects:
             if type(tgw_object) == IWindow:
                 continue
             include: str = ""
             if type(tgw_object) == ICanvas:
-                include = '#include "TGWCanvas.h"\r\n'
+                include = '#include "TGWCanvas.h"\n'
             else:
-                include = f'#include "{tgw_gen.TYPE_TRANS.get(type(tgw_object), "")}.h"\r\n'
+                include = f'#include "{tgw_gen.TYPE_TRANS.get(type(tgw_object), "")}.h"\n'
             if retval.find(include) == -1:
                 retval += include
         return retval
@@ -85,7 +85,7 @@ class TGW_user_generator(BaseTGWGenerator):
     
     @classmethod #TODO: handle on construction
     def __generate_user_func_definition(cls, event_dict: dict[str, list[tuple[IBaseObject, str]]], old_functions: list[tuple[int, str]], old_file: str)-> tuple[str, list[tuple[int, str]]]:
-        retval: str = "void on_construction()\r\n{\r\n"
+        retval: str = "void on_construction()\n{\n"
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
             for index, name in old_functions:
                 if name == "on_construction":
@@ -93,11 +93,11 @@ class TGW_user_generator(BaseTGWGenerator):
                     func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                     retval += old_file[func_definition_start:func_definition_end]
                     old_functions.pop(index)
-        retval += "}\r\n\r\n"
+        retval += "}\n\n"
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
                 retval += tgw_gen.generate_event_head_own(event_type, user_event)
-                retval += "{\r\n"
+                retval += "{\n"
                 for index, name in old_functions:
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
                         func_definition_start: int = cls.__find_next(old_file, tuple("{"), index)[1] + 1
@@ -105,7 +105,7 @@ class TGW_user_generator(BaseTGWGenerator):
                         retval += old_file[func_definition_start:func_definition_end]
                         old_functions.pop(index)
                         break
-                retval += "}\r\n"
+                retval += "}\n"
         return retval, old_functions
 
     @classmethod

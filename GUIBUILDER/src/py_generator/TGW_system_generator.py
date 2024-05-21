@@ -29,10 +29,10 @@ class TGW_system_generator(BaseTGWGenerator):
                 gui_params = tgw_gen.window_params(tgw_object)
         constructor_definition: str = ""
         for tgw_object in tgw_objects:
-            constructor_definition += self._INDENT + self.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object)
+            constructor_definition += self._INDENT + self.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object) + ";\n"
             if type(tgw_object) == ICanvas:
-                constructor_definition += self._INDENT + tgw_gen.get_object_name(tgw_object) + " = " + tgw_gen.get_object_name(tgw_object) + "_bitmap->canvas"
-        constructor_definition += self._INDENT + "on_construction();\r\n"
+                constructor_definition += self._INDENT + tgw_gen.get_object_name(tgw_object) + " = " + tgw_gen.get_object_name(tgw_object) + "_bitmap->canvas;\n"
+        constructor_definition += self._INDENT + "on_construction();\n"
         event_funcs: str = self.__generate_event_funcs_definition(tgw_objects)
         return gui_params, constructor_definition, event_funcs
     
@@ -42,13 +42,13 @@ class TGW_system_generator(BaseTGWGenerator):
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         for tgw_event in event_dict.keys():
             if tgw_event != "timer_funcs":
-                retval += cls._INDENT + "void GUI::" + tgw_gen.generate_event_head_tgw(tgw_event, event_dict[tgw_event][0][0]) + ";\r\n"
+                retval += "void GUI::" + tgw_gen.generate_event_head_tgw(tgw_event, event_dict[tgw_event][0][0]) + "\n"
             else:
-                retval += cls._INDENT + "void GUI::eventTimer(int id);\r\n"
-            retval += "{\r\n"
+                retval += "void GUI::eventTimer(int id)\n"
+            retval += "{\n"
             for tgw_object, event_type in event_dict.get(tgw_event, []):
                 retval += cls.__generate_event_bind(tgw_object, event_type)
-            retval += "}\r\n\r\n"
+            retval += "}\n\n"
         return retval
     
     @classmethod
@@ -56,7 +56,7 @@ class TGW_system_generator(BaseTGWGenerator):
         retval: str = ""
         content: str = tgw_gen.generate_event_head_own(event_type, tgw_object).replace("int ", "").replace("HDC ", "").replace("TGWindow* ", "")
         if type(tgw_object) == IWindow:
-            retval += cls._INDENT + content + ";\r\n"
+            retval += cls._INDENT + content + ";\n"
         else:
             condition: str = ""
             if type(tgw_object) == ITimer:
@@ -64,7 +64,7 @@ class TGW_system_generator(BaseTGWGenerator):
             elif type(tgw_object) == ICheckbox:
                 condition = f"eineCheckBox == this->{tgw_gen.get_object_name(tgw_object)}"
             elif type(tgw_object) in [IEdit, IButton]:
-                condition = f"ein{str(type(tgw_object))[1:]} == this->{tgw_gen.get_object_name(tgw_object)}"
+                condition = f"ein{type(tgw_object).__name__[1:]} == this->{tgw_gen.get_object_name(tgw_object)}"
             retval = tgw_gen.generate_if_clause(condition, content, cls._INDENT, 1)
         return retval
     
