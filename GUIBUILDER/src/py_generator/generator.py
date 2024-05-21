@@ -103,7 +103,7 @@ class generator(BaseGenerator):
                 user_gui = user_template.replace("#tag:generated_code#", user_gui)
                 self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_TGW), user_gui)
             else:
-                old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"# region generated code\n\n" + user_gui + "\n") # type:ignore
+                old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"#pragma region generated code\n\n" + user_gui + "\n") # type:ignore
                 self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_TGW), old_user_gui)
             
             if removed_events != "":
