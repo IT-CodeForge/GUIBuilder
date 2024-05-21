@@ -16,7 +16,8 @@ class TGW_system_generator(BaseTGWGenerator):
         ICanvas: tgw_gen.canvas,
         ICheckbox: tgw_gen.checkbox,
         IEdit: tgw_gen.edit,
-        ILabel: tgw_gen.label
+        ILabel: tgw_gen.label,
+        ITimer: tgw_gen.timer
     }
 
     def __init__(self) -> None:
@@ -29,6 +30,8 @@ class TGW_system_generator(BaseTGWGenerator):
                 gui_params = tgw_gen.window_params(tgw_object)
         constructor_definition: str = ""
         for tgw_object in tgw_objects:
+            if type(tgw_object) == IWindow:
+                continue
             constructor_definition += self._INDENT + self.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object) + ";\n"
             if type(tgw_object) == ICanvas:
                 constructor_definition += self._INDENT + tgw_gen.get_object_name(tgw_object) + " = " + tgw_gen.get_object_name(tgw_object) + "_bitmap->canvas;\n"
