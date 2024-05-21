@@ -102,7 +102,7 @@ class TGW_user_generator(BaseTGWGenerator):
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
                         func_definition_start: int = cls.__find_next(old_file, tuple("{"), file_index)[1] + 1
                         func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
-                        retval += old_file[func_definition_start:func_definition_end]
+                        retval += old_file[func_definition_start + 1:func_definition_end + 1]
                         old_functions.pop(list_index)
                         break
                 retval += "}\n"

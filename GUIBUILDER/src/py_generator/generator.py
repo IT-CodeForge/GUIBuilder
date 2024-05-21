@@ -18,7 +18,7 @@ class generator(BaseGenerator):
     __REMOVED_EVENTS_ETK: str = "RemovedEvents.txt"
     __USER_GUI_NAME_ETK: str = "UserGUI.py"
     __SYSTEM_GUI_NAME_ETK: str = "SystemGUI.py"
-    __REMOVED_EVENTS_TGW: str = "RemovedEvents.cpp"
+    __REMOVED_EVENTS_TGW: str = "RemovedEvents.txt"
     __USER_GUI_NAME_TGW: str = "UserGUI.cpp"
     __SYSTEM_GUI_NAME_TGW: str = "SystemGUI.cpp"
     __HEADER_GUI_NAME_TGW: str = "GUI.h"
