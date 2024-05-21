@@ -1,7 +1,6 @@
 #pragma region generated code
 
 #tag:generated_code#
-
 #pragma endregion
 #pragma region additional user code
 

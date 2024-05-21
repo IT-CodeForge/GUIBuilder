@@ -98,7 +98,7 @@ class TGW_user_generator(BaseTGWGenerator):
                     break
             else:
                 retval += "\n"
-        retval += "}\n\n"
+        retval += "}\n\n\n"
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
                 retval += "void GUI::" + tgw_gen.generate_event_head_own(event_type, user_event)
@@ -112,7 +112,7 @@ class TGW_user_generator(BaseTGWGenerator):
                         break
                 else:
                     retval += "\n"
-                retval += "}\n"
+                retval += "}\n\n"
         return retval, old_functions
 
     @classmethod
