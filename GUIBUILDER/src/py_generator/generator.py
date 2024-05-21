@@ -14,6 +14,8 @@ class SupportedFrameworks(Enum):
     ETK = auto()
     TGW = auto()
 
+#TODO: double_pressed event for tgw
+
 class generator(BaseGenerator):
     __REMOVED_EVENTS_ETK: str = "RemovedEvents.txt"
     __USER_GUI_NAME_ETK: str = "UserGUI.py"

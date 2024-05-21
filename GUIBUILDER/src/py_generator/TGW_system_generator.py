@@ -68,6 +68,8 @@ class TGW_system_generator(BaseTGWGenerator):
                 condition = f"eineCheckBox == this->{tgw_gen.get_object_name(tgw_object)}"
             elif type(tgw_object) in [IEdit, IButton]:
                 condition = f"ein{type(tgw_object).__name__[1:]} == this->{tgw_gen.get_object_name(tgw_object)}"
+            if type(tgw_object) == IButton and event_type == "button_double_pressed":
+                condition += " && event == 1"
             retval = tgw_gen.generate_if_clause(condition, content, cls._INDENT, 1)
         return retval
     
