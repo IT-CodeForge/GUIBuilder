@@ -11,7 +11,7 @@ class ETK_user_gui_generator(BaseETKGenerator):
     @classmethod
     def generate_file(cls, etk_objects: tuple[IBaseObject, ...], old_file:Optional[str]) -> tuple[str, str]:
         template: Module
-        template = parse(cls._read_file(cls._join_relative_path("./templates/generator/UserGUI.txt")))
+        template = parse(cls._read_file(cls._join_relative_path("./templates/ETKgenerator/UserGUI.txt")))
 
         ast_old_file: Optional[Module] = None
         if old_file != None:

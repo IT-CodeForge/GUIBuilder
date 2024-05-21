@@ -28,7 +28,7 @@ class ETK_system_gui_generator(BaseETKGenerator):
     @classmethod
     def generate_file(cls, etk_objects: tuple[IBaseObject, ...]) -> str:
         template: Module
-        template = parse(cls._read_file(cls._join_relative_path("./templates/generator/SystemGUI.txt")))
+        template = parse(cls._read_file(cls._join_relative_path("./templates/ETKgenerator/SystemGUI.txt")))
         
         for e in template.body:
             if type(e) == ClassDef and e.name == "SystemGUI":

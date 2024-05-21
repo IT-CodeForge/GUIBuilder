@@ -1,0 +1,7 @@
+from ETK import *
+from SystemGUI import SystemGUI
+from typing import Any  # type:ignore
+
+class UserGUI(SystemGUI):
+    def _on_init(self) -> None:
+        pass

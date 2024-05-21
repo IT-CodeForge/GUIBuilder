@@ -1,0 +1,10 @@
+#include "GUI.h"
+#include "TGW_AllClassDefinitions.h"
+#include "TGWTimer.h"
+
+GUI::GUI():TGWMainWindow(#tag:main_window_params#)
+{
+#tag:constructor_definition#
+}
+
+#tag:event_funcs_definition#
