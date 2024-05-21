@@ -34,7 +34,7 @@ class TGW_user_generator(BaseTGWGenerator):
     def __remainig_funcs_to_string(cls, remaining_funcs: list[tuple[int, str]], old_file: str)-> str:
         retval: str = ""
         for index, _ in remaining_funcs:
-            start_of_function: int = index - 1
+            start_of_function: int = index - 6
             status = "NotFound"
             while True:
                 character: str = old_file[start_of_function]
@@ -89,12 +89,12 @@ class TGW_user_generator(BaseTGWGenerator):
     def __generate_user_func_definition(cls, event_dict: dict[str, list[tuple[IBaseObject, str]]], old_functions: list[tuple[int, str]], old_file: str)-> tuple[str, list[tuple[int, str]]]:
         retval: str = "void GUI::on_construction()\n{\n"
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
-            for file_index, name in old_functions:
+            for i, (file_index, name) in enumerate(old_functions):
                 if name == "on_construction":
                     func_definition_start: int = old_file.find("{", file_index) + 1
                     func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                     retval += old_file[func_definition_start:func_definition_end]
-                    old_functions.pop(file_index)
+                    old_functions.pop(i)
         retval += "}\n\n"
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
