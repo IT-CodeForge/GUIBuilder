@@ -1,4 +1,4 @@
-from BaseGenerator import BaseGenerator
+from .BaseGenerator import BaseGenerator
 from intermediary_neu.objects.IBaseObject import IBaseObject
 from intermediary_neu.objects.ICheckbox import ICheckbox
 from intermediary_neu.objects.ITimer import ITimer

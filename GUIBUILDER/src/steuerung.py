@@ -399,9 +399,9 @@ class Steuerung:
             return
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
-                self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.ETK)  # TODO
+                self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.ETK)
             case "C++ (TGW)":
-                pass  # TODO
+                self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.TGW)
             case _:
                 raise ValueError
 
