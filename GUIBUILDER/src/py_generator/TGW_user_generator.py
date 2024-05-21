@@ -87,23 +87,23 @@ class TGW_user_generator(BaseTGWGenerator):
     def __generate_user_func_definition(cls, event_dict: dict[str, list[tuple[IBaseObject, str]]], old_functions: list[tuple[int, str]], old_file: str)-> tuple[str, list[tuple[int, str]]]:
         retval: str = "void GUI::on_construction()\n{\n"
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
-            for index, name in old_functions:
+            for file_index, name in old_functions:
                 if name == "on_construction":
-                    func_definition_start: int = cls.__find_next(old_file, tuple("{"), index)[1] + 1
+                    func_definition_start: int = cls.__find_next(old_file, tuple("{"), file_index)[1] + 1
                     func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                     retval += old_file[func_definition_start:func_definition_end]
-                    old_functions.pop(index)
+                    old_functions.pop(file_index)
         retval += "}\n\n"
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
                 retval += "void GUI::" + tgw_gen.generate_event_head_own(event_type, user_event)
                 retval += "\n{\n"
-                for index, name in old_functions:
+                for list_index, (file_index, name) in enumerate(old_functions):
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
-                        func_definition_start: int = cls.__find_next(old_file, tuple("{"), index)[1] + 1
+                        func_definition_start: int = cls.__find_next(old_file, tuple("{"), file_index)[1] + 1
                         func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                         retval += old_file[func_definition_start:func_definition_end]
-                        old_functions.pop(index)
+                        old_functions.pop(list_index)
                         break
                 retval += "}\n"
         return retval, old_functions
