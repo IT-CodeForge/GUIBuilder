@@ -87,7 +87,7 @@ class TGW_user_generator(BaseTGWGenerator):
     
     @classmethod #TODO: handle on construction
     def __generate_user_func_definition(cls, event_dict: dict[str, list[tuple[IBaseObject, str]]], old_functions: list[tuple[int, str]], old_file: str)-> tuple[str, list[tuple[int, str]]]:
-        retval: str = "void GUI::on_construction()\n{\n"
+        retval: str = "void GUI::on_construction()\n{"
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
             for i, (file_index, name) in enumerate(old_functions):
                 if name == "on_construction":
@@ -95,18 +95,22 @@ class TGW_user_generator(BaseTGWGenerator):
                     func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                     retval += old_file[func_definition_start:func_definition_end]
                     old_functions.pop(i)
+            else:
+                retval += "\n"
         retval += "}\n\n"
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
                 retval += "void GUI::" + tgw_gen.generate_event_head_own(event_type, user_event)
-                retval += "\n{\n"
+                retval += "\n{"
                 for list_index, (file_index, name) in enumerate(old_functions):
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
                         func_definition_start: int = old_file.find("{", file_index) + 1
                         func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
-                        retval += old_file[func_definition_start + 1:func_definition_end]
+                        retval += old_file[func_definition_start:func_definition_end]
                         old_functions.pop(list_index)
                         break
+                else:
+                    retval += "\n"
                 retval += "}\n"
         return retval, old_functions
 
