@@ -63,7 +63,7 @@ class TGW_system_generator(BaseTGWGenerator):
         else:
             condition: str = ""
             if type(tgw_object) == ITimer:
-                condition = f"id == {tgw_gen.get_object_name(tgw_object)}id && {tgw_gen.get_object_name(tgw_object)}IsEnabled == true"
+                condition = f"id == {tgw_gen.get_object_name(tgw_object)}_id && {tgw_gen.get_object_name(tgw_object)}IsEnabled == true"
             elif type(tgw_object) == ICheckbox:
                 condition = f"eineCheckBox == this->{tgw_gen.get_object_name(tgw_object)}"
             elif type(tgw_object) in [IEdit, IButton]:

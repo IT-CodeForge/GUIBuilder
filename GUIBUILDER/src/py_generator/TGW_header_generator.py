@@ -21,7 +21,7 @@ class TGW_header_generator(BaseTGWGenerator):
             if type(tgw_object) not in [IWindow, ICanvas]:
                 retval += cls._INDENT + tgw_gen.TYPE_TRANS.get(type(tgw_object), "") + "* " + tgw_gen.get_object_name(tgw_object) + ";\n"
             if type(tgw_object) == ITimer:
-                retval += cls._INDENT + "int " + tgw_gen.get_object_name(tgw_object) + "id = " + str(tgw_object.id) + ";\n"
+                retval += cls._INDENT + "int " + tgw_gen.get_object_name(tgw_object) + "_id = " + str(tgw_object.id) + ";\n"
                 retval += cls._INDENT + "bool " + tgw_gen.get_object_name(tgw_object) + "IsEnabled = " + str(tgw_object.enabled).lower() + ";\n"
             if type(tgw_object) == ICanvas:
                 retval += cls._INDENT + "TGWCanvas* " + tgw_gen.get_object_name(tgw_object) + ";\n"
