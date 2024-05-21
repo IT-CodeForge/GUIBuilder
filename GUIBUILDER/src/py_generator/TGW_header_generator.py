@@ -34,7 +34,7 @@ class TGW_header_generator(BaseTGWGenerator):
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         for tgw_event in event_dict.keys():
             if tgw_event != "timer_funcs":
-                retval += cls._INDENT + "void " + tgw_gen.generate_event_head_tgw(tgw_event, event_dict[tgw_event][0][0]) + ";\n"
+                retval += cls._INDENT + "void " + tgw_gen.generate_event_head_tgw(tgw_event) + ";\n"
             else:
                 retval += cls._INDENT + "void eventTimer(int id);\n"
             for tgw_object, event_type in event_dict.get(tgw_event, []):

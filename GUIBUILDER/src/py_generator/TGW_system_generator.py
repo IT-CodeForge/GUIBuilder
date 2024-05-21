@@ -42,7 +42,7 @@ class TGW_system_generator(BaseTGWGenerator):
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         for tgw_event in event_dict.keys():
             if tgw_event != "timer_funcs":
-                retval += "void GUI::" + tgw_gen.generate_event_head_tgw(tgw_event, event_dict[tgw_event][0][0]) + "\n"
+                retval += "void GUI::" + tgw_gen.generate_event_head_tgw(tgw_event) + "\n"
             else:
                 retval += "void GUI::eventTimer(int id)\n"
             retval += "{\n"
@@ -54,9 +54,9 @@ class TGW_system_generator(BaseTGWGenerator):
     @classmethod
     def __generate_event_bind(cls, tgw_object: IBaseObject, event_type: str)-> str:
         retval: str = ""
-        content: str = tgw_gen.generate_event_head_own(event_type, tgw_object).replace("int ", "").replace("HDC ", "").replace("TGWindow* ", "")
+        content: str = tgw_gen.generate_event_head_own(event_type, tgw_object).replace("int ", "").replace("HDC ", "").replace("TGWindow* ", "") + ";\n"
         if type(tgw_object) == IWindow:
-            retval += cls._INDENT + content + ";\n"
+            retval += cls._INDENT + content
         else:
             condition: str = ""
             if type(tgw_object) == ITimer:

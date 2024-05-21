@@ -84,13 +84,8 @@ def generate_event_head_own(event: str, obj: IBaseObject) ->str:
         return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event, ('',''))[1]})"
     return f"{get_event_func_own_name(event, obj)}({__EVENT_FUNCS_HEAD_OWN_PARAMS.get(event)})"
 
-def generate_event_head_tgw(event: str, obj: IBaseObject) ->str:
-    if type(obj) == IEdit:
-        return __TGW_EVENT_FUNC_NAMES.get('event_changed', ('',''))[0]
-    if type(obj) == ICheckbox:
-        return __TGW_EVENT_FUNC_NAMES.get('event_changed', ('',''))[1]
-    
-    return f"{__TGW_EVENT_FUNC_NAMES.get(event)}"
+def generate_event_head_tgw(tgw_event: str) ->str:
+    return f"{__TGW_EVENT_FUNC_NAMES.get(tgw_event)}"
 
 def generate_if_clause(condition: str, content: str, indent: str, starting_indent_level: int) -> str:
     retval: str = ""
@@ -98,7 +93,7 @@ def generate_if_clause(condition: str, content: str, indent: str, starting_inden
     retval += string_times_n(indent, starting_indent_level) + "{\n"
     for line in content.splitlines():
         retval += string_times_n(indent, starting_indent_level + 1) + line
-    retval += string_times_n(indent, starting_indent_level) + "\n}\n"
+    retval += string_times_n(indent, starting_indent_level) + "}\n"
     return retval
 
 # endregion

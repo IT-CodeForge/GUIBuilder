@@ -97,7 +97,7 @@ class TGW_user_generator(BaseTGWGenerator):
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
                 retval += tgw_gen.generate_event_head_own(event_type, user_event)
-                retval += "{\n"
+                retval += "\n{\n"
                 for index, name in old_functions:
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
                         func_definition_start: int = cls.__find_next(old_file, tuple("{"), index)[1] + 1
