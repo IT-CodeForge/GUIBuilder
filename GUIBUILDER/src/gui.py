@@ -24,6 +24,8 @@ class GUI(ETKMainWindow):
 
         self.__move_timer = ETKTimer(self._tk_object, 10, self.__update_element_pos)
 
+        self.add_event(ETKWindowEvents.EXIT, self.__steuerung.exit_event)
+
         self.add_event(ETKBaseEvents.MOUSE_UP, self.__mouse_up_event_handler)
         self.add_event(ETKBaseEvents.MOUSE_MOVED, self.__mouse_moved_event_handler)
         self.__moving_element: Optional[ETKBaseObject] = None

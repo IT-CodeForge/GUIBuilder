@@ -13,6 +13,8 @@ class Steuerung:
         from main import dir_root
         self.__save_path: str = dir_root
 
+        self.__unsaved_changes: bool = False
+
         self.__intermediary = Intermediary()
         self.__generator = generator()
         self.__gui = GUI(self)
@@ -234,6 +236,8 @@ class Steuerung:
     def set_element_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:
         if self.__gui.last_active_attributes_element == None:
             raise RuntimeError
+        
+        self.__unsaved_changes = True
 
         object = self.__objects[self.__gui.last_active_attributes_element]
         self.__set_attribute_event(caller, object, self.__EL_GUI_TO_GEN_ATTR)
@@ -254,6 +258,8 @@ class Steuerung:
         self.__apply_object_attributes_to_gui(object)
 
     def update_element_pos_event(self, element: ETKBaseObject) -> None:
+        self.__unsaved_changes = True
+
         object = self.__objects[element]
         if not isinstance(object, IBaseObjectWidget):
             raise RuntimeError
@@ -262,6 +268,8 @@ class Steuerung:
         self.__GEN_ATTR_TO_EL_GUI["pos_y"].text = str(int(element.pos.y))
 
     def set_window_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:
+        self.__unsaved_changes = True
+
         object = self.__objects[self.__gui]
         self.__set_attribute_event(caller, object, self.__WIN_GUI_TO_GEN_ATTR)
 
@@ -361,8 +369,15 @@ class Steuerung:
         if path == "":
             return
         self.__intermediary.save_to_file(path)
+        self.__unsaved_changes = False
 
     def load_elements_from_file(self) -> None:
+        if self.__unsaved_changes:
+            from jk import msgbox
+            ret = msgbox.create_msg_box("GUI-Builder - Ungespeicherte Änderungen", "Es gibt ungespeicherte Änderungen!\nBeim Ladevorgang wird der bisherige Zustand gelöscht!\nFortfahren?", msgbox.BUTTON_STYLES.YES_NO, msgbox.ICON_STYLES.WARNING, default_button=2)
+            if ret != msgbox.RETURN_VALUES.YES:
+                return
+
         path = self.__get_load_file_path()
         if path == "":
             return
@@ -404,6 +419,13 @@ class Steuerung:
                 self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.TGW)
             case _:
                 raise ValueError
+    
+    def exit_event(self) -> None:
+        if self.__unsaved_changes:
+            from jk import msgbox
+            ret = msgbox.create_msg_box("GUI-Builder - Ungespeicherte Änderungen", "Es gibt ungespeicherte Änderungen!\nMit dem Schließen fortfahren?", msgbox.BUTTON_STYLES.YES_NO, msgbox.ICON_STYLES.WARNING, default_button=2)
+            if ret != msgbox.RETURN_VALUES.YES:
+                self.__gui.exit_ignore_next = True
 
     def run(self) -> None:
         self.__gui.run()
