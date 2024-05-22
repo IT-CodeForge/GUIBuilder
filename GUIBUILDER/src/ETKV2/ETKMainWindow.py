@@ -26,6 +26,7 @@ class ETKMainWindow(ETKBaseTkObject):
         self._tk_object: Tk = Tk()
         self.__topmost = False
         self.exit_locked = False
+        self.exit_ignore_next = False
         self.__fullscreen = False
         self.canvas = ETKCanvas(self._tk_object, Vector2d(), Vector2d())
 
@@ -131,8 +132,10 @@ class ETKMainWindow(ETKBaseTkObject):
 
     def exit(self) -> None:
         self._handle_event(ETKWindowEvents.EXIT)
-        if not self.exit_locked:
+        if not self.exit_locked and not self.exit_ignore_next:
             sys.exit()
+        if self.exit_ignore_next:
+            self.exit_ignore_next = False
 
     def force_focus(self) -> None:
         self._tk_object.attributes('-topmost', 1)  # type:ignore
