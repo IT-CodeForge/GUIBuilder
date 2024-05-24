@@ -10,6 +10,11 @@ from intermediary_neu.objects.IWindow import IWindow
 from . import TGW_code_generator  as tgw_gen
 from typing import Callable, Any
 
+"""
+the SystemGUI generator generates a cpp file which links the default tgw-events to the GUI-Builder events
+and the definition of the Constructor (to generate the GUI-elements)
+"""
+
 class TGW_system_generator(BaseTGWGenerator):
     __GENERATOR_TRANS: dict[type, Callable[[Any], str]] = {
         IButton: tgw_gen.button,
@@ -24,23 +29,42 @@ class TGW_system_generator(BaseTGWGenerator):
         super().__init__()
     
     def generate_file(self, tgw_objects: tuple[IBaseObject, ...])-> tuple[str, str, str]:
+        """
+        this returns three strings.
+        the first string replaces the #tag:main_window_params#in the SystemGUI template
+        the second string replaces the #tag:constructor_definition# in the SystemGUI template
+        the third string replaces the #tag:event_funcs_definition# in the SystemGUI template
+        """
         gui_params: str = ""
-        for tgw_object in tgw_objects:
+        for tgw_object in tgw_objects: #searches for the Window in the list and use it to generate the GUI params
             if type(tgw_object) == IWindow:
                 gui_params = tgw_gen.window_params(tgw_object)
         constructor_definition: str = ""
-        for tgw_object in tgw_objects:
+        for tgw_object in tgw_objects: #goes over all objects and generates the assignement of values for every object where this is necessary (keep in mind the Timer attributes are assigned in the header)
             if type(tgw_object) == IWindow:
                 continue
-            constructor_definition += self._INDENT + self.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object) + ";\n"
+            constructor_definition += self._INDENT + self.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object) + ";\n" #the "lmabda obj : """ is necessery since strict typeng gets upset because it doesn't know that the tgw-objects can only be of the types that are specified in the dict hence it says None types are not callable
             if type(tgw_object) == ICanvas:
                 constructor_definition += self._INDENT + tgw_gen.get_object_name(tgw_object) + " = " + tgw_gen.get_object_name(tgw_object) + "_bitmap->canvas;\n"
-        constructor_definition += self._INDENT + "on_construction();\n"
+        constructor_definition += self._INDENT + "on_construction();\n" #adds the call of the "on_construction" function, which gives the user "access" to the constructor by activating it once everything neccessary for the GUI to work has been done
         event_funcs: str = self.__generate_event_funcs_definition(tgw_objects)
         return gui_params, constructor_definition, event_funcs
     
     @classmethod
     def __generate_event_funcs_definition(cls, tgw_objects: tuple[IBaseObject, ...]) -> str:
+        """
+        generates the function definitions.
+        Here they are needed, to connect the the TGW functions with the custom generated ones
+        (e.g. we have a button called "btn" with the id 2, and we want a pressed event so this generates:
+        void GUI::eventButton(TGWButton* einButton, int event)
+        {
+          if(einButton == this->e2_btn)
+          {
+            e2_btn_event_pressed();
+          }
+        }
+        )
+        """
         retval: str = ""
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         for tgw_event in event_dict.keys():
@@ -56,6 +80,9 @@ class TGW_system_generator(BaseTGWGenerator):
     
     @classmethod
     def __generate_event_bind(cls, tgw_object: IBaseObject, event_type: str)-> str:
+        """
+        this generates the code insed of the curly brackets of the TGW-event functions (in the previous example it would be the if-clause)
+        """
         retval: str = ""
         content: str = tgw_gen.generate_event_head_own(event_type, tgw_object).replace("int ", "").replace("HDC ", "").replace("TGWindow* ", "") + ";\n"
         if type(tgw_object) == IWindow:

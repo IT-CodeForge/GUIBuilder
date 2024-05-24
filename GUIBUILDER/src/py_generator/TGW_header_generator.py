@@ -5,17 +5,32 @@ from intermediary_neu.objects.ICanvas import ICanvas
 from intermediary_neu.objects.IWindow import IWindow
 from . import TGW_code_generator as tgw_gen
 
+"""
+this generates the header file
+"""
+
 class TGW_header_generator(BaseTGWGenerator):
     def __init__(self) -> None:
         super().__init__()
     
     def generate_file(self, tgw_objects: tuple[IBaseObject, ...]) ->tuple[str, str]:
+        """
+        this returns two strings.
+        the first string replaces the #tag:attributes# in the HeaderGUI template
+        the second string replaces the #tag:function_declarations# in the headerGUI template
+        """
         attributes: str = self.__generate_attributes(tgw_objects)
         event_funcs: str = self.__generate_event_funcs(tgw_objects)
         return attributes, event_funcs
     
     @classmethod
     def __generate_attributes(cls, tgw_objects: tuple[IBaseObject, ...]) -> str:
+        """
+        generates the attributes of the class.
+        which means, for every object it generates the pointers to said object (e.g. TGWButton* e{object id}_{object_name}),
+        If the object is a Timer it also generates its ID and enabled status and assign the their respective value (but only the timer Attributes get their value assigned here)
+        if the object is a canvas, it generates the bitmap and the canvas
+        """
         retval: str = ""
         for tgw_object in tgw_objects:
             if type(tgw_object) not in [IWindow, ICanvas]:
@@ -30,6 +45,12 @@ class TGW_header_generator(BaseTGWGenerator):
     
     @classmethod
     def __generate_event_funcs(cls, tgw_objects: tuple[IBaseObject, ...]) -> str:
+        """
+        generates the declarations of the event functions.
+        this means, it generates all of the standard TGWEvent Functions, that get called by the framework
+        and the functions the get called by the system GUI to make the more user friendly
+        (which means to get the "pressed" event from a certain button, you dont need to check the ID given by the tgw event function but instead get a different function for every button)
+        """
         retval: str = cls._INDENT + "void on_construction();\n"
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         for tgw_event in event_dict.keys():

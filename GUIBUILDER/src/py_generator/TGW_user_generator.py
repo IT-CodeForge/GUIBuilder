@@ -5,6 +5,10 @@ from intermediary_neu.objects.IWindow import IWindow
 from . import TGW_code_generator as tgw_gen
 from typing import Optional
 
+"""
+this generates the User cpp file, the file where the user of the GUI-Builder can edit the code
+"""
+
 class TGW_user_generator(BaseTGWGenerator):
     __VALID_FUNC_NAME_CHARACTER: list[str] = [
         "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
@@ -17,6 +21,11 @@ class TGW_user_generator(BaseTGWGenerator):
         super().__init__()
     
     def generate_file(self, tgw_objects: tuple[IBaseObject, ...], old_file:Optional[str]) -> tuple[str, str]:
+        """
+        this returns two strings.
+        the first string gets put inside the "generated code" region of the UserGUI (if it exists the existing file else the template by replacing #tag:generated_code#)
+        the second string has the functions that got deleted while generating (events that got removed) !this only detects functions of the GUI class (only functions beginning with GUI::) other functions are not detected
+        """
         retval: str = self.__generate_includes(tgw_objects)
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = self._generate_event_dict(tgw_objects)
         old_functions: tuple[tuple[int, str], ...] = ()
@@ -32,6 +41,9 @@ class TGW_user_generator(BaseTGWGenerator):
     
     @classmethod
     def __remainig_funcs_to_string(cls, remaining_funcs: list[tuple[int, str]], old_file: str)-> str:
+        """
+        extracts the functions which weren't regenerated (i.e. removed) and adds the to a string
+        """
         retval: str = ""
         for index, _ in remaining_funcs:
             start_of_function: int = index - 6
@@ -51,6 +63,9 @@ class TGW_user_generator(BaseTGWGenerator):
     
     @staticmethod
     def __generate_includes(tgw_objects: tuple[IBaseObject, ...])-> str:
+        """
+        generates all the necessary includes
+        """
         retval: str = '#include "GUI.h"\n'
         for tgw_object in tgw_objects:
             if type(tgw_object) == IWindow:
@@ -66,6 +81,9 @@ class TGW_user_generator(BaseTGWGenerator):
     
     @classmethod
     def __find_functions(cls, file: str)-> tuple[tuple[int, str], ...]:
+        """
+        finds the functions in the oldfile that was provided and returns a tuplpe, which contains the name af tthe function and the index in the oldfile
+        """
         temp_index: int = 0
         retval: list[tuple[int, str]] = []
         while True:
@@ -85,8 +103,12 @@ class TGW_user_generator(BaseTGWGenerator):
             except:
                 return tuple(retval)
     
-    @classmethod #TODO: handle on construction
+    @classmethod
     def __generate_user_func_definition(cls, event_dict: dict[str, list[tuple[IBaseObject, str]]], old_functions: list[tuple[int, str]], old_file: str)-> tuple[str, list[tuple[int, str]]]:
+        """
+        generates all the functions the user can manipulate, if it found an old version in the oldfile
+        (meaning same id and event type(name doesn't need to match since user can change name)) it copies the contents af the old event
+        """
         retval: str = "void GUI::on_construction()\n{"
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
             for i, (file_index, name) in enumerate(old_functions):
@@ -117,6 +139,10 @@ class TGW_user_generator(BaseTGWGenerator):
 
     @classmethod
     def __find_func_end(cls, start_index: int, file: str) -> int:
+        """
+        given the index of the start of a function (meaning the index of the first "{") it return the index of the end of the function
+        it considers invalid "{", "}" which might be located in strings or comments
+        """
         end_index = start_index
         counter = 1
         if file[start_index] != "{":
@@ -141,6 +167,9 @@ class TGW_user_generator(BaseTGWGenerator):
     
     @staticmethod
     def __find_next(st: str, searches: tuple[str, ...], start: int = 0, end: Optional[int] = None):
+        """
+        finds the next occurrence from a list of strings inside the mainstring
+        """
         if end == None:
             end = len(st)
         erg: dict[str, int] = {}
