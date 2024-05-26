@@ -234,7 +234,7 @@ class Steuerung:
         setattr(object, attr_name, value)
 
     def set_element_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:
-        if self.__gui.last_active_attributes_element == None:
+        if self.__gui.last_active_attributes_element is None:
             raise RuntimeError
         
         self.__unsaved_changes = True

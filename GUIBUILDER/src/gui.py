@@ -492,7 +492,7 @@ class GUI(ETKMainWindow):
         self.__steuerung.update_element_attributes_gui(new_element)
 
     def __delete_element_event(self) -> None:
-        if self.active_attributes_element == None:
+        if self.active_attributes_element is None:
             raise RuntimeError
         self.__steuerung.delete_element(self.active_attributes_element)
 

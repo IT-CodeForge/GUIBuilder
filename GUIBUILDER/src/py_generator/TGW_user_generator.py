@@ -29,14 +29,14 @@ class TGW_user_generator(BaseTGWGenerator):
         retval: str = self.__generate_includes(tgw_objects)
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = self._generate_event_dict(tgw_objects)
         old_functions: tuple[tuple[int, str], ...] = ()
-        if old_file == None:
+        if old_file is None:
             pass
         else:
             old_functions = self.__find_functions(old_file)
         retval += "\n"
-        tempval, remaining_funcs = self.__generate_user_func_definition(event_dict, list(old_functions), "" if old_file == None else old_file)
+        tempval, remaining_funcs = self.__generate_user_func_definition(event_dict, list(old_functions), "" if old_file is None else old_file)
         retval += tempval
-        deleted_funcs: str = self.__remainig_funcs_to_string(remaining_funcs, "" if old_file == None else old_file)
+        deleted_funcs: str = self.__remainig_funcs_to_string(remaining_funcs, "" if old_file is None else old_file)
         return retval, deleted_funcs
     
     @classmethod
@@ -170,7 +170,7 @@ class TGW_user_generator(BaseTGWGenerator):
         """
         finds the next occurrence from a list of strings inside the mainstring
         """
-        if end == None:
+        if end is None:
             end = len(st)
         erg: dict[str, int] = {}
         for s in searches:
