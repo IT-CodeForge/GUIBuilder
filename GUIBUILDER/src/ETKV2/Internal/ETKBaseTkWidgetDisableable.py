@@ -2,7 +2,6 @@ from typing import Any
 from ..Vector2d import Vector2d
 from .ETKBaseTkWidget import ETKBaseTkWidget
 from .ETKBaseWidgetDisableable import ETKBaseWidgetDisableable
-from .ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKBaseTkWidgetDisableable(ETKBaseWidgetDisableable, ETKBaseTkWidget):

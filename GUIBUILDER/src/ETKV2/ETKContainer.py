@@ -2,7 +2,6 @@ from __future__ import annotations
 from tkinter import Tk
 from typing import Any, Literal
 from .Internal.ETKBaseWidget import ETKBaseWidget
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 from .Vector2d import Vector2d
 

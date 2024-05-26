@@ -22,12 +22,13 @@ class GUI(ETKMainWindow):
     def _add_elements(self):
         self._tk_object.iconbitmap(executable) # type:ignore
 
+        self.__moving_element = None
         self.__move_timer = ETKTimer(self._tk_object, 10, self.__update_element_pos)
 
         self.add_event(ETKWindowEvents.EXIT, self.__steuerung.exit_event)
 
-        self.add_event(ETKBaseEvents.MOUSE_UP, self.__mouse_up_event_handler)
-        self.add_event(ETKBaseEvents.MOUSE_MOVED, self.__mouse_moved_event_handler)
+        self.add_event(ETKWindowEvents.MOUSE_UP, self.__mouse_up_event_handler)
+        self.add_event(ETKWindowEvents.MOUSE_MOVED, self.__mouse_moved_event_handler)
         self.__moving_element: Optional[ETKBaseObject] = None
         self.active_attributes_element: Optional[ETKBaseObject] = None
         self.last_active_attributes_element: Optional[ETKBaseObject] = None
@@ -76,7 +77,7 @@ class GUI(ETKMainWindow):
         self.element_area = ETKContainer(
             self._tk_object, size=ETKContainerSize(500, 500), outline_thickness=2)
         self.main2.add_element(self.element_area)
-        self.element_area.add_event(ETKBaseEvents.MOUSE_DOWN, self.__element_area_mousedown_handler)
+        self.element_area.add_event(ETKContainerEvents.MOUSE_DOWN, self.__element_area_mousedown_handler)
 
         # region Menubar_left Elemente
 
@@ -84,38 +85,38 @@ class GUI(ETKMainWindow):
             self._tk_object, text="BUTTON", size=Vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_button.enabled = False
         self.menubar_button.add_event(
-            ETKBaseEvents.MOUSE_DOWN, self.__menubar_left_handler)
+            ETKButtonEvents.MOUSE_DOWN, self.__menubar_left_handler)
         self.menubar_left.add_element(self.menubar_button)
 
         self.menubar_label = ETKLabel(
             self._tk_object, text="LABEL", size=Vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_label.add_event(
-            ETKBaseEvents.MOUSE_DOWN, self.__menubar_left_handler)
+            ETKLabelEvents.MOUSE_DOWN, self.__menubar_left_handler)
         self.menubar_left.add_element(self.menubar_label)
 
         self.menubar_edit = ETKLabel(
             self._tk_object, text="EDIT", size=Vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_edit.add_event(
-            ETKBaseEvents.MOUSE_DOWN, self.__menubar_left_handler)
+            ETKLabelEvents.MOUSE_DOWN, self.__menubar_left_handler)
         self.menubar_left.add_element(self.menubar_edit)
 
         self.menubar_checkbox = ETKCheckbox(
             self._tk_object, text="CHECKBOX", size=Vector2d(100, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_checkbox.enabled = False
         self.menubar_checkbox.add_event(
-            ETKBaseEvents.MOUSE_DOWN, self.__menubar_left_handler)
+            ETKCheckboxEvents.MOUSE_DOWN, self.__menubar_left_handler)
         self.menubar_left.add_element(self.menubar_checkbox)
 
         self.menubar_canvas = ETKLabel(
             self._tk_object, text="CANVAS", size=Vector2d(70, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_canvas.add_event(
-            ETKBaseEvents.MOUSE_DOWN, self.__menubar_left_handler)
+            ETKLabelEvents.MOUSE_DOWN, self.__menubar_left_handler)
         self.menubar_left.add_element(self.menubar_canvas)
 
         self.menubar_timer = ETKLabel(
             self._tk_object, text="TIMER", size=Vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_timer.add_event(
-            ETKBaseEvents.MOUSE_DOWN, self.__menubar_left_handler)
+            ETKLabelEvents.MOUSE_DOWN, self.__menubar_left_handler)
         self.menubar_left.add_element(self.menubar_timer)
 
         # endregion
@@ -511,7 +512,7 @@ class GUI(ETKMainWindow):
             except AttributeError:
                 pass
 
-        new_element.add_event(ETKBaseEvents.MOUSE_DOWN, self.__element_mouse_down_handler)
+        new_element.add_event(ETKEvents.MOUSE_DOWN, self.__element_mouse_down_handler)
         self.element_area.add_element(new_element)
         return new_element
 

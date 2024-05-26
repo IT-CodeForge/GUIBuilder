@@ -142,7 +142,7 @@ class ETK_static_GUI_Generator:
         return "self." + object_name + ".add_event(" + "ETK" + object_name + "." + event_type + ", " + eventhandler[:-2] + ")\r\n"
     
     def __generate_base_event_bind_func(self, object_name: str, event_type: str, eventhandler: str)->str:
-        return "self." + object_name + ".add_event(" + "ETKBaseEvents." + event_type + ", " + eventhandler[:-2] + ")\r\n"
+        return "self." + object_name + ".add_event(" + "ETKEvents." + event_type + ", " + eventhandler[:-2] + ")\r\n"
 
     def __generate_Vector2d_from_tuple(self, input_tuple: tuple[int, int])->str:
         return "Vector2d(" + str(input_tuple[0]) + ", " + str(input_tuple[1]) + ")"

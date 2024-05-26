@@ -4,7 +4,6 @@ from typing import Any
 from .ETKUtils import gen_col_from_int
 from .ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .ETKBaseTkWidgetText import ETKBaseTkWidgetText
-from .ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from ..Vector2d import Vector2d
 
 

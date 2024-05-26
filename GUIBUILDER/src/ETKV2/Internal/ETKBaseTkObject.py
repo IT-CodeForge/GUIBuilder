@@ -4,7 +4,7 @@ from typing import Any, Callable, Optional
 from .ETKUtils import gen_col_from_int
 
 from ..Vector2d import Vector2d
-from .ETKBaseObject import ETKBaseObject, ETKEvents, ETKBaseEvents
+from .ETKBaseObject import ETKBaseObject, ETKEvents
 
 
 class ETKBaseTkObject(ETKBaseObject):
@@ -31,30 +31,30 @@ class ETKBaseTkObject(ETKBaseObject):
     # region Eventhandling Methods
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
-        if event_type.value[0] != "<Custom>":
+        if event_type.value != "<Custom>":
             if len(self._event_lib[event_type]) == 0:
                 self._tk_object.bind(
-                    event_type.value[0], self._handle_tk_event)  # type:ignore
+                    event_type.value, self._handle_tk_event)  # type:ignore
         super().add_event(event_type, eventhandler)
 
     def remove_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
         super().remove_event(event_type, eventhandler)
-        if event_type.value[0] != "<Custom>":
+        if event_type.value != "<Custom>":
             if len(self._event_lib[event_type]) == 0:
-                self._tk_object.unbind(event_type.value[0])
+                self._tk_object.unbind(event_type.value)
 
     def _handle_tk_event(self, event: Event) -> None:  # type:ignore
         match event.type:
             case EventType.ButtonPress:
-                event_type = ETKBaseEvents.MOUSE_DOWN
+                event_type = ETKEvents.MOUSE_DOWN
             case EventType.ButtonRelease:
-                event_type = ETKBaseEvents.MOUSE_UP
+                event_type = ETKEvents.MOUSE_UP
             case EventType.Enter:
-                event_type = ETKBaseEvents.ENTER
+                event_type = ETKEvents.ENTER
             case EventType.Leave:
-                event_type = ETKBaseEvents.LEAVE
+                event_type = ETKEvents.LEAVE
             case EventType.Motion:
-                event_type = ETKBaseEvents.MOUSE_MOVED
+                event_type = ETKEvents.MOUSE_MOVED
             case _:
                 raise ValueError(f"invalid event {event}")
 

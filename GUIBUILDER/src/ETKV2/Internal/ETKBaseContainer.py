@@ -9,6 +9,11 @@ from .ETKBaseWidget import ETKBaseWidget
 from ..Vector2d import Vector2d
 from .ETKBaseWidgetDisableable import ETKBaseWidgetDisableable
 from ..ETKCanvas import ETKCanvas
+from .ETKBaseObject import ETKEvents
+
+class ETKContainerEvents(ETKEvents):
+    pass
+
 
 # region Enums
 

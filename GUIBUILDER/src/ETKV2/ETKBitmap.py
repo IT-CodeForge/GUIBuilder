@@ -1,10 +1,12 @@
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from .Internal.ETKUtils import gen_col_from_int
 from .Vector2d import Vector2d
 from tkinter import PhotoImage, Label, Tk
 from typing import Any, Iterable
+from .Internal.ETKBaseObject import ETKEvents
 
+class ETKBitmapEvents(ETKEvents):
+    pass
 
 class ETKBitmap(ETKBaseTkWidgetDisableable):
     def __init__(self, tk: Tk, pos: Vector2d, size: Vector2d, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:

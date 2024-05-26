@@ -1,16 +1,16 @@
-from enum import auto
+from __future__ import annotations
 from typing import Any
 
 from .Internal.ETKBaseObject import ETKEvents
 from .Internal.ETKBaseTkWidgetButton import ETKBaseTkWidgetButton
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from .Vector2d import Vector2d
 from tkinter import FLAT, Button, Event, Tk, EventType
 
 
 class ETKButtonEvents(ETKEvents):
-    PRESSED = ("<ButtonPress>", auto())
-    RELEASED = ("<ButtonRelease>", auto())
+    PRESSED: ETKButtonEvents
+    RELEASED: ETKButtonEvents
+    _values = {"PRESSED": "<ButtonPress>", "RELEASED": "<ButtonRelease>"}
 
 
 class ETKButton(ETKBaseTkWidgetButton):
@@ -18,7 +18,7 @@ class ETKButton(ETKBaseTkWidgetButton):
         super()._create_outline(tk)
         self._tk_object: Button = Button(self._outline, relief=FLAT)  # type:ignore
         super().__init__(pos=pos, size=size, text=text, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
-        self._event_lib.update({e: [] for e in ETKButtonEvents})
+        self._event_lib.update({e: [] for e in ETKButtonEvents if e not in self._event_lib.keys()})
 
     # region Methods
 

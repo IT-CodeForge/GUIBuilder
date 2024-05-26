@@ -1,7 +1,6 @@
 from typing import Any
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from .ETKCanvasItem import ETKCanvasItem
 from .ETKCanvasRectangle import ETKCanvasRectangle
 from .ETKCanvasSquare import ETKCanvasSquare
@@ -9,6 +8,10 @@ from .ETKCanvasOval import ETKCanvasOval
 from .ETKCanvasCircle import ETKCanvasCircle
 from .ETKCanvasLine import ETKCanvasLine
 from tkinter import Canvas, Tk
+from .Internal.ETKBaseObject import ETKEvents
+
+class ETKCanvasEvents(ETKEvents):
+    pass
 
 
 class ETKCanvas(ETKBaseTkWidgetDisableable):

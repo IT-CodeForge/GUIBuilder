@@ -2,8 +2,11 @@ from tkinter import END, Event, EventType, Text, Tk
 from typing import Any
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkWidgetText import ETKBaseTkWidgetText
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
+from .Internal.ETKBaseObject import ETKEvents
+from .Internal.ETKBaseObject import ETKEvents
 
+class ETKLabelEvents(ETKEvents):
+    pass
 
 class ETKLabel(ETKBaseTkWidgetText):
     def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(80, 17), text: str = "Label", *, visibility: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
@@ -13,7 +16,7 @@ class ETKLabel(ETKBaseTkWidgetText):
         super().__init__(pos=pos, size=size, text=text, visibility=visibility, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self._tk_object["state"] = "disabled"
-        self.add_event(ETKBaseEvents.MOUSE_DOWN, lambda: None)
+        self.add_event(ETKEvents.MOUSE_DOWN, lambda: None)
         self._tk_object.configure(cursor="")
 
     # region Properties

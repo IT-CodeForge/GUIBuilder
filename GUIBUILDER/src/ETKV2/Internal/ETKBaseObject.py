@@ -1,21 +1,18 @@
 from __future__ import annotations
-from enum import Enum, auto
+from .SubclassableEnum import SubclassableEnum
 import traceback
 from typing import Any, Callable, Optional
 
 from ..Vector2d import Vector2d
 
 
-class ETKEvents(Enum):
-    pass
-
-
-class ETKBaseEvents(ETKEvents):
-    MOUSE_DOWN = ("<ButtonPress>", auto())
-    MOUSE_UP = ("<ButtonRelease>", auto())
-    ENTER = ("<Enter>", auto())
-    LEAVE = ("<Leave>", auto())
-    MOUSE_MOVED = ("<Motion>", auto())
+class ETKEvents(SubclassableEnum):
+    MOUSE_DOWN: ETKEvents
+    MOUSE_UP: ETKEvents
+    ENTER: ETKEvents
+    LEAVE: ETKEvents
+    MOUSE_MOVED: ETKEvents
+    _values = {"MOUSE_DOWN": "<ButtonPress>", "MOUSE_UP": "<ButtonRelease>", "ENTER": "<Enter>", "LEAVE": "<Leave>", "MOUSE_MOVED": "<Motion>"}
 
 
 class ETKBaseObject:
@@ -24,8 +21,7 @@ class ETKBaseObject:
         self.__size: Vector2d = Vector2d()
         self.__background_color: int = 0x0
         self.__visibility: bool = True
-        self._event_lib: dict[ETKEvents, list[Callable[..., Any]]] = {
-            e: [] for e in ETKBaseEvents}
+        self._event_lib: dict[ETKEvents, list[Callable[..., Any]]] = {e: [] for e in ETKEvents}
 
         self.background_color = background_color
         self.pos = pos

@@ -1,5 +1,5 @@
+from __future__ import annotations
 from abc import abstractmethod
-from enum import auto
 import sys
 from tkinter import Event, Tk, EventType
 from types import NoneType
@@ -8,17 +8,18 @@ from typing import Any, Callable, Optional
 from .ETKCanvas import ETKCanvas
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkObject import ETKBaseTkObject
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from .Internal.ETKBaseObject import ETKEvents
 
 
 class ETKWindowEvents(ETKEvents):
-    KEY_PRESSED = ("<KeyDown>", auto())
-    KEY_RELEASED = ("<KeyRelease>", auto())
-    FOCUS_IN = ("<FocusIn>", auto())
-    FOCUS_OUT = ("<FocusOut>", auto())
-    START = ("<Custom>", auto())
-    EXIT = ("<Custom>", auto())
+    KEY_PRESSED: ETKWindowEvents
+    KEY_RELEASED: ETKWindowEvents
+    FOCUS_IN: ETKWindowEvents
+    FOCUS_OUT: ETKWindowEvents
+    START: ETKWindowEvents
+    EXIT: ETKWindowEvents
+
+    _values = {"KEY_PRESSED": "<KeyDown>", "KEY_RELEASED": "<KeyRelease>", "FOCUS_IN": "<FocusIn>", "FOCUS_OUT": "<FocusOut>", "START": "<Custom>", "EXIT": "<Custom>"}
 
 
 class ETKMainWindow(ETKBaseTkObject):
@@ -38,7 +39,7 @@ class ETKMainWindow(ETKBaseTkObject):
         self.fullscreen = fullscreen
         self.size = size
         self._tk_object.protocol("WM_DELETE_WINDOW", self.exit)
-        self._event_lib.update({e: [] for e in ETKWindowEvents})
+        self._event_lib.update({e: [] for e in ETKWindowEvents if e not in self._event_lib.keys()})
         self._tk_object.bind(
             "<Configure>", self.__resize_event_handler)  # type:ignore
 

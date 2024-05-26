@@ -1,17 +1,17 @@
-from enum import auto
+from __future__ import annotations
 from typing import Any
 
 from .Vector2d import Vector2d
 from .Internal.ETKBaseObject import ETKEvents
 from .Internal.ETKBaseTkWidgetButton import ETKBaseTkWidgetButton
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 from tkinter import Checkbutton, IntVar, Tk
 
 
 class ETKCheckboxEvents(ETKEvents):
-    CHECKED = ("<Custom>", auto())
-    UNCHECKED = ("<Custom>", auto())
-    TOGGLED = ("<Custom>", auto())
+    CHECKED: ETKCheckboxEvents
+    UNCHECKED: ETKCheckboxEvents
+    TOGGLED: ETKCheckboxEvents
+    _values = {"CHECKED": "<Custom>", "UNCHECKED": "<Custom>", "TOGGLED": "<Custom>"}
 
 
 class ETKCheckbox(ETKBaseTkWidgetButton):
@@ -22,7 +22,7 @@ class ETKCheckbox(ETKBaseTkWidgetButton):
         self._tk_object: Checkbutton = Checkbutton(  # type:ignore
             self._outline, variable=self.__state)
         super().__init__(pos=pos, size=size, text=text, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
-        self._event_lib.update({e: [] for e in ETKCheckboxEvents})
+        self._event_lib.update({e: [] for e in ETKCheckboxEvents if e not in self._event_lib.keys()})
         self.__state.trace_add("write", self.__checkbox_event_handler)
         self.state = state
 

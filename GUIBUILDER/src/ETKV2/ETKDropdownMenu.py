@@ -1,14 +1,16 @@
+from __future__ import annotations
+
 from typing import Any
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .Internal.ETKBaseObject import ETKEvents
-from enum import auto
 from tkinter import OptionMenu, StringVar, Tk
 from tkinter import _setit #type:ignore
 
 
 class ETKDropdownMenuEvents(ETKEvents):
-    CHANGED = ("<Custom>", auto())
+    CHANGED: ETKDropdownMenuEvents
+    _values = {"CHANGED": "<Custom>"}
 
 
 class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
@@ -23,7 +25,7 @@ class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
         super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self.__selected.trace("w", self.__clicked_changed)  # type:ignore
-        self._event_lib.update({e: [] for e in ETKDropdownMenuEvents})
+        self._event_lib.update({e: [] for e in ETKDropdownMenuEvents if e not in self._event_lib.keys()})
 
     @property
     def options(self) -> list[str]:

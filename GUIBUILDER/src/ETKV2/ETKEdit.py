@@ -1,4 +1,4 @@
-from enum import auto
+from __future__ import annotations
 from tkinter import Event, Tk, EventType
 from typing import Any
 
@@ -6,12 +6,12 @@ from .Internal.ETKBaseObject import ETKEvents
 from .Vector2d import Vector2d
 from .ETKLabel import ETKLabel
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
-from .Internal.ETKBaseTkObject import ETKBaseEvents  # type:ignore
 
 
 class ETKEditEvents(ETKEvents):
-    CHANGED = ("<KeyRelease>", auto())
-    CHANGED_DELAYED = ("<KeyRelease>", auto())
+    CHANGED: ETKEditEvents
+    CHANGED_DELAYED: ETKEditEvents
+    _values = {"CHANGED": "<KeyRelease>", "CHANGED_DELAYED": "<KeyRelease>"}
 
 
 class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
@@ -23,7 +23,7 @@ class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
                          background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self._tk_object["state"] = "normal"
-        self._event_lib.update({e: [] for e in ETKEditEvents})
+        self._event_lib.update({e: [] for e in ETKEditEvents if e not in self._event_lib.keys()})
 
     # region Properties
 
