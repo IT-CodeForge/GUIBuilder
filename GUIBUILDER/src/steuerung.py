@@ -3,7 +3,7 @@ from tkinter import Tk, filedialog as fd
 from typing import Any
 from intermediary_all import *
 from ETK import *
-from py_generator.generator import generator, SupportedFrameworks
+from py_generator.generator import Generator, SupportedFrameworks
 
 
 class Steuerung:
@@ -16,7 +16,7 @@ class Steuerung:
         self.__unsaved_changes: bool = False
 
         self.__intermediary = Intermediary()
-        self.__generator = generator()
+        self.__generator = Generator()
         self.__gui = GUI(self)
 
     def on_gui_init(self) -> None:

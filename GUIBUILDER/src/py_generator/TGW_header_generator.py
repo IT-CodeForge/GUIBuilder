@@ -13,14 +13,15 @@ class TGW_header_generator(BaseTGWGenerator):
     def __init__(self) -> None:
         super().__init__()
     
-    def generate_file(self, tgw_objects: tuple[IBaseObject, ...]) ->tuple[str, str]:
+    @classmethod
+    def generate_file(cls, tgw_objects: tuple[IBaseObject, ...]) ->tuple[str, str]:
         """
         this returns two strings.
         the first string replaces the #tag:attributes# in the HeaderGUI template
         the second string replaces the #tag:function_declarations# in the headerGUI template
         """
-        attributes: str = self.__generate_attributes(tgw_objects)
-        event_funcs: str = self.__generate_event_funcs(tgw_objects)
+        attributes: str = cls.__generate_attributes(tgw_objects)
+        event_funcs: str = cls.__generate_event_funcs(tgw_objects)
         return attributes, event_funcs
     
     @classmethod

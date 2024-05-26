@@ -28,7 +28,8 @@ class TGW_system_generator(BaseTGWGenerator):
     def __init__(self) -> None:
         super().__init__()
     
-    def generate_file(self, tgw_objects: tuple[IBaseObject, ...])-> tuple[str, str, str]:
+    @classmethod
+    def generate_file(cls, tgw_objects: tuple[IBaseObject, ...])-> tuple[str, str, str]:
         """
         this returns three strings.
         the first string replaces the #tag:main_window_params#in the SystemGUI template
@@ -43,11 +44,11 @@ class TGW_system_generator(BaseTGWGenerator):
         for tgw_object in tgw_objects: #goes over all objects and generates the assignement of values for every object where this is necessary (keep in mind the Timer attributes are assigned in the header)
             if type(tgw_object) == IWindow:
                 continue
-            constructor_definition += self._INDENT + self.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object) + ";\n" #the "lmabda obj : """ is necessery since strict typeng gets upset because it doesn't know that the tgw-objects can only be of the types that are specified in the dict hence it says None types are not callable
+            constructor_definition += cls._INDENT + cls.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object) + ";\n" #the "lmabda obj : """ is necessery since strict typeng gets upset because it doesn't know that the tgw-objects can only be of the types that are specified in the dict hence it says None types are not callable
             if type(tgw_object) == ICanvas:
-                constructor_definition += self._INDENT + tgw_gen.get_object_name(tgw_object) + " = " + tgw_gen.get_object_name(tgw_object) + "_bitmap->canvas;\n"
-        constructor_definition += self._INDENT + "on_construction();\n" #adds the call of the "on_construction" function, which gives the user "access" to the constructor by activating it once everything neccessary for the GUI to work has been done
-        event_funcs: str = self.__generate_event_funcs_definition(tgw_objects)
+                constructor_definition += cls._INDENT + tgw_gen.get_object_name(tgw_object) + " = " + tgw_gen.get_object_name(tgw_object) + "_bitmap->canvas;\n"
+        constructor_definition += cls._INDENT + "on_construction();\n" #adds the call of the "on_construction" function, which gives the user "access" to the constructor by activating it once everything neccessary for the GUI to work has been done
+        event_funcs: str = cls.__generate_event_funcs_definition(tgw_objects)
         return gui_params, constructor_definition, event_funcs
     
     @classmethod

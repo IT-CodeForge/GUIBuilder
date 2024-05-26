@@ -20,23 +20,24 @@ class TGW_user_generator(BaseTGWGenerator):
     def __init__(self) -> None:
         super().__init__()
     
-    def generate_file(self, tgw_objects: tuple[IBaseObject, ...], old_file:Optional[str]) -> tuple[str, str]:
+    @classmethod
+    def generate_file(cls, tgw_objects: tuple[IBaseObject, ...], old_file:Optional[str]) -> tuple[str, str]:
         """
         this returns two strings.
         the first string gets put inside the "generated code" region of the UserGUI (if it exists the existing file else the template by replacing #tag:generated_code#)
         the second string has the functions that got deleted while generating (events that got removed) !this only detects functions of the GUI class (only functions beginning with GUI::) other functions are not detected
         """
-        retval: str = self.__generate_includes(tgw_objects)
-        event_dict: dict[str, list[tuple[IBaseObject, str]]] = self._generate_event_dict(tgw_objects)
+        retval: str = cls.__generate_includes(tgw_objects)
+        event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         old_functions: tuple[tuple[int, str], ...] = ()
         if old_file is None:
             pass
         else:
-            old_functions = self.__find_functions(old_file)
+            old_functions = cls.__find_functions(old_file)
         retval += "\n"
-        tempval, remaining_funcs = self.__generate_user_func_definition(event_dict, list(old_functions), "" if old_file is None else old_file)
+        tempval, remaining_funcs = cls.__generate_user_func_definition(event_dict, list(old_functions), "" if old_file is None else old_file)
         retval += tempval
-        deleted_funcs: str = self.__remainig_funcs_to_string(remaining_funcs, "" if old_file is None else old_file)
+        deleted_funcs: str = cls.__remainig_funcs_to_string(remaining_funcs, "" if old_file is None else old_file)
         return retval, deleted_funcs
     
     @classmethod

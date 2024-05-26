@@ -46,7 +46,7 @@ __EVENT_FUNCS_HEAD_OWN_PARAMS: dict[str, str | tuple[str, str]] = {
 
 get_object_name: Callable[[IBaseObject], str] = lambda obj : f"e{obj.id}_{obj.name}"
 
-get_event_func_own_name: Callable[[str, IBaseObject], str] = lambda event, obj : f"{get_object_name(obj)}_{event}"
+get_event_func_own_name: Callable[[str, IBaseObject], str] = lambda event_type, obj : f"{get_object_name(obj)}_{event_type}"
 
 __col_arr_to_col: Callable[[tuple[int, int, int]], int] = lambda arr: arr[0] << 16 | arr[1] << 8 | arr[2]
 
