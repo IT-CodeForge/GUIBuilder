@@ -15,15 +15,13 @@ class ETKBitmap(ETKBaseTkWidgetDisableable):
             tk, text="", image=self.__bitmap)
         super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
-    # region Properties
-
-    @ETKBaseTkWidgetDisableable.size.setter
-    def size(self, value: Vector2d) -> None:
-        ETKBaseTkWidgetDisableable.size.fset(self, value)  # type:ignore
-        self.__bitmap.configure(width=int(value.x), height=int(value.y))
-
-    # endregion
     # region Methods
+    
+    def _update_size(self, validation: bool = True) -> bool:
+        if not super()._update_size(validation):
+            return False
+        self.__bitmap.configure(width=int(self.size.x), height=int(self.size.y))
+        return True
 
     def __getitem__(self, index: Vector2d | Iterable[int]) -> int:
         if type(index) not in [Vector2d, Iterable]:

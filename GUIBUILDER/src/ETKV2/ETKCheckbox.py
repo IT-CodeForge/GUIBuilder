@@ -34,6 +34,8 @@ class ETKCheckbox(ETKBaseTkWidgetButton):
 
     @state.setter
     def state(self, value: bool) -> None:
+        if self.state == value:
+            return
         self.__ignore_next_change_event = True
         self.__state.set(value)
 

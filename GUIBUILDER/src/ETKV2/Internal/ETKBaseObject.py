@@ -1,4 +1,5 @@
 from __future__ import annotations
+from abc import abstractmethod
 from .SubclassableEnum import SubclassableEnum
 import traceback
 from typing import Any, Callable, Optional
@@ -17,10 +18,10 @@ class ETKEvents(SubclassableEnum):
 
 class ETKBaseObject:
     def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int) -> None:
-        self.__pos: Vector2d = Vector2d()
-        self.__size: Vector2d = Vector2d()
-        self.__background_color: int = 0x0
-        self.__visibility: bool = True
+        self._pos: Vector2d = Vector2d() if pos != Vector2d() else Vector2d(1)
+        self.__size: Vector2d = Vector2d() if size != Vector2d() else Vector2d(1)
+        self.__background_color: int = 0 if background_color != 0 else 1
+        self.__visibility: bool = not visibility
         self._event_lib: dict[ETKEvents, list[Callable[..., Any]]] = {e: [] for e in ETKEvents}
 
         self.background_color = background_color
@@ -32,16 +33,20 @@ class ETKBaseObject:
 
     @property
     def pos(self) -> Vector2d:
-        return self.__pos.copy()
+        return self._pos.copy()
 
     @pos.setter
     def pos(self, value: Vector2d) -> None:
-        self.__pos = value
+        if self._pos == value:
+            return
+        self._pos = value
+        self._update_pos()
+
 
     @property
     def abs_pos(self) -> Vector2d:
         """READ-ONLY"""
-        return self.__pos.copy()
+        return self._pos.copy()
 
     @property
     def size(self) -> Vector2d:
@@ -49,7 +54,10 @@ class ETKBaseObject:
 
     @size.setter
     def size(self, value: Vector2d) -> None:
+        if self.__size == value:
+            return
         self.__size = value
+        self._update_size()
 
     @property
     def visibility(self) -> bool:
@@ -57,7 +65,10 @@ class ETKBaseObject:
 
     @visibility.setter
     def visibility(self, value: bool) -> None:
+        if self.__visibility == value:
+            return
         self.__visibility = value
+        self._update_visibility()
 
     @property
     def abs_visibility(self) -> bool:
@@ -70,7 +81,10 @@ class ETKBaseObject:
 
     @background_color.setter
     def background_color(self, value: int) -> None:
+        if self.__background_color == value:
+            return
         self.__background_color = value
+        self._update_background_color()
 
     @property
     def events(self) -> dict[ETKEvents, list[Callable[..., Any]]]:
@@ -79,6 +93,23 @@ class ETKBaseObject:
 
     # endregion
     # region Methods
+
+    @abstractmethod
+    def _update_pos(self) -> bool:
+        pass
+
+    @abstractmethod
+    def _update_size(self) -> bool:
+        pass
+
+    @abstractmethod
+    def _update_visibility(self) -> bool:
+        pass
+
+    @abstractmethod
+    def _update_background_color(self):
+        pass
+
     # region Eventhandling Methods
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:

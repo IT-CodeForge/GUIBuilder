@@ -45,10 +45,10 @@ class SubclassableEnumType(type):
         return value in cls._members.values()
 
     def __repr__(cls) -> str:
-        return f"{type(cls).__name__}({", ".join(repr(m) for m in cls._members.values())})"
+        return f"{type(cls).__name__}({', '.join(repr(m) for m in cls._members.values())})"
 
     def __str__(cls) -> str:
-        return f"{type(cls).__name__}({", ".join(str(m) for m in cls._members.values())})"
+        return f"{type(cls).__name__}({', '.join(str(m) for m in cls._members.values())})"
 
 
 class SubclassableEnum(metaclass=SubclassableEnumType):

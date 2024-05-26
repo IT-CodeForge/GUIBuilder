@@ -25,25 +25,22 @@ class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
         self._tk_object["state"] = "normal"
         self._event_lib.update({e: [] for e in ETKEditEvents if e not in self._event_lib.keys()})
 
-    # region Properties
-
-    @ETKBaseTkWidgetDisableable.enabled.setter
-    def enabled(self, value: bool) -> None:
-        ETKBaseTkWidgetDisableable.enabled.fset(self, value)  # type:ignore
-        if value:
+    # region Methods
+    
+    def _update_text(self):
+        super()._update_text()
+        self.__old_text = self._text
+    
+    def _update_enabled(self) -> bool:
+        if not super()._update_enabled():
+            return False
+        if self.abs_enabled:
             self._send_button_event_break = False
             self._tk_object.configure(cursor="xterm")
         else:
             self._send_button_event_break = True
             self._tk_object.configure(cursor="")
-
-    @ETKLabel.text.setter
-    def text(self, value: str) -> None:
-        ETKLabel.text.fset(self, value)  # type:ignore
-        self.__old_text = value
-
-    # endregion
-    # region Methods
+        return True
 
     def __send_delayed_changed_event(self, event: Event) -> None:  # type:ignore
         if self.__delay_cycles == 0:

@@ -232,7 +232,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
         self._element_rel_pos.update({element: Vector2d()})
 
-        element._update_visibility()
+        element._update_visibility(False)
 
         self._update_all_element_pos()
 
@@ -264,7 +264,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         for ev in events:
             element.remove_event(ev, self.__event_handler)
 
-        element._update_pos()
+        element._update_pos(False)
         self._update_all_element_pos()
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
@@ -287,20 +287,29 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
     # region update event methods
 
-    def _update_pos(self) -> None:
+    def _update_pos(self, validation: bool = True) -> bool:
+        if not super()._update_pos(validation):
+            return False
         for e in self._element_rel_pos.keys():
-            e._update_pos()
+            e._update_pos(False)
         self.__background.pos = self.abs_pos
+        return True
 
-    def _update_visibility(self) -> None:
+    def _update_visibility(self, validation: bool = True) -> bool:
+        if not super()._update_visibility(validation):
+            return False
         self._update_all_element_pos()
         for e in self._element_rel_pos.keys():
-            e._update_visibility()
+            e._update_visibility(False)
         self.__background.visibility = self.abs_visibility
+        return True
 
-    def _update_enabled(self) -> None:
+    def _update_enabled(self) -> bool:
+        if not super()._update_enabled():
+            return False
         for e in self._element_rel_pos.keys():
             e._update_enabled()
+        return True
 
     # endregion
     # region child validation methods
@@ -317,15 +326,12 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
     def _validate_size(self, element: ETKBaseWidget) -> None:
         self._update_all_element_pos()
-        element._update_pos()
 
     def _validate_pos(self, element: ETKBaseWidget) -> None:
         self._update_all_element_pos()
-        element._update_pos()
 
     def _validate_visibility(self, element: ETKBaseWidget) -> None:
         self._update_all_element_pos()
-        element._update_pos()
 
     # endregion
     # endregion

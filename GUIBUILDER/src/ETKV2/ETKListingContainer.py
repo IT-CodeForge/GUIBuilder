@@ -2,7 +2,6 @@ from enum import Enum, auto
 from tkinter import Tk
 from typing import Any
 
-from .Internal.ETKBaseObject import ETKBaseObject
 from .Internal.ETKBaseContainer import ETKAlignments
 from .Internal.ETKBaseWidget import ETKBaseWidget
 from .ETKContainer import ETKContainerSize
@@ -91,8 +90,8 @@ class ETKListingContainer(ETKBaseContainer):
             pos[listing_dir_index] = listing_dir_pos
             pos[non_listing_dir_index] = non_listing_dir_pos
             self._element_rel_pos[e] = pos
-            ETKBaseObject.pos.fset(e, pos)  # type:ignore
-            e._update_pos()
+            e._pos = pos
+            e._update_pos(False)
             listing_dir_pos += e.size[listing_dir_index] + self.__offset
 
     def __calculate_pos_part(self, index: int, size_part: float, padding_part: tuple[float, float]) -> float:

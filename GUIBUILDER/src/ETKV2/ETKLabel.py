@@ -21,18 +21,20 @@ class ETKLabel(ETKBaseTkWidgetText):
 
     # region Properties
 
-    @property
+    @ETKBaseTkWidgetText.text.getter
     def text(self) -> str:
         return self._tk_object.get("1.0", 'end-1c')
 
-    @text.setter
-    def text(self, value: str) -> None:
+    # endregion
+    # region Methods
+        
+    def _update_text(self):
         state = self._tk_object["state"]
         self._tk_object["state"] = "normal"
         self._tk_object.delete(1.0, END)
-        self._tk_object.insert(1.0, value)
+        self._tk_object.insert(1.0, self._text)
         self._tk_object["state"] = state
-
+        
     def _handle_tk_event(self, event: Event) -> str | None:  # type:ignore
         super()._handle_tk_event(event)  # type:ignore
         match event.type:
@@ -42,4 +44,4 @@ class ETKLabel(ETKBaseTkWidgetText):
             case _:
                 pass
 
-    # endregion
+    #endregion

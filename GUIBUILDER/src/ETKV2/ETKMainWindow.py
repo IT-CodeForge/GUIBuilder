@@ -102,11 +102,6 @@ class ETKMainWindow(ETKBaseTkObject):
     def caption(self, value: str) -> None:
         self._tk_object.title(value)
 
-    @ETKBaseTkObject.background_color.setter
-    def background_color(self, value: Optional[int]) -> None:
-        ETKBaseTkObject.background_color.fset(self, value)  # type:ignore
-        self.canvas.background_color = value
-
     @property
     def topmost(self) -> bool:
         return self.__topmost
@@ -145,13 +140,17 @@ class ETKMainWindow(ETKBaseTkObject):
     def exec_gui_function(self, function: Callable[..., Any], *args: Any, **kwargs: Any) -> None:
         self._tk_object.after(0, lambda: function(*args, **kwargs))
 
+    def _update_background_color(self):
+        super()._update_background_color()
+        self.canvas.background_color = self.background_color
+
     def __resize_event_handler(self, event: Event):  # type:ignore
         if self.fullscreen:
             self.fullscreen = True
 
     def __place_object(self) -> None:
         self._tk_object.geometry(
-            f"{int(self.size.x)}x{int(self.size.y)}+{self.pos.x}+{self.pos.y}")
+            f"{int(self.size.x)}x{int(self.size.y)}+{int(self.pos.x)}+{int(self.pos.y)}")
 
     def _handle_tk_event(self, event: Event) -> None:  # type:ignore
         match event.type:

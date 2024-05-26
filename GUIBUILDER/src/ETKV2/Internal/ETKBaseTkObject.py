@@ -1,5 +1,5 @@
 from tkinter import Event, EventType
-from typing import Any, Callable, Optional
+from typing import Any, Callable
 
 from .ETKUtils import gen_col_from_int
 
@@ -15,18 +15,13 @@ class ETKBaseTkObject(ETKBaseObject):
 
         self._tk_object.configure(borderwidth=0)
 
-    # region Properties
-
-    @ETKBaseObject.background_color.setter
-    def background_color(self, value: Optional[int]) -> None:
-        ETKBaseObject.background_color.fset(self, value)  # type:ignore
-        self._tk_object.configure(background=gen_col_from_int(value))
-
-    # endregion
     # region Methods
 
     def __del__(self) -> None:
         self.visibility = False
+
+    def _update_background_color(self):
+        self._tk_object.configure(background=gen_col_from_int(self.background_color))
 
     # region Eventhandling Methods
 

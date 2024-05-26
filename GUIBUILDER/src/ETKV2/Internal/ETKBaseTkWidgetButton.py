@@ -13,39 +13,30 @@ class ETKBaseTkWidgetButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
 
         super().__init__(text=text, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
-    # region Properties
-
-    @ETKBaseTkWidgetText.text_color.setter
-    def text_color(self, value: int) -> None:
-        ETKBaseTkWidgetText.text_color.fset(self, value)  # type:ignore
-        self._tk_object.configure(disabledforeground=gen_col_from_int(value))  # type:ignore
-
-    @ETKBaseTkWidgetDisableable.outline_color.setter
-    def outline_color(self, value: int) -> None:
-        ETKBaseTkWidgetDisableable.outline_color.fset(self, value)  # type:ignore
-        self._outline.configure(bg=self._outline_color)  # type:ignore
-
-    @ETKBaseTkWidgetDisableable.outline_thickness.setter
-    def outline_thickness(self, value: int) -> None:
-        ETKBaseTkWidgetDisableable.outline_thickness.fset(self, value)  # type:ignore
-        self._outline.configure(bd=value)  # type:ignore
-        self._outline.pack(padx=value*2, pady=value*2)
-        self._place_object()
-
-    # endregion
     # region Methods
+    
+    def _update_text_color(self):
+        super()._update_text_color()
+        self._tk_object.configure(disabledforeground=gen_col_from_int(self._text_color))  # type:ignore
 
     def _create_outline(self, tk: Tk) -> None:
         self._outline = LabelFrame(tk, relief=FLAT)
 
-    def _update_visibility(self) -> None:
-        if self.abs_visibility:
-            self._place_object()
-        else:
-            self._tk_object.place_forget()
+    def _update_visibility(self, validation: bool = True) -> bool:
+        if not super()._update_visibility(validation):
+            return False
+        if not self.abs_visibility:
             self._outline.place_forget()
-            self._tk_object.update()
             self._outline.update()
+        return True
+    
+    def _update_outline_color(self):
+        self._outline.configure(bg=gen_col_from_int(self._outline_color))  # type:ignore
+    
+    def _update_outline_thickness(self):
+        self._outline.configure(bd=self._outline_thickness)  # type:ignore
+        self._outline.pack(padx=self._outline_thickness*2, pady=self._outline_thickness*2)
+        self._paint_object()
 
     def _place_object(self) -> None:
         pos = self.abs_pos

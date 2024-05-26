@@ -11,11 +11,14 @@ class ETKBaseTkWidgetDisableable(ETKBaseWidgetDisableable, ETKBaseTkWidget):
     # region Methods
     # region update event methods
 
-    def _update_enabled(self) -> None:
+    def _update_enabled(self) -> bool:
+        if not super()._update_enabled():
+            return False
         if self.abs_enabled:
             self._tk_object["state"] = "normal"
         else:
             self._tk_object["state"] = "disabled"
+        return True
 
     # endregion
     # endregion

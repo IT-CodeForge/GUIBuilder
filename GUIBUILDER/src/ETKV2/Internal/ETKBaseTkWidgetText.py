@@ -6,6 +6,9 @@ from .ETKUtils import gen_col_from_int
 
 class ETKBaseTkWidgetText(ETKBaseTkWidget):
     def __init__(self, *, text: str, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+        self._text = "" if text != "" else "-"
+        self._text_color = 0 if text_color != 0 else 1
+
         super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self.text_color = text_color
@@ -19,7 +22,10 @@ class ETKBaseTkWidgetText(ETKBaseTkWidget):
 
     @text.setter
     def text(self, value: str) -> None:
-        self._tk_object.config(text=value)  # type:ignore
+        if self._text == value:
+            return
+        self._text = value
+        self._update_text()
 
     @property
     def text_color(self) -> int:
@@ -27,6 +33,18 @@ class ETKBaseTkWidgetText(ETKBaseTkWidget):
 
     @text_color.setter
     def text_color(self, value: int) -> None:
-        self._tk_object.configure(fg=gen_col_from_int(value))  # type:ignore
+        if self._text_color == value:
+            return
+        self._text_color = value
+        self._update_text_color()
 
     # endregion
+    # region Methods
+        
+    def _update_text(self):
+        self._tk_object.config(text=self._text)  # type:ignore
+    
+    def _update_text_color(self):
+        self._tk_object.configure(fg=gen_col_from_int(self._text_color))  # type:ignore
+
+    #endregion

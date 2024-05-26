@@ -1,5 +1,4 @@
 from __future__ import annotations
-from abc import abstractmethod
 from typing import Any, Optional
 from ..Vector2d import Vector2d
 from .ETKBaseObject import ETKBaseObject
@@ -9,29 +8,14 @@ class ETKBaseWidget(ETKBaseObject):
     def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
         self._parent: Optional[ETKBaseWidget] = None
         self._enabled: bool = True
+        self.__akt_visibility: bool
+        self.__akt_pos: Vector2d
+        self.__akt_size: Vector2d
+        self.__akt_enabled: bool
 
         super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
     # region Properties
-
-    @ETKBaseObject.pos.setter
-    def pos(self, value: Vector2d) -> None:
-        ETKBaseObject.pos.fset(self, value)  # type:ignore
-        if self.parent != None:
-            self.parent._validate_pos(self)
-
-        abspos = self.abs_pos
-        if abspos.x < 0 or abspos.y < 0:
-            raise RuntimeError(
-                f"element {self} is outside of window\nelement: pos: {self.pos}")
-
-        self._update_pos()
-
-    @ETKBaseObject.size.setter
-    def size(self, value: Vector2d) -> None:
-        ETKBaseObject.size.fset(self, value)  # type:ignore
-        if self.parent != None:
-            self.parent._validate_size(self)
 
     @property
     def abs_pos(self) -> Vector2d:
@@ -43,13 +27,6 @@ class ETKBaseWidget(ETKBaseObject):
     @property
     def parent(self) -> Optional[ETKBaseWidget]:
         return self._parent
-
-    @ETKBaseObject.visibility.setter
-    def visibility(self, value: bool) -> None:
-        ETKBaseObject.visibility.fset(self, value)  # type:ignore
-        self._update_visibility()
-        if self._parent != None:
-            self._parent._validate_visibility(self)
 
     @property
     def abs_visibility(self) -> bool:
@@ -80,16 +57,48 @@ class ETKBaseWidget(ETKBaseObject):
 
     # region update event methods
 
-    @abstractmethod
-    def _update_pos(self) -> None:
-        pass
+    def _update_pos(self, validation: bool = True) -> bool:
+        abspos = self.abs_pos
+        if abspos == getattr(self, "__akt_pos", Vector2d() if abspos != Vector2d() else Vector2d(1)):
+            return False
 
-    @abstractmethod
-    def _update_visibility(self) -> None:
-        pass
+        if self.parent != None and validation:
+            self.parent._validate_pos(self)
 
-    def _update_enabled(self) -> None:
-        pass
+        if abspos.x < 0 or abspos.y < 0:
+            raise RuntimeError(
+                f"element {self} is outside of window\nelement: pos: {self.pos}")
+        return True
+
+    def _update_size(self, validation: bool = True) -> bool:
+        try:  # NOTE
+            size = self.size.vec  # type:ignore
+        except:
+            size = self.size
+        akt_size_0 = getattr(self, "__akt_size", Vector2d() if size != Vector2d() else Vector2d(1))
+        try:
+            akt_size = akt_size_0.vec  # type:ignore
+        except:
+            akt_size = akt_size_0
+        if size == akt_size:
+            return False
+
+        if self.parent != None and validation:
+            self.parent._validate_size(self)
+        return True
+
+    def _update_visibility(self, validation: bool = True) -> bool:
+        if self.abs_visibility == getattr(self, "__akt_visibility", not self.abs_visibility):
+            return False
+
+        if self._parent != None and validation:
+            self._parent._validate_visibility(self)
+        return True
+
+    def _update_enabled(self) -> bool:
+        if self.abs_enabled == getattr(self, "__akt_enabled", not self.abs_enabled):
+            return False
+        return True
 
     # endregion
     # region child validation methods

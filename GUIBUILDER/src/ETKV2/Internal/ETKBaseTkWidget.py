@@ -12,8 +12,8 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
     def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._tk_object: tk_widget
-        self._outline_color: str = ""
-        self._outline_thickness: int = 0
+        self._outline_color: int = 0 if outline_color != 0 else 1
+        self._outline_thickness: int = 0 if outline_thickness != 0 else 1
 
         super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
@@ -23,20 +23,16 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
     # region Properties
 
-    @ETKBaseWidget.size.setter
-    def size(self, value: Vector2d) -> None:
-        ETKBaseWidget.size.fset(self, value)  # type:ignore
-        self._place_object()
-
     @property
     def outline_color(self) -> int:
-        return int(self._outline_color[1:], 16)
+        return self._outline_color
 
     @outline_color.setter
     def outline_color(self, value: int) -> None:
-        col = gen_col_from_int(value)
-        self._outline_color = col
-        self._tk_object.configure(highlightbackground=col)  # type:ignore
+        if self._outline_color == value:
+            return
+        self._outline_color = value
+        self._update_outline_color()
 
     @property
     def outline_thickness(self) -> int:
@@ -44,31 +40,51 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
     @outline_thickness.setter
     def outline_thickness(self, value: int) -> None:
+        if self._outline_thickness == value:
+            return
         self._outline_thickness = value
-        self._tk_object.configure(highlightthickness=value)  # type:ignore
+        self._update_outline_thickness()
 
     # endregion
     # region Methods
 
     def _place_object(self) -> None:
         pos = self.abs_pos
-        self._tk_object.place(
-            x=pos.x, y=pos.y, width=self.size.x, height=self.size.y)
+        self._tk_object.place(x=pos.x, y=pos.y, width=self.size.x, height=self.size.y)
+    
+    def _paint_object(self) -> None:
+        if self.abs_visibility:
+            self._place_object()
 
         # region update event methods
 
-    def _update_pos(self) -> None:
-        if self.abs_visibility:
-            self._place_object()
-        else:
-            self._tk_object.place_forget()
-            self._tk_object.update()
+    def _update_pos(self, validation: bool = True) -> bool:
+        if not super()._update_pos(validation):
+            return False
+        self._paint_object()
+        return True
+    
+    def _update_size(self, validation: bool = True) -> bool:
+        if not super()._update_size(validation):
+            return False
+        self._paint_object()
+        return True
 
-    def _update_visibility(self) -> None:
+    def _update_visibility(self, validation: bool = True) -> bool:
+        if not super()._update_visibility(validation):
+            return False
         if self.abs_visibility:
-            self._place_object()
+            self._paint_object()
         else:
             self._tk_object.place_forget()
             self._tk_object.update()
+        return True
+    
+    def _update_outline_color(self) -> None:
+        self._tk_object.configure(highlightbackground=gen_col_from_int(self._outline_color))  # type:ignore
+    
+    def _update_outline_thickness(self) -> None:
+        self._tk_object.configure(highlightthickness=self._outline_thickness)  # type:ignore
+
     # endregion
     # endregion

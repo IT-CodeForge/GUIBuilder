@@ -58,7 +58,7 @@ class ETKContainer(ETKBaseContainer):
         for e in elements:
             self._element_rel_pos[e] = self._calculate_rel_element_pos(e)
             self.__validate_size_pos(self._element_rel_pos[e], e.size)
-            e._update_pos()
+            e._update_pos(False)
 
     def _calculate_rel_element_pos(self, element: ETKBaseWidget) -> Vector2d:
         x = self._calculate_rel_element_pos_part(

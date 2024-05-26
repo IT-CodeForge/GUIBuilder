@@ -16,9 +16,9 @@ class ETKDropdownMenuEvents(ETKEvents):
 class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
     def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(70, 18), options: list[str] = [], start_value: str = "", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__selected = StringVar(value=start_value)
-        self.__options = options
         if len(options) == 0:
             options = [""]
+        self.__options = options
         self._tk_object = OptionMenu(tk, self.__selected, *options)
         self.__ignore_next_change_event = False
 
@@ -33,6 +33,8 @@ class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
     
     @options.setter
     def options(self, value: list[str]) -> None:
+        if self.__options == value:
+            return
         if len(value) == 0:
             value = [""]
         self._tk_object['menu'].delete(0, 'end')
@@ -48,6 +50,8 @@ class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
     
     @selected.setter
     def selected(self, value: str) -> None:
+        if self.selected == value:
+            return
         self.__ignore_next_change_event = True
         self.__selected.set(value)
 
