@@ -42,7 +42,7 @@ class BaseETKGenerator(BaseGenerator):
                     intermediary_event = attribute
                     etk_events = cls._EVENT_TRANS.get(attribute)
                     # get the correct representation of the event in the ETK Framework
-                    if etk_events == None:
+                    if etk_events is None:
                         continue
                     my_etk_event: Optional[str] = None
                     for etk_event in etk_events:
@@ -50,7 +50,7 @@ class BaseETKGenerator(BaseGenerator):
                             my_etk_event = etk_events.get(IBaseObject)
                         if etk_event == type(etk_object):
                             my_etk_event = etk_events.get(type(etk_object))
-                    if my_etk_event == None:
+                    if my_etk_event is None:
                         continue
                     # add all the necessary information to the return list
                     retval.append(
@@ -60,7 +60,7 @@ class BaseETKGenerator(BaseGenerator):
 
     @classmethod
     def _generate_event_funcs(cls, event_list: list[tuple[IBaseObject, Optional[str], str]], previous_events: Optional[dict[str, list[stmt]]] = None) -> tuple[list[stmt], dict[str, list[stmt]]]:
-        if previous_events == None:
+        if previous_events is None:
             previous_events = {}
         retval: list[stmt] = []
         for etk_object, _, intermediary_event_type in event_list:

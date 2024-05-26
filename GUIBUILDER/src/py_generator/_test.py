@@ -52,7 +52,7 @@ def __find_func_end(start_index: int, file: str) -> int:
     return end_index
 
 def __find_next(st: str, searches: tuple[str, ...], start: int = 0, end: Optional[int] = None):
-    if end == None:
+    if end is None:
         end = len(st)
     erg: dict[str, int] = {}
     for s in searches:

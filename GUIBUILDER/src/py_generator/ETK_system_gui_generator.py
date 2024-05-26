@@ -72,7 +72,7 @@ class ETK_system_gui_generator(BaseETKGenerator):
                 retval.append(ast_gen.timer(etk_object, "event_timer"))
                 continue
             my_func = cls.__GENERATOR_TRANS.get(type(etk_object))
-            if my_func == None:
+            if my_func is None:
                 continue
             retval.append(my_func(etk_object))
         return retval
@@ -82,7 +82,7 @@ class ETK_system_gui_generator(BaseETKGenerator):
         retval: list[stmt] = []
         for etk_object, etk_event_typ, intermediary_event_type in event_list:
             etk_event_enum: str = ""
-            if etk_event_typ == None:
+            if etk_event_typ is None:
                 continue
             if IBaseObject in cls._EVENT_TRANS.get(intermediary_event_type, {}).keys():
                 etk_event_enum = "Base"

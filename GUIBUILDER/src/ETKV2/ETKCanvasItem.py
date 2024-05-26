@@ -114,7 +114,7 @@ class ETKCanvasItem:
             p2 = Vector2d(self._pointlist[index + 1].x,
                           self._pointlist[index + 1].y)
             sol = self.__find_intersection(p1, p2, p3, p4)
-            if sol == None:
+            if sol is None:
                 continue
             poly_edge_dir = p2 - p1
             sign = (poly_edge_dir*Vector2d(0, 1)).normalize().y

@@ -88,7 +88,7 @@ class ETKBaseObject:
         self._event_lib[event_type].remove(eventhandler)
 
     def _handle_event(self, event: ETKEvents, event_data: Optional[list[Any]] = None) -> None:
-        if event_data == None:
+        if event_data is None:
             event_data = []
         err_1 = ""
         for c in self._event_lib[event]:

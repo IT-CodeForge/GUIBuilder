@@ -74,7 +74,7 @@ class ETKBaseWidget(ETKBaseObject):
     # region Methods
 
     def detach_from_parent(self) -> None:
-        if self._parent == None:
+        if self._parent is None:
             raise ValueError(f"{self} has no parent!")
         self._parent._detach_child(self)
 

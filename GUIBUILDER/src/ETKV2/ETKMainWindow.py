@@ -2,7 +2,6 @@ from __future__ import annotations
 from abc import abstractmethod
 import sys
 from tkinter import Event, Tk, EventType
-from types import NoneType
 from typing import Any, Callable, Optional
 
 from .ETKCanvas import ETKCanvas
@@ -61,7 +60,7 @@ class ETKMainWindow(ETKBaseTkObject):
 
     @ETKBaseTkObject.size.setter
     def size(self, value: Optional[Vector2d]) -> None:
-        if type(value) == NoneType:
+        if value is None:
             old_state = self._tk_object.state()
             self._tk_object.state("zoomed")
             self._tk_object.update()

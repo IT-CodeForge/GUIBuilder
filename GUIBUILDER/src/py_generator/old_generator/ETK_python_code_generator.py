@@ -25,4 +25,4 @@ class ETK_python_code_generator:
         return retval + ")"
     
     def generate_class_head(self, name: str, parent_class: Optional[str])->str:
-        return "class " + name + ("" if parent_class == None else ("(" + parent_class + ")")) + ":\r\n"
+        return "class " + name + ("" if parent_class is None else ("(" + parent_class + ")")) + ":\r\n"

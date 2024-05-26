@@ -54,7 +54,7 @@ class generator(BaseGenerator):
 
             user_gui, removed_events = self.__USER_GUI_GEN_ETK.generate_file(intermediary_objects, read_user_gui)
 
-            if old_user_gui == None:
+            if old_user_gui is None:
                 user_template: str = self._read_file(self._join_relative_path("./templates/ETKwrite/UserGUI.txt"))
                 user_gui = user_template.replace("#tag:generated_code#", user_gui)
                 fix_code(user_gui)
@@ -100,7 +100,7 @@ class generator(BaseGenerator):
 
             header_gui_attributes, header_gui_func_declarations = self.__HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
 
-            if old_user_gui == None:
+            if old_user_gui is None:
                 user_template: str = self._read_file(self._join_relative_path("./templates/TGWwrite/UserGUI.txt"))
                 user_gui = user_template.replace("#tag:generated_code#\n", user_gui)
                 self.__write_file(self._join_paths(path, self.__USER_GUI_NAME_TGW), user_gui)
@@ -131,7 +131,7 @@ class generator(BaseGenerator):
     
     @staticmethod
     def __find_next(st: str, searches: tuple[str, ...], start: int = 0, end: Optional[int] = None):
-        if end == None:
+        if end is None:
             end = len(st)
         erg: dict[str, int] = {}
         for s in searches:

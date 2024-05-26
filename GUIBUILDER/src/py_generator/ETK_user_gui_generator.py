@@ -53,7 +53,7 @@ class ETK_user_gui_generator(BaseETKGenerator):
     @staticmethod
     def __generate_previous_funcs_dict(ast_old_file: Optional[Module]) -> dict[str, list[stmt]]:
         retval: dict[str, list[stmt]] = {}
-        if ast_old_file == None:
+        if ast_old_file is None:
             return retval
         for ast_object in ast_old_file.body:
             if type(ast_object) == ClassDef and ast_object.name == "UserGUI":
@@ -74,7 +74,7 @@ class ETK_user_gui_generator(BaseETKGenerator):
     def __removed_events_dict_to_ast(removed_events: dict[str, list[stmt]], ast_old_file: Optional[Module]) -> Module:
         retval: Module = Module()
         retval.body = []
-        if ast_old_file == None:
+        if ast_old_file is None:
             return retval
         for ast_object in ast_old_file.body:
             if type(ast_object) == ClassDef and ast_object.name == "UserGUI":

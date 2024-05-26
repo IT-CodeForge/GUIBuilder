@@ -2,7 +2,7 @@ from typing import Optional
 
 
 def gen_col_from_int(col: Optional[int]) -> str:
-    if col == None:
+    if col is None:
         return ""
     hold_str = hex(col)[2:]
     if len(hold_str) < 6:
