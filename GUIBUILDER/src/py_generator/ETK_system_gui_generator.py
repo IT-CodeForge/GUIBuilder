@@ -81,16 +81,9 @@ class ETK_system_gui_generator(BaseETKGenerator):
     def __generate_event_binds(cls, event_list: list[tuple[IBaseObject, Optional[str], str]]) -> list[stmt]:
         retval: list[stmt] = []
         for etk_object, etk_event_typ, intermediary_event_type in event_list:
-            etk_event_enum: str = ""
             if etk_event_typ is None:
                 continue
-            if IBaseObject in cls._EVENT_TRANS.get(intermediary_event_type, {}).keys():
-                etk_event_enum = "Base"
-            elif cls._EVENT_TRANS.get(intermediary_event_type, {}) != {}:
-                etk_event_enum = str(type(etk_object).__name__)[1:]
-            else:
-                raise ValueError("incompatible event list")
-            etk_event_typ = "ETK" + etk_event_enum + "Events." + etk_event_typ
+            etk_event_typ = "ETK" + str(type(etk_object).__name__)[1:] + "Events." + etk_event_typ
             retval.append(ast_gen.generate_event_bind(
                 etk_object, etk_event_typ, intermediary_event_type))
         return retval
