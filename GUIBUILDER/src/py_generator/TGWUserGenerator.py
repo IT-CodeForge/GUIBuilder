@@ -2,14 +2,14 @@ from .BaseTGWGenerator import BaseTGWGenerator
 from intermediary_neu.objects.IBaseObject import IBaseObject
 from intermediary_neu.objects.ICanvas import ICanvas
 from intermediary_neu.objects.IWindow import IWindow
-from . import TGW_code_generator as tgw_gen
+from . import TGWCodeGenerator as tgw_gen
 from typing import Optional
 
 """
 this generates the User cpp file, the file where the user of the GUI-Builder can edit the code
 """
 
-class TGW_user_generator(BaseTGWGenerator):
+class TGWUserGenerator(BaseTGWGenerator):
     __VALID_FUNC_NAME_CHARACTER: list[str] = [
         "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
         "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",

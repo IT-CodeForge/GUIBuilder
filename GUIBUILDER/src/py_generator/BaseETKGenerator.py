@@ -8,7 +8,7 @@ from intermediary_neu.objects.IWindow import IWindow
 from typing import Optional
 from .BaseGenerator import BaseGenerator
 from ast import stmt, Pass, FunctionDef
-from . import ast_generator as ast_gen
+from . import ASTGenerator as ast_gen
 
 class BaseETKGenerator(BaseGenerator):
     _EVENT_TRANS: dict[str, dict[type, str]] = {

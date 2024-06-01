@@ -4,7 +4,7 @@ from astor import to_source  # type:ignore
 from typing import Optional
 from .BaseETKGenerator import BaseETKGenerator
 
-class ETK_user_gui_generator(BaseETKGenerator):
+class ETKUserGUIGenerator(BaseETKGenerator):
     def __init__(self) -> None:
         super().__init__()
 

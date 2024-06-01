@@ -3,11 +3,11 @@ from .BaseGenerator import BaseGenerator
 import os
 from enum import Enum, auto
 from typing import Optional
-from .ETK_system_gui_generator import ETK_system_gui_generator
-from .ETK_user_gui_generator import ETK_user_gui_generator
-from .TGW_header_generator import TGW_header_generator
-from .TGW_system_generator import TGW_system_generator
-from .TGW_user_generator import TGW_user_generator
+from .ETKSystemGUIGenerator import ETKSystemGUIGenerator
+from .ETKUserGUIGenerator import ETKUserGUIGenerator
+from .TGWHeaderGenerator import TGWHeaderGenerator
+from .TGWSystemGenerator import TGWSystemGenerator
+from .TGWUserGenerator import TGWUserGenerator
 from autopep8 import fix_code # type:ignore
 
 class SupportedFrameworks(Enum):
@@ -22,11 +22,11 @@ class Generator(BaseGenerator):
     __USER_GUI_NAME_TGW: str = "UserGUI.cpp"
     __SYSTEM_GUI_NAME_TGW: str = "SystemGUI.cpp"
     __HEADER_GUI_NAME_TGW: str = "GUI.h"
-    __SYSTEM_GUI_GEN_ETK = ETK_system_gui_generator()
-    __USER_GUI_GEN_ETK = ETK_user_gui_generator()
-    __HEADER_GUI_GEN_TGW = TGW_header_generator()
-    __SYSTEM_GUI_GEN_TGW = TGW_system_generator()
-    __USER_GUI_GEN_TGW = TGW_user_generator()
+    __SYSTEM_GUI_GEN_ETK = ETKSystemGUIGenerator()
+    __USER_GUI_GEN_ETK = ETKUserGUIGenerator()
+    __HEADER_GUI_GEN_TGW = TGWHeaderGenerator()
+    __SYSTEM_GUI_GEN_TGW = TGWSystemGenerator()
+    __USER_GUI_GEN_TGW = TGWUserGenerator()
 
     def __init__(self) -> None:
         super().__init__()

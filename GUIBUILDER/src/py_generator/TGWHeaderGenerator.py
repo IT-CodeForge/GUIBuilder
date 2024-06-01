@@ -3,13 +3,13 @@ from intermediary_neu.objects.IBaseObject import IBaseObject
 from intermediary_neu.objects.ITimer import ITimer
 from intermediary_neu.objects.ICanvas import ICanvas
 from intermediary_neu.objects.IWindow import IWindow
-from . import TGW_code_generator as tgw_gen
+from . import TGWCodeGenerator as tgw_gen
 
 """
 this generates the header file
 """
 
-class TGW_header_generator(BaseTGWGenerator):
+class TGWHeaderGenerator(BaseTGWGenerator):
     def __init__(self) -> None:
         super().__init__()
     

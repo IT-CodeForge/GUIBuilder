@@ -9,11 +9,11 @@ from intermediary_neu.objects.IWindow import IWindow
 from ast import ClassDef, Module, stmt, FunctionDef, parse
 from astor import to_source  # type:ignore
 from typing import Optional, Callable, Any
-from . import ast_generator as ast_gen
+from . import ASTGenerator as ast_gen
 from .BaseETKGenerator import BaseETKGenerator
 
 
-class ETK_system_gui_generator(BaseETKGenerator):
+class ETKSystemGUIGenerator(BaseETKGenerator):
     __GENERATOR_TRANS: dict[type, Callable[[Any], stmt]] = {
         IButton: ast_gen.button,
         ICanvas: ast_gen.canvas,

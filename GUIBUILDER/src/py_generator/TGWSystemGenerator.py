@@ -7,7 +7,7 @@ from intermediary_neu.objects.IEdit import IEdit
 from intermediary_neu.objects.ILabel import ILabel
 from intermediary_neu.objects.ITimer import ITimer
 from intermediary_neu.objects.IWindow import IWindow
-from . import TGW_code_generator  as tgw_gen
+from . import TGWCodeGenerator  as tgw_gen
 from typing import Callable, Any
 
 """
@@ -15,7 +15,7 @@ the SystemGUI generator generates a cpp file which links the default tgw-events 
 and the definition of the Constructor (to generate the GUI-elements)
 """
 
-class TGW_system_generator(BaseTGWGenerator):
+class TGWSystemGenerator(BaseTGWGenerator):
     __GENERATOR_TRANS: dict[type, Callable[[Any], str]] = {
         IButton: tgw_gen.button,
         ICanvas: tgw_gen.canvas,
