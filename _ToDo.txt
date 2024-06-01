@@ -1,7 +1,6 @@
 ToDo:
 
-implement generators
-UML-Diagramm: Generatoren, GUI: Elemente
+unimplemented features in GUI-Frameworks
 handle exceptions: py_gen: syntaxerror, etc.
 
 
