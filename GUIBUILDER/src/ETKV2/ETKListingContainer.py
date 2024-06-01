@@ -1,6 +1,7 @@
 from enum import Enum, auto
-from tkinter import Tk
 from typing import Any
+
+from .ETKMainWindow import ETKMain
 
 from .Internal.ETKBaseContainer import ETKAlignments
 from .Internal.ETKBaseWidget import ETKBaseWidget
@@ -21,12 +22,12 @@ class ETKListingTypes(Enum):
 
 
 class ETKListingContainer(ETKBaseContainer):
-    def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), alignment: ETKAlignments = ETKAlignments.TOP_LEFT, listing_type: ETKListingTypes = ETKListingTypes.TOP_TO_BOTTOM, offset: int = 10, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+    def __init__(self, main: ETKMain, pos: Vector2d = Vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), alignment: ETKAlignments = ETKAlignments.TOP_LEFT, listing_type: ETKListingTypes = ETKListingTypes.TOP_TO_BOTTOM, offset: int = 10, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__alignment = alignment
         self.__listing_type = listing_type
         self.__offset = offset
 
-        super().__init__(tk=tk, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Properties
 

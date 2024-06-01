@@ -1,8 +1,9 @@
 from __future__ import annotations
 from abc import abstractmethod
 from enum import Enum, auto
-from tkinter import Tk
 from typing import Any, Callable, Optional
+
+from ..ETKMainWindow import ETKMain
 from .ETKBaseObject import ETKEvents, ETKBaseObject
 
 from .ETKBaseWidget import ETKBaseWidget
@@ -158,8 +159,8 @@ class PosError(ValueError):
 
 
 class ETKBaseContainer(ETKBaseWidgetDisableable):
-    def __init__(self, *, tk: Tk, pos: Vector2d, size: ETKContainerSize, visibility: bool, enabled: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
-        self.__background = ETKCanvas(tk, pos, size.vec, background_color=background_color)
+    def __init__(self, *, main: ETKMain, pos: Vector2d, size: ETKContainerSize, visibility: bool, enabled: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+        self.__background = ETKCanvas(main, pos, size.vec, background_color=background_color)
         self._container_size: ETKContainerSize = ETKContainerSize(0, 0)
         self._element_rel_pos: dict[ETKBaseWidget, Vector2d] = {}
 

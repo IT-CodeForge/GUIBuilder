@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from typing import Any
+
+from ETKV2.ETKMainWindow import ETKMain
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .Internal.ETKBaseObject import ETKEvents
-from tkinter import OptionMenu, StringVar, Tk
+from tkinter import OptionMenu, StringVar
 from tkinter import _setit #type:ignore
 
 
@@ -14,12 +16,12 @@ class ETKDropdownMenuEvents(ETKEvents):
 
 
 class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
-    def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(70, 18), options: list[str] = [], start_value: str = "", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+    def __init__(self, main: ETKMain, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(70, 18), options: list[str] = [], start_value: str = "", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__selected = StringVar(value=start_value)
         if len(options) == 0:
             options = [""]
         self.__options = options
-        self._tk_object = OptionMenu(tk, self.__selected, *options)
+        self._tk_object = OptionMenu(main.root_tk_object, self.__selected, *options)
         self.__ignore_next_change_event = False
 
         super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)

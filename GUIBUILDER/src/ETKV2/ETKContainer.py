@@ -1,6 +1,7 @@
 from __future__ import annotations
-from tkinter import Tk
 from typing import Any, Literal
+
+from .ETKMainWindow import ETKMain
 from .Internal.ETKBaseWidget import ETKBaseWidget
 
 from .Vector2d import Vector2d
@@ -10,8 +11,8 @@ from .Internal.ETKBaseContainer import ETKAlignments, ETKContainerSize, SizeErro
 
 
 class ETKContainer(ETKBaseContainer):
-    def __init__(self, tk: Tk, pos: Vector2d = Vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
-        super().__init__(tk=tk, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+    def __init__(self, main: ETKMain, pos: Vector2d = Vector2d(0, 0), size: ETKContainerSize = ETKContainerSize(0, 0, True, True), *, visibility: bool = True, enabled: bool = True, background_color: int = 0xAAAAAA, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
         self.__element_alignments: dict[ETKBaseWidget, ETKAlignments] = {}
 
     # region Properties

@@ -4,7 +4,8 @@ import sys
 from tkinter import Event, Tk, EventType
 from typing import Any, Callable, Optional
 
-from .ETKCanvas import ETKCanvas
+from .Internal.ETKScheduler import ETKScheduler
+
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkObject import ETKBaseTkObject
 from .Internal.ETKBaseObject import ETKEvents
@@ -22,13 +23,30 @@ class ETKWindowEvents(ETKEvents):
 
 
 class ETKMainWindow(ETKBaseTkObject):
+    class ETKMain:
+        def __init__(self, root_tk_object: Tk, scheduler: ETKScheduler) -> None:
+            self.__root_tk_object: Tk = root_tk_object
+            self.__scheduler: ETKScheduler = scheduler
+
+        @property
+        def root_tk_object(self) -> Tk:
+            """READ-ONLY"""
+            return self.__root_tk_object
+
+        @property
+        def scheduler(self) -> ETKScheduler:
+            """READ-ONLY"""
+            return self.__scheduler
+
     def __init__(self, pos: Vector2d = Vector2d(0, 0), size: Optional[Vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
+        from .ETKCanvas import ETKCanvas
         self._tk_object: Tk = Tk()
+        self._main = ETKMain(self._tk_object, ETKScheduler())
         self.__topmost = False
         self.exit_locked = False
         self.exit_ignore_next = False
         self.__fullscreen = False
-        self.canvas = ETKCanvas(self._tk_object, Vector2d(), Vector2d())
+        self.canvas = ETKCanvas(self._main, Vector2d(), Vector2d())
 
         super().__init__(pos=pos, size=Vector2d(1920, 1080), background_color=background_color, visibility=visibility, **kwargs)
 
@@ -128,6 +146,7 @@ class ETKMainWindow(ETKBaseTkObject):
     def exit(self) -> None:
         self._handle_event(ETKWindowEvents.EXIT)
         if not self.exit_locked and not self.exit_ignore_next:
+            self._main.scheduler.exit()
             sys.exit()
         if self.exit_ignore_next:
             self.exit_ignore_next = False
@@ -175,3 +194,6 @@ class ETKMainWindow(ETKBaseTkObject):
         super()._handle_tk_event(event)  # type:ignore
 
     # endregion
+
+
+ETKMain = ETKMainWindow.ETKMain

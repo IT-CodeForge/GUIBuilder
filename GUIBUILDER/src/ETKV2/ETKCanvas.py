@@ -1,4 +1,6 @@
 from typing import Any
+
+from .ETKMainWindow import ETKMain
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .ETKCanvasItem import ETKCanvasItem
@@ -7,7 +9,7 @@ from .ETKCanvasSquare import ETKCanvasSquare
 from .ETKCanvasOval import ETKCanvasOval
 from .ETKCanvasCircle import ETKCanvasCircle
 from .ETKCanvasLine import ETKCanvasLine
-from tkinter import Canvas, Tk
+from tkinter import Canvas
 from .Internal.ETKBaseObject import ETKEvents
 
 class ETKCanvasEvents(ETKEvents):
@@ -15,8 +17,8 @@ class ETKCanvasEvents(ETKEvents):
 
 
 class ETKCanvas(ETKBaseTkWidgetDisableable):
-    def __init__(self, tk: Tk, pos: Vector2d, size: Vector2d, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xFFFFFF, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
-        self._tk_object: Canvas = Canvas(tk, highlightthickness=0)  # type:ignore
+    def __init__(self, main: ETKMain, pos: Vector2d, size: Vector2d, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xFFFFFF, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+        self._tk_object: Canvas = Canvas(main.root_tk_object, highlightthickness=0)  # type:ignore
         self.__canvas_items: list[ETKCanvasItem] = []
         super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
