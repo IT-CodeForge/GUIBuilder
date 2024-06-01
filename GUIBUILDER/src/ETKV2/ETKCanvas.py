@@ -20,7 +20,7 @@ class ETKCanvas(ETKBaseTkWidgetDisableable):
     def __init__(self, main: ETKMain, pos: Vector2d, size: Vector2d, *, visibility: bool = True, enabled: bool = True, background_color: int = 0xFFFFFF, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self._tk_object: Canvas = Canvas(main.root_tk_object, highlightthickness=0)  # type:ignore
         self.__canvas_items: list[ETKCanvasItem] = []
-        super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Properties
 

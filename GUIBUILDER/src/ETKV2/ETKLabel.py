@@ -15,7 +15,7 @@ class ETKLabel(ETKBaseTkWidgetText):
         self._tk_object: Text = Text(main.root_tk_object)  # type:ignore
         self._send_button_event_break = True
 
-        super().__init__(pos=pos, size=size, text=text, visibility=visibility, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, text=text, visibility=visibility, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self._tk_object["state"] = "disabled"
         self.add_event(ETKEvents.MOUSE_DOWN, lambda: None)

@@ -24,7 +24,7 @@ class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
         self._tk_object = OptionMenu(main.root_tk_object, self.__selected, *options)
         self.__ignore_next_change_event = False
 
-        super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self.__selected.trace("w", self.__clicked_changed)  # type:ignore
         self._event_lib.update({e: [] for e in ETKDropdownMenuEvents if e not in self._event_lib.keys()})

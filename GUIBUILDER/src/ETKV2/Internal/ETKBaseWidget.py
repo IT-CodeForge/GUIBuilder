@@ -1,11 +1,15 @@
 from __future__ import annotations
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Optional
+
 from ..Vector2d import Vector2d
 from .ETKBaseObject import ETKBaseObject
 
+if TYPE_CHECKING:
+    from ..ETKMainWindow import ETKMain
+
 
 class ETKBaseWidget(ETKBaseObject):
-    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, main: ETKMain, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
         self._parent: Optional[ETKBaseWidget] = None
         self._enabled: bool = True
         self.__akt_visibility: bool
@@ -13,7 +17,7 @@ class ETKBaseWidget(ETKBaseObject):
         self.__akt_size: Vector2d
         self.__akt_enabled: bool
 
-        super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
     # region Properties
 

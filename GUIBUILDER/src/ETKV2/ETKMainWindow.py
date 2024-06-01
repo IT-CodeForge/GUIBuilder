@@ -48,7 +48,7 @@ class ETKMainWindow(ETKBaseTkObject):
         self.__fullscreen = False
         self.canvas = ETKCanvas(self._main, Vector2d(), Vector2d())
 
-        super().__init__(pos=pos, size=Vector2d(1920, 1080), background_color=background_color, visibility=visibility, **kwargs)
+        super().__init__(main=self._main, pos=pos, size=Vector2d(1920, 1080), background_color=background_color, visibility=visibility, **kwargs)
 
         self.canvas.outline_color = 0x0
         self.canvas.outline_thickness = 2

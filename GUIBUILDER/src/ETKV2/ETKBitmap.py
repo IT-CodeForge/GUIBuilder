@@ -14,7 +14,7 @@ class ETKBitmap(ETKBaseTkWidgetDisableable):
         self.__bitmap = PhotoImage(width=int(size.x), height=int(size.y))
         self._tk_object: Label = Label(  # type:ignore
             main.root_tk_object, text="", image=self.__bitmap)
-        super().__init__(pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Methods
     

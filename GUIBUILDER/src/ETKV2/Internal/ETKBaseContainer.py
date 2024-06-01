@@ -164,7 +164,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         self._container_size: ETKContainerSize = ETKContainerSize(0, 0)
         self._element_rel_pos: dict[ETKBaseWidget, Vector2d] = {}
 
-        super().__init__(pos=pos, size=size.vec, visibility=visibility, enabled=enabled, background_color=background_color, **kwargs)
+        super().__init__(main=main, pos=pos, size=size.vec, visibility=visibility, enabled=enabled, background_color=background_color, **kwargs)
 
         self.outline_color = outline_color
         self.outline_thickness = outline_thickness

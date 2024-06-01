@@ -1,6 +1,8 @@
 from tkinter import FLAT, LabelFrame, Tk
 from typing import Any
 
+from ..ETKMainWindow import ETKMain
+
 from .ETKUtils import gen_col_from_int
 from .ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .ETKBaseTkWidgetText import ETKBaseTkWidgetText
@@ -8,10 +10,10 @@ from ..Vector2d import Vector2d
 
 
 class ETKBaseTkWidgetButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
-    def __init__(self, *, pos: Vector2d, size: Vector2d, text: str, visibility: bool, enabled: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+    def __init__(self, *, main: ETKMain, pos: Vector2d, size: Vector2d, text: str, visibility: bool, enabled: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._outline: LabelFrame
 
-        super().__init__(text=text, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+        super().__init__(main=main, text=text, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
     # region Methods
     

@@ -1,17 +1,21 @@
+from __future__ import annotations
 from tkinter import Event, EventType
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any, Callable
 
 from .ETKUtils import gen_col_from_int
 
 from ..Vector2d import Vector2d
 from .ETKBaseObject import ETKBaseObject, ETKEvents
 
+if TYPE_CHECKING:
+    from ..ETKMainWindow import ETKMain
+
 
 class ETKBaseTkObject(ETKBaseObject):
-    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
+    def __init__(self, *, main: ETKMain, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, **kwargs: Any) -> None:
         self._tk_object: Any
 
-        super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
         self._tk_object.configure(borderwidth=0)
 

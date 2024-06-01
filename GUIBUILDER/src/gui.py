@@ -503,7 +503,6 @@ class GUI(ETKMainWindow):
 
     def create_new_element(self, typ: Type[ETKBaseTkWidgetText]) -> ETKBaseTkWidgetText:
         new_element = typ(self._main)  # type:ignore
-        print(new_element)
         new_element.outline_color = 0x0
         new_element.outline_thickness = 2
 

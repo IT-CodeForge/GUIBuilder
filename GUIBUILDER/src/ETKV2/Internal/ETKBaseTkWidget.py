@@ -1,6 +1,8 @@
 from tkinter import Widget as tk_widget
 from typing import Any
 
+from ..ETKMainWindow import ETKMain
+
 from .ETKUtils import gen_col_from_int
 
 from ..Vector2d import Vector2d
@@ -10,12 +12,12 @@ from .ETKBaseTkObject import ETKBaseTkObject
 
 class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
-    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
+    def __init__(self, *, main: ETKMain, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._tk_object: tk_widget
         self._outline_color: int = 0 if outline_color != 0 else 1
         self._outline_thickness: int = 0 if outline_thickness != 0 else 1
 
-        super().__init__(pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
         self._place_object()
         self.outline_thickness = outline_thickness

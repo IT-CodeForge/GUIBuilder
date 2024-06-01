@@ -23,7 +23,7 @@ class ETKCheckbox(ETKBaseTkWidgetButton):
         self._create_outline(main.root_tk_object)
         self._tk_object: Checkbutton = Checkbutton(  # type:ignore
             self._outline, variable=self.__state)
-        super().__init__(pos=pos, size=size, text=text, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
+        super().__init__(main=main, pos=pos, size=size, text=text, visibility=visibility, enabled=enabled, background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
         self._event_lib.update({e: [] for e in ETKCheckboxEvents if e not in self._event_lib.keys()})
         self.__state.trace_add("write", self.__checkbox_event_handler)
         self.state = state

@@ -1,10 +1,13 @@
 from __future__ import annotations
 from abc import abstractmethod
+
 from .SubclassableEnum import SubclassableEnum
-import traceback
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional
 
 from ..Vector2d import Vector2d
+
+if TYPE_CHECKING:
+    from ..ETKMainWindow import ETKMain
 
 
 class ETKEvents(SubclassableEnum):
@@ -17,11 +20,12 @@ class ETKEvents(SubclassableEnum):
 
 
 class ETKBaseObject:
-    def __init__(self, *, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int) -> None:
+    def __init__(self, *, main: ETKMain, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int) -> None:
         self._pos: Vector2d = Vector2d() if pos != Vector2d() else Vector2d(1)
         self.__size: Vector2d = Vector2d() if size != Vector2d() else Vector2d(1)
         self.__background_color: int = 0 if background_color != 0 else 1
         self.__visibility: bool = not visibility
+        self._scheduler = main.scheduler
         self._event_lib: dict[ETKEvents, list[Callable[..., Any]]] = {e: [] for e in ETKEvents}
 
         self.background_color = background_color
@@ -121,26 +125,8 @@ class ETKBaseObject:
     def _handle_event(self, event: ETKEvents, event_data: Optional[list[Any]] = None) -> None:
         if event_data is None:
             event_data = []
-        err_1 = ""
         for c in self._event_lib[event]:
-            try:
-                c((self, event, *event_data))
-                continue
-            except TypeError as ex:
-                err_1 = traceback.format_exc()
-                if str(ex).find("positional argument") == -1:
-                    raise ex
-            try:
-                c()
-            except TypeError as ex:
-                if str(ex).find("positional argument") == -1:
-                    raise ex
-                ret_val = c.__code__.co_varnames
-                name = c.__name__  # type:ignore
-                print(err_1)
-                print(traceback.format_exc())
-                raise TypeError(
-                    f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
+            self._scheduler.schedule_event(c, (self, event, *event_data))
 
     # endregion
     # endregion
