@@ -10,6 +10,7 @@ class ETKBaseTkWidgetText(ETKBaseTkWidget):
     def __init__(self, *, main: ETKMain, text: str, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int, text_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
         self._text = "" if text != "" else "-"
         self._text_color = 0 if text_color != 0 else 1
+        self.multiline = getattr(self, "multiline", False)
 
         super().__init__(main=main, pos=pos, size=size, visibility=visibility, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
@@ -26,6 +27,8 @@ class ETKBaseTkWidgetText(ETKBaseTkWidget):
     def text(self, value: str) -> None:
         if self._text == value:
             return
+        if not self.multiline:
+            value = value.replace("\n", "").replace("\r", "")
         self._text = value
         self._scheduler.schedule_event_action(self._update_text)
 

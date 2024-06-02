@@ -17,15 +17,16 @@ class ETKEditEvents(ETKEvents):
 
 
 class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
-    def __init__(self, main: ETKMain, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(80, 17), text: str = "Edit", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
+    def __init__(self, main: ETKMain, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(80, 17), text: str = "Edit", *, multiline: bool = False, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, text_color: int = 0, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
         self.__old_text: str = ""
         self.__delay_cycles: int = -1
 
-        super().__init__(main=main, pos=pos, size=size, text=text, visibility=visibility, enabled=enabled,
+        super().__init__(main=main, pos=pos, size=size, text=text, multiline=multiline, visibility=visibility, enabled=enabled,
                          background_color=background_color, text_color=text_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
         self._tk_object["state"] = "normal"
         self._event_lib.update({e: [] for e in ETKEditEvents if e not in self._event_lib.keys()})
+        self.add_event(ETKEditEvents.CHANGED, lambda: None)
 
     # region Methods
     
@@ -54,6 +55,8 @@ class ETKEdit(ETKBaseTkWidgetDisableable, ETKLabel):
         match event.type:
             case EventType.KeyRelease:
                 if self.abs_enabled and self.text != self.__old_text:
+                    if not self.multiline:
+                        self.text = self.text
                     self.__delay_cycles += 1
                     self._handle_event(ETKEditEvents.CHANGED,
                                        [event])  # type:ignore

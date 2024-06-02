@@ -24,6 +24,8 @@ class ETKScheduler:
         if (current_thread() != self.__thread and not self._blocked) or self.__disabled:
             callback(*args, **kwargs)
             return
+        if callback in self.__scheduled_event_actions.keys():
+            del self.__scheduled_event_actions[callback]
         self.__scheduled_event_actions.update({callback: (args, kwargs)})
 
     def schedule_event(self, ev_callback: Callable[..., Any], event_data: tuple[Any, ...]):
