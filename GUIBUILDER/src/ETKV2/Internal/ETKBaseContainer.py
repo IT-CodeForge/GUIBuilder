@@ -160,7 +160,7 @@ class PosError(ValueError):
 
 class ETKBaseContainer(ETKBaseWidgetDisableable):
     def __init__(self, *, main: ETKMain, pos: Vector2d, csize: ETKContainerSize, visibility: bool, enabled: bool, background_color: int, outline_color: int, outline_thickness: int, **kwargs: Any) -> None:
-        self.__background = ETKCanvas(main, pos, csize.vec, background_color=background_color)
+        self._background = ETKCanvas(main, pos, csize.vec, background_color=background_color)
         self._container_size: ETKContainerSize = ETKContainerSize(0, 0)
         self._element_rel_pos: dict[ETKBaseWidget, Vector2d] = {}
 
@@ -175,7 +175,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
     @ETKBaseWidgetDisableable.pos.setter
     def pos(self, value: Vector2d) -> None:
         ETKBaseWidgetDisableable.pos.fset(self, value)  # type:ignore
-        self.__background.pos = self.abs_pos
+        self._background.pos = self.abs_pos
 
     @ETKBaseWidgetDisableable.size.setter
     def size(self, value: Vector2d):
@@ -201,27 +201,27 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
     @property
     def outline_color(self) -> int:
-        return self.__background.outline_color
+        return self._background.outline_color
 
     @outline_color.setter
     def outline_color(self, value: int) -> None:
-        self.__background.outline_color = value
+        self._background.outline_color = value
 
     @property
     def outline_thickness(self) -> int:
-        return self.__background.outline_thickness
+        return self._background.outline_thickness
 
     @outline_thickness.setter
     def outline_thickness(self, value: int) -> None:
-        self.__background.outline_thickness = value
+        self._background.outline_thickness = value
 
     @property
     def background_color(self) -> int:
-        return self.__background.background_color
+        return self._background.background_color
 
     @background_color.setter
     def background_color(self, value: int) -> None:
-        self.__background.background_color = value
+        self._background.background_color = value
 
     # endregion
 
@@ -274,19 +274,19 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
         super().add_event(event_type, eventhandler)
-        self.__background.add_event(event_type, self.__event_handler)
+        self._background.add_event(event_type, self.__event_handler)
         for e in self._element_rel_pos.keys():
             e.add_event(event_type, self.__event_handler)
 
     def remove_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
         super().remove_event(event_type, eventhandler)
-        self.__background.remove_event(event_type, self.__event_handler)
+        self._background.remove_event(event_type, self.__event_handler)
         for e in self._element_rel_pos.keys():
             e.remove_event(event_type, self.__event_handler)
 
     def __event_handler(self, data: tuple[ETKBaseObject, ETKEvents, Optional[Any]]) -> None:
         obj = data[0]
-        if obj == self.__background:
+        if obj == self._background:
             obj = self
         self._handle_event(data[1], [data[2], obj])
 
@@ -296,13 +296,13 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         if not super()._update_pos():
             return False
         self._scheduler.schedule_event_action(self._update_all_element_pos)
-        self.__background.pos = self.abs_pos
+        self._background.pos = self.abs_pos
         return True
 
     def _update_size(self) -> bool:
         if not super()._update_size():
             return False
-        self.__background.size = self.size
+        self._background.size = self.size
         self._scheduler.schedule_event_action(self._update_all_element_pos)
         return True
 
@@ -312,7 +312,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         for e in self._element_rel_pos.keys():
             self._scheduler.schedule_event_action(e._update_visibility)
         self._scheduler.schedule_event_action(self._update_all_element_pos)
-        self.__background.visibility = self.abs_visibility
+        self._background.visibility = self.abs_visibility
         return True
 
     def _update_enabled(self) -> bool:

@@ -42,7 +42,11 @@ class ETKContainer(ETKBaseContainer):
         if self.csize.dynamic_y:
             self._container_size.y = max_size[1] + self.csize.padding_y_u
 
-        self.csize = self.csize
+        vec_size = self.csize.vec
+        self._size = vec_size
+        if self.parent != None:
+            self.parent._validate_size(self, vec_size)
+        self._background.size = self.size
 
         for e in elements:
             self._element_rel_pos[e] = self._calculate_rel_element_pos(e)

@@ -21,11 +21,13 @@ class Vector2d:
                 self.__raise_error()
             self.x = math.cos(radians) * lenght
             self.y = math.sin(radians) * lenght
-        elif x != None and y != None:
+        elif x != None or y != None:
             if lenght != None or radians != None:
                 self.__raise_error()
-            self.x = x
-            self.y = y
+            if x != None:
+                self.x = x
+            if y != None:
+                self.y = y
 
     def __raise_error(self) -> None:
         raise TypeError(

@@ -67,7 +67,11 @@ class ETKListingContainer(ETKBaseContainer):
             self._container_size.y = int(
                 needed_size.y) + self.csize.padding_y_o + self.csize.padding_y_u
 
-        self.csize = self.csize
+        vec_size = self.csize.vec
+        self._size = vec_size
+        if self.parent != None:
+            self.parent._validate_size(self, vec_size)
+        #self._background.size = self.size
 
         self.__calulate_excess_space(int(listing_dir_size))
 

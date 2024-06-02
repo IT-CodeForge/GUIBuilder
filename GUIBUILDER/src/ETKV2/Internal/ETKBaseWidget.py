@@ -87,8 +87,12 @@ class ETKBaseWidget(ETKBaseObject):
 
     def _update_pos(self) -> bool:
         abspos = self.abs_pos
-        if abspos == getattr(self, "__akt_pos", Vector2d() if abspos != Vector2d() else Vector2d(1)):
-            return False
+        try:
+            if abspos == self.__akt_pos:
+                return False
+        except:
+            pass
+        self.__akt_pos = abspos
 
         if abspos.x < 0 or abspos.y < 0:
             raise RuntimeError(
@@ -97,19 +101,32 @@ class ETKBaseWidget(ETKBaseObject):
 
     def _update_size(self) -> bool:
         size = self.size
-        akt_size = getattr(self, "__akt_size", Vector2d() if size != Vector2d() else Vector2d(1))
-        if size == akt_size:
-            return False
+        try:
+            if size == self.__akt_size:
+                return False
+        except:
+            pass
+        self.__akt_size = size
         return True
 
     def _update_visibility(self) -> bool:
-        if self.abs_visibility == getattr(self, "__akt_visibility", not self.abs_visibility):
-            return False
+        a_vis = self.abs_visibility
+        try:
+            if a_vis == self.__akt_visibility:
+                return False
+        except:
+            pass
+        self.__akt_visibility = a_vis
         return True
 
     def _update_enabled(self) -> bool:
-        if self.abs_enabled == getattr(self, "__akt_enabled", not self.abs_enabled):
-            return False
+        a_en = self.abs_enabled
+        try:
+            if a_en == self.__akt_enabled:
+                return False
+        except:
+            pass
+        self.__akt_enabled = a_en
         return True
 
     # endregion
