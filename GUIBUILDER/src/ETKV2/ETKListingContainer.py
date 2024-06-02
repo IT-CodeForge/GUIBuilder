@@ -31,14 +31,6 @@ class ETKListingContainer(ETKBaseContainer):
 
         self.__calulate_excess_space(0)
 
-    # region Properties
-
-    @ETKBaseContainer.size.setter
-    def size(self, value: ETKContainerSize | Vector2d) -> None:
-        ETKBaseContainer.size.fset(self, value)  # type:ignore
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
-
-    # endregion
     # region Methods
 
     def add_element(self, element: ETKBaseWidget) -> None:
@@ -54,6 +46,7 @@ class ETKListingContainer(ETKBaseContainer):
             non_listing_dir_index = 1
 
         elements = [e for e in self._element_rel_pos.keys() if e.abs_visibility]
+        # print([(e.abs_visibility, e) for e in self._element_rel_pos.keys()]) #NOTE
         sizes = [e.size for e in elements]
 
         if len(elements) == 0:
@@ -74,7 +67,7 @@ class ETKListingContainer(ETKBaseContainer):
             self._container_size.y = int(
                 needed_size.y) + self.csize.padding_y_o + self.csize.padding_y_u
 
-        self._size = self.csize.vec
+        self.csize = self.csize
 
         self.__calulate_excess_space(int(listing_dir_size))
 

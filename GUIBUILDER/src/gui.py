@@ -20,7 +20,7 @@ class GUI(ETKMainWindow):
     CC_NOTICE_HEIGHT: Final = 35
 
     def _add_elements(self):
-        self._tk_object.iconbitmap(executable) # type:ignore
+        self._tk_object.iconbitmap(executable)  # type:ignore
 
         self.__moving_element = None
 
@@ -445,7 +445,7 @@ class GUI(ETKMainWindow):
 
         self.__steuerung.on_gui_init()
 
-        # endregion
+    # endregion
     # region Methods
 
     def __mouse_up_event_handler(self) -> None:

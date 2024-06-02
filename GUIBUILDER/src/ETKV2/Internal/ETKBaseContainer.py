@@ -300,7 +300,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         return True
 
     def _update_size(self) -> bool:
-        if not super()._update_pos():
+        if not super()._update_size():
             return False
         self.__background.size = self.size
         self._scheduler.schedule_event_action(self._update_all_element_pos)
