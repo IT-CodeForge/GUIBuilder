@@ -26,6 +26,8 @@ class ETKScheduler:
         self.__scheduled_event_actions.update({callback: (args, kwargs)})
 
     def schedule_event(self, ev_callback: Callable[..., Any], event_data: tuple[Any, ...]):
+        if self.__disabled:
+            self.__exec_event_callback(ev_callback, event_data)
         self.__scheduled_events.append((ev_callback, event_data))
 
     def exit(self) -> None:

@@ -22,7 +22,7 @@ class ETKEvents(SubclassableEnum):
 class ETKBaseObject:
     def __init__(self, *, main: ETKMain, pos: Vector2d, size: Vector2d, visibility: bool, background_color: int) -> None:
         self._pos: Vector2d = Vector2d() if pos != Vector2d() else Vector2d(1)
-        self.__size: Vector2d = Vector2d() if size != Vector2d() else Vector2d(1)
+        self._size: Vector2d = Vector2d() if size != Vector2d() else Vector2d(1)
         self.__background_color: int = 0 if background_color != 0 else 1
         self.__visibility: bool = not visibility
         self._scheduler = main.scheduler
@@ -54,13 +54,13 @@ class ETKBaseObject:
 
     @property
     def size(self) -> Vector2d:
-        return self.__size.copy()
+        return self._size.copy()
 
     @size.setter
     def size(self, value: Vector2d) -> None:
-        if self.__size == value:
+        if self._size == value:
             return
-        self.__size = value
+        self._size = value
         self._scheduler.schedule_event_action(self._update_size)
 
     @property
