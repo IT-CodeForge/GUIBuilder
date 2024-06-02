@@ -1,3 +1,4 @@
+from threading import Thread
 from tkinter import Tk
 from typing import Any, Callable
 
@@ -31,7 +32,8 @@ class ETKTimer:
 
     def __trigger(self) -> None:
         if self.__is_running:
-            self.__scheduler.schedule_event(self.__timer_function, tuple())
+            t = Thread(target=self.__scheduler.schedule_event, args=(self.__timer_function, tuple()))
+            t.start()
             self.__my_Tk.after(self.interval_in_ms, self.__trigger)
 
     # endregion

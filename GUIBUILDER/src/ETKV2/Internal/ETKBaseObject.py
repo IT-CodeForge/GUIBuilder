@@ -1,6 +1,8 @@
 from __future__ import annotations
 from abc import abstractmethod
 
+from ETKV2.Internal.ETKUtils import exec_event_callback
+
 from .SubclassableEnum import SubclassableEnum
 from typing import TYPE_CHECKING, Any, Callable, Optional
 
@@ -122,10 +124,13 @@ class ETKBaseObject:
     def remove_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
         self._event_lib[event_type].remove(eventhandler)
 
-    def _handle_event(self, event: ETKEvents, event_data: Optional[list[Any]] = None) -> None:
+    def _handle_event(self, event: ETKEvents, event_data: Optional[list[Any]] = None, ignore_scheduler: bool = False) -> None:
         if event_data is None:
             event_data = []
         for c in self._event_lib[event]:
+            if ignore_scheduler:
+                exec_event_callback(c, (self, event, *event_data))
+                continue
             self._scheduler.schedule_event(c, (self, event, *event_data))
 
     # endregion

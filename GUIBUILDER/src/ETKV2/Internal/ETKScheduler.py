@@ -3,8 +3,9 @@ from threading import Thread, current_thread
 import threading
 import time
 from tkinter import Tk
-import traceback
 from typing import Any, Callable
+
+from .ETKUtils import exec_event_callback
 
 
 class ETKScheduler:
@@ -27,36 +28,15 @@ class ETKScheduler:
 
     def schedule_event(self, ev_callback: Callable[..., Any], event_data: tuple[Any, ...]):
         if self.__disabled:
-            self.__exec_event_callback(ev_callback, event_data)
+            exec_event_callback(ev_callback, event_data)
+            return
         self.__scheduled_events.append((ev_callback, event_data))
 
     def exit(self) -> None:
         self.__exit = True
         if not self.__thread.is_alive():
             sys.exit()
-    
 
-    def __exec_event_callback(self, callback_function: Callable[..., Any], event_data: tuple[Any, ...]) -> None:
-        err_1 = ""
-        try:
-            callback_function(event_data)
-            return
-        except TypeError as ex:
-            err_1 = traceback.format_exc()
-            if str(ex).find("positional argument") == -1:
-                raise ex
-        try:
-            callback_function()
-        except TypeError as ex:
-            if str(ex).find("positional argument") == -1:
-                raise ex
-            ret_val = callback_function.__code__.co_varnames
-            name = callback_function.__name__  # type:ignore
-            print(err_1, file=sys.stderr)
-            print(traceback.format_exc(), file=sys.stderr)
-            raise TypeError(
-                f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
-    
     def handle_event_actions(self):
         while len(self.__scheduled_event_actions.keys()) != 0 and not self.__exit:
             c2 = tuple(self.__scheduled_event_actions.keys())[0]
@@ -74,9 +54,8 @@ class ETKScheduler:
             while len(self.__scheduled_events) > 0 and not self.__exit:
                 c1, data = self.__scheduled_events[0]
                 self.__scheduled_events.pop(0)
-                self.__exec_event_callback(c1, data)
-
-                self.handle_event_actions()
+                exec_event_callback(c1, data)
+            self.handle_event_actions()
 
             sleep_duration = 0.1
             duration = (time.time_ns() - begin_ns) / 10**9
@@ -85,4 +64,3 @@ class ETKScheduler:
         if threading.main_thread().is_alive():
             self.__tk.after(0, sys.exit)
             sys.exit()
-

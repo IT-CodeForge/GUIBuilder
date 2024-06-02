@@ -143,7 +143,7 @@ class ETKMainWindow(ETKBaseTkObject):
         self._tk_object.mainloop()
 
     def exit(self) -> None:
-        self._handle_event(ETKWindowEvents.EXIT)
+        self._handle_event(ETKWindowEvents.EXIT, None, True)
         if not self.exit_locked and not self.exit_ignore_next:
             self._main.scheduler.exit()
         if self.exit_ignore_next:

@@ -23,7 +23,6 @@ class GUI(ETKMainWindow):
         self._tk_object.iconbitmap(executable) # type:ignore
 
         self.__moving_element = None
-        self.__move_timer = ETKTimer(self._main, 10, self.__update_element_pos)
 
         self.add_event(ETKWindowEvents.EXIT, self.__steuerung.exit_event)
 
@@ -456,6 +455,7 @@ class GUI(ETKMainWindow):
 
     def __mouse_moved_event_handler(self, event: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
         self.__mouse_pos = Vector2d(event[2].x_root, event[2].y_root)
+        self.__update_element_pos()
 
     def __update_element_pos(self) -> None:
         mouse_pos = self.__mouse_pos - self.abs_pos
