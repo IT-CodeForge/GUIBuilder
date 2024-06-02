@@ -150,6 +150,7 @@ class ETKListingContainer(ETKBaseContainer):
         self._element_rel_pos = dict(element_list)
 
         self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_event_action(element._update_visibility)
 
     # region child validation methods
 

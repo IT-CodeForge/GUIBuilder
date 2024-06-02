@@ -236,6 +236,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
         self._element_rel_pos.update({element: Vector2d()})
 
+        self._scheduler.schedule_event_action(element._update_visibility)
         self._scheduler.schedule_event_action(element._update_pos)
 
         self._scheduler.schedule_event_action(self._update_all_element_pos)
@@ -310,6 +311,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
             return False
         for e in self._element_rel_pos.keys():
             self._scheduler.schedule_event_action(e._update_visibility)
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
         self.__background.visibility = self.abs_visibility
         return True
 
