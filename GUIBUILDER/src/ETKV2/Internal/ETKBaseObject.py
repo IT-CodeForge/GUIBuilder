@@ -44,7 +44,7 @@ class ETKBaseObject:
         if self._pos == value:
             return
         self._pos = value
-        self._update_pos()
+        self._scheduler.schedule_event_action(self._update_pos)
 
 
     @property
@@ -61,7 +61,7 @@ class ETKBaseObject:
         if self.__size == value:
             return
         self.__size = value
-        self._update_size()
+        self._scheduler.schedule_event_action(self._update_size)
 
     @property
     def visibility(self) -> bool:
@@ -72,7 +72,7 @@ class ETKBaseObject:
         if self.__visibility == value:
             return
         self.__visibility = value
-        self._update_visibility()
+        self._scheduler.schedule_event_action(self._update_visibility)
 
     @property
     def abs_visibility(self) -> bool:
@@ -88,7 +88,7 @@ class ETKBaseObject:
         if self.__background_color == value:
             return
         self.__background_color = value
-        self._update_background_color()
+        self._scheduler.schedule_event_action(self._update_background_color)
 
     @property
     def events(self) -> dict[ETKEvents, list[Callable[..., Any]]]:

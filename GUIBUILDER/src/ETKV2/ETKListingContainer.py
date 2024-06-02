@@ -92,7 +92,7 @@ class ETKListingContainer(ETKBaseContainer):
             pos[non_listing_dir_index] = non_listing_dir_pos
             self._element_rel_pos[e] = pos
             e._pos = pos
-            e._update_pos(False)
+            self._scheduler.schedule_event_action(e._update_pos, False)
             listing_dir_pos += e.size[listing_dir_index] + self.__offset
 
     def __calculate_pos_part(self, index: int, size_part: float, padding_part: tuple[float, float]) -> float:

@@ -41,7 +41,7 @@ class ETKMainWindow(ETKBaseTkObject):
     def __init__(self, pos: Vector2d = Vector2d(0, 0), size: Optional[Vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
         from .ETKCanvas import ETKCanvas
         self._tk_object: Tk = Tk()
-        self._main = ETKMain(self._tk_object, ETKScheduler())
+        self._main = ETKMain(self._tk_object, ETKScheduler(self._tk_object))
         self.__topmost = False
         self.exit_locked = False
         self.exit_ignore_next = False
@@ -60,7 +60,7 @@ class ETKMainWindow(ETKBaseTkObject):
         self._tk_object.bind(
             "<Configure>", self.__resize_event_handler)  # type:ignore
 
-        self._tk_object.after(0, self._add_elements)
+        self._tk_object.after(0, lambda: self._main.scheduler.schedule_event(self._add_elements, tuple()))
         self._tk_object.after(1, self._handle_event, ETKWindowEvents.START)
         self._on_init()
 
@@ -147,7 +147,6 @@ class ETKMainWindow(ETKBaseTkObject):
         self._handle_event(ETKWindowEvents.EXIT)
         if not self.exit_locked and not self.exit_ignore_next:
             self._main.scheduler.exit()
-            sys.exit()
         if self.exit_ignore_next:
             self.exit_ignore_next = False
 

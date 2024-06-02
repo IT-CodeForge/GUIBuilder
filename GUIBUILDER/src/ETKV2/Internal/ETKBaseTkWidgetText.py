@@ -27,7 +27,7 @@ class ETKBaseTkWidgetText(ETKBaseTkWidget):
         if self._text == value:
             return
         self._text = value
-        self._update_text()
+        self._scheduler.schedule_event_action(self._update_text)
 
     @property
     def text_color(self) -> int:
