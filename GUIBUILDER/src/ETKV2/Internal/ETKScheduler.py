@@ -50,6 +50,13 @@ class ETKScheduler:
             print(traceback.format_exc(), file=sys.stderr)
             raise TypeError(
                 f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
+    
+    def handle_event_actions(self):
+        while len(self.__scheduled_event_actions.keys()) != 0 and not self.__exit:
+            c2 = tuple(self.__scheduled_event_actions.keys())[0]
+            a2, kwa2 = self.__scheduled_event_actions[c2]
+            del self.__scheduled_event_actions[c2]
+            c2(*a2, **kwa2)
 
     def __handler(self):
         while not self.__exit and threading.main_thread().is_alive():
@@ -63,11 +70,7 @@ class ETKScheduler:
                 self.__scheduled_events.pop(0)
                 self.__exec_event_callback(c1, data)
 
-                while len(self.__scheduled_event_actions.keys()) != 0 and not self.__exit:
-                    c2 = tuple(self.__scheduled_event_actions.keys())[0]
-                    a2, kwa2 = self.__scheduled_event_actions[c2]
-                    del self.__scheduled_event_actions[c2]
-                    c2(*a2, **kwa2)
+                self.handle_event_actions()
 
             sleep_duration = 0.1
             duration = (time.time_ns() - begin_ns) / 10**9

@@ -148,6 +148,9 @@ class ETKMainWindow(ETKBaseTkObject):
             self._main.scheduler.exit()
         if self.exit_ignore_next:
             self.exit_ignore_next = False
+    
+    def update_gui(self) -> None:
+        self._scheduler.handle_event_actions()
 
     def force_focus(self) -> None:
         self._tk_object.attributes('-topmost', 1)  # type:ignore
