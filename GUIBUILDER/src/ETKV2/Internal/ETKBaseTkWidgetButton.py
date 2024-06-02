@@ -24,8 +24,8 @@ class ETKBaseTkWidgetButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
     def _create_outline(self, tk: Tk) -> None:
         self._outline = LabelFrame(tk, relief=FLAT)
 
-    def _update_visibility(self, validation: bool = True) -> bool:
-        if not super()._update_visibility(validation):
+    def _update_visibility(self) -> bool:
+        if not super()._update_visibility():
             return False
         if not self.abs_visibility:
             self._outline.place_forget()

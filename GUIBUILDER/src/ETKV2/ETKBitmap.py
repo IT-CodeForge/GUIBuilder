@@ -18,8 +18,8 @@ class ETKBitmap(ETKBaseTkWidgetDisableable):
 
     # region Methods
     
-    def _update_size(self, validation: bool = True) -> bool:
-        if not super()._update_size(validation):
+    def _update_size(self) -> bool:
+        if not super()._update_size():
             return False
         self.__bitmap.configure(width=int(self.size.x), height=int(self.size.y))
         return True

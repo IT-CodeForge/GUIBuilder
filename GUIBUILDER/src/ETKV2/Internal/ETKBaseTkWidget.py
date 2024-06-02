@@ -60,20 +60,20 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
         # region update event methods
 
-    def _update_pos(self, validation: bool = True) -> bool:
-        if not super()._update_pos(validation):
+    def _update_pos(self) -> bool:
+        if not super()._update_pos():
             return False
         self._paint_object()
         return True
     
-    def _update_size(self, validation: bool = True) -> bool:
-        if not super()._update_size(validation):
+    def _update_size(self) -> bool:
+        if not super()._update_size():
             return False
         self._paint_object()
         return True
 
-    def _update_visibility(self, validation: bool = True) -> bool:
-        if not super()._update_visibility(validation):
+    def _update_visibility(self) -> bool:
+        if not super()._update_visibility():
             return False
         if self.abs_visibility:
             self._paint_object()

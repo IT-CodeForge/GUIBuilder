@@ -22,6 +22,10 @@ class ETKBaseWidget(ETKBaseObject):
     # region Properties
 
     @property
+    def parent(self) -> Optional[ETKBaseWidget]:
+        return self._parent
+
+    @property
     def abs_pos(self) -> Vector2d:
         """READ-ONLY"""
         if self._parent != None:
@@ -29,15 +33,35 @@ class ETKBaseWidget(ETKBaseObject):
         return self.pos
 
     @property
-    def parent(self) -> Optional[ETKBaseWidget]:
-        return self._parent
-
-    @property
     def abs_visibility(self) -> bool:
         """READ-ONLY"""
         if self._parent != None:
             return self.visibility and self._parent.abs_visibility
         return self.visibility
+
+    @ETKBaseObject.pos.setter
+    def pos(self, value: Vector2d):
+        if self._pos == value:
+            return
+        if self.parent != None:
+            self.parent._validate_pos(self, value)
+        ETKBaseObject.pos.fset(self, value)  # type:ignore
+
+    @ETKBaseObject.size.setter
+    def size(self, value: Vector2d):
+        if self.size == value:
+            return
+        if self.parent != None:
+            self.parent._validate_size(self, value)
+        ETKBaseObject.size.fset(self, value)  # type:ignore
+
+    @ETKBaseObject.visibility.setter
+    def visibility(self, value: bool):
+        if self.visibility == value:
+            return
+        if self.parent != None:
+            self.parent._validate_visibility(self, value)
+        ETKBaseObject.visibility.fset(self, value)  # type:ignore
 
     @property
     def enabled(self) -> bool:
@@ -61,42 +85,26 @@ class ETKBaseWidget(ETKBaseObject):
 
     # region update event methods
 
-    def _update_pos(self, validation: bool = True) -> bool:
+    def _update_pos(self) -> bool:
         abspos = self.abs_pos
         if abspos == getattr(self, "__akt_pos", Vector2d() if abspos != Vector2d() else Vector2d(1)):
             return False
-
-        if self.parent != None and validation:
-            self.parent._validate_pos(self)
 
         if abspos.x < 0 or abspos.y < 0:
             raise RuntimeError(
                 f"element {self} is outside of window\nelement: pos: {self.pos}")
         return True
 
-    def _update_size(self, validation: bool = True) -> bool:
-        try:  # NOTE
-            size = self.size.vec  # type:ignore
-        except:
-            size = self.size
-        akt_size_0 = getattr(self, "__akt_size", Vector2d() if size != Vector2d() else Vector2d(1))
-        try:
-            akt_size = akt_size_0.vec  # type:ignore
-        except:
-            akt_size = akt_size_0
+    def _update_size(self) -> bool:
+        size = self.size
+        akt_size = getattr(self, "__akt_size", Vector2d() if size != Vector2d() else Vector2d(1))
         if size == akt_size:
             return False
-
-        if self.parent != None and validation:
-            self.parent._validate_size(self)
         return True
 
-    def _update_visibility(self, validation: bool = True) -> bool:
+    def _update_visibility(self) -> bool:
         if self.abs_visibility == getattr(self, "__akt_visibility", not self.abs_visibility):
             return False
-
-        if self._parent != None and validation:
-            self._parent._validate_visibility(self)
         return True
 
     def _update_enabled(self) -> bool:
@@ -115,13 +123,13 @@ class ETKBaseWidget(ETKBaseObject):
             raise ValueError(f"{self} is not the parent of {element}!")
         element._parent = None
 
-    def _validate_pos(self, element: ETKBaseWidget) -> None:
+    def _validate_pos(self, element: ETKBaseWidget, new_pos: Vector2d) -> None:
         pass
 
-    def _validate_size(self, element: ETKBaseWidget) -> None:
+    def _validate_size(self, element: ETKBaseWidget, new_size: Vector2d) -> None:
         pass
 
-    def _validate_visibility(self, element: ETKBaseWidget) -> None:
+    def _validate_visibility(self, element: ETKBaseWidget, new_visibility: bool) -> None:
         pass
 
     # endregion
