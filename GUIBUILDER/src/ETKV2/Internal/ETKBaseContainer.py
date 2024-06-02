@@ -235,7 +235,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
         self._scheduler.schedule_event_action(element._update_pos, False)
 
-        self._update_all_element_pos()
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
 
     def _prepare_element_add(self, element: ETKBaseWidget) -> None:
         if element in self._element_rel_pos.keys():
@@ -266,7 +266,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
             element.remove_event(ev, self.__event_handler)
 
         self._scheduler.schedule_event_action(element._update_pos, False)
-        self._update_all_element_pos()
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
         super().add_event(event_type, eventhandler)
@@ -291,15 +291,19 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
     def _update_pos(self, validation: bool = True) -> bool:
         if not super()._update_pos(validation):
             return False
-        for e in self._element_rel_pos.keys():
-            self._scheduler.schedule_event_action(e._update_pos, False)
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
         self.__background.pos = self.abs_pos
+        return True
+
+    def _update_size(self, validation: bool = True) -> bool:
+        if not super()._update_pos(validation):
+            return False
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
         return True
 
     def _update_visibility(self, validation: bool = True) -> bool:
         if not super()._update_visibility(validation):
             return False
-        self._update_all_element_pos() #NOTE: why?
         for e in self._element_rel_pos.keys():
             self._scheduler.schedule_event_action(e._update_visibility, False)
         self.__background.visibility = self.abs_visibility
@@ -326,13 +330,13 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         self.remove_element(element)
 
     def _validate_size(self, element: ETKBaseWidget) -> None:
-        self._update_all_element_pos()
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
 
     def _validate_pos(self, element: ETKBaseWidget) -> None:
-        self._update_all_element_pos()
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
 
     def _validate_visibility(self, element: ETKBaseWidget) -> None:
-        self._update_all_element_pos()
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
 
     # endregion
     # endregion

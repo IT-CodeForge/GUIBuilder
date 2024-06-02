@@ -10,11 +10,10 @@ from typing import Any, Callable
 class ETKScheduler:
     def __init__(self, tk: Tk) -> None:
         self.__exit = False
-        self._ignore_err = True
         self._blocked = False
         self.__tk = tk
         self.__scheduled_events: list[tuple[Callable[..., Any], tuple[Any, ...]]] = []
-        self.__scheduled_event_actions: list[tuple[Callable[..., Any], tuple[Any, ...], dict[str, Any]]] = []
+        self.__scheduled_event_actions: dict[Callable[..., Any], tuple[tuple[Any, ...], dict[str, Any]]] = {}
         self.__thread = Thread(target=self.__handler)
         self.__thread.start()
 
@@ -23,11 +22,7 @@ class ETKScheduler:
             callback(*args, **kwargs)
             print("aha") #NOTE
             return
-        try:
-            self.__scheduled_event_actions.remove((callback, args, kwargs))
-        except ValueError:
-            pass
-        self.__scheduled_event_actions.append((callback, args, kwargs))
+        self.__scheduled_event_actions.update({callback: (args, kwargs)})
 
     def schedule_event(self, ev_callback: Callable[..., Any], event_data: tuple[Any, ...]):
         self.__scheduled_events.append((ev_callback, event_data))
@@ -61,7 +56,7 @@ class ETKScheduler:
         while not self.__exit and threading.main_thread().is_alive():
             begin_ns = time.time_ns()
 
-            if len(self.__scheduled_event_actions) != 0 and not self._ignore_err: #NOTE
+            if len(self.__scheduled_event_actions.keys()) != 0:
                 raise RuntimeError
 
             while len(self.__scheduled_events) > 0 and not self.__exit:
@@ -69,12 +64,13 @@ class ETKScheduler:
                 self.__scheduled_events.pop(0)
                 self.__exec_event_callback(c1, data)
 
-                if len(self.__scheduled_event_actions) != 0:
-                    print("outer", len(self.__scheduled_event_actions)) #NOTE
-                while len(self.__scheduled_event_actions) != 0 and not self.__exit:
-                    print("inner", len(self.__scheduled_event_actions))
-                    c2, a2, kwa2 = self.__scheduled_event_actions[0]
-                    self.__scheduled_event_actions.pop(0)
+                if len(self.__scheduled_event_actions.keys()) != 0:
+                    print("outer", len(self.__scheduled_event_actions.keys())) #NOTE
+                while len(self.__scheduled_event_actions.keys()) != 0 and not self.__exit:
+                    print("inner", len(self.__scheduled_event_actions.keys())) #NOTE
+                    c2 = tuple(self.__scheduled_event_actions.keys())[0]
+                    a2, kwa2 = self.__scheduled_event_actions[c2]
+                    del self.__scheduled_event_actions[c2]
                     c2(*a2, **kwa2)
 
             sleep_duration = 0.1

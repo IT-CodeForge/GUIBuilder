@@ -15,17 +15,6 @@ class ETKContainer(ETKBaseContainer):
         super().__init__(main=main, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
         self.__element_alignments: dict[ETKBaseWidget, ETKAlignments] = {}
 
-    # region Properties
-
-    @ETKBaseContainer.size.setter
-    def size(self, value: ETKContainerSize | Vector2d) -> None:
-        ETKBaseContainer.size.fset(self, value)  # type:ignore
-        try:
-            self._update_all_element_pos()
-        except ValueError:
-            raise SizeError(
-                f"size of container {self} is too small\ncontainer: size: {self.size}")
-
     # endregion
     # region Methods
 

@@ -1,6 +1,5 @@
 from __future__ import annotations
 from abc import abstractmethod
-import sys
 from tkinter import Event, Tk, EventType
 from typing import Any, Callable, Optional
 

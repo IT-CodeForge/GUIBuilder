@@ -34,7 +34,7 @@ class ETKListingContainer(ETKBaseContainer):
     @ETKBaseContainer.size.setter
     def size(self, value: ETKContainerSize | Vector2d) -> None:
         ETKBaseContainer.size.fset(self, value)  # type:ignore
-        self._update_all_element_pos()
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
 
     # endregion
     # region Methods
@@ -111,13 +111,15 @@ class ETKListingContainer(ETKBaseContainer):
         element_list.insert(index, (element, Vector2d()))
         self._element_rel_pos = dict(element_list)
 
-        self._update_all_element_pos()
+        self._scheduler.schedule_event_action(self._update_all_element_pos)
 
     # region child validation methods
 
     def _validate_pos(self, element: ETKBaseWidget) -> None:
-        raise ElementPosLockedError(
-            f"pos of element {element} is locked by ListingContainer {self}")
+        pass
+        # raise ElementPosLockedError(
+        #     f"pos of element {element} is locked by ListingContainer {self}")
+        # NOTE!!!
 
     # endregion
     # endregion
