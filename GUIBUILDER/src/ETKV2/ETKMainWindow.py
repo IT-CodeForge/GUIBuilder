@@ -37,10 +37,10 @@ class ETKMainWindow(ETKBaseTkObject):
             """READ-ONLY"""
             return self.__scheduler
 
-    def __init__(self, pos: Vector2d = Vector2d(0, 0), size: Optional[Vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, **kwargs: Any) -> None:
+    def __init__(self, pos: Vector2d = Vector2d(0, 0), size: Optional[Vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, scheduler_disabled: bool = False, **kwargs: Any) -> None:
         from .ETKCanvas import ETKCanvas
         self._tk_object: Tk = Tk()
-        self._main = ETKMain(self._tk_object, ETKScheduler(self._tk_object))
+        self._main = ETKMain(self._tk_object, ETKScheduler(self._tk_object, scheduler_disabled))
         self.__topmost = False
         self.exit_locked = False
         self.exit_ignore_next = False

@@ -9,7 +9,7 @@ class GUI(ETKMainWindow):
     def __init__(self, steuerung: Steuerung) -> None:
         self.__steuerung = steuerung
         self.__mouse_pos = Vector2d()
-        super().__init__(caption=f"GUI-Builder V{version}")
+        super().__init__(caption=f"GUI-Builder V{version}", scheduler_disabled=False)
 
     LANGUAGES: Final = ["C++ (TGW)", "Python (ETK)"]
     MENUBAR_PADDING: Final = 10

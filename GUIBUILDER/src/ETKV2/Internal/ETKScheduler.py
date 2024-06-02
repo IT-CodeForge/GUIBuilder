@@ -8,17 +8,19 @@ from typing import Any, Callable
 
 
 class ETKScheduler:
-    def __init__(self, tk: Tk) -> None:
+    def __init__(self, tk: Tk, disabled: bool) -> None:
         self.__exit = False
+        self.__disabled = disabled
         self._blocked = False
         self.__tk = tk
         self.__scheduled_events: list[tuple[Callable[..., Any], tuple[Any, ...]]] = []
         self.__scheduled_event_actions: dict[Callable[..., Any], tuple[tuple[Any, ...], dict[str, Any]]] = {}
         self.__thread = Thread(target=self.__handler)
-        self.__thread.start()
+        if not self.__disabled:
+            self.__thread.start()
 
     def schedule_event_action(self, callback: Callable[..., Any], *args: Any, **kwargs: Any):
-        if current_thread() != self.__thread and not self._blocked:
+        if (current_thread() != self.__thread and not self._blocked) or self.__disabled:
             callback(*args, **kwargs)
             return
         self.__scheduled_event_actions.update({callback: (args, kwargs)})
@@ -28,6 +30,8 @@ class ETKScheduler:
 
     def exit(self) -> None:
         self.__exit = True
+        if not self.__thread.is_alive():
+            sys.exit()
     
 
     def __exec_event_callback(self, callback_function: Callable[..., Any], event_data: tuple[Any, ...]) -> None:
