@@ -29,15 +29,7 @@ class ETKListingContainer(ETKBaseContainer):
 
         super().__init__(main=main, pos=pos, csize=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
-        if self.__listing_type in [ETKListingTypes.TOP_TO_BOTTOM, ETKListingTypes.BOTTOM_TO_TOP]: #NOTE: refactor
-            listing_dir_index = 1
-        else:
-            listing_dir_index = 0
-        if listing_dir_index == 0:
-            padding = self.csize.padding_x_r + self.csize.padding_x_l
-        else:
-            padding = self.csize.padding_y_o + self.csize.padding_y_u 
-        self.__excess_space = self.csize[listing_dir_index] - padding
+        self.__calulate_excess_space(0)
 
     # region Properties
 
@@ -48,9 +40,9 @@ class ETKListingContainer(ETKBaseContainer):
 
     # endregion
     # region Methods
-    
+
     def add_element(self, element: ETKBaseWidget) -> None:
-        self.__validate_element_size(Vector2d() ,element.size)
+        self.__validate_element_size(Vector2d(), element.size)
         super().add_element(element)
 
     def _update_all_element_pos(self) -> None:
@@ -82,17 +74,9 @@ class ETKListingContainer(ETKBaseContainer):
             self._container_size.y = int(
                 needed_size.y) + self.csize.padding_y_o + self.csize.padding_y_u
 
-        # print(needed_size, self.csize)
-
         ETKBaseContainer.csize.fset(self, self.csize)  # type:ignore
 
-        if listing_dir_index == 0:
-            padding = self.csize.padding_x_r + self.csize.padding_x_l
-        else:
-            padding = self.csize.padding_y_o + self.csize.padding_y_u 
-        self.__excess_space = self.csize[listing_dir_index] - listing_dir_size - padding
-
-        # print(needed_size, self.csize)
+        self.__calulate_excess_space(int(listing_dir_size))
 
         if listing_dir_size > self.csize[listing_dir_index] or non_listing_dir_size > self.csize[non_listing_dir_index]:
             raise SizeError(
@@ -123,7 +107,7 @@ class ETKListingContainer(ETKBaseContainer):
                 return 0.5 * (self.csize[index] - padding_part[0] - padding_part[1]) - 0.5 * size_part + padding_part[0]
             case _ETKSubAlignments.MAX:
                 return self.csize[index] - size_part - padding_part[1]
-    
+
     def __validate_element_size(self, old_size: Vector2d, new_size: Vector2d):
         needed_space = new_size - old_size
 
@@ -137,13 +121,26 @@ class ETKListingContainer(ETKBaseContainer):
             non_listing_dir_index = 1
             listing_dir_dynamic = self.csize.dynamic_x
             non_listing_dir_dynamic = self.csize.dynamic_y
-        
+
         if needed_space[listing_dir_index] > 0 and needed_space[listing_dir_index] > self.__excess_space and not listing_dir_dynamic:
             raise SizeError(
                 f"size of container {self} is too small\ncontainer: size: {self.csize}")
         if new_size[non_listing_dir_index] > self.size[non_listing_dir_index] and not non_listing_dir_dynamic:
             raise SizeError(
                 f"size of container {self} is too small\ncontainer: size: {self.csize}")
+
+    def __calulate_excess_space(self, used_space: int):
+        if self.__listing_type in [ETKListingTypes.TOP_TO_BOTTOM, ETKListingTypes.BOTTOM_TO_TOP]:
+            listing_dir_index = 1
+        else:
+            listing_dir_index = 0
+
+        if listing_dir_index == 0:
+            padding = self.csize.padding_x_r + self.csize.padding_x_l
+        else:
+            padding = self.csize.padding_y_o + self.csize.padding_y_u
+
+        self.__excess_space = self.csize[listing_dir_index] - used_space - padding
 
     def insert_element(self, element: ETKBaseWidget, index: int) -> None:
         self._prepare_element_add(element)

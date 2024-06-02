@@ -20,7 +20,6 @@ class ETKScheduler:
     def schedule_event_action(self, callback: Callable[..., Any], *args: Any, **kwargs: Any):
         if current_thread() != self.__thread and not self._blocked:
             callback(*args, **kwargs)
-            print("aha") #NOTE
             return
         self.__scheduled_event_actions.update({callback: (args, kwargs)})
 
@@ -47,8 +46,8 @@ class ETKScheduler:
                 raise ex
             ret_val = callback_function.__code__.co_varnames
             name = callback_function.__name__  # type:ignore
-            print(err_1)
-            print(traceback.format_exc())
+            print(err_1, file=sys.stderr)
+            print(traceback.format_exc(), file=sys.stderr)
             raise TypeError(
                 f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
 
@@ -64,10 +63,7 @@ class ETKScheduler:
                 self.__scheduled_events.pop(0)
                 self.__exec_event_callback(c1, data)
 
-                if len(self.__scheduled_event_actions.keys()) != 0:
-                    print("outer", len(self.__scheduled_event_actions.keys())) #NOTE
                 while len(self.__scheduled_event_actions.keys()) != 0 and not self.__exit:
-                    print("inner", len(self.__scheduled_event_actions.keys())) #NOTE
                     c2 = tuple(self.__scheduled_event_actions.keys())[0]
                     a2, kwa2 = self.__scheduled_event_actions[c2]
                     del self.__scheduled_event_actions[c2]
