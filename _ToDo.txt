@@ -22,7 +22,11 @@ logging
 
 
 
-
+Beobachten:
+abs. import weg
+imports sortieren
+#regions
+#TODO, #NOTE
 
 Formalitäten:
 
