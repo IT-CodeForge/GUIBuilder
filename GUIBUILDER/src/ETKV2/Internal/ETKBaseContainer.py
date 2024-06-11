@@ -236,10 +236,10 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
 
         self._element_rel_pos.update({element: Vector2d()})
 
-        self._scheduler.schedule_event_action(element._update_visibility)
-        self._scheduler.schedule_event_action(element._update_pos)
+        self._scheduler.schedule_action(element._update_visibility)
+        self._scheduler.schedule_action(element._update_pos)
 
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_action(self._update_all_element_pos)
 
     def _prepare_element_add(self, element: ETKBaseWidget) -> None:
         if element in self._element_rel_pos.keys():
@@ -269,8 +269,8 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         for ev in events:
             element.remove_event(ev, self.__event_handler)
 
-        self._scheduler.schedule_event_action(element._update_pos)
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_action(element._update_pos)
+        self._scheduler.schedule_action(self._update_all_element_pos)
 
     def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
         super().add_event(event_type, eventhandler)
@@ -295,7 +295,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
     def _update_pos(self) -> bool:
         if not super()._update_pos():
             return False
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_action(self._update_all_element_pos)
         self._background.pos = self.abs_pos
         return True
 
@@ -303,15 +303,15 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         if not super()._update_size():
             return False
         self._background.size = self.size
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_action(self._update_all_element_pos)
         return True
 
     def _update_visibility(self) -> bool:
         if not super()._update_visibility():
             return False
         for e in self._element_rel_pos.keys():
-            self._scheduler.schedule_event_action(e._update_visibility)
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+            self._scheduler.schedule_action(e._update_visibility)
+        self._scheduler.schedule_action(self._update_all_element_pos)
         self._background.visibility = self.abs_visibility
         return True
 
@@ -319,7 +319,7 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         if not super()._update_enabled():
             return False
         for e in self._element_rel_pos.keys():
-            self._scheduler.schedule_event_action(e._update_enabled)
+            self._scheduler.schedule_action(e._update_enabled)
         return True
 
     # endregion
@@ -336,13 +336,13 @@ class ETKBaseContainer(ETKBaseWidgetDisableable):
         self.remove_element(element)
 
     def _validate_size(self, element: ETKBaseWidget, new_size: Vector2d) -> None:
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_action(self._update_all_element_pos)
 
     def _validate_pos(self, element: ETKBaseWidget, new_pos: Vector2d) -> None:
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_action(self._update_all_element_pos)
 
     def _validate_visibility(self, element: ETKBaseWidget, new_visibility: bool) -> None:
-        self._scheduler.schedule_event_action(self._update_all_element_pos)
+        self._scheduler.schedule_action(self._update_all_element_pos)
 
     # endregion
     # endregion

@@ -19,7 +19,6 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
 
         super().__init__(main=main, pos=pos, size=size, visibility=visibility, background_color=background_color, **kwargs)
 
-        self._place_object()
         self.outline_thickness = outline_thickness
         self.outline_color = outline_color
 
@@ -34,7 +33,7 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
         if self._outline_color == value:
             return
         self._outline_color = value
-        self._scheduler.schedule_event_action(self._update_outline_color)
+        self._scheduler.schedule_action(self._update_outline_color)
 
     @property
     def outline_thickness(self) -> int:
@@ -45,7 +44,7 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
         if self._outline_thickness == value:
             return
         self._outline_thickness = value
-        self._scheduler.schedule_event_action(self._update_outline_thickness)
+        self._scheduler.schedule_action(self._update_outline_thickness)
 
     # endregion
     # region Methods
