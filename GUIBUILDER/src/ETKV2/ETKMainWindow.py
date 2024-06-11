@@ -59,9 +59,8 @@ class ETKMainWindow(ETKBaseTkObject):
         self._tk_object.bind(
             "<Configure>", self.__resize_event_handler)  # type:ignore
 
-        self._tk_object.after(0, lambda: self._main.scheduler.schedule_event(self._add_elements, tuple()))
-        self._tk_object.after(1, self._handle_event, ETKWindowEvents.START)
-        self._on_init()
+        self._main.scheduler.schedule_event(self._add_elements, tuple())
+        self._main.scheduler.schedule_event(lambda: self._handle_event(ETKWindowEvents.START), tuple())
 
     # region Properties
 
@@ -130,10 +129,6 @@ class ETKMainWindow(ETKBaseTkObject):
 
     # endregion
     # region Methods
-
-    @abstractmethod
-    def _on_init(self) -> None:
-        pass
 
     @abstractmethod
     def _add_elements(self) -> None:
