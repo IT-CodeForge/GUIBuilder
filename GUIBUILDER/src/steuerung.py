@@ -3,7 +3,7 @@ from tkinter import Tk, filedialog as fd
 from typing import Any
 from intermediary_all import *
 from ETK import *
-from py_generator.generator import Generator, SupportedFrameworks
+from code_generator.generator import Generator, SupportedFrameworks
 
 
 class Steuerung:
