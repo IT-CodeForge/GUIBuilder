@@ -5,9 +5,9 @@ from enum import Enum, auto
 from typing import Optional
 from .ETKSystemGUIGenerator import ETKSystemGUIGenerator
 from .ETKUserGUIGenerator import ETKUserGUIGenerator
-from .TGWHeaderGenerator import TGWHeaderGenerator
-from .TGWSystemGenerator import TGWSystemGenerator
-from .TGWUserGenerator import TGWUserGenerator
+from .TGWSystemHeaderGenerator import TGWHeaderGenerator
+from .TGWSystemCPPGenerator import TGWSystemCPPGenerator
+from .TGWUserCPPGenerator import TGWUserCPPGenerator
 from autopep8 import fix_code # type:ignore
 
 class SupportedFrameworks(Enum):
@@ -19,14 +19,15 @@ class Generator(BaseGenerator):
     __USER_GUI_NAME_ETK: str = "UserGUI.py"
     __SYSTEM_GUI_NAME_ETK: str = "SystemGUI.py"
     __REMOVED_EVENTS_TGW: str = "RemovedEvents.txt"
-    __USER_GUI_NAME_TGW: str = "UserGUI.cpp"
-    __SYSTEM_GUI_NAME_TGW: str = "SystemGUI.cpp"
-    __HEADER_GUI_NAME_TGW: str = "GUI.h"
+    __USER_GUI_CPP_NAME_TGW: str = "UserGUI.cpp"
+    __USER_GUI_HEADER_NAME_TGW: str = "UserGUI.h"
+    __SYSTEM_GUI_CPP_NAME_TGW: str = "SystemGUI.cpp"
+    __SYSTEM_GUI_HEADER_NAME_TGW: str = "SystemGUI.h"
     __SYSTEM_GUI_GEN_ETK = ETKSystemGUIGenerator()
     __USER_GUI_GEN_ETK = ETKUserGUIGenerator()
     __HEADER_GUI_GEN_TGW = TGWHeaderGenerator()
-    __SYSTEM_GUI_GEN_TGW = TGWSystemGenerator()
-    __USER_GUI_GEN_TGW = TGWUserGenerator()
+    __SYSTEM_GUI_GEN_TGW = TGWSystemCPPGenerator()
+    __USER_GUI_GEN_TGW = TGWUserCPPGenerator()
 
     def __init__(self) -> None:
         super().__init__()
@@ -81,8 +82,8 @@ class Generator(BaseGenerator):
             
         elif framework == SupportedFrameworks.TGW:
             old_user_gui: Optional[str] = None
-            if os.path.exists(cls._join_paths(path, cls.__USER_GUI_NAME_TGW)):
-                old_user_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_NAME_TGW))
+            if os.path.exists(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW)):
+                old_user_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW))
             
             read_user_gui: Optional[str] = None
             if old_user_gui != None:
@@ -100,12 +101,12 @@ class Generator(BaseGenerator):
             header_gui_attributes, header_gui_func_declarations = cls.__HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
 
             if old_user_gui is None:
-                user_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/UserGUI.txt"))
+                user_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/UserCPPGUI.txt"))
                 user_gui = user_template.replace("#tag:generated_code#\n", user_gui)
-                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_TGW), user_gui)
+                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW), user_gui)
             else:
                 old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"#pragma region generated code\n\n" + user_gui) # type:ignore
-                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_TGW), old_user_gui)
+                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW), old_user_gui)
             
             if removed_events != "":
                 old_removed_events: str = ""
@@ -118,13 +119,13 @@ class Generator(BaseGenerator):
                 fix_code(all_removed_events)
                 cls.__write_file(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW), all_removed_events)
             
-            system_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemGUI.txt"))
+            system_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemCPPGUI.txt"))
             system_gui: str = system_template.replace("#tag:main_window_params#", system_gui_params).replace("#tag:constructor_definition#", system_gui_constructor).replace("#tag:event_funcs_definition#", system_gui_event_binds)
-            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_NAME_TGW), system_gui)
+            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_CPP_NAME_TGW), system_gui)
 
-            header_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/HeaderGUI.txt"))
+            header_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemHeaderGUI.txt"))
             header_gui: str = header_template.replace("#tag:attributes#", header_gui_attributes).replace("#tag:function_declarations#", header_gui_func_declarations)
-            cls.__write_file(cls._join_paths(path, cls.__HEADER_GUI_NAME_TGW), header_gui)
+            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_HEADER_NAME_TGW), header_gui)
         else:
             raise ValueError(f"Selected framework ({framework.name}) is not supported")
     

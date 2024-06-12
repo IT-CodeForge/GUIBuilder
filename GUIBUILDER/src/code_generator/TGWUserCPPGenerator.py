@@ -8,8 +8,9 @@ from typing import Optional
 """
 this generates the User cpp file, the file where the user of the GUI-Builder can edit the code
 """
+#TODO generate constructor definition
 
-class TGWUserGenerator(BaseTGWGenerator):
+class TGWUserCPPGenerator(BaseTGWGenerator):
     __VALID_FUNC_NAME_CHARACTER: list[str] = [
         "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
         "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
@@ -25,7 +26,7 @@ class TGWUserGenerator(BaseTGWGenerator):
         """
         this returns two strings.
         the first string gets put inside the "generated code" region of the UserGUI (if it exists the existing file else the template by replacing #tag:generated_code#)
-        the second string has the functions that got deleted while generating (events that got removed) !this only detects functions of the GUI class (only functions beginning with GUI::) other functions are not detected
+        the second string has the functions that got deleted while generating (events that got removed) !this only detects functions of the GUI class (only functions beginning with UserGUI::) other functions are not detected
         """
         retval: str = cls.__generate_includes(tgw_objects)
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
@@ -89,7 +90,7 @@ class TGWUserGenerator(BaseTGWGenerator):
         retval: list[tuple[int, str]] = []
         while True:
             try:
-                func_candidate_index: int = file.find("GUI::", temp_index)
+                func_candidate_index: int = file.find("UserGUI::", temp_index)
                 if func_candidate_index == -1:
                     raise ValueError
                 temp_index = func_candidate_index + 5
@@ -110,7 +111,7 @@ class TGWUserGenerator(BaseTGWGenerator):
         generates all the functions the user can manipulate, if it found an old version in the oldfile
         (meaning same id and event type(name doesn't need to match since user can change name)) it copies the contents af the old event
         """
-        retval: str = "void GUI::on_construction()\n{"
+        retval: str = "void UserGUI::on_construction()\n{"
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
             for i, (file_index, name) in enumerate(old_functions):
                 if name == "on_construction":
@@ -124,7 +125,7 @@ class TGWUserGenerator(BaseTGWGenerator):
         retval += "}\n\n\n"
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
-                retval += "void GUI::" + tgw_gen.generate_event_head_own(event_type, user_event)
+                retval += "void UserGUI::" + tgw_gen.generate_event_head_own(event_type, user_event)
                 retval += "\n{"
                 for list_index, (file_index, name) in enumerate(old_functions):
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):

@@ -15,7 +15,7 @@ the SystemGUI generator generates a cpp file which links the default tgw-events 
 and the definition of the Constructor (to generate the GUI-elements)
 """
 
-class TGWSystemGenerator(BaseTGWGenerator):
+class TGWSystemCPPGenerator(BaseTGWGenerator):
     __GENERATOR_TRANS: dict[type, Callable[[Any], str]] = {
         IButton: tgw_gen.button,
         ICanvas: tgw_gen.canvas,
@@ -57,7 +57,7 @@ class TGWSystemGenerator(BaseTGWGenerator):
         generates the function definitions.
         Here they are needed, to connect the the TGW functions with the custom generated ones
         (e.g. we have a button called "btn" with the id 2, and we want a pressed event so this generates:
-        void GUI::eventButton(TGWButton* einButton, int event)
+        void SystemGUI::eventButton(TGWButton* einButton, int event)
         {
           if(einButton == this->e2_btn)
           {
@@ -70,9 +70,9 @@ class TGWSystemGenerator(BaseTGWGenerator):
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         for tgw_event in event_dict.keys():
             if tgw_event != "timer_funcs":
-                retval += "void GUI::" + tgw_gen.generate_event_head_tgw(tgw_event) + "\n"
+                retval += "void SystemGUI::" + tgw_gen.generate_event_head_tgw(tgw_event) + "\n"
             else:
-                retval += "void GUI::eventTimer(int id)\n"
+                retval += "void SystemGUI::eventTimer(int id)\n"
             retval += "{\n"
             for tgw_object, event_type in event_dict.get(tgw_event, []):
                 retval += cls.__generate_event_bind(tgw_object, event_type)

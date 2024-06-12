@@ -61,7 +61,7 @@ class TGWHeaderGenerator(BaseTGWGenerator):
                 retval += cls._INDENT + "void eventTimer(int id);\n"
             for tgw_object, event_type in event_dict.get(tgw_event, []):
                 if type(tgw_object) == ITimer:
-                    retval += cls._INDENT + "void " + tgw_gen.get_event_func_own_name(event_type, tgw_object) + "();\n"
+                    retval += cls._INDENT + "virtual void " + tgw_gen.get_event_func_own_name(event_type, tgw_object) + "() = 0;\n"
                     continue
-                retval += cls._INDENT + "void " + tgw_gen.generate_event_head_own(event_type, tgw_object) + ";\n"
+                retval += cls._INDENT + "virtual void " + tgw_gen.generate_event_head_own(event_type, tgw_object) + " = 0;\n"
         return retval
