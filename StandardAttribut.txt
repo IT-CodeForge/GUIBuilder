@@ -5,7 +5,7 @@ type: IWindow:
 	size (list[int, int], std: [500, 500])
 	title_color (list[int, int, int], std: [0, 0, 0], N/A in TGWindowLib)
 	background_color (list[int, int, int], std: [170, 170, 170], N/A in TGWindowLib)
-	event_create (bool, std: False)
+	event_create (bool, std: True)
 	event_destroy (bool, std: False)
 	event_paint (bool, std: False, N/A in ETK)
 	event_resize (bool, std: False, N/A in ETK)
