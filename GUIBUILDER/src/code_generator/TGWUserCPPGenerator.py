@@ -84,7 +84,7 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
     @classmethod
     def __find_functions(cls, file: str)-> tuple[tuple[int, str], ...]:
         """
-        finds the functions in the oldfile that was provided and returns a tuplpe, which contains the name af tthe function and the index in the oldfile
+        finds the functions in the oldfile that was provided and returns a tuplpe, which contains the name af the function and the index in the oldfile
         """
         temp_index: int = 0
         retval: list[tuple[int, str]] = []
@@ -111,10 +111,10 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
         generates all the functions the user can manipulate, if it found an old version in the oldfile
         (meaning same id and event type(name doesn't need to match since user can change name)) it copies the contents af the old event
         """
-        retval: str = "void UserGUI::on_construction()\n{"
+        retval: str = "void UserGUI::UserGUI() : SystemGUI()\n{" #TODO include the constructor parameters
         if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
             for i, (file_index, name) in enumerate(old_functions):
-                if name == "on_construction":
+                if name == "UserGUI":
                     func_definition_start: int = old_file.find("{", file_index) + 1
                     func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
                     retval += old_file[func_definition_start:func_definition_end]
