@@ -3,7 +3,7 @@ from intermediary_neu.objects.IBaseObject import IBaseObject
 from intermediary_neu.objects.ICanvas import ICanvas
 from intermediary_neu.objects.IWindow import IWindow
 from . import TGWCodeGenerator as tgw_gen
-from ..generator import ParsingError
+from ..ErrorMSGS import ParsingError
 from typing import Optional
 
 class ReturnTypeError(ParsingError):

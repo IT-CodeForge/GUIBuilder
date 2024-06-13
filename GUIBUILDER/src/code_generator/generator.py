@@ -10,16 +10,7 @@ from .TGW_generators.TGWSystemCPPGenerator import TGWSystemCPPGenerator
 from .TGW_generators.TGWUserHeaderGenerator import TGWUserHeaderGenerator
 from .TGW_generators.TGWUserCPPGenerator import TGWUserCPPGenerator
 from autopep8 import fix_code # type:ignore
-
-class UserError(Exception):
-    def __init__(self, err_dt: str, err_en: str) -> None:
-        self.err_dt = err_dt
-        self.err_en = err_en
-        super().__init__(self.err_en)
-
-class ParsingError(UserError):
-    def __init__(self, err_dt: str, err_en: str) -> None:
-        super().__init__(err_dt, err_en)
+from ErrorMSGS import ParsingError
 
 class RegionMarkerIncompleteError(ParsingError):
     def __init__(self) -> None:
