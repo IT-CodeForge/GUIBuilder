@@ -9,7 +9,7 @@ from . import TGWCodeGenerator as tgw_gen
 this generates the header file
 """
 
-class TGWHeaderGenerator(BaseTGWGenerator):
+class TGWSystemHeaderGenerator(BaseTGWGenerator):
     def __init__(self) -> None:
         super().__init__()
     
@@ -52,7 +52,7 @@ class TGWHeaderGenerator(BaseTGWGenerator):
         and the functions the get called by the system GUI to make the more user friendly
         (which means to get the "pressed" event from a certain button, you dont need to check the ID given by the tgw event function but instead get a different function for every button)
         """
-        retval: str = cls._INDENT + "void on_construction();\n"
+        retval: str = ""
         event_dict: dict[str, list[tuple[IBaseObject, str]]] = cls._generate_event_dict(tgw_objects)
         for tgw_event in event_dict.keys():
             if tgw_event != "timer_funcs":

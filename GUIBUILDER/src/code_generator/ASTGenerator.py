@@ -40,7 +40,7 @@ def generate_event_definition(obj: IBaseObject, intermediary_event_type: str) ->
         params += ", params: tuple[ETKBaseObject, ETKEvents, Any]"
     return parse(f"def {__event_func_name(obj, intermediary_event_type)}({params}):\n   pass").body[0]
 
-generate_gui_init:Callable[[IWindow], stmt] = lambda window: parse(f"super().__init__(size={__arr_to_vec(window.size)}, caption='{window.title}', background_color={__col_arr_to_col(window.background_color)})\nself._on_init()").body[0]
+generate_gui_init:Callable[[IWindow], stmt] = lambda window: parse(f"super().__init__(size={__arr_to_vec(window.size)}, caption='{window.title}', background_color={__col_arr_to_col(window.background_color)})").body[0]
 
 
 def generate_event_bind(obj: IBaseObject, etk_event_type: str, intermediary_event_type: str) -> stmt:

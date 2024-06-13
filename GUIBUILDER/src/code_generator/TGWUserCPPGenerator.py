@@ -111,18 +111,7 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
         generates all the functions the user can manipulate, if it found an old version in the oldfile
         (meaning same id and event type(name doesn't need to match since user can change name)) it copies the contents af the old event
         """
-        retval: str = "void UserGUI::UserGUI() : SystemGUI()\n{" #TODO include the constructor parameters
-        if "on_construction" in [oldfunc[1] for oldfunc in old_functions]:
-            for i, (file_index, name) in enumerate(old_functions):
-                if name == "UserGUI":
-                    func_definition_start: int = old_file.find("{", file_index) + 1
-                    func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
-                    retval += old_file[func_definition_start:func_definition_end]
-                    old_functions.pop(i)
-                    break
-        else:
-            retval += "\n"
-        retval += "}\n\n\n"
+        retval: str = ""
         for tgw_event in event_dict.keys():
             for user_event, event_type in event_dict.get(tgw_event, []):
                 retval += "void UserGUI::" + tgw_gen.generate_event_head_own(event_type, user_event)

@@ -14,22 +14,6 @@ class ETKUserGUIGenerator(BaseETKGenerator):
         template = parse(cls._read_file(cls._join_relative_path("./templates/ETKgenerator/UserGUI.txt")))
 
         ast_old_file: Optional[Module] = None
-        if old_file != None:
-            ast_old_file = parse(old_file)
-            for ast_object  in ast_old_file.body:
-                if not (type(ast_object) == ClassDef and ast_object.name == "UserGUI"):
-                    continue
-                for class_object in ast_object.body:
-                    if not (type(class_object) == FunctionDef and class_object.name == "_on_init"):
-                        continue
-                    for ast_object2 in template.body:
-                        if type(ast_object2) == ClassDef:
-                            ast_object2.body[0].body = class_object.body # type:ignore
-                            break
-                    else:
-                        raise ValueError("Somebody deleted the UserGui class")
-                    break
-                break
         
         my_event_list: list[tuple[IBaseObject, Optional[str],
                                   str]] = cls._generate_event_list(etk_objects)
@@ -40,7 +24,7 @@ class ETKUserGUIGenerator(BaseETKGenerator):
 
         for ast_object in template.body:
             if type(ast_object) == ClassDef and ast_object.name == "UserGUI":
-                ast_object.body += my_event_funcs
+                ast_object.body = my_event_funcs
                 break
         else:
             raise ValueError("Somebody deleted the UserGui class")
@@ -59,8 +43,6 @@ class ETKUserGUIGenerator(BaseETKGenerator):
             if type(ast_object) == ClassDef and ast_object.name == "UserGUI":
                 for class_object in ast_object.body:
                     if type(class_object) == FunctionDef:
-                        if class_object.name == "_on_init":
-                            continue
                         if len(class_object.body) == 0:
                             continue
                         if len(class_object.body) == 1 and type(class_object.body[0]) == Pass:
@@ -72,7 +54,7 @@ class ETKUserGUIGenerator(BaseETKGenerator):
     
     @staticmethod
     def __removed_events_dict_to_ast(removed_events: dict[str, list[stmt]], ast_old_file: Optional[Module]) -> Module:
-        retval: Module = Module()
+        retval: Module = Module([], [])
         retval.body = []
         if ast_old_file is None:
             return retval

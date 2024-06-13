@@ -47,7 +47,6 @@ class TGWSystemCPPGenerator(BaseTGWGenerator):
             constructor_definition += cls._INDENT + cls.__GENERATOR_TRANS.get(type(tgw_object), lambda obj : "")(tgw_object) + ";\n" #the "lmabda obj : """ is necessery since strict typeng gets upset because it doesn't know that the tgw-objects can only be of the types that are specified in the dict hence it says None types are not callable
             if type(tgw_object) == ICanvas:
                 constructor_definition += cls._INDENT + tgw_gen.get_object_name(tgw_object) + " = " + tgw_gen.get_object_name(tgw_object) + "_bitmap->canvas;\n"
-        constructor_definition += cls._INDENT + "on_construction();\n" #adds the call of the "on_construction" function, which gives the user "access" to the constructor by activating it once everything neccessary for the GUI to work has been done
         event_funcs: str = cls.__generate_event_funcs_definition(tgw_objects)
         return gui_params, constructor_definition, event_funcs
     

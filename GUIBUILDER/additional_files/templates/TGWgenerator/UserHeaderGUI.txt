@@ -1,0 +1,12 @@
+#ifndef _UserGUI_h_
+#define _UserGUI_h_
+#include "SystemGUI.h"
+
+class UserGUI : public SystemGUI
+{
+private:
+#tag:function_declarations#
+
+public:
+  UserGUI();
+}
