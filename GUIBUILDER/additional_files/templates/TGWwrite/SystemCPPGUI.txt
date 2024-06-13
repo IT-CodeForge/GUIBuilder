@@ -4,7 +4,6 @@
 
 SystemGUI::SystemGUI():TGWMainWindow(#tag:main_window_params#)
 {
-#tag:constructor_definition#
-}
+#tag:constructor_definition#}
 
 #tag:event_funcs_definition#

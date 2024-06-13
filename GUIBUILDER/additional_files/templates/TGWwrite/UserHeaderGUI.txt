@@ -7,6 +7,6 @@
 
 #pragma endregion
 
-# NICHT VERÄNDER!:
+// NICHT VERÄNDERN!:
 };
 #endif

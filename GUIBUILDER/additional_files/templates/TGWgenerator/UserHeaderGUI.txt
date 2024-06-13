@@ -6,7 +6,3 @@ class UserGUI : public SystemGUI
 {
 private:
 #tag:function_declarations#
-
-public:
-  UserGUI();
-}
