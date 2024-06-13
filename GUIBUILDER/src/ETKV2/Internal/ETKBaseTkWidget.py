@@ -33,7 +33,7 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
         if self._outline_color == value:
             return
         self._outline_color = value
-        self._scheduler.schedule_action(self._update_outline_color)
+        self._main.scheduler.schedule_action(self._update_outline_color)
 
     @property
     def outline_thickness(self) -> int:
@@ -44,7 +44,7 @@ class ETKBaseTkWidget(ETKBaseTkObject, ETKBaseWidget):
         if self._outline_thickness == value:
             return
         self._outline_thickness = value
-        self._scheduler.schedule_action(self._update_outline_thickness)
+        self._main.scheduler.schedule_action(self._update_outline_thickness)
 
     # endregion
     # region Methods

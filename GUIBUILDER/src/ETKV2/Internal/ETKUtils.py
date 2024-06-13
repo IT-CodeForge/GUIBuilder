@@ -1,7 +1,13 @@
+from __future__ import annotations
 import sys
+from tkinter import Event, Tk
 import traceback
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional
 
+from ..Vector2d import Vector2d
+
+if TYPE_CHECKING:
+    from .ETKEventData import ETKEventData
 
 def gen_col_from_int(col: Optional[int]) -> str:
     if col is None:
@@ -11,17 +17,18 @@ def gen_col_from_int(col: Optional[int]) -> str:
         hold_str = "0"*(6-len(hold_str)) + hold_str
     return "#" + hold_str
 
-def exec_event_callback(callback_function: Callable[..., Any], event_data: tuple[Any, ...]) -> None:
+
+def exec_event_callback(callback_function: Callable[[], Any] | Callable[[ETKEventData], Any], event_data: ETKEventData) -> None:
     err_1 = ""
     try:
-        callback_function(event_data)
+        callback_function(event_data)  # type:ignore
         return
     except TypeError as ex:
         err_1 = traceback.format_exc()
         if str(ex).find("positional argument") == -1:
             raise ex
     try:
-        callback_function()
+        callback_function()  # type:ignore
     except TypeError as ex:
         if str(ex).find("positional argument") == -1:
             raise ex
@@ -31,3 +38,11 @@ def exec_event_callback(callback_function: Callable[..., Any], event_data: tuple
         print(traceback.format_exc(), file=sys.stderr)
         raise TypeError(
             f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
+
+
+def get_rel_event_pos(event: Event) -> Vector2d:  # type:ignore
+    return Vector2d(event.x, event.y)
+
+
+def get_abs_event_pos(event: Event, root_tk: Tk) -> Vector2d:  # type:ignore
+    return Vector2d(event.x_root, event.y_root) - Vector2d(root_tk.winfo_rootx(), root_tk.winfo_rooty())

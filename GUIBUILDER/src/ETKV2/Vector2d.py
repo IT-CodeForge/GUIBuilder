@@ -129,35 +129,35 @@ class Vector2d:
             return self.__get_lenght() == other
         elif type(other) == Vector2d:
             return self.x == other.x and self.y == other.y
-        raise ValueError("incompatible compare types")
+        return False
 
     def __lt__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() < other
         elif type(other) == Vector2d:
             return self.x < other.x and self.y < other.y
-        raise ValueError("incompatible compare types")
+        return False
 
     def __le__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() <= other
         elif type(other) == Vector2d:
             return self.x <= other.x and self.y <= other.y
-        raise ValueError("incompatible compare types")
+        return False
 
     def __gt__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() > other
         elif type(other) == Vector2d:
             return self.x > other.x and self.y > other.y
-        raise ValueError("incompatible compare types")
+        return False
 
     def __ge__(self, other: int | float | Vector2d) -> bool:
         if type(other) == float or type(other) == int:
             return self.__get_lenght() >= other
         elif type(other) == Vector2d:
             return self.x >= other.x and self.y >= other.y
-        raise ValueError("incompatible compare types")
+        return False
 
     def __setitem__(self, address: int, other: float) -> None:
         if address not in [0, 1]:
@@ -177,6 +177,9 @@ class Vector2d:
 
     def __str__(self) -> str:
         return f"<{self.x}, {self.y}>"
+    
+    def __repr__(self) -> str:
+        return f"Vector2d<self: {object.__repr__(self)}; x: {self.x}, y: {self.y}>"
 
     def __get_lenght(self) -> float:
         return math.sqrt(self.x**2 + self.y**2)

@@ -20,6 +20,6 @@ class ETKBaseWidgetDisableable(ETKBaseWidget):
         if self._enabled == value:
             return
         self._enabled = value
-        self._scheduler.schedule_action(self._update_enabled)
+        self._main.scheduler.schedule_action(self._update_enabled)
 
     # endregion

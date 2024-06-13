@@ -1,15 +1,16 @@
 from __future__ import annotations
 from abc import abstractmethod
 
-from ETKV2.Internal.ETKUtils import exec_event_callback
+from .ETKUtils import exec_event_callback
 
 from .SubclassableEnum import SubclassableEnum
-from typing import TYPE_CHECKING, Any, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable
 
 from ..Vector2d import Vector2d
 
 if TYPE_CHECKING:
     from ..ETKMainWindow import ETKMain
+    from .ETKEventData import ETKEventData
 
 
 class ETKEvents(SubclassableEnum):
@@ -27,8 +28,8 @@ class ETKBaseObject:
         self._size: Vector2d = Vector2d() if size != Vector2d() else Vector2d(1)
         self.__background_color: int = 0 if background_color != 0 else 1
         self.__visibility: bool = not visibility
-        self._scheduler = main.scheduler
-        self._event_lib: dict[ETKEvents, list[Callable[..., Any]]] = {e: [] for e in ETKEvents}
+        self._main = main
+        self._event_lib: dict[ETKEvents, list[Callable[[], Any] | Callable[[ETKEventData], Any]]] = {e: [] for e in ETKEvents}
 
         self.background_color = background_color
         self.pos = pos
@@ -46,7 +47,7 @@ class ETKBaseObject:
         if self._pos == value:
             return
         self._pos = value
-        self._scheduler.schedule_action(self._update_pos)
+        self._main.scheduler.schedule_action(self._update_pos)
 
 
     @property
@@ -63,7 +64,7 @@ class ETKBaseObject:
         if self._size == value:
             return
         self._size = value
-        self._scheduler.schedule_action(self._update_size)
+        self._main.scheduler.schedule_action(self._update_size)
 
     @property
     def visibility(self) -> bool:
@@ -74,7 +75,7 @@ class ETKBaseObject:
         if self.__visibility == value:
             return
         self.__visibility = value
-        self._scheduler.schedule_action(self._update_visibility)
+        self._main.scheduler.schedule_action(self._update_visibility)
 
     @property
     def abs_visibility(self) -> bool:
@@ -90,7 +91,7 @@ class ETKBaseObject:
         if self.__background_color == value:
             return
         self.__background_color = value
-        self._scheduler.schedule_action(self._update_background_color)
+        self._main.scheduler.schedule_action(self._update_background_color)
 
     @property
     def events(self) -> dict[ETKEvents, list[Callable[..., Any]]]:
@@ -118,20 +119,18 @@ class ETKBaseObject:
 
     # region Eventhandling Methods
 
-    def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
+    def add_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[ETKEventData], None]) -> None:
         self._event_lib[event_type].append(eventhandler)
 
-    def remove_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[tuple[ETKBaseObject, ETKEvents, Any]], None]) -> None:
+    def remove_event(self, event_type: ETKEvents, eventhandler: Callable[[], None] | Callable[[ETKEventData], None]) -> None:
         self._event_lib[event_type].remove(eventhandler)
 
-    def _handle_event(self, event: ETKEvents, event_data: Optional[list[Any]] = None, ignore_scheduler: bool = False) -> None:
-        if event_data is None:
-            event_data = []
-        for c in self._event_lib[event]:
+    def _handle_event(self, event_data: ETKEventData, ignore_scheduler: bool = False) -> None:
+        for c in self._event_lib[event_data.event]:
             if ignore_scheduler:
-                exec_event_callback(c, (self, event, *event_data))
+                exec_event_callback(c, event_data)
                 continue
-            self._scheduler.schedule_event(c, (self, event, *event_data))
+            self._main.scheduler.schedule_event(c, event_data)
 
     # endregion
     # endregion

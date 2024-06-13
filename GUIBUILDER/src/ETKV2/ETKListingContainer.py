@@ -93,7 +93,7 @@ class ETKListingContainer(ETKBaseContainer):
             pos[non_listing_dir_index] = non_listing_dir_pos
             self._element_rel_pos[e] = pos
             e._pos = pos
-            self._scheduler.schedule_action(e._update_pos)
+            self._main.scheduler.schedule_action(e._update_pos)
             listing_dir_pos += e.size[listing_dir_index] + self.__offset
 
     def __calculate_pos_part(self, index: int, size_part: float, padding_part: tuple[float, float]) -> float:
@@ -146,8 +146,8 @@ class ETKListingContainer(ETKBaseContainer):
         element_list.insert(index, (element, Vector2d()))
         self._element_rel_pos = dict(element_list)
 
-        self._scheduler.schedule_action(self._update_all_element_pos)
-        self._scheduler.schedule_action(element._update_visibility)
+        self._main.scheduler.schedule_action(self._update_all_element_pos)
+        self._main.scheduler.schedule_action(element._update_visibility)
 
     # region child validation methods
 

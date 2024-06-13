@@ -5,7 +5,9 @@ import time
 from tkinter import Tk
 from typing import Any, Callable
 
-from ETKV2.Internal.ETKBaseTkObject import ETKBaseTkObject
+from .ETKEventData import ETKEventData
+
+from .ETKBaseTkObject import ETKBaseTkObject
 
 from .ETKUtils import exec_event_callback
 
@@ -16,7 +18,7 @@ class ETKScheduler:
         self.__disabled = disabled
         self._blocked = False
         self.__tk = tk
-        self.__scheduled_events: list[tuple[Callable[..., Any], tuple[Any, ...]]] = [
+        self.__scheduled_events: list[tuple[Callable[..., Any], ETKEventData]] = [
         ]
         self.__scheduled_gui_actions: dict[Callable[..., Any],
                                            tuple[tuple[Any, ...], dict[str, Any]]] = {}
@@ -42,7 +44,7 @@ class ETKScheduler:
         self.__schedule_action(
             self.__scheduled_gui_actions, callback, *args, **kwargs)
 
-    def schedule_event(self, ev_callback: Callable[..., Any], event_data: tuple[Any, ...]):
+    def schedule_event(self, ev_callback: Callable[..., Any], event_data: ETKEventData):
         if self.__disabled:
             exec_event_callback(ev_callback, event_data)
             return

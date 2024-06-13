@@ -1,6 +1,8 @@
 from __future__ import annotations
 from typing import Any
 
+from .Internal.ETKEventData import ETKEventData
+
 from .ETKMainWindow import ETKMain
 
 from .Vector2d import Vector2d
@@ -48,10 +50,10 @@ class ETKCheckbox(ETKBaseTkWidgetButton):
         if self.__ignore_next_change_event:
             self.__ignore_next_change_event = False
             return
-        self._handle_event(ETKCheckboxEvents.TOGGLED)
+        self._handle_event(ETKEventData(self, ETKCheckboxEvents.TOGGLED))
         if self.state:
-            self._handle_event(ETKCheckboxEvents.CHECKED)
+            self._handle_event(ETKEventData(self, ETKCheckboxEvents.CHECKED))
         else:
-            self._handle_event(ETKCheckboxEvents.UNCHECKED)
+            self._handle_event(ETKEventData(self, ETKCheckboxEvents.UNCHECKED))
 
     # endregion

@@ -1,6 +1,7 @@
 """Diese Datei hat alle vom Endnutzer benötigten Module von ETK importiert. Der Endnutzer kann diese von dieser Datei einzeln oder mit * alle existierenden importieren."""
 
 
+from ETKV2.Internal.ETKEventData import ETKEventData
 from ETKV2.Internal.ETKBaseObject import ETKBaseObject, ETKEvents
 from ETKV2.Internal.ETKBaseWidget import ETKBaseWidget
 from ETKV2.Internal.ETKBaseTkObject import ETKBaseTkObject
@@ -70,3 +71,4 @@ if __name__ == "__main__":
     ETKCanvasEvents.ENTER
     ETKLabelEvents.ENTER
     ETKEvents.ENTER
+    ETKEventData.__annotations__

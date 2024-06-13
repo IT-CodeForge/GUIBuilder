@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from ETKV2.ETKMainWindow import ETKMain
+from ETKV2.Internal.ETKEventData import ETKEventData
+
+from .ETKMainWindow import ETKMain
 from .Vector2d import Vector2d
 from .Internal.ETKBaseTkWidgetDisableable import ETKBaseTkWidgetDisableable
 from .Internal.ETKBaseObject import ETKEvents
@@ -59,7 +61,7 @@ class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
 
     def __clicked_changed(self, *args: str) -> None:
         if not self.__ignore_next_change_event:
-            self._handle_event(ETKDropdownMenuEvents.CHANGED)
+            self._handle_event(ETKEventData(self, ETKDropdownMenuEvents.CHANGED))
         else:
             self.__ignore_next_change_event = False
 

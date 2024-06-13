@@ -1,5 +1,5 @@
 from sys import executable
-from typing import Any, Final, Optional, Type
+from typing import Final, Optional, Type
 from ETK import *
 from steuerung import Steuerung
 from main import version
@@ -453,12 +453,14 @@ class GUI(ETKMainWindow):
             self.__steuerung.update_element_pos_event(self.__moving_element)
             self.__moving_element = None
 
-    def __mouse_moved_event_handler(self, event: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
-        self.__mouse_pos = Vector2d(event[2].x_root, event[2].y_root)
+    def __mouse_moved_event_handler(self, event: ETKEventData) -> None:
+        if event.abs_pos == None:
+            raise ValueError
+        self.__mouse_pos = event.abs_pos
         self.__update_element_pos()
 
     def __update_element_pos(self) -> None:
-        mouse_pos = self.__mouse_pos - self.abs_pos
+        mouse_pos = self.__mouse_pos
         if self.__moving_element != None:
             element_pos = mouse_pos - self.__moving_element_rel_click_pos
             rel_mouse_pos = element_pos - self.element_area.abs_pos
@@ -473,21 +475,23 @@ class GUI(ETKMainWindow):
                 rel_mouse_pos.y = self.element_area.size.y - self.__moving_element.size.y
             self.__moving_element.pos = rel_mouse_pos
 
-    def __element_mouse_down_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
+    def __element_mouse_down_handler(self, event_data: ETKEventData) -> None:
+        if event_data.abs_pos == None:
+            raise ValueError
         self.__start_moving_element(
-            event_data[0], Vector2d(event_data[2].x, event_data[2].y))
-        self.__steuerung.update_element_attributes_gui(event_data[0])
+            event_data.sender, event_data.abs_pos - event_data.sender.abs_pos)
+        self.__steuerung.update_element_attributes_gui(event_data.sender)
 
-    def __element_attribut_changed_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
-        if type(event_data[0]) == ETKCheckbox or type(event_data[0]) == ETKEdit:
-            self.__steuerung.set_element_attribute_event(event_data[0])
+    def __element_attribut_changed_handler(self, event_data: ETKEventData) -> None:
+        if type(event_data.sender) == ETKCheckbox or type(event_data.sender) == ETKEdit:
+            self.__steuerung.set_element_attribute_event(event_data.sender)
 
-    def __window_attribut_changed_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
-        if type(event_data[0]) == ETKCheckbox or type(event_data[0]) == ETKEdit:
-            self.__steuerung.set_window_attribute_event(event_data[0])
+    def __window_attribut_changed_handler(self, event_data: ETKEventData) -> None:
+        if type(event_data.sender) == ETKCheckbox or type(event_data.sender) == ETKEdit:
+            self.__steuerung.set_window_attribute_event(event_data.sender)
 
-    def __menubar_left_handler(self, event_data: tuple[ETKBaseObject, ETKEvents, Any]) -> None:
-        new_element = self.__steuerung.create_new_element_event(event_data[0])
+    def __menubar_left_handler(self, event_data: ETKEventData) -> None:
+        new_element = self.__steuerung.create_new_element_event(event_data.sender)
         self.__start_moving_element(new_element)
         self.__steuerung.update_element_attributes_gui(new_element)
 
@@ -496,8 +500,8 @@ class GUI(ETKMainWindow):
             raise RuntimeError
         self.__steuerung.delete_element(self.active_attributes_element)
 
-    def __element_area_mousedown_handler(self, ev_data: Any) -> None:
-        if ev_data[3] == self.element_area and self.attributes_element_inner.visibility:
+    def __element_area_mousedown_handler(self, ev_data: ETKEventData) -> None:
+        if ev_data.child_sender == None and self.attributes_element_inner.visibility:
             self.attributes_element_inner.visibility = False
             self.active_attributes_element = None
 

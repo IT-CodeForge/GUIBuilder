@@ -30,7 +30,7 @@ class ETKBaseTkWidgetText(ETKBaseTkWidget):
         if not self.multiline:
             value = value.replace("\n", "").replace("\r", "")
         self._text = value
-        self._scheduler.schedule_action(self._update_text)
+        self._main.scheduler.schedule_action(self._update_text)
 
     @property
     def text_color(self) -> int:
