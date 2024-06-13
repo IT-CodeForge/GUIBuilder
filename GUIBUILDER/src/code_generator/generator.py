@@ -102,7 +102,7 @@ class Generator(BaseGenerator):
                 user_header_gui = user_template.replace("#tag:generated_code#\n", user_header_gui)
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW), user_header_gui)
             else:
-                old_user_header_gui = old_user_header_gui.replace(old_user_header_gui[user_header_gui_region_start:user_header_gui_region_end],"#pragma region generated code\n\n" + user_cpp_gui) # type:ignore
+                old_user_header_gui = old_user_header_gui.replace(old_user_header_gui[user_header_gui_region_start:user_header_gui_region_end],"#pragma region generated code\n\n" + user_header_gui) # type:ignore
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW), old_user_header_gui)
 # endregion
 # region user cpp
