@@ -1,17 +1,17 @@
-#ifndef _GUI_h_
-#define _GUI_h_
+#ifndef _SystemGUI_h_
+#define _SystemGUI_h_
 #include "TGWMainWindow.h"
 #include "TGW_AllClassDeclarations.h"
 
-class GUI : public TGWMainWindow
+class SystemGUI : public TGWMainWindow
 {
 #tag:attributes#
 
-private:
+protected:
 #tag:function_declarations#
 
 public:
-  GUI();
+  SystemGUI();
 };
 
 #endif

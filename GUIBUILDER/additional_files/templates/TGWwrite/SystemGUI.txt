@@ -1,8 +1,8 @@
-#include "GUI.h"
+#include "SystemGUI.h"
 #include "TGW_AllClassDefinitions.h"
 #include "TGWTimer.h"
 
-GUI::GUI():TGWMainWindow(#tag:main_window_params#)
+SystemGUI::SystemGUI():TGWMainWindow(#tag:main_window_params#)
 {
 #tag:constructor_definition#
 }
