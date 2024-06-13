@@ -47,19 +47,19 @@ class ETKBaseTkObject(ETKBaseObject):
         match event.type:
             case EventType.ButtonPress:
                 event_type = ETKEvents.MOUSE_DOWN
-                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object))
+                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor))
             case EventType.ButtonRelease:
                 event_type = ETKEvents.MOUSE_UP
-                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object))
+                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor))
             case EventType.Enter:
                 event_type = ETKEvents.ENTER
-                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.focus, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object))
+                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.focus, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor))
             case EventType.Leave:
                 event_type = ETKEvents.LEAVE
-                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.focus, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object))
+                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.focus, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor))
             case EventType.Motion:
                 event_type = ETKEvents.MOUSE_MOVED
-                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.state, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object))
+                ev_data = ETKEventData(self, event_type, tk_event=event, state=event.state, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor))
             case _:
                 raise ValueError(f"invalid event {event}")
 

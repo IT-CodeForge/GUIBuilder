@@ -1,9 +1,9 @@
 from __future__ import annotations
 from abc import abstractmethod
-from tkinter import Event, Tk, EventType
+from tkinter import Event, Tk, EventType, font
 from typing import Any, Callable, Optional
 
-from .Internal.ETKUtils import get_abs_event_pos, get_rel_event_pos #type:ignore
+from .Internal.ETKUtils import get_abs_event_pos, get_rel_event_pos  # type:ignore
 
 from .Internal.ETKScheduler import ETKScheduler
 
@@ -11,6 +11,7 @@ from .Vector2d import Vector2d
 from .Internal.ETKBaseTkObject import ETKBaseTkObject
 from .Internal.ETKBaseObject import ETKEvents
 from .Internal.ETKEventData import ETKEventData
+
 
 class ETKWindowEvents(ETKEvents):
     KEY_PRESSED: ETKWindowEvents
@@ -25,9 +26,10 @@ class ETKWindowEvents(ETKEvents):
 
 class ETKMainWindow(ETKBaseTkObject):
     class ETKMain:
-        def __init__(self, root_tk_object: Tk, scheduler: ETKScheduler) -> None:
+        def __init__(self, root_tk_object: Tk, scheduler: ETKScheduler, scale_factor: float) -> None:
             self.__root_tk_object: Tk = root_tk_object
             self.__scheduler: ETKScheduler = scheduler
+            self.__scale_factor: float = scale_factor
 
         @property
         def root_tk_object(self) -> Tk:
@@ -39,10 +41,15 @@ class ETKMainWindow(ETKBaseTkObject):
             """READ-ONLY"""
             return self.__scheduler
 
-    def __init__(self, pos: Vector2d = Vector2d(0, 0), size: Optional[Vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, scheduler_disabled: bool = False, **kwargs: Any) -> None:
+        @property
+        def scale_factor(self) -> float:
+            """READ-ONLY"""
+            return self.__scale_factor
+
+    def __init__(self, pos: Vector2d = Vector2d(0, 0), size: Optional[Vector2d] = None, caption: str = "Window-Title", fullscreen: bool = True, *, visibility: bool = True, background_color: int = 0xAAAAAA, scheduler_disabled: bool = False, scale_factor: float = 1, **kwargs: Any) -> None:
         from .ETKCanvas import ETKCanvas
         self._tk_object: Tk = Tk()
-        self._main = ETKMain(self._tk_object, ETKScheduler(self._tk_object, scheduler_disabled))
+        self._main = ETKMain(self._tk_object, ETKScheduler(self._tk_object, scheduler_disabled), scale_factor)
         self.__topmost = False
         self.exit_locked = False
         self.exit_ignore_next = False
@@ -59,13 +66,17 @@ class ETKMainWindow(ETKBaseTkObject):
         self._tk_object.protocol("WM_DELETE_WINDOW", self.exit)
         self._event_lib.update({e: [] for e in ETKWindowEvents if e not in self._event_lib.keys()})
         self._tk_object.bind(
-            "<Configure>", self.__resize_event_handler)  # type:ignore
+            "<Configure>", self.__configure_event_handler)  # type:ignore
+
+        default_font = font.nametofont("TkFixedFont")
+        default_font.configure(size=int(10 * self._main.scale_factor))
+        self._tk_object.option_add("*Font", default_font)  # type:ignore
 
         class InternalEvents(ETKEvents):
             INTERNAL_EVENT: ETKEvents
             _values = {"INTERNAL_EVENT": "<Custom>"}
 
-        self._main.scheduler.schedule_event(self._add_elements, ETKEventData(self, InternalEvents.INTERNAL_EVENT))
+        self._main.scheduler.schedule_event(lambda: self._add_elements(), ETKEventData(self, InternalEvents.INTERNAL_EVENT))
         self._main.scheduler.schedule_event(lambda: self._handle_event(ETKEventData(self, ETKWindowEvents.START)), ETKEventData(self, InternalEvents.INTERNAL_EVENT))
 
     # region Properties
@@ -149,7 +160,7 @@ class ETKMainWindow(ETKBaseTkObject):
             self._main.scheduler.exit()
         if self.exit_ignore_next:
             self.exit_ignore_next = False
-    
+
     def update_gui(self) -> None:
         self._main.scheduler.handle_actions()
 
@@ -165,7 +176,7 @@ class ETKMainWindow(ETKBaseTkObject):
         super()._update_background_color()
         self.canvas.background_color = self.background_color
 
-    def __resize_event_handler(self, event: Event):  # type:ignore
+    def __configure_event_handler(self, event: Any = None):  # type:ignore
         if self.fullscreen:
             self.fullscreen = True
 
@@ -176,10 +187,10 @@ class ETKMainWindow(ETKBaseTkObject):
     def _handle_tk_event(self, event: Event) -> None:  # type:ignore
         match event.type:
             case EventType.KeyPress:
-                self._handle_event(ETKEventData(self, ETKWindowEvents.KEY_PRESSED, tk_event=event, state=event.state, keysym=event.keysym, keycode=event.keycode, keychar=event.char, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object)))
+                self._handle_event(ETKEventData(self, ETKWindowEvents.KEY_PRESSED, tk_event=event, state=event.state, keysym=event.keysym, keycode=event.keycode, keychar=event.char, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor)))
                 return
             case EventType.KeyRelease:
-                self._handle_event(ETKEventData(self, ETKWindowEvents.KEY_RELEASED, tk_event=event, state=event.state, keysym=event.keysym, keycode=event.keycode, keychar=event.char, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object)))
+                self._handle_event(ETKEventData(self, ETKWindowEvents.KEY_RELEASED, tk_event=event, state=event.state, keysym=event.keysym, keycode=event.keycode, keychar=event.char, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor)))
                 return
             case EventType.FocusIn:
                 self._handle_event(ETKEventData(self, ETKWindowEvents.FOCUS_IN, tk_event=event))
@@ -192,5 +203,6 @@ class ETKMainWindow(ETKBaseTkObject):
         super()._handle_tk_event(event)  # type:ignore
 
     # endregion
+
 
 ETKMain = ETKMainWindow.ETKMain

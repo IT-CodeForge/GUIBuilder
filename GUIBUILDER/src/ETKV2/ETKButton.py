@@ -32,10 +32,10 @@ class ETKButton(ETKBaseTkWidgetButton):
         match event.type:
             case EventType.ButtonPress:
                 if self.abs_enabled:
-                    self._handle_event(ETKEventData(self, ETKButtonEvents.PRESSED, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object)))
+                    self._handle_event(ETKEventData(self, ETKButtonEvents.PRESSED, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor)))
             case EventType.ButtonRelease:
                 if self.abs_enabled:
-                    self._handle_event(ETKEventData(self, ETKButtonEvents.RELEASED, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event), abs_pos=get_abs_event_pos(event, self._main.root_tk_object)))
+                    self._handle_event(ETKEventData(self, ETKButtonEvents.RELEASED, tk_event=event, state=event.state, btn_num=event.num, rel_pos=get_rel_event_pos(event, self._main.scale_factor), abs_pos=get_abs_event_pos(event, self._main.root_tk_object, self._main.scale_factor)))
             case _:
                 pass
         return super()._handle_tk_event(event)  # type:ignore

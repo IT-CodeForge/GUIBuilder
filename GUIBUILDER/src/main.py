@@ -29,7 +29,7 @@ class MSGBoxStream():
             self.t = Thread(target=self.__send)
             self.t.start()
             import ctypes
-            ctypes.windll.shcore.SetProcessDpiAwareness(0)  # NOTE
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)
         return len(text)
 
     def flush(self) -> None:
@@ -39,6 +39,8 @@ class MSGBoxStream():
 if __name__ == "__main__":
     import main
     freeze_support()  # must be called to ensure that multiprocessing works correctly if packaged to exe (ignored when run as script)
+    import ctypes
+    ctypes.windll.shcore.SetProcessDpiAwareness(2)
 
     # fixes problem when application is ran without console (because then sys.stdout and sys.stderr are nonexisting and any print() etc. raises an Error)
     if sys.stdout is None:  # type:ignore

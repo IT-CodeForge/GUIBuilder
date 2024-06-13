@@ -40,8 +40,9 @@ class ETKBaseTkWidgetButton(ETKBaseTkWidgetDisableable, ETKBaseTkWidgetText):
         self._paint_object()
 
     def _place_object(self) -> None:
-        pos = self.abs_pos
-        self._tk_object.place(x=0, y=0, width=self.size.x-2*self.outline_thickness, height=self.size.y-2*self.outline_thickness)
-        self._outline.place(x=pos.x, y=pos.y, width=self.size.x, height=self.size.y)
+        pos = self.abs_pos * self._main.scale_factor
+        size = self.size * self._main.scale_factor
+        self._tk_object.place(x=0, y=0, width=size.x-2*self.outline_thickness, height=size.y-2*self.outline_thickness)
+        self._outline.place(x=pos.x, y=pos.y, width=size.x, height=size.y)
 
     # endregion

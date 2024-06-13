@@ -40,9 +40,9 @@ def exec_event_callback(callback_function: Callable[[], Any] | Callable[[ETKEven
             f"invalid parametercount for event function ({name}) (can only be 0, 1 (self, cls, etc not included)), parameter: {ret_val}")
 
 
-def get_rel_event_pos(event: Event) -> Vector2d:  # type:ignore
-    return Vector2d(event.x, event.y)
+def get_rel_event_pos(event: Event, scale_factor: float) -> Vector2d:  # type:ignore
+    return Vector2d(event.x, event.y) / scale_factor
 
 
-def get_abs_event_pos(event: Event, root_tk: Tk) -> Vector2d:  # type:ignore
-    return Vector2d(event.x_root, event.y_root) - Vector2d(root_tk.winfo_rootx(), root_tk.winfo_rooty())
+def get_abs_event_pos(event: Event, root_tk: Tk, scale_factor: float) -> Vector2d:  # type:ignore
+    return (Vector2d(event.x_root, event.y_root) - Vector2d(root_tk.winfo_rootx(), root_tk.winfo_rooty())) / scale_factor

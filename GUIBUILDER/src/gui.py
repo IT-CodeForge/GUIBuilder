@@ -9,7 +9,14 @@ class GUI(ETKMainWindow):
     def __init__(self, steuerung: Steuerung) -> None:
         self.__steuerung = steuerung
         self.__mouse_pos = Vector2d()
-        super().__init__(caption=f"GUI-Builder V{version}")
+
+        import ctypes
+        user32 = ctypes.windll.user32
+        screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+        width = screensize[0]
+        scale_factor = width / 1920
+
+        super().__init__(caption=f"GUI-Builder V{version}", scale_factor=scale_factor)
 
     LANGUAGES: Final = ["C++ (TGW)", "Python (ETK)"]
     MENUBAR_PADDING: Final = 10
