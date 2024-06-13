@@ -5,10 +5,10 @@ from enum import Enum, auto
 from typing import Optional
 from .ETK_generators.ETKSystemGUIGenerator import ETKSystemGUIGenerator
 from .ETK_generators.ETKUserGUIGenerator import ETKUserGUIGenerator
-from .TGWSystemHeaderGenerator import TGWSystemHeaderGenerator
-from .TGWSystemCPPGenerator import TGWSystemCPPGenerator
-from .TGWUserHeaderGenerator import TGWUserHeaderGenerator
-from .TGWUserCPPGenerator import TGWUserCPPGenerator
+from .TGW_generators.TGWSystemHeaderGenerator import TGWSystemHeaderGenerator
+from .TGW_generators.TGWSystemCPPGenerator import TGWSystemCPPGenerator
+from .TGW_generators.TGWUserHeaderGenerator import TGWUserHeaderGenerator
+from .TGW_generators.TGWUserCPPGenerator import TGWUserCPPGenerator
 from autopep8 import fix_code # type:ignore
 
 class UserError(Exception):
