@@ -26,7 +26,7 @@ class ETKUserGUIGenerator(BaseETKGenerator):
 
         for ast_object in template.body:
             if type(ast_object) == ClassDef and ast_object.name == "UserGUI":
-                ast_object.body += my_event_funcs
+                ast_object.body = my_event_funcs
                 break
         else:
             raise ValueError("Somebody deleted the UserGui class")

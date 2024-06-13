@@ -40,7 +40,6 @@ class Generator(BaseGenerator):
             old_user_gui: Optional[str] = None
             if os.path.exists(cls._join_paths(path, cls.__USER_GUI_NAME_ETK)):
                 old_user_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK))
-            print(old_user_gui)
             
             read_user_gui: Optional[str] = None
             if old_user_gui != None:
@@ -62,7 +61,6 @@ class Generator(BaseGenerator):
                 user_gui = user_template.replace("#tag:generated_code#", user_gui)
                 fix_code(user_gui)
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK), user_gui)
-                print("bitte nicht")
             else:
                 old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"# region generated code\n\n" + user_gui + "\n") # type:ignore
                 fix_code(old_user_gui)

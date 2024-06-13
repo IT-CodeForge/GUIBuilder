@@ -1,10 +1,6 @@
 class SystemGUI(ETKMainWindow):
     def __init__(self) -> None:
         pass
-    
-    @abstractmethod
-    def _on_init(self) -> None:
-        pass
 
     def _add_elements(self) -> None:
         pass
