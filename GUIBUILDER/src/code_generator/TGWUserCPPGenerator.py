@@ -117,7 +117,6 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
                 retval += "void UserGUI::" + tgw_gen.generate_event_head_own(event_type, user_event)
                 retval += "\n{"
                 for list_index, (file_index, name) in enumerate(old_functions):
-                    print(name)
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
                         func_definition_start: int = old_file.find("{", file_index) + 1
                         func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
