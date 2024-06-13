@@ -37,34 +37,36 @@ class Generator(BaseGenerator):
     @classmethod
     def write_files(cls, path: str, intermediary_objects:tuple[IBaseObject, ...], framework: SupportedFrameworks):
         if framework == SupportedFrameworks.ETK:
-            old_user_cpp_gui: Optional[str] = None
+            old_user_gui: Optional[str] = None
             if os.path.exists(cls._join_paths(path, cls.__USER_GUI_NAME_ETK)):
-                old_user_cpp_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK))
+                old_user_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK))
+            print(old_user_gui)
             
-            read_user_cpp_gui: Optional[str] = None
-            if old_user_cpp_gui != None:
-                user_cpp_gui_region_start: int = old_user_cpp_gui.find("# region generated code")
-                if user_cpp_gui_region_start == -1:
-                    user_cpp_gui_region_start: int = old_user_cpp_gui.find("#region generated code")
-                if user_cpp_gui_region_start == -1:
+            read_user_gui: Optional[str] = None
+            if old_user_gui != None:
+                user_gui_region_start: int = old_user_gui.find("# region generated code")
+                if user_gui_region_start == -1:
+                    user_gui_region_start: int = old_user_gui.find("#region generated code")
+                if user_gui_region_start == -1:
                     raise ValueError("Region for generated Code is not defined")            
-                user_cpp_gui_region_end = cls.__find_region_end_python(old_user_cpp_gui, user_cpp_gui_region_start)
+                user_gui_region_end = cls.__find_region_end_python(old_user_gui, user_gui_region_start)
 
-                read_user_cpp_gui = old_user_cpp_gui[user_cpp_gui_region_start:user_cpp_gui_region_end]
+                read_user_gui = old_user_gui[user_gui_region_start:user_gui_region_end]
             
-            system_cpp_gui: str = cls.__SYSTEM_GUI_GEN_ETK.generate_file(intermediary_objects)
+            system_gui: str = cls.__SYSTEM_GUI_GEN_ETK.generate_file(intermediary_objects)
 
-            user_cpp_gui, removed_events = cls.__USER_GUI_GEN_ETK.generate_file(intermediary_objects, read_user_cpp_gui)
+            user_gui, removed_events = cls.__USER_GUI_GEN_ETK.generate_file(intermediary_objects, read_user_gui)
 
-            if old_user_cpp_gui is None:
+            if old_user_gui is None:
                 user_template: str = cls._read_file(cls._join_relative_path("./templates/ETKwrite/UserGUI.txt"))
-                user_cpp_gui = user_template.replace("#tag:generated_code#", user_cpp_gui)
-                fix_code(user_cpp_gui)
-                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK), user_cpp_gui)
+                user_gui = user_template.replace("#tag:generated_code#", user_gui)
+                fix_code(user_gui)
+                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK), user_gui)
+                print("bitte nicht")
             else:
-                old_user_cpp_gui = old_user_cpp_gui.replace(old_user_cpp_gui[user_cpp_gui_region_start:user_cpp_gui_region_end],"# region generated code\n\n" + user_cpp_gui + "\n") # type:ignore
-                fix_code(old_user_cpp_gui)
-                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK), old_user_cpp_gui)
+                old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"# region generated code\n\n" + user_gui + "\n") # type:ignore
+                fix_code(old_user_gui)
+                cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK), old_user_gui)
 
             if removed_events != "":
                 old_removed_events: str = ""
@@ -77,10 +79,10 @@ class Generator(BaseGenerator):
                 fix_code(all_removed_events)
                 cls.__write_file(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK), all_removed_events)
             
-            system_cpp_template: str = cls._read_file(cls._join_relative_path("./templates/ETKwrite/SystemGUI.txt"))
-            system_cpp_gui = system_cpp_template.replace("#tag:generated_code#", system_cpp_gui)
-            fix_code(system_cpp_gui)
-            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_NAME_ETK), system_cpp_gui)
+            system_template: str = cls._read_file(cls._join_relative_path("./templates/ETKwrite/SystemGUI.txt"))
+            system_gui = system_template.replace("#tag:generated_code#", system_gui)
+            fix_code(system_gui)
+            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_NAME_ETK), system_gui)
             
         elif framework == SupportedFrameworks.TGW:
 # region TGW

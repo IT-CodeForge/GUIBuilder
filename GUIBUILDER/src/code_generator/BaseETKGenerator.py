@@ -68,6 +68,7 @@ class BaseETKGenerator(BaseGenerator):
                 etk_object, intermediary_event_type)
             for previous_event in previous_events.keys():
                 if cls.__compare_event_funcs(my_function.name, intermediary_event_type, previous_event):
+                    print(previous_events.pop(previous_event, [Pass()]))
                     my_function.body = previous_events.pop(previous_event, [Pass()])
                     break
             retval.append(my_function)
