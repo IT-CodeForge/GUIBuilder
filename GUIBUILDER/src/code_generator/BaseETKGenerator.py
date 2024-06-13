@@ -6,7 +6,7 @@ from intermediary_neu.objects.ITimer import ITimer
 from intermediary_neu.objects.IWindow import IWindow
 #ILabe and ICanvas not needed, since they don't have events
 from typing import Optional
-from .BaseGenerator import BaseGenerator
+from ..BaseGenerator import BaseGenerator
 from ast import stmt, Pass, FunctionDef
 from . import ASTGenerator as ast_gen
 

@@ -3,8 +3,8 @@ from .BaseGenerator import BaseGenerator
 import os
 from enum import Enum, auto
 from typing import Optional
-from .ETKSystemGUIGenerator import ETKSystemGUIGenerator
-from .ETKUserGUIGenerator import ETKUserGUIGenerator
+from .ETK_generators.ETKSystemGUIGenerator import ETKSystemGUIGenerator
+from .ETK_generators.ETKUserGUIGenerator import ETKUserGUIGenerator
 from .TGWSystemHeaderGenerator import TGWSystemHeaderGenerator
 from .TGWSystemCPPGenerator import TGWSystemCPPGenerator
 from .TGWUserHeaderGenerator import TGWUserHeaderGenerator

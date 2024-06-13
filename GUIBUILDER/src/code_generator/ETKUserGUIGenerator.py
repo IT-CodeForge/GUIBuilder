@@ -3,7 +3,7 @@ from ast import Module, stmt, FunctionDef, ClassDef, Pass, parse
 from astor import to_source  # type:ignore
 from typing import Optional
 from .BaseETKGenerator import BaseETKGenerator
-from .generator import ParsingError
+from ..generator import ParsingError
 
 class PythonSyntaxError(ParsingError):
     def __init__(self) -> None:
