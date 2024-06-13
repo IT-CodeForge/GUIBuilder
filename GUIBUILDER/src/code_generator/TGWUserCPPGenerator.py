@@ -3,12 +3,24 @@ from intermediary_neu.objects.IBaseObject import IBaseObject
 from intermediary_neu.objects.ICanvas import ICanvas
 from intermediary_neu.objects.IWindow import IWindow
 from . import TGWCodeGenerator as tgw_gen
+from .generator import ParsingError
 from typing import Optional
+
+class ReturnTypeError(ParsingError):
+    def __init__(self, func_name: str) -> None:
+        err_en: str = f"Could not parse the method \"{func_name}\" of the file \"UserGUI.cpp\" (could not find the returntype of the method)"
+        err_dt: str = f"Konnte die Methode \"{func_name}\" der Datei \"UserGUI.cpp\" nicht parsen (Der rückgabetyp dieser Methode, konnte nicht gefunden werden)"
+        super().__init__(err_dt, err_en)
+
+class FunctionEndNotFound(ParsingError):
+    def __init__(self, func_name: str) -> None:
+        err_en: str = "Could not parse the method \"" + func_name + "\" of the file \"UserGUI.cpp\" (could not interpret the placement of curly-brackets (\"{\", \"}\") corectly)"
+        err_dt: str = f"Konnte die Methode \"" + func_name + "\" der Datei \"UserGUI.cpp\" nicht parsen (konnte die platzierung der geschweiften Klammern (\"{\", \"}\") nicht richtig interpretieren)"
+        super().__init__(err_dt, err_en)
 
 """
 this generates the User cpp file, the file where the user of the GUI-Builder can edit the code
 """
-#TODO generate constructor definition
 
 class TGWUserCPPGenerator(BaseTGWGenerator):
     __VALID_FUNC_NAME_CHARACTER: list[str] = [
@@ -47,7 +59,7 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
         extracts the functions which weren't regenerated (i.e. removed) and adds the to a string
         """
         retval: str = ""
-        for index, _ in remaining_funcs:
+        for index, name in remaining_funcs:
             start_of_function: int = index - 6
             status = "NotFound"
             while True:
@@ -57,9 +69,12 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
                 if status == "Found" and character not in cls.__VALID_FUNC_NAME_CHARACTER:
                     break
                 if start_of_function < 0:
-                    raise ValueError("Unable to find return type of function")
+                    raise ReturnTypeError(name)
                 start_of_function -= 1
-            end_of_function: int = cls.__find_func_end(cls.__find_next(old_file, tuple("{"), index)[1], old_file)
+            try:
+                end_of_function: int = cls.__find_func_end(cls.__find_next(old_file, tuple("{"), index)[1], old_file)
+            except:
+                raise FunctionEndNotFound(name)
             retval += old_file[start_of_function + 1:end_of_function + 1] + "\n\n"
         return retval
     
@@ -119,7 +134,10 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
                 for list_index, (file_index, name) in enumerate(old_functions):
                     if name.startswith(f"e{user_event.id}_") and name.endswith(f"_{event_type}"):
                         func_definition_start: int = old_file.find("{", file_index) + 1
-                        func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
+                        try:
+                            func_definition_end: int = cls.__find_func_end(func_definition_start - 1, old_file)
+                        except:
+                            raise FunctionEndNotFound(name)
                         retval += old_file[func_definition_start:func_definition_end]
                         old_functions.pop(list_index)
                         break
@@ -137,7 +155,7 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
         end_index = start_index
         counter = 1
         if file[start_index] != "{":
-            raise ValueError("wrong index was supplied")
+            raise ValueError
         while counter != 0:
             next_key, new_index = cls.__find_next(file, ("{", "}", "\"", "//", "/*"), end_index + 1)
             end_index = new_index
@@ -147,12 +165,18 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
                 counter -= 1
             elif next_key == "\"":
                 end_of_cpp_str: int = file.find("\"", end_index + 1)
+                if end_of_cpp_str == -1:
+                    raise ValueError
                 end_index = end_of_cpp_str
             elif next_key == "//":
                 end_of_cpp_comment: int = file.find("\n", end_index + 1)
+                if end_of_cpp_comment == -1:
+                    raise ValueError
                 end_index = end_of_cpp_comment
             elif next_key == "/*":
                 end_of_cpp_comment: int = file.find("*/", end_index + 1)
+                if end_of_cpp_comment == -1:
+                    raise ValueError
                 end_index = end_of_cpp_comment
         return end_index
     

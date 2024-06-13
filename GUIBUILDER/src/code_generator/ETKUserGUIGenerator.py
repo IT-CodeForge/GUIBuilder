@@ -3,6 +3,19 @@ from ast import Module, stmt, FunctionDef, ClassDef, Pass, parse
 from astor import to_source  # type:ignore
 from typing import Optional
 from .BaseETKGenerator import BaseETKGenerator
+from .generator import ParsingError
+
+class PythonSyntaxError(ParsingError):
+    def __init__(self) -> None:
+        err_en: str = "The python code inside of the old \"UserGUI.py\" file, had a Syntax Error and could not be parsed (fix all Errors, to be able to export again)"
+        err_dt: str = "Der Pythoncode aus der alten \"UserGUI.py\" Datei, hat Syntaxfehler und konnte aus diesem Grund nicht geparsed werden (behebe alle Fehler damit du wieder Exportieren kannst)"
+        super().__init__(err_dt, err_en)
+
+class UserGUINotFoundError(ParsingError):
+    def __init__(self) -> None:
+        err_en: str = "The UserGUI class was not found in the old \"UserGUI.py\" file"
+        err_dt: str = "Die UserGUI Klasse wurde nicht in der alten \"UserGUI.py\" Datei gefunden"
+        super().__init__(err_dt, err_en)
 
 class ETKUserGUIGenerator(BaseETKGenerator):
     def __init__(self) -> None:
@@ -15,7 +28,10 @@ class ETKUserGUIGenerator(BaseETKGenerator):
 
         ast_old_file: Optional[Module] = None
         if old_file != None:
-            ast_old_file = parse(old_file)
+            try:
+                ast_old_file = parse(old_file)
+            except:
+                raise PythonSyntaxError
         
         my_event_list: list[tuple[IBaseObject, Optional[str],
                                   str]] = cls._generate_event_list(etk_objects)
@@ -29,7 +45,7 @@ class ETKUserGUIGenerator(BaseETKGenerator):
                 ast_object.body = my_event_funcs
                 break
         else:
-            raise ValueError("Somebody deleted the UserGui class")
+            raise UserGUINotFoundError
 
         ast_removed_events = cls.__removed_events_dict_to_ast(removed_events, ast_old_file)
 
@@ -54,7 +70,7 @@ class ETKUserGUIGenerator(BaseETKGenerator):
                         retval[class_object.name] = class_object.body
                 return retval
         else:
-            raise ValueError("Somebody deleted the UserGui class")
+            raise UserGUINotFoundError
     
     @staticmethod
     def __removed_events_dict_to_ast(removed_events: dict[str, list[stmt]], ast_old_file: Optional[Module]) -> Module:
@@ -69,4 +85,4 @@ class ETKUserGUIGenerator(BaseETKGenerator):
                         retval.body.append(class_object)
                 return retval
         else:
-            raise ValueError("Somebody deleted the UserGui class")
+            raise UserGUINotFoundError

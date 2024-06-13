@@ -11,6 +11,22 @@ from .TGWUserHeaderGenerator import TGWUserHeaderGenerator
 from .TGWUserCPPGenerator import TGWUserCPPGenerator
 from autopep8 import fix_code # type:ignore
 
+class UserError(Exception):
+    def __init__(self, err_dt: str, err_en: str) -> None:
+        self.err_dt = err_dt
+        self.err_en = err_en
+        super().__init__(self.err_en)
+
+class ParsingError(UserError):
+    def __init__(self, err_dt: str, err_en: str) -> None:
+        super().__init__(err_dt, err_en)
+
+class RegionMarkerIncompleteError(ParsingError):
+    def __init__(self) -> None:
+        err_en: str = "The \"generated code\" region was incomplete, this means, that either the head marker \"# region generated code\" was manipulated, or not enough \"# regionend\" markers were found"
+        err_dt: str = "Die \"generated code\" Region ist unvollständig, dass bedeutet, dass entweder der Kopf-Marker \"# region generated code\" manipuliert wurde, oder es nicht genügend \"# regionend\" Marker gibt"
+        super().__init__(err_dt, err_en)
+
 class SupportedFrameworks(Enum):
     ETK = auto()
     TGW = auto()
@@ -47,7 +63,7 @@ class Generator(BaseGenerator):
                 if user_gui_region_start == -1:
                     user_gui_region_start: int = old_user_gui.find("#region generated code")
                 if user_gui_region_start == -1:
-                    raise ValueError("Region for generated Code is not defined")            
+                    raise RegionMarkerIncompleteError           
                 user_gui_region_end = cls.__find_region_end_python(old_user_gui, user_gui_region_start)
 
                 read_user_gui = old_user_gui[user_gui_region_start:user_gui_region_end]
@@ -92,7 +108,7 @@ class Generator(BaseGenerator):
             if old_user_header_gui != None:
                 user_header_gui_region_start: int = old_user_header_gui.find("#pragma region generated code")
                 if user_header_gui_region_start == -1:
-                    raise ValueError("Region for generated Code is not defined")            
+                    raise RegionMarkerIncompleteError           
                 user_header_gui_region_end = cls.__find_region_end_cpp(old_user_header_gui, user_header_gui_region_start)
             
             user_header_gui: str = cls.__USER_HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
@@ -114,7 +130,7 @@ class Generator(BaseGenerator):
             if old_user_cpp_gui != None:
                 user_cpp_gui_region_start: int = old_user_cpp_gui.find("#pragma region generated code")
                 if user_cpp_gui_region_start == -1:
-                    raise ValueError("Region for generated Code is not defined")            
+                    raise RegionMarkerIncompleteError           
                 user_cpp_gui_region_end = cls.__find_region_end_cpp(old_user_cpp_gui, user_cpp_gui_region_start)
 
                 read_user_cpp_gui = old_user_cpp_gui[user_cpp_gui_region_start:user_cpp_gui_region_end]
@@ -180,7 +196,7 @@ class Generator(BaseGenerator):
             try:
                 v, i = cls.__find_next(st, ("# region", "#region", "# endregion", "#endregion"), index)
             except ValueError:
-                raise ValueError("regionend not found")
+                raise RegionMarkerIncompleteError
             if v in ["# region", "#region"]:
                 indent += 1
             elif v in ["# endregion", "#endregion"]:
@@ -197,7 +213,7 @@ class Generator(BaseGenerator):
             try:
                 v, i = cls.__find_next(st, ("#pragma region", "#pragma endregion"), index)
             except ValueError:
-                raise ValueError("regionend not found")
+                raise RegionMarkerIncompleteError
             if v == "#pragma region":
                 indent += 1
             elif v == "#pragma endregion":
