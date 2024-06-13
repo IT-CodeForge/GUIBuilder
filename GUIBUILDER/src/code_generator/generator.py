@@ -10,7 +10,7 @@ from .TGW_generators.TGWSystemCPPGenerator import TGWSystemCPPGenerator
 from .TGW_generators.TGWUserHeaderGenerator import TGWUserHeaderGenerator
 from .TGW_generators.TGWUserCPPGenerator import TGWUserCPPGenerator
 from autopep8 import fix_code # type:ignore
-from ErrorMSGS import ParsingError
+from .ErrorMSGS import ParsingError
 
 class RegionMarkerIncompleteError(ParsingError):
     def __init__(self) -> None:
