@@ -55,6 +55,7 @@ class ETKMainWindow(ETKBaseTkObject):
         self.exit_ignore_next = False
         self.__fullscreen = False
         self.canvas = ETKCanvas(self._main, Vector2d(), Vector2d())
+        self.__caption = ""
 
         super().__init__(main=self._main, pos=pos, size=Vector2d(1920, 1080), background_color=background_color, visibility=visibility, **kwargs)
 
@@ -84,7 +85,8 @@ class ETKMainWindow(ETKBaseTkObject):
     @ETKBaseTkObject.pos.setter
     def pos(self, value: Vector2d) -> None:
         ETKBaseTkObject.pos.fset(self, value)  # type:ignore
-        self.__place_object()
+        self.fullscreen = False
+        self._main.scheduler.schedule_action(self.__place_object)
 
     @property
     def abs_pos(self) -> Vector2d:
@@ -104,7 +106,8 @@ class ETKMainWindow(ETKBaseTkObject):
             t_value = value
         ETKBaseTkObject.size.fset(self, t_value)  # type:ignore
         self.canvas.size = t_value
-        self.__place_object()
+        self.fullscreen = False
+        self._main.scheduler.schedule_action(self.__place_object)
 
     @property
     def fullscreen(self) -> bool:
@@ -113,27 +116,21 @@ class ETKMainWindow(ETKBaseTkObject):
     @fullscreen.setter
     def fullscreen(self, value: bool) -> None:
         self.__fullscreen = value
-        if value:
-            self._tk_object.state("zoomed")
-        else:
-            self._tk_object.state("normal")
+        self._main.scheduler.schedule_action(self.__update_window_state)
 
     @property
     def caption(self) -> str:
-        return self._tk_object.title()
+        return self.__caption
+
+    @caption.setter
+    def caption(self, value: str) -> None:
+        self.__caption = value
+        self._main.scheduler.schedule_action(self.__update_caption)
 
     @ETKBaseTkObject.visibility.setter
     def visibility(self, value: bool) -> None:
         ETKBaseTkObject.visibility.fset(self, value)  # type: ignore
-        if not value:
-            self._tk_object.withdraw()
-        else:
-            self._tk_object.deiconify()
-            self.force_focus()
-
-    @caption.setter
-    def caption(self, value: str) -> None:
-        self._tk_object.title(value)
+        self._main.scheduler.schedule_action(self.__update_visibility)
 
     @property
     def topmost(self) -> bool:
@@ -142,10 +139,34 @@ class ETKMainWindow(ETKBaseTkObject):
     @topmost.setter
     def topmost(self, value: bool) -> None:
         self.__topmost = value
-        self._tk_object.attributes('-topmost', self.__topmost)  # type:ignore
+        self._main.scheduler.schedule_action(self.__update_topmost)
 
     # endregion
     # region Methods
+        
+    def __update_window_state(self):
+        if self.__fullscreen:
+            self._tk_object.state("zoomed")
+        else:
+            self._tk_object.state("normal")
+    
+    def __update_caption(self):
+        self._tk_object.title(self.__caption)
+    
+    def __update_visibility(self):
+        if not self.visibility:
+            self._tk_object.withdraw()
+        else:
+            self._tk_object.deiconify()
+            self.force_focus()
+    
+    def __update_topmost(self):
+        self._tk_object.attributes('-topmost', self.__topmost)  # type:ignore
+    
+    def __update_focus(self):
+        self._tk_object.attributes('-topmost', 1)  # type:ignore
+        self._tk_object.focus_force()
+        self._tk_object.attributes('-topmost', self.__topmost)  # type:ignore
 
     @abstractmethod
     def _add_elements(self) -> None:
@@ -165,9 +186,7 @@ class ETKMainWindow(ETKBaseTkObject):
         self._main.scheduler.handle_actions()
 
     def force_focus(self) -> None:
-        self._tk_object.attributes('-topmost', 1)  # type:ignore
-        self._tk_object.focus_force()
-        self._tk_object.attributes('-topmost', self.__topmost)  # type:ignore
+        self._main.scheduler.schedule_action(self.__update_focus)
 
     def exec_gui_function(self, function: Callable[..., Any], *args: Any, **kwargs: Any) -> None:
         self._tk_object.after(0, lambda: function(*args, **kwargs))

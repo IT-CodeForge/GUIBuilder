@@ -19,16 +19,17 @@ class ETKDropdownMenuEvents(ETKEvents):
 
 class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
     def __init__(self, main: ETKMain, pos: Vector2d = Vector2d(0, 0), size: Vector2d = Vector2d(70, 18), options: list[str] = [], start_value: str = "", *, visibility: bool = True, enabled: bool = True, background_color: int = 0xEEEEEE, outline_color: int = 0x0, outline_thickness: int = 0, **kwargs: Any) -> None:
-        self.__selected = StringVar(value=start_value)
+        self.__selected_var = StringVar(value=start_value)
+        self.__selected = start_value
         if len(options) == 0:
             options = [""]
         self.__options = options
-        self._tk_object = OptionMenu(main.root_tk_object, self.__selected, *options)
+        self._tk_object = OptionMenu(main.root_tk_object, self.__selected_var, *options)
         self.__ignore_next_change_event = False
 
         super().__init__(main=main, pos=pos, size=size, visibility=visibility, enabled=enabled, background_color=background_color, outline_color=outline_color, outline_thickness=outline_thickness, **kwargs)
 
-        self.__selected.trace("w", self.__clicked_changed)  # type:ignore
+        self.__selected_var.trace("w", self.__clicked_changed)  # type:ignore
         self._event_lib.update({e: [] for e in ETKDropdownMenuEvents if e not in self._event_lib.keys()})
 
     @property
@@ -41,23 +42,30 @@ class ETKDropdownMenu(ETKBaseTkWidgetDisableable):
             return
         if len(value) == 0:
             value = [""]
-        self._tk_object['menu'].delete(0, 'end')
-        for st in value:
-            self._tk_object['menu'].add_command(label=st, command=_setit(self.__selected, st))
-        if self.selected not in value:
-            self.selected = value[0]
         self.__options = value
+        self._main.scheduler.schedule_action(self.__update_options)
 
     @property
     def selected(self) -> str:
-        return self.__selected.get()
+        return self.__selected
     
     @selected.setter
     def selected(self, value: str) -> None:
         if self.selected == value:
             return
+        self.__selected = value
+        self._main.scheduler.schedule_action(self.__update_selected)
+    
+    def __update_selected(self):
         self.__ignore_next_change_event = True
-        self.__selected.set(value)
+        self.__selected_var.set(self.__selected)
+
+    def __update_options(self):
+        self._tk_object['menu'].delete(0, 'end')
+        for st in self.__options:
+            self._tk_object['menu'].add_command(label=st, command=_setit(self.__selected_var, st))
+        if self.selected not in self.__options:
+            self.selected = self.__options[0]
 
     def __clicked_changed(self, *args: str) -> None:
         if not self.__ignore_next_change_event:
