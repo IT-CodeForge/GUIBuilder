@@ -63,7 +63,6 @@ class ETKMainWindow(ETKBaseTkObject):
         self.canvas.outline_thickness = 2
         self.caption = caption
         self.fullscreen = fullscreen
-        self.size = size
         self._tk_object.protocol("WM_DELETE_WINDOW", self.exit)
         self._event_lib.update({e: [] for e in ETKWindowEvents if e not in self._event_lib.keys()})
         self._tk_object.bind(
