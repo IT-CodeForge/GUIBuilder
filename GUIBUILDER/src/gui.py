@@ -3,7 +3,6 @@ from typing import Final, Optional, Type
 from ETK import *
 from steuerung import Steuerung
 from main import version
-# TODO: fix licence box height
 
 
 class GUI(ETKMainWindow):
@@ -24,7 +23,7 @@ class GUI(ETKMainWindow):
     MENUBAR_ELEMENT_HEIGHT: Final = 20
     ATTRIBUTES_WIDTH: Final = 360
     ATTRIBUTES_ELEMENT_HEIGHT: Final = 20
-    CC_NOTICE_HEIGHT: Final = 35
+    CC_NOTICE_HEIGHT: Final = 45
 
     def _add_elements(self):
         self._tk_object.iconbitmap(executable)  # type:ignore
