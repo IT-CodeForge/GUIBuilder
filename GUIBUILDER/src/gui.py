@@ -10,10 +10,11 @@ class GUI(ETKMainWindow):
         self.__steuerung = steuerung
         self.__mouse_pos = Vector2d()
 
+        # calculates scale_factor so that the application always fits on the screen (app is built with 1920x1080 resolution and the scaler scales it if the screen is bigger or smaller).
         import ctypes
         user32 = ctypes.windll.user32
         screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-        scale_factor = min((screensize[0] / 1920, screensize[1] / 1017))
+        scale_factor = min((screensize[0] / 1920, screensize[1] / 1080))
 
         super().__init__(caption=f"GUI-Builder V{version}", size=Vector2d(1920, 1017), scale_factor=scale_factor)
 
