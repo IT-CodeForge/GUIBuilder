@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from ETKV2.Internal.ETKEventData import ETKEventData
+from .Internal.ETKEventData import ETKEventData
 
 from .ETKMainWindow import ETKMain
 from .Vector2d import Vector2d

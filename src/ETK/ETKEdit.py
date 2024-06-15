@@ -2,7 +2,7 @@ from __future__ import annotations
 from tkinter import Event, EventType
 from typing import Any
 
-from ETKV2.Internal.ETKEventData import ETKEventData
+from .Internal.ETKEventData import ETKEventData
 
 from .ETKMainWindow import ETKMain
 
