@@ -1,6 +1,5 @@
 ToDo:
 
-#type:ignore in UserGUI.py
 unimplemented features in GUI-Frameworks
 handle exceptions: py_gen: syntaxerror, when elements gets deleted, json loading, etc.
 main.py aufräumen
