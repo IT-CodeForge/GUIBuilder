@@ -62,6 +62,7 @@ class Generator(BaseGenerator):
             system_gui: str = cls.__SYSTEM_GUI_GEN_ETK.generate_file(intermediary_objects)
 
             user_gui, removed_events = cls.__USER_GUI_GEN_ETK.generate_file(intermediary_objects, read_user_gui)
+            user_gui = user_gui.replace("from typing import Any", "from typing import Any  # type:ignore")
 
             if old_user_gui is None:
                 user_template: str = cls._read_file(cls._join_relative_path("./templates/ETKwrite/UserGUI.txt"))
