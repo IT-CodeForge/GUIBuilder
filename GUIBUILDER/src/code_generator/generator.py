@@ -59,10 +59,13 @@ class Generator(BaseGenerator):
 
                 read_user_gui = old_user_gui[user_gui_region_start:user_gui_region_end]
             
-            system_gui: str = cls.__SYSTEM_GUI_GEN_ETK.generate_file(intermediary_objects)
+            system_gui, attributes = cls.__SYSTEM_GUI_GEN_ETK.generate_file(intermediary_objects)
+            attribute_lines = attributes.splitlines()
+            attributes_region = "# region attributes\n" + "\n".join(["#" + line for line in attribute_lines if line != ""]) +  "# endregion\n\n"
 
             user_gui, removed_events = cls.__USER_GUI_GEN_ETK.generate_file(intermediary_objects, read_user_gui)
             user_gui = user_gui.replace("from typing import Any", "from typing import Any  # type:ignore")
+            user_gui = attributes_region + user_gui
 
             if old_user_gui is None:
                 user_template: str = cls._read_file(cls._join_relative_path("./templates/ETKwrite/UserGUI.txt"))
@@ -92,6 +95,25 @@ class Generator(BaseGenerator):
             
         elif framework == SupportedFrameworks.TGW:
 # region TGW
+# region system cpp
+            system_cpp_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemCPPGUI.txt"))
+
+            system_cpp_gui_params, system_cpp_gui_constructor, system_cpp_gui_event_binds = cls.__SYSTEM_CPP_GUI_GEN_TGW.generate_file(intermediary_objects)
+
+            system_cpp_gui: str = system_cpp_template.replace("#tag:main_window_params#", system_cpp_gui_params).replace("#tag:constructor_definition#", system_cpp_gui_constructor).replace("#tag:event_funcs_definition#", system_cpp_gui_event_binds)
+            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_CPP_NAME_TGW), system_cpp_gui)
+# endregion
+# region system header
+            system_header_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemHeaderGUI.txt"))
+
+            system_header_gui_attributes, system_header_gui_func_declarations = cls.__SYSTEM_HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
+
+            system_header_gui: str = system_header_template.replace("#tag:attributes#", system_header_gui_attributes).replace("#tag:function_declarations#", system_header_gui_func_declarations)
+            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_HEADER_NAME_TGW), system_header_gui)
+# endregion
+            attribute_lines: list[str] = system_header_gui_attributes.removeprefix("  ").splitlines()
+            attribute_lines = ["//" + line for line in attribute_lines if line != ""]
+            attributes_region: str = "#pragma region attributes\n" + "\n".join(attribute_lines) + "#pragma endregion\n\n"
 # region user header
             old_user_header_gui: Optional[str] = None
             if os.path.exists(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW)):
@@ -103,7 +125,7 @@ class Generator(BaseGenerator):
                     raise RegionMarkerIncompleteError           
                 user_header_gui_region_end = cls.__find_region_end_cpp(old_user_header_gui, user_header_gui_region_start)
             
-            user_header_gui: str = cls.__USER_HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
+            user_header_gui: str = attributes_region + cls.__USER_HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
             
             if old_user_header_gui is None:
                 user_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/UserHeaderGUI.txt"))
@@ -128,6 +150,7 @@ class Generator(BaseGenerator):
                 read_user_cpp_gui = old_user_cpp_gui[user_cpp_gui_region_start:user_cpp_gui_region_end]
             
             user_cpp_gui, removed_events = cls.__USER_CPP_GUI_GEN_TGW.generate_file(intermediary_objects, read_user_cpp_gui)
+            user_cpp_gui = attributes_region + user_cpp_gui
 
             if old_user_cpp_gui is None:
                 user_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/UserCPPGUI.txt"))
@@ -149,22 +172,6 @@ class Generator(BaseGenerator):
                 cls.__write_file(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW), all_removed_events)
 # endregion
 # endregion            
-# region system cpp
-            system_cpp_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemCPPGUI.txt"))
-
-            system_cpp_gui_params, system_cpp_gui_constructor, system_cpp_gui_event_binds = cls.__SYSTEM_CPP_GUI_GEN_TGW.generate_file(intermediary_objects)
-
-            system_cpp_gui: str = system_cpp_template.replace("#tag:main_window_params#", system_cpp_gui_params).replace("#tag:constructor_definition#", system_cpp_gui_constructor).replace("#tag:event_funcs_definition#", system_cpp_gui_event_binds)
-            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_CPP_NAME_TGW), system_cpp_gui)
-# endregion
-# region system header
-            system_header_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemHeaderGUI.txt"))
-
-            system_header_gui_attributes, system_header_gui_func_declarations = cls.__SYSTEM_HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
-
-            system_header_gui: str = system_header_template.replace("#tag:attributes#", system_header_gui_attributes).replace("#tag:function_declarations#", system_header_gui_func_declarations)
-            cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_HEADER_NAME_TGW), system_header_gui)
-# endregion
 # endregion
         else:
             raise ValueError(f"Selected framework ({framework.name}) is not supported")

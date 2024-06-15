@@ -26,7 +26,7 @@ class ETKSystemGUIGenerator(BaseETKGenerator):
         super().__init__()
 
     @classmethod
-    def generate_file(cls, etk_objects: tuple[IBaseObject, ...]) -> str:
+    def generate_file(cls, etk_objects: tuple[IBaseObject, ...]) -> tuple[str, str]:
         template: Module
         template = parse(cls._read_file(cls._join_relative_path("./templates/ETKgenerator/SystemGUI.txt")))
         
@@ -53,7 +53,7 @@ class ETKSystemGUIGenerator(BaseETKGenerator):
 
         code: str = to_source(template)
 
-        return code
+        return code, to_source(cls.__generate_attribute_creation(etk_objects))
 
     @staticmethod
     def __generate_init_body(etk_objects: tuple[IBaseObject, ...]) -> stmt:
