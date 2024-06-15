@@ -3,6 +3,7 @@ from typing import Final, Optional, Type
 from ETK import *
 from steuerung import Steuerung
 from main import version
+# TODO: fix licence box height
 
 
 class GUI(ETKMainWindow):
@@ -13,10 +14,9 @@ class GUI(ETKMainWindow):
         import ctypes
         user32 = ctypes.windll.user32
         screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-        width = screensize[0]
-        scale_factor = width / 1920
+        scale_factor = min((screensize[0] / 1920, screensize[1] / 1017))
 
-        super().__init__(caption=f"GUI-Builder V{version}", scale_factor=scale_factor)
+        super().__init__(caption=f"GUI-Builder V{version}", size=Vector2d(1920, 1017), scale_factor=scale_factor)
 
     LANGUAGES: Final = ["C++ (TGW)", "Python (ETK)"]
     MENUBAR_PADDING: Final = 10
