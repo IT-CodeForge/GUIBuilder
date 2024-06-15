@@ -1,0 +1,3 @@
+[submodule "src/ETK"]
+	path = src/ETK
+	url = git@github.com:IT-CodeForge/ETK.git
