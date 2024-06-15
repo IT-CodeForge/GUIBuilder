@@ -1,6 +1,6 @@
 from .BaseTGWGenerator import BaseTGWGenerator
-from intermediary_neu.objects.IBaseObject import IBaseObject
-from intermediary_neu.objects.ITimer import ITimer
+from intermediary.objects.IBaseObject import IBaseObject
+from intermediary.objects.ITimer import ITimer
 from . import TGWCodeGenerator as tgw_gen
 
 class TGWUserHeaderGenerator(BaseTGWGenerator):

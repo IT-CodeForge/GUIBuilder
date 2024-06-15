@@ -1,4 +1,4 @@
-from intermediary_neu.objects.IBaseObject import IBaseObject
+from intermediary.objects.IBaseObject import IBaseObject
 from .BaseGenerator import BaseGenerator
 import os
 from enum import Enum, auto

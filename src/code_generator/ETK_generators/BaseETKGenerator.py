@@ -1,9 +1,9 @@
-from intermediary_neu.objects.IBaseObject import IBaseObject
-from intermediary_neu.objects.IButton import IButton
-from intermediary_neu.objects.ICheckbox import ICheckbox
-from intermediary_neu.objects.IEdit import IEdit
-from intermediary_neu.objects.ITimer import ITimer
-from intermediary_neu.objects.IWindow import IWindow
+from intermediary.objects.IBaseObject import IBaseObject
+from intermediary.objects.IButton import IButton
+from intermediary.objects.ICheckbox import ICheckbox
+from intermediary.objects.IEdit import IEdit
+from intermediary.objects.ITimer import ITimer
+from intermediary.objects.IWindow import IWindow
 #ILabe and ICanvas not needed, since they don't have events
 from typing import Optional
 from ..BaseGenerator import BaseGenerator

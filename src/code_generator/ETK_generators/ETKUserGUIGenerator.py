@@ -1,4 +1,4 @@
-from intermediary_neu.objects.IBaseObject import IBaseObject
+from intermediary.objects.IBaseObject import IBaseObject
 from ast import Module, stmt, FunctionDef, ClassDef, Pass, parse
 from astor import to_source  # type:ignore
 from typing import Optional

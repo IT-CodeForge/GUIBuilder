@@ -1,11 +1,11 @@
-from intermediary_neu.objects.IBaseObject import IBaseObject
-from intermediary_neu.objects.IButton import IButton
-from intermediary_neu.objects.ICanvas import ICanvas
-from intermediary_neu.objects.ICheckbox import ICheckbox
-from intermediary_neu.objects.IEdit import IEdit
-from intermediary_neu.objects.ILabel import ILabel
-from intermediary_neu.objects.ITimer import ITimer
-from intermediary_neu.objects.IWindow import IWindow
+from intermediary.objects.IBaseObject import IBaseObject
+from intermediary.objects.IButton import IButton
+from intermediary.objects.ICanvas import ICanvas
+from intermediary.objects.ICheckbox import ICheckbox
+from intermediary.objects.IEdit import IEdit
+from intermediary.objects.ILabel import ILabel
+from intermediary.objects.ITimer import ITimer
+from intermediary.objects.IWindow import IWindow
 from ast import ClassDef, Module, stmt, FunctionDef, parse
 from astor import to_source  # type:ignore
 from typing import Optional, Callable, Any

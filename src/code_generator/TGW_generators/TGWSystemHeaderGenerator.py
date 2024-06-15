@@ -1,8 +1,8 @@
 from .BaseTGWGenerator import BaseTGWGenerator
-from intermediary_neu.objects.IBaseObject import IBaseObject
-from intermediary_neu.objects.ITimer import ITimer
-from intermediary_neu.objects.ICanvas import ICanvas
-from intermediary_neu.objects.IWindow import IWindow
+from intermediary.objects.IBaseObject import IBaseObject
+from intermediary.objects.ITimer import ITimer
+from intermediary.objects.ICanvas import ICanvas
+from intermediary.objects.IWindow import IWindow
 from . import TGWCodeGenerator as tgw_gen
 
 """
