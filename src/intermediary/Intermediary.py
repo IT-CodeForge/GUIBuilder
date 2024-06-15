@@ -44,8 +44,8 @@ class Intermediary:
             data = json.load(f)
         self.__next_id = data["next_id"]
         for c, d in data["objects"].items():
-            import intermediary_all
-            type = getattr(intermediary_all, c)
+            import intermediary
+            type = getattr(intermediary, c)
             object: IObjects = type(d["id"])
             object.load_attributes_from_dict(d)
             self.__objects.update({object.id: object})

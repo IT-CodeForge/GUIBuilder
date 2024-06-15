@@ -1,7 +1,7 @@
 from os import path
 from tkinter import Tk, filedialog as fd
 from typing import Any
-from intermediary_all import *
+from intermediary import *
 from ETK import *
 from code_generator.generator import Generator, SupportedFrameworks
 
