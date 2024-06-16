@@ -83,7 +83,7 @@ class TGWUserCPPGenerator(BaseTGWGenerator):
         """
         generates all the necessary includes
         """
-        retval: str = '#include "GUI.h"\n'
+        retval: str = '#include "UserGUI.h"\n'
         for tgw_object in tgw_objects:
             if type(tgw_object) == IWindow:
                 continue
