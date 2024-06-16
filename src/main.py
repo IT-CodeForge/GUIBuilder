@@ -1,39 +1,13 @@
 from multiprocessing import freeze_support
 from os import devnull, path
 import sys
-from threading import Thread
-import time
 from steuerung import Steuerung
+from jk.msgbox import MSGBoxStream
 
 version = "0.1"
 dir_root: str  # path to root dir (project folder / folder of exe)
 internal_dir_root: str  # path to internal root dir (project folder / folder of unpacked files)
 additional_files_path: str
-
-
-class MSGBoxStream():
-    def __init__(self):
-        self.t = Thread()
-        self.msg = ""
-
-    def __send(self):
-        time.sleep(0.25)
-        from jk import msgbox
-        msgbox.create_msg_box(
-            f"GUI-Builder - FEHLER", self.msg, msgbox.BUTTON_STYLES.OK)
-        self.msg = ""
-
-    def write(self, text: str) -> int:
-        self.msg += text
-        if not self.t.is_alive():
-            self.t = Thread(target=self.__send)
-            self.t.start()
-            import ctypes
-            ctypes.windll.shcore.SetProcessDpiAwareness(0)
-        return len(text)
-
-    def flush(self) -> None:
-        return
 
 
 if __name__ == "__main__":

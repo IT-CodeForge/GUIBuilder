@@ -3,6 +3,8 @@ from __future__ import annotations
 from enum import Enum
 from typing import Final, Literal, overload
 from ctypes import windll
+from threading import Thread
+import time
 
 
 class RETURN_VALUES(Enum):
@@ -62,3 +64,27 @@ def create_msg_box(title: str, text: str, button_style: BUTTON_STYLES = BUTTON_S
         t_topmost = __TOPMOST
 
     return RETURN_VALUES(windll.user32.MessageBoxW(None, text, title, __SETFOREGROUND | t_topmost | button_style.value | icon_style.value | t_default_button_value))
+
+class MSGBoxStream():
+    def __init__(self):
+        self.t = Thread()
+        self.msg = ""
+
+    def __send(self):
+        time.sleep(0.25)
+        from jk import msgbox
+        msgbox.create_msg_box(
+            f"GUI-Builder - FEHLER", self.msg, msgbox.BUTTON_STYLES.OK)
+        self.msg = ""
+
+    def write(self, text: str) -> int:
+        self.msg += text
+        if not self.t.is_alive():
+            self.t = Thread(target=self.__send)
+            self.t.start()
+            import ctypes
+            ctypes.windll.shcore.SetProcessDpiAwareness(0)
+        return len(text)
+
+    def flush(self) -> None:
+        return
