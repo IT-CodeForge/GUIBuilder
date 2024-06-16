@@ -176,6 +176,10 @@ class Steuerung:
 
     def __load_element_attributes_in_editor(self, element: ETKBaseObject) -> None:
         self.__load_attributes_in_editor(element, self.__EL_GUI_TO_GEN_ATTR)
+
+        if element not in self.__objects.keys():
+            return
+
         object = self.__objects[element]
         for a in ["text", "text_color", "background_color", "interval", "enabled", "checked", "multiple_lines", "event_pressed", "event_double_pressed", "event_changed", "event_hovered"]:
             if hasattr(object, a):
@@ -236,7 +240,11 @@ class Steuerung:
     def set_element_attribute_event(self, caller: ETKEdit | ETKCheckbox) -> None:
         if self.__gui.last_active_attributes_element is None:
             raise RuntimeError
-        
+
+        if self.__gui.last_active_attributes_element not in self.__objects.keys():
+            self.__gui.last_active_attributes_element = None
+            return
+
         self.__unsaved_changes = True
 
         object = self.__objects[self.__gui.last_active_attributes_element]
@@ -258,6 +266,9 @@ class Steuerung:
         self.__apply_object_attributes_to_gui(object)
 
     def update_element_pos_event(self, element: ETKBaseObject) -> None:
+        if element not in self.__objects.keys():
+            return
+
         self.__unsaved_changes = True
 
         object = self.__objects[element]
@@ -282,6 +293,9 @@ class Steuerung:
         self.__apply_window_attributes_to_gui()
 
     def delete_element(self, element: ETKBaseObject) -> None:
+        if element not in self.__objects.keys():
+            return
+
         self.__intermediary.delete_object(self.__objects[element])
         self.__objects.pop(element)
         element.visibility = False
@@ -290,6 +304,10 @@ class Steuerung:
     def update_element_attributes_gui(self, element: ETKBaseObject) -> None:
         if self.__gui.active_attributes_element == element:
             return
+
+        if element not in self.__objects.keys():
+            return
+
         self.__gui.active_attributes_element = element
         self.__gui.last_active_attributes_element = element
 
@@ -419,7 +437,7 @@ class Steuerung:
                 self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.TGW)
             case _:
                 raise ValueError
-    
+
     def exit_event(self) -> None:
         if self.__unsaved_changes:
             from jk import msgbox
