@@ -1,8 +1,9 @@
 from sys import executable
 from typing import Final, Optional, Type
 from ETK import *
+from exceptions import UserError
 from steuerung import Steuerung
-from main import version
+from main import generate_error, version
 
 
 class GUI(ETKMainWindow):
@@ -27,6 +28,17 @@ class GUI(ETKMainWindow):
     CC_NOTICE_HEIGHT: Final = 45
 
     def _add_elements(self):
+        def handle_exception(exc: Exception) -> bool:
+            try:
+                raise exc
+            except UserError as e:
+                generate_error(e)
+                self.exit()
+                return True
+
+        self._main.scheduler.except_exceptions = (UserError, )
+        self._main.scheduler.except_exception_handler = handle_exception
+
         self._tk_object.iconbitmap(executable)  # type:ignore
 
         self.__moving_element = None
