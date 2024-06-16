@@ -1,5 +1,6 @@
 ToDo:
 
+investigate: change e.g. size of element and select other element before the size gets saved
 unimplemented features in GUI-Frameworks
 
 
