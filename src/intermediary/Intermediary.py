@@ -9,6 +9,7 @@ from .objects.ITimer import ITimer
 from .objects.IButton import IButton
 from .objects.IWindow import IWindow
 from .objects.IBaseObject import IBaseObject
+from .exceptions import LoadingError
 
 IObjectWidgets = Union[IButton, ICanvas, ICheckbox, IEdit, ILabel, ITimer]
 IObjects = Union[IWindow, IObjectWidgets]
@@ -42,10 +43,18 @@ class Intermediary:
     def load_from_file(self, path: str) -> None:
         with open(path, "r") as f:
             data = json.load(f)
-        self.__next_id = data["next_id"]
+        try:
+            self.__next_id = data["next_id"]
+        except KeyError:
+            raise LoadingError(f"Die Datei {path} ist unvollständig.\n Der Schlüssel 'next_id' fehlt.", f"The file {path} is invalid.\n It does not contain the 'next_id' key.")
+        if "objects" not in data.keys():
+            raise LoadingError(f"Die Datei {path} ist unvollständig.\n Der Schlüssel 'objects' fehlt.", f"The file {path} is invalid.\n It does not contain the 'objects' key.")
         for c, d in data["objects"].items():
             import intermediary
             type = getattr(intermediary, c)
+            for a in type.ATTRIBUTES:
+                if a not in d.keys():
+                    raise LoadingError(f"Das Objekt {c} in der Datei {path} ist unvollständig.\n Der Schlüssel '{a}' fehlt.", f"The object {c} in the file {path} is invalid.\n It does not contain the '{a}' key.")
             object: IObjects = type(d["id"])
             object.load_attributes_from_dict(d)
             self.__objects.update({object.id: object})
