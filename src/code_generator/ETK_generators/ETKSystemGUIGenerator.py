@@ -6,7 +6,7 @@ from intermediary.objects.IEdit import IEdit
 from intermediary.objects.ILabel import ILabel
 from intermediary.objects.ITimer import ITimer
 from intermediary.objects.IWindow import IWindow
-from ast import ClassDef, Module, stmt, FunctionDef, parse
+from ast import ClassDef, Module, stmt, FunctionDef, AnnAssign, Assign, Attribute, Tuple, parse
 from astor import to_source  # type:ignore
 from typing import Optional, Callable, Any
 from . import ASTGenerator as ast_gen
@@ -52,8 +52,20 @@ class ETKSystemGUIGenerator(BaseETKGenerator):
         template_class.body = my_class_body  # type:ignore
 
         code: str = to_source(template)
-
-        return code, to_source(cls.__generate_attribute_creation(etk_objects))
+        
+        attributes: str = ""
+        for element in cls.__generate_attribute_creation(etk_objects):
+            if type(element) == AnnAssign and type(element.target) == Attribute:
+                attributes += "#" + element.target.attr + "\n"
+            elif type(element) == Assign:
+                for var in element.targets:
+                    if type(var) == Attribute:
+                        attributes += "#" + var.attr + "\n"
+                    if type(var) == Tuple:
+                        for var2 in var.elts:
+                            if type(var2) == Attribute:
+                                attributes += "#" + var2.attr + "\n"
+        return code, attributes
 
     @staticmethod
     def __generate_init_body(etk_objects: tuple[IBaseObject, ...]) -> stmt:

@@ -60,8 +60,7 @@ class Generator(BaseGenerator):
                 read_user_gui = old_user_gui[user_gui_region_start:user_gui_region_end]
             
             system_gui, attributes = cls.__SYSTEM_GUI_GEN_ETK.generate_file(intermediary_objects)
-            attribute_lines = attributes.splitlines()
-            attributes_region = "# region attributes\n" + "\n".join(["#" + line for line in attribute_lines if line != ""]) +  "# endregion\n\n"
+            attributes_region = "# region attributes\n" + attributes +  "# endregion\n\n"
 
             user_gui, removed_events = cls.__USER_GUI_GEN_ETK.generate_file(intermediary_objects, read_user_gui)
             user_gui = user_gui.replace("from typing import Any", "from typing import Any  # type:ignore")
