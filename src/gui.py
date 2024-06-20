@@ -144,22 +144,16 @@ class GUI(ETKMainWindow):
 
         self.menubar_export = ETKButton(
             self._main, text="Export", size=Vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
-        self.menubar_export.add_event(
-            ETKButton.EVENTS.PRESSED, lambda: None)
         self.menubar_right.add_element(self.menubar_export)
         self.menubar_export.add_event(ETKButton.EVENTS.PRESSED, self.__steuerung.export)
 
         self.menubar_save = ETKButton(
             self._main, text="Save", size=Vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
-        self.menubar_save.add_event(
-            ETKButton.EVENTS.PRESSED, lambda: None)
         self.menubar_right.add_element(self.menubar_save)
         self.menubar_save.add_event(ETKButton.EVENTS.PRESSED, self.__steuerung.save_elements_to_file)
 
         self.menubar_load = ETKButton(
             self._main, text="Load", size=Vector2d(50, self.MENUBAR_ELEMENT_HEIGHT))
-        self.menubar_load.add_event(
-            ETKButton.EVENTS.PRESSED, lambda: None)
         self.menubar_right.add_element(self.menubar_load)
         self.menubar_load.add_event(ETKButton.EVENTS.PRESSED, self.__steuerung.load_elements_from_file)
 
