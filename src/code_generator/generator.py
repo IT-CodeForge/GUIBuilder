@@ -40,6 +40,30 @@ class Generator(BaseGenerator):
 
     def __init__(self) -> None:
         super().__init__()
+    
+    @classmethod
+    def how_many_files_exist(cls, path: str, framework: SupportedFrameworks) -> int:
+        retval: int = 0
+        if framework == SupportedFrameworks.ETK:
+            if os.path.exists(cls._join_paths(path, cls.__USER_GUI_NAME_ETK)):
+                retval += 1
+            if os.path.exists(cls._join_paths(path, cls.__SYSTEM_GUI_NAME_ETK)):
+                retval += 1
+            if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK)):
+                retval += 1
+        elif framework == SupportedFrameworks.TGW:
+            if os.path.exists(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW)):
+                retval += 1
+            if os.path.exists(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW)):
+                retval += 1
+            if os.path.exists(cls._join_paths(path, cls.__SYSTEM_GUI_CPP_NAME_TGW)):
+                retval += 1
+            if os.path.exists(cls._join_paths(path, cls.__SYSTEM_GUI_HEADER_NAME_TGW)):
+                retval += 1
+            if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW)):
+                retval += 1
+        return retval
+        
 
     @classmethod
     def write_files(cls, path: str, intermediary_objects:tuple[IBaseObject, ...], framework: SupportedFrameworks, discard_old_changes: bool):
