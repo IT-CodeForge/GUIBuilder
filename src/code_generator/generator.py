@@ -103,10 +103,11 @@ class Generator(BaseGenerator):
 
             if removed_events != "":
                 old_removed_events: str = ""
-                if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK)) and not discard_old_changes:
-                    old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
-                elif discard_old_changes:
-                    send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
+                if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK)):
+                    if not discard_old_changes:
+                        old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
+                    elif discard_old_changes:
+                        send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
             
                 all_removed_events: str = old_removed_events
 
@@ -188,10 +189,11 @@ class Generator(BaseGenerator):
 # region removed events            
             if removed_events != "":
                 old_removed_events: str = ""
-                if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW)) and not discard_old_changes:
-                    old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
-                elif discard_old_changes:
-                    send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
+                if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW)):
+                    if not discard_old_changes:
+                        old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
+                    elif discard_old_changes:
+                        send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
                 
                 all_removed_events: str = old_removed_events
 
