@@ -439,7 +439,7 @@ class Steuerung:
 
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
-                framework = SupportedFrameworks.TGW
+                framework = SupportedFrameworks.ETK
             case "C++ (TGW)":
                 framework = SupportedFrameworks.TGW
             case _:
