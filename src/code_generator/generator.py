@@ -11,6 +11,7 @@ from .TGW_generators.TGWUserHeaderGenerator import TGWUserHeaderGenerator
 from .TGW_generators.TGWUserCPPGenerator import TGWUserCPPGenerator
 from autopep8 import fix_code # type:ignore
 from .ErrorMSGS import ParsingError
+import send2trash
 
 class RegionMarkerIncompleteError(ParsingError):
     def __init__(self) -> None:
@@ -104,6 +105,8 @@ class Generator(BaseGenerator):
                 old_removed_events: str = ""
                 if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK)) and not discard_old_changes:
                     old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
+                elif discard_old_changes:
+                    send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
             
                 all_removed_events: str = old_removed_events
 
@@ -187,6 +190,8 @@ class Generator(BaseGenerator):
                 old_removed_events: str = ""
                 if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW)) and not discard_old_changes:
                     old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
+                elif discard_old_changes:
+                    send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
                 
                 all_removed_events: str = old_removed_events
 
