@@ -74,7 +74,7 @@ class MSGBoxStream():
         time.sleep(0.25)
         from jk import msgbox
         msgbox.create_msg_box(
-            f"GUI-Builder - FEHLER", self.msg, msgbox.BUTTON_STYLES.OK)
+            f"GUI-Builder - ERROR", self.msg, msgbox.BUTTON_STYLES.OK)
         self.msg = ""
 
     def write(self, text: str) -> int:

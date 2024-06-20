@@ -393,7 +393,7 @@ class Steuerung:
     def load_elements_from_file(self) -> None:
         if self.__unsaved_changes:
             from jk import msgbox
-            ret = msgbox.create_msg_box("GUI-Builder - Ungespeicherte Änderungen", "Es gibt ungespeicherte Änderungen!\nBeim Ladevorgang wird der bisherige Zustand gelöscht!\nFortfahren?", msgbox.BUTTON_STYLES.YES_NO, msgbox.ICON_STYLES.WARNING, default_button=2)
+            ret = msgbox.create_msg_box("GUI-Builder - Unsaved changes", "en:\nUnsaved changes!\nAll changes are overwritten during the loading process.\nDiscard changes and load?\n\ndt:\nEs gibt ungespeicherte Änderungen!\nBeim Ladevorgang werden alle Änderungen überschrieben.\nMit dem Ladevorgang fortfahren?", msgbox.BUTTON_STYLES.YES_NO, msgbox.ICON_STYLES.WARNING, default_button=2)
             if ret != msgbox.RETURN_VALUES.YES:
                 return
 
@@ -447,7 +447,7 @@ class Steuerung:
     def exit_event(self) -> None:
         if self.__unsaved_changes:
             from jk import msgbox
-            ret = msgbox.create_msg_box("GUI-Builder - Ungespeicherte Änderungen", "Es gibt ungespeicherte Änderungen!\nMit dem Schließen fortfahren?", msgbox.BUTTON_STYLES.YES_NO, msgbox.ICON_STYLES.WARNING, default_button=2)
+            ret = msgbox.create_msg_box("GUI-Builder - Unsaved changes", "en:\nUnsaved changes!\nDiscard changes and close?\n\ndt:\nEs gibt ungespeicherte Änderungen!\nMit dem Schließen fortfahren?", msgbox.BUTTON_STYLES.YES_NO, msgbox.ICON_STYLES.WARNING, default_button=2)
             if ret != msgbox.RETURN_VALUES.YES:
                 self.__gui.exit_ignore_next = True
 
