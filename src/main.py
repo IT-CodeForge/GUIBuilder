@@ -6,7 +6,7 @@ from exceptions import UserError
 from steuerung import Steuerung
 from jk.msgbox import MSGBoxStream
 
-version = "2.0_pre-1"
+version = "2.0_pre-2"
 dir_root: str  # path to root dir (project folder / folder of exe)
 internal_dir_root: str  # path to internal root dir (project folder / folder of unpacked files)
 additional_files_path: str
