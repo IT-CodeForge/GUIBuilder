@@ -37,7 +37,7 @@ timer: Callable[[ITimer, str], stmt] = lambda obj, intermediary_event_type: pars
 def generate_event_definition(obj: IBaseObject, intermediary_event_type: str) -> stmt:
     params = "self"
     if type(obj) != ITimer:
-        params += ", params: tuple[ETKBaseObject, ETKEvents, Any]"
+        params += ", params: ETKEventData"
     return parse(f"def {__event_func_name(obj, intermediary_event_type)}({params}):\n   pass").body[0]
 
 generate_gui_init:Callable[[IWindow], stmt] = lambda window: parse(f"super().__init__(size={__arr_to_vec(window.size)}, caption='{window.title}', background_color={__col_arr_to_col(window.background_color)})").body[0]
