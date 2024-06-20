@@ -42,5 +42,7 @@ if __name__ == "__main__":
     try:
         __main()
     except UserError as e:
-        generate_error(e)
-        sys.exit()
+        try:
+            generate_error(e)
+        finally:
+            sys.exit()

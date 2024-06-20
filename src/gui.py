@@ -1,3 +1,4 @@
+import os
 from sys import executable
 from typing import Final, Optional, Type
 from ETK import *
@@ -32,9 +33,10 @@ class GUI(ETKMainWindow):
             try:
                 raise exc
             except UserError as e:
-                generate_error(e)
-                self.exit()
-                return True
+                try:
+                    generate_error(e)
+                finally:
+                    os._exit(1) # type:ignore
 
         self._main.scheduler.except_exceptions = (UserError, )
         self._main.scheduler.except_exception_handler = handle_exception
