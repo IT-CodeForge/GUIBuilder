@@ -162,6 +162,10 @@ class GUI(ETKMainWindow):
         self.menubar_right.add_element(self.language_selector)
         self.language_selector.add_event(ETKDropdownMenu.EVENTS.CHANGED, self.__steuerung.change_language_event)
 
+        self.menubar_discard_old_files = ETKCheckbox(self._main, text="Discard old files on export", size=Vector2d(250, self.MENUBAR_ELEMENT_HEIGHT))
+        self.menubar_right.add_element(self.menubar_discard_old_files)
+
+
         # endregion
         # region attributes_element Elemente
 

@@ -436,13 +436,22 @@ class Steuerung:
         path = self.__get_dir_path()
         if path == "":
             return
+
         match self.__gui.language_selector.selected:
             case "Python (ETK)":
-                self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.ETK)
+                framework = SupportedFrameworks.TGW
             case "C++ (TGW)":
-                self.__generator.write_files(path, tuple(self.__objects.values()), SupportedFrameworks.TGW)
+                framework = SupportedFrameworks.TGW
             case _:
                 raise ValueError
+
+        if (discard := self.__gui.menubar_discard_old_files.state) and self.__generator.how_many_files_exist(path, framework) > 0:
+            from jk import msgbox
+            ret = msgbox.create_msg_box("GUI-Builder - Discard all files?", "en:\nAre you sure you want to discard all old files and generate new ones?\nYour own code gets deleted.\nThis cannot be undone!\n\ndt:\nSicher, dass alle alten Dateien verworfen und komplett neue generiert werden sollen?\nDein eigener Code wird gelöscht.\nDies kann nicht rückgängig gemacht werden!", msgbox.BUTTON_STYLES.OK_CANCEL, msgbox.ICON_STYLES.WARNING, default_button=2)
+            if ret != msgbox.RETURN_VALUES.OK:
+                return
+
+        self.__generator.write_files(path, tuple(self.__objects.values()), framework, discard)
 
     def exit_event(self) -> None:
         if self.__unsaved_changes:
