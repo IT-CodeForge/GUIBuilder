@@ -95,7 +95,7 @@ class ETKSystemGUIGenerator(BaseETKGenerator):
         for etk_object, etk_event_typ, intermediary_event_type in event_list:
             if etk_event_typ == None:
                 continue
-            etk_event_typ = "ETK" + str(type(etk_object).__name__)[1:] + "Events." + etk_event_typ
+            etk_event_typ = "ETK" + str(type(etk_object).__name__)[1:] + ".Events." + etk_event_typ
             retval.append(ast_gen.generate_event_bind(
                 etk_object, etk_event_typ, intermediary_event_type))
         return retval
