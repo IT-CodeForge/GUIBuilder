@@ -4,6 +4,7 @@ from typing import Any
 from intermediary import *
 from ETK import *
 from code_generator.generator import Generator, SupportedFrameworks
+from intermediary.exceptions import LoadingError
 
 
 class Steuerung:
@@ -386,7 +387,7 @@ class Steuerung:
         path = self.__get_save_file_path()
         if path == "":
             return
-        self.__intermediary.save_to_file(path)
+        self.__intermediary.save_to_file(path, self.__gui.language_selector.selected)
         self.__unsaved_changes = False
 
     def load_elements_from_file(self) -> None:
@@ -407,7 +408,12 @@ class Steuerung:
         self.__objects = {}
 
         self.__intermediary = Intermediary()
-        self.__intermediary.load_from_file(path)
+        lang = self.__intermediary.load_from_file(path)
+        self.__gui.language_selector.selected = lang
+        try:
+            self.change_language_event()
+        except ValueError:
+            raise LoadingError(f"Die Datei {path} ist fehlerhaft.\n Der Schlüssel 'language' hat einen ungültigen Wert ({lang}).", f"The file {path} is invalid.\nThe key 'language' has an invalid value ({lang}).")
 
         for e in self.__intermediary.objects:
             if type(e) == IWindow:

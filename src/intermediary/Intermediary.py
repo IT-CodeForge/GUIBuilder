@@ -14,6 +14,7 @@ from .exceptions import LoadingError
 IObjectWidgets = Union[IButton, ICanvas, ICheckbox, IEdit, ILabel, ITimer]
 IObjects = Union[IWindow, IObjectWidgets]
 
+
 class Intermediary:
     def __init__(self) -> None:
         self.__next_id: int = 0
@@ -25,6 +26,7 @@ class Intermediary:
         return tuple(self.__objects.values())
 
     __T = TypeVar("__T", bound=IObjects)
+
     def create_object(self, type: Type[__T], **kwargs: Any) -> __T:
         object = type(id=self.__next_id, **kwargs)
         self.__next_id += 1
@@ -34,19 +36,25 @@ class Intermediary:
     def delete_object(self, object: IBaseObject) -> None:
         self.__objects.pop(object.id)
 
-    def save_to_file(self, path: str) -> None:
+    def save_to_file(self, path: str, language: str) -> None:
         objects = {str(type(o).__name__): o.get_attributes_as_dict() for o in self.__objects.values()}
-        data = {"next_id": self.__next_id, "objects": objects}
+        data = {"next_id": self.__next_id, "language": language, "objects": objects}
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
-    def load_from_file(self, path: str) -> None:
+    def load_from_file(self, path: str) -> str:
         with open(path, "r") as f:
             data = json.load(f)
         try:
             self.__next_id = data["next_id"]
         except KeyError:
             raise LoadingError(f"Die Datei {path} ist unvollständig.\n Der Schlüssel 'next_id' fehlt.", f"The file {path} is invalid.\nIt does not contain the 'next_id' key.")
+
+        try:
+            lang = data["language"]
+        except KeyError:
+            raise LoadingError(f"Die Datei {path} ist unvollständig.\n Der Schlüssel 'language' fehlt.", f"The file {path} is invalid.\nIt does not contain the 'language' key.")
+
         if "objects" not in data.keys():
             raise LoadingError(f"Die Datei {path} ist unvollständig.\n Der Schlüssel 'objects' fehlt.", f"The file {path} is invalid.\nIt does not contain the 'objects' key.")
         for c, d in data["objects"].items():
@@ -58,3 +66,5 @@ class Intermediary:
             object: IObjects = type(d["id"])
             object.load_attributes_from_dict(d)
             self.__objects.update({object.id: object})
+
+        return lang
