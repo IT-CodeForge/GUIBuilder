@@ -1,6 +1,7 @@
 from multiprocessing import freeze_support
 from os import devnull, path
 import sys
+from traceback import format_exc
 from exceptions import UserError
 from steuerung import Steuerung
 from jk.msgbox import MSGBoxStream
@@ -12,7 +13,11 @@ additional_files_path: str
 
 def generate_error(e: UserError):
     if not getattr(sys, "frozen", False):
+        try:
             raise e
+        except:
+            print(format_exc())
+            return
     print(f"en:\n{e.err_en}\n\ndt:\n{e.err_dt}", file=sys.stderr)
 
 def __main():
