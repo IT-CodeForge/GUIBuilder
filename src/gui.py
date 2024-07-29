@@ -165,6 +165,10 @@ class GUI(ETKMainWindow):
         self.menubar_discard_old_files = ETKCheckbox(self._main, text="Discard old files on export", size=Vector2d(250, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_right.add_element(self.menubar_discard_old_files)
 
+        self.menubar_clear_gui_builder = ETKButton(self._main, text="Clear GUI-Builder", size=Vector2d(150, self.MENUBAR_ELEMENT_HEIGHT), background_color=0xFF0000, text_color=0xFFFFFF)
+        self.menubar_right.add_element(self.menubar_clear_gui_builder)
+        self.menubar_clear_gui_builder.add_event(ETKButton.EVENTS.PRESSED, self.__steuerung.clear_gui_builder_event)
+
         # endregion
         # region attributes_element Elemente
 

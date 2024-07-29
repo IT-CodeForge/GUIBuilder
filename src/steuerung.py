@@ -419,6 +419,18 @@ class Steuerung:
 
         self.__intermediary = Intermediary()
 
+    def clear_gui_builder_event(self) -> None:
+        if not self.__check_for_changes():
+            return
+        self.__delete_all_gui_elements()
+        self.__gui.language_selector.selected
+        self.__objects.update({self.__gui: self.__intermediary.create_object(IWindow)})
+        self.__load_window_attributes_in_editor()
+        self.__apply_window_attributes_to_gui()
+        self.__gui.attributes_element_inner.visibility = False
+        self.__gui.active_attributes_element = None
+        self.__gui.last_active_attributes_element = None
+
     def load_elements_from_file(self) -> None:
         if not self.__check_for_changes():
             return
