@@ -402,17 +402,15 @@ class Steuerung:
         self.__intermediary.save_to_file(path, self.__gui.language_selector.selected)
         self.__unsaved_changes = False
 
-    def load_elements_from_file(self) -> None:
+    def __check_for_changes(self) -> bool:
         if self.__unsaved_changes:
             from jk import msgbox
             ret = msgbox.create_msg_box("GUI-Builder - Unsaved changes", "en:\nUnsaved changes!\nAll changes are overwritten during the loading process.\nDiscard changes and load?\n\ndt:\nEs gibt ungespeicherte Änderungen!\nBeim Ladevorgang werden alle Änderungen überschrieben.\nMit dem Ladevorgang fortfahren?", msgbox.BUTTON_STYLES.YES_NO, msgbox.ICON_STYLES.WARNING, default_button=2)
             if ret != msgbox.RETURN_VALUES.YES:
-                return
+                return False
+        return True
 
-        path = self.__get_load_file_path()
-        if path == "":
-            return
-
+    def __delete_all_gui_elements(self) -> None:
         for e in self.__objects.keys():
             if e == self.__gui:
                 continue
@@ -420,6 +418,17 @@ class Steuerung:
         self.__objects = {}
 
         self.__intermediary = Intermediary()
+
+    def load_elements_from_file(self) -> None:
+        if not self.__check_for_changes():
+            return
+
+        path = self.__get_load_file_path()
+        if path == "":
+            return
+
+        self.__delete_all_gui_elements()
+
         lang = self.__intermediary.load_from_file(path)
         self.__gui.language_selector.selected = lang
         try:
