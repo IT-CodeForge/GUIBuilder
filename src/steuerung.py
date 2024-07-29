@@ -121,14 +121,14 @@ class Steuerung:
         min_x = max(space_x) if max(space_x) >= 100 else 100
         min_y = max(space_y) if max(space_y) >= 100 else 100
 
-        if r_size[0] < min_x:
-            r_size[0] = int(min_x)
-        if r_size[1] < min_y:
-            r_size[1] = int(min_y)
-        if r_size[0] > self.__gui.main2.size.x - self.__gui.attributes.size.x:
-            r_size[0] = int(self.__gui.main2.size.x - self.__gui.attributes.size.x)
-        if r_size[1] > self.__gui.main2.size.y:
-            r_size[1] = int(self.__gui.main2.size.y)
+        if r_size[0] < (t := min_x):
+            r_size[0] = int(t)
+        if r_size[1] < (t := min_y):
+            r_size[1] = int(t)
+        if r_size[0] > (t := (self.__gui.main2.size.x - self.__gui.attributes.size.x)):
+            r_size[0] = int(t)
+        if r_size[1] > (t := self.__gui.main2.size.y):
+            r_size[1] = int(t)
 
         return r_size[0], r_size[1]
 
