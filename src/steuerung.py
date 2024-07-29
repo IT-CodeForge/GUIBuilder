@@ -125,7 +125,7 @@ class Steuerung:
             r_size[0] = int(min_x)
         if r_size[1] < min_y:
             r_size[1] = int(min_y)
-        if r_size[0] > self.__gui.main2.size.x:
+        if r_size[0] > self.__gui.main2.size.x - self.__gui.attributes.size.x:
             r_size[0] = int(self.__gui.main2.size.x - self.__gui.attributes.size.x)
         if r_size[1] > self.__gui.main2.size.y:
             r_size[1] = int(self.__gui.main2.size.y)
