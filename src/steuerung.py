@@ -313,6 +313,8 @@ class Steuerung:
         self.__objects.pop(element)
         element.visibility = False
         self.__gui.attributes_element_inner.visibility = False
+        self.__gui.active_attributes_element = None
+        self.__gui.last_active_attributes_element = None
 
     def update_element_attributes_gui(self, element: ETKBaseObject) -> None:
         if self.__gui.active_attributes_element == element:
