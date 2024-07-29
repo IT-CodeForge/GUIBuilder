@@ -11,6 +11,7 @@ dir_root: str  # path to root dir (project folder / folder of exe)
 internal_dir_root: str  # path to internal root dir (project folder / folder of unpacked files)
 additional_files_path: str
 
+
 def generate_error(e: UserError):
     if not getattr(sys, "frozen", False):
         try:
@@ -19,6 +20,7 @@ def generate_error(e: UserError):
             print(format_exc())
             return
     print(f"en:\n{e.err_en}\n\ndt:\n{e.err_dt}", file=sys.stderr)
+
 
 def __main():
     import main
@@ -42,6 +44,7 @@ def __main():
     print("\n"*20)
     s = Steuerung()
     s.run()
+
 
 if __name__ == "__main__":
     try:
