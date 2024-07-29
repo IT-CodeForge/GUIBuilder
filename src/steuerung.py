@@ -464,8 +464,11 @@ class Steuerung:
                 continue
             if not isinstance(o, IBaseObjectWidget):
                 raise RuntimeError
-            self.__load_element_attributes_in_editor(e)
             self.__apply_object_attributes_to_gui(o)
+
+        self.__gui.attributes_element_inner.visibility = False
+        self.__gui.active_attributes_element = None
+        self.__gui.last_active_attributes_element = None
 
     def export(self) -> None:
         path = self.__get_dir_path()
