@@ -140,6 +140,15 @@ class Steuerung:
             ret = fallback
         return ret
 
+    @classmethod
+    def __convert_col_str_to_int(cls, color: str | bool) -> int:
+        col = cls.__convert_to_int(color, 0)
+        if col < 0:
+            col = 0
+        elif col > 255:
+            col = 255
+        return col
+
     def __get_attribute_value(self, attr_name: str, object: IBaseObject) -> str:
         try:
             if attr_name[-2:] == "_x":
@@ -224,15 +233,18 @@ class Steuerung:
         elif attr_name[-2:] == "_r":
             attr_name = attr_name[:-2]
             ob_data = getattr(object, attr_name)
-            value = (self.__convert_to_int(value), ob_data[1], ob_data[2])
+            value = (col := self.__convert_col_str_to_int(value), ob_data[1], ob_data[2])
+            caller.text = str(col)
         elif attr_name[-2:] == "_g":
             attr_name = attr_name[:-2]
             ob_data = getattr(object, attr_name)
-            value = (ob_data[0], self.__convert_to_int(value), ob_data[2])
+            value = (ob_data[0], col := self.__convert_col_str_to_int(value), ob_data[2])
+            caller.text = str(col)
         elif attr_name[-2:] == "_b":
             attr_name = attr_name[:-2]
             ob_data = getattr(object, attr_name)
-            value = (ob_data[0], ob_data[1], self.__convert_to_int(value))
+            value = (ob_data[0], ob_data[1], col := self.__convert_col_str_to_int(value))
+            caller.text = str(col)
         elif attr_name in ["interval"]:
             value = self.__convert_to_int(value, 100)
 
