@@ -36,7 +36,7 @@ class GUI(ETKMainWindow):
                 try:
                     generate_error(e)
                 finally:
-                    os._exit(1) # type:ignore
+                    os._exit(1)  # type:ignore
 
         self._main.scheduler.except_exceptions = (UserError, )
         self._main.scheduler.except_exception_handler = handle_exception
@@ -165,7 +165,6 @@ class GUI(ETKMainWindow):
         self.menubar_discard_old_files = ETKCheckbox(self._main, text="Discard old files on export", size=Vector2d(250, self.MENUBAR_ELEMENT_HEIGHT))
         self.menubar_right.add_element(self.menubar_discard_old_files)
 
-
         # endregion
         # region attributes_element Elemente
 
@@ -262,7 +261,7 @@ class GUI(ETKMainWindow):
         self.attributes_element_background_color_var_b.add_event(ETKEdit.EVENTS.CHANGED_DELAYED, self.__element_attribut_changed_handler)
 
         self.attributes_element_interval_container = ETKListingContainer(self._main, size=ETKBaseContainer.ContainerSize(0, 0, True, True), listing_type=ETKListingContainer.LISTING_TYPES.LEFT_TO_RIGHT, offset=3)
-        self.attributes_element_interval_const = ETKLabel(self._main, text="Interval: ", size=Vector2d(75, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
+        self.attributes_element_interval_const = ETKLabel(self._main, text="Interval (ms): ", size=Vector2d(115, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
         self.attributes_element_interval_container.add_element(self.attributes_element_interval_const)
         self.attributes_element_interval_var = ETKEdit(self._main, text="-", size=Vector2d(50, self.ATTRIBUTES_ELEMENT_HEIGHT))
         self.attributes_element_interval_container.add_element(self.attributes_element_interval_var)
