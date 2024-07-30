@@ -1,4 +1,3 @@
-import os
 from sys import executable
 from typing import Final, Optional, Type
 from ETK import *
@@ -36,7 +35,7 @@ class GUI(ETKMainWindow):
                 try:
                     generate_error(e)
                 finally:
-                    os._exit(1)  # type:ignore
+                    exit(1)
 
         self._main.scheduler.except_exceptions = (UserError, )
         self._main.scheduler.except_exception_handler = handle_exception
