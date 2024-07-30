@@ -22,7 +22,6 @@ class GUI(ETKMainWindow):
         workarea = wintypes.RECT()
         system_parameters_info(0x30, 0, byref(workarea), 0)
         taskbar_height = screensize[1] - workarea.bottom
-        print(taskbar_height)
 
         # get window-title-bar size
         get_system_metrics_for_dpi = windll.user32.GetSystemMetricsForDpi
