@@ -185,10 +185,10 @@ class Steuerung:
         self.__load_attributes_in_editor(self.__gui, self.__WIN_GUI_TO_GEN_ATTR)
 
     def __load_element_attributes_in_editor(self, element: ETKBaseObject) -> None:
-        self.__load_attributes_in_editor(element, self.__EL_GUI_TO_GEN_ATTR)
-
         if element not in self.__objects.keys():
             return
+
+        self.__load_attributes_in_editor(element, self.__EL_GUI_TO_GEN_ATTR)
 
         object = self.__objects[element]
         for a in ["text", "text_color", "background_color", "interval", "enabled", "checked", "multiple_lines", "event_pressed", "event_double_pressed", "event_changed", "event_hovered"]:
