@@ -191,6 +191,7 @@ class Steuerung:
         self.__load_attributes_in_editor(element, self.__EL_GUI_TO_GEN_ATTR)
 
         object = self.__objects[element]
+        self.__gui.attributes_element_id_var.text = str(object.id)
         for a in ["text", "text_color", "background_color", "interval", "enabled", "checked", "multiple_lines", "event_pressed", "event_double_pressed", "event_changed", "event_hovered"]:
             if hasattr(object, a):
                 self.__GEN_ATTR_TO_EL_GUI_CONT[a].visibility = True
