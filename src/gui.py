@@ -59,7 +59,7 @@ class GUI(ETKMainWindow):
             self.main.size.x, self.MENUBAR_HEIGHT))
         self.main.add_element(self.menubar_outer)
 
-        self.attributes_text = ETKLabel(self._main, text="ROT hinterlegte Attribute sind in der\nausgewählten Sprache nicht verfügbar!", size=Vector2d(500, self.ATTRIBUTES_ELEMENT_HEIGHT*2), background_color=self.menubar_outer.background_color, text_color=0xFF0000)
+        self.attributes_text = ETKLabel(self._main, text="Attributes highlighted in RED are not\navailable in the selected framework!", size=Vector2d(500, self.ATTRIBUTES_ELEMENT_HEIGHT*2), background_color=self.menubar_outer.background_color, text_color=0xFF0000)
         self.menubar_outer.add_element(self.attributes_text)
 
         self.menubar_inner = ETKContainer(self._main, Vector2d(self.ATTRIBUTES_WIDTH, 0), size=ETKBaseContainer.ContainerSize(
@@ -176,7 +176,7 @@ class GUI(ETKMainWindow):
         self.attributes_element.add_element(
             self.attributes_element_title_container)
 
-        self.attributes_element_title = ETKLabel(self._main, text="Element-Eigenschaften:", size=Vector2d(
+        self.attributes_element_title = ETKLabel(self._main, text="Element-Properties:", size=Vector2d(
             180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_element.background_color)
         self.attributes_element_title_container.add_element(
             self.attributes_element_title, ETKBaseContainer.ALIGNMENTS.MIDDLE_CENTER)
@@ -342,7 +342,7 @@ class GUI(ETKMainWindow):
         self.attributes_window.add_element(
             self.attributes_window_title_container)
 
-        self.attributes_window_title = ETKLabel(self._main, text="Fenster-Eigenschaften:", size=Vector2d(
+        self.attributes_window_title = ETKLabel(self._main, text="Window-Properties:", size=Vector2d(
             180, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_window.background_color)
         self.attributes_window_title_container.add_element(
             self.attributes_window_title, ETKBaseContainer.ALIGNMENTS.MIDDLE_CENTER)
