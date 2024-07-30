@@ -17,7 +17,7 @@ def generate_error(e: UserError):
         try:
             raise e
         except:
-            print(format_exc())
+            print(format_exc(), file=sys.stderr)
             return
     print(f"en:\n{e.err_en}\n\ndt:\n{e.err_dt}", file=sys.stderr)
 
