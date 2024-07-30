@@ -1,5 +1,6 @@
 from sys import executable
 from typing import Final, Optional, Type
+from ctypes import windll, wintypes, byref
 from ETK import *
 from exceptions import UserError
 from steuerung import Steuerung
@@ -11,11 +12,24 @@ class GUI(ETKMainWindow):
         self.__steuerung = steuerung
         self.__mouse_pos = Vector2d()
 
-        # calculates scale_factor so that the application always fits on the screen (app is built with 1920x1080 resolution and the scaler scales it if the screen is bigger or smaller).
+        # calculates scale_factor so that the application always fits on the screen (app is built with 1920x1009 resolution and the scaler scales it if the screen is bigger or smaller).
         import ctypes
         user32 = ctypes.windll.user32
         screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-        scale_factor = min((screensize[0] / 1920, screensize[1] / 1080))
+
+        # get taskbar size
+        system_parameters_info = windll.user32.SystemParametersInfoA
+        workarea = wintypes.RECT()
+        system_parameters_info(0x30, 0, byref(workarea), 0)
+        taskbar_height = screensize[1] - workarea.bottom
+        print(taskbar_height)
+
+        # get window-title-bar size
+        get_system_metrics_for_dpi = windll.user32.GetSystemMetricsForDpi
+        titlebar_height = get_system_metrics_for_dpi(4, 96) + get_system_metrics_for_dpi(33, 96) + get_system_metrics_for_dpi(92, 96)
+
+        effective_screensize = (screensize[0], screensize[1] - taskbar_height - titlebar_height)
+        scale_factor = min((effective_screensize[0] / 1920, effective_screensize[1] / 1009))
 
         super().__init__(caption=f"GUI-Builder V{version}", size=Vector2d(1920, 1017), scale_factor=scale_factor)
 
