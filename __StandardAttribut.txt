@@ -14,7 +14,7 @@ type: IWindow:
 
 type: IButton:
 	id (int)
-	name (str, std: f"{id}_button")
+	name (str, std: f"button")
 	text (str, std: "Button")
 	pos (list[int, int], std: [0, 0])
 	size (list[int, int], std: [70, 18])
@@ -26,7 +26,7 @@ type: IButton:
 
 type: ILabel:
 	id (int)
-	name (str, std: f"{id}_label")
+	name (str, std: f"label")
 	text (str, std: "Label")
 	pos (list[int, int], std: [0, 0])
 	size (list[int, int], std: [75, 18])
@@ -36,7 +36,7 @@ type: ILabel:
 	
 type: IEdit:
 	id (int)
-	name (str, std: f"{id}_edit")
+	name (str, std: f"edit")
 	text (str, std: "Edit")
 	pos (list[int, int], std: [0, 0])
 	size size (list[int, int], std: [200, 100])
@@ -48,7 +48,7 @@ type: IEdit:
 
 type: ICheckbox:
 	id (int)
-	name (str, std: f"{id}_checkbox")
+	name (str, std: f"checkbox")
 	text (str, std: "Checkbox")
 	pos (list[int, int], std: [0, 0])
 	size (list[int, int], std: [100, 25])
@@ -60,7 +60,7 @@ type: ICheckbox:
 
 type: ITimer:
 	id (int)
-	name (str, std: f"{id}_timer")
+	name (str, std: f"timer")
 	pos (list[int, int], std: [0, 0])
 	size (list[int, int], std: [50, 18])
 	interval (int, std: 1000)
@@ -68,7 +68,7 @@ type: ITimer:
 
 type: ICanvas:
 	id (int)
-	name (str, std: f"{id}_canvas")
+	name (str, std: f"canvas")
 	pos (list[int, int], std: [0, 0])
 	size (list[int, int], std: [100, 100])
 	background_color (list[int, int, int], std: [255, 255, 255], N/A in TGWindowLib)
