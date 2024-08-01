@@ -1,4 +1,5 @@
 from os import path
+import re
 from tkinter import Tk, filedialog as fd
 from typing import Any
 from intermediary import *
@@ -248,6 +249,15 @@ class Steuerung:
             caller.text = str(col)
         elif attr_name in ["interval"]:
             value = self.__convert_to_int(value, 100)
+        elif attr_name == "name":
+            if type(value) != str:
+                raise ValueError
+            wrong_chrs = re.findall("[^0-9A-Za-z-_]", value)
+            print(value, wrong_chrs)
+            for wrong_chr in wrong_chrs:
+                value = value.replace(wrong_chr, "-")
+            if len(wrong_chrs) != 0:
+                caller.text = value
 
         setattr(object, attr_name, value)
 
