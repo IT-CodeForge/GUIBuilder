@@ -73,7 +73,7 @@ class GUI(ETKMainWindow):
             self.main.size.x, self.MENUBAR_HEIGHT))
         self.main.add_element(self.menubar_outer)
 
-        self.attributes_text = ETKLabel(self._main, text="Attributes highlighted in RED are not\navailable in the selected framework!", size=Vector2d(500, self.ATTRIBUTES_ELEMENT_HEIGHT*2), background_color=self.menubar_outer.background_color, text_color=0xFF0000)
+        self.attributes_text = ETKLabel(self._main, text="Properties highlighted in RED are not\navailable in the selected framework!", size=Vector2d(500, self.ATTRIBUTES_ELEMENT_HEIGHT*2), background_color=self.menubar_outer.background_color, text_color=0xFF0000)
         self.menubar_outer.add_element(self.attributes_text)
 
         self.menubar_inner = ETKContainer(self._main, Vector2d(self.ATTRIBUTES_WIDTH, 0), size=ETKBaseContainer.ContainerSize(
