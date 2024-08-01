@@ -362,10 +362,8 @@ class GUI(ETKMainWindow):
             self.attributes_window_title, ETKBaseContainer.ALIGNMENTS.MIDDLE_CENTER)
 
         self.attributes_window_id_container = ETKListingContainer(self._main, size=ETKBaseContainer.ContainerSize(0, 0, True, True), listing_type=ETKListingContainer.LISTING_TYPES.LEFT_TO_RIGHT, offset=0)
-        self.attributes_window_id_const = ETKLabel(self._main, text="ID: ", size=Vector2d(30, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_window.background_color)
+        self.attributes_window_id_const = ETKLabel(self._main, text="ID: 0", size=Vector2d(45, self.ATTRIBUTES_ELEMENT_HEIGHT), background_color=self.attributes_window.background_color)
         self.attributes_window_id_container.add_element(self.attributes_window_id_const)
-        self.attributes_window_id_var = ETKLabel(self._main, text="-", background_color=self.attributes_window.background_color)
-        self.attributes_window_id_container.add_element(self.attributes_window_id_var)
         self.attributes_window.add_element(self.attributes_window_id_container)
 
         self.attributes_window_name_container = ETKListingContainer(self._main, size=ETKBaseContainer.ContainerSize(0, 0, True, True), listing_type=ETKListingContainer.LISTING_TYPES.LEFT_TO_RIGHT, offset=3)
