@@ -1,4 +1,5 @@
 from sys import executable
+import sys
 from typing import Final, Optional, Type
 from ctypes import windll, wintypes, byref
 from ETK import *
@@ -48,7 +49,7 @@ class GUI(ETKMainWindow):
                 try:
                     generate_error(e)
                 finally:
-                    exit(1)
+                    sys.exit(1)
 
         self._main.scheduler.except_exceptions = (UserError, )
         self._main.scheduler.except_exception_handler = handle_exception
