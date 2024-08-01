@@ -142,7 +142,7 @@ class Generator(BaseGenerator):
 # endregion
             attribute_lines: list[str] = system_header_gui_attributes.removeprefix("  ").splitlines()
             attribute_lines = ["//" + line for line in attribute_lines if line != ""]
-            attributes_region: str = "#pragma region attributes\n" + "\n".join(attribute_lines) + "#pragma endregion\n\n"
+            attributes_region: str = "#pragma region attributes\n" + "\n".join(attribute_lines) + "\n#pragma endregion\n\n"
 # region user header
             old_user_header_gui: Optional[str] = None
             if os.path.exists(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW)) and not discard_old_changes:
