@@ -1,4 +1,3 @@
-from sys import executable
 import sys
 from typing import Final, Optional, Type
 from ctypes import windll, wintypes, byref
@@ -54,11 +53,9 @@ class GUI(ETKMainWindow):
         self._main.scheduler.except_exceptions = (UserError, )
         self._main.scheduler.except_exception_handler = handle_exception
 
-        self._tk_object.iconbitmap(executable)  # type:ignore
-
         self.__moving_element = None
 
-        self.add_event(ETKMainWindow.EVENTS.EXIT, self.__steuerung.exit_event)
+        self.add_event(ETKMainWindow.EVENTS.PRE_EXIT, self.__steuerung.exit_event)
 
         self.add_event(ETKMainWindow.EVENTS.MOUSE_UP, self.__mouse_up_event_handler)
         self.add_event(ETKMainWindow.EVENTS.MOUSE_MOVED, self.__mouse_moved_event_handler)
