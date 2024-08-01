@@ -443,6 +443,7 @@ class Steuerung:
         self.__gui.attributes_element_inner.visibility = False
         self.__gui.active_attributes_element = None
         self.__gui.last_active_attributes_element = None
+        self.__unsaved_changes = False
 
     def load_elements_from_file(self) -> None:
         if not self.__check_for_changes():
@@ -480,6 +481,7 @@ class Steuerung:
         self.__gui.attributes_element_inner.visibility = False
         self.__gui.active_attributes_element = None
         self.__gui.last_active_attributes_element = None
+        self.__unsaved_changes = False
 
     def export(self) -> None:
         path = self.__get_dir_path()
