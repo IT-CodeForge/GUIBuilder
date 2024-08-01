@@ -39,11 +39,11 @@ class Intermediary:
     def save_to_file(self, path: str, language: str) -> None:
         objects = {str(type(o).__name__): o.get_attributes_as_dict() for o in self.__objects.values()}
         data = {"next_id": self.__next_id, "language": language, "objects": objects}
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             f.write(json.dumps(data, indent=4))
 
     def load_from_file(self, path: str) -> str:
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         try:
             self.__next_id = data["next_id"]

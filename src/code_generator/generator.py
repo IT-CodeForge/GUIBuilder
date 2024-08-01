@@ -9,9 +9,10 @@ from .TGW_generators.TGWSystemHeaderGenerator import TGWSystemHeaderGenerator
 from .TGW_generators.TGWSystemCPPGenerator import TGWSystemCPPGenerator
 from .TGW_generators.TGWUserHeaderGenerator import TGWUserHeaderGenerator
 from .TGW_generators.TGWUserCPPGenerator import TGWUserCPPGenerator
-from autopep8 import fix_code # type:ignore
+from autopep8 import fix_code  # type:ignore
 from .ErrorMSGS import ParsingError
 import send2trash
+
 
 class RegionMarkerIncompleteError(ParsingError):
     def __init__(self) -> None:
@@ -19,9 +20,11 @@ class RegionMarkerIncompleteError(ParsingError):
         err_dt: str = "Die \"generated code\" Region ist unvollständig, dass bedeutet, dass entweder der Kopf-Marker \"# region generated code\" manipuliert wurde, oder es nicht genügend \"# regionend\" Marker gibt"
         super().__init__(err_dt, err_en)
 
+
 class SupportedFrameworks(Enum):
     ETK = auto()
     TGW = auto()
+
 
 class Generator(BaseGenerator):
     __REMOVED_EVENTS_ETK: str = "RemovedEvents.txt"
@@ -41,7 +44,7 @@ class Generator(BaseGenerator):
 
     def __init__(self) -> None:
         super().__init__()
-    
+
     @classmethod
     def how_many_files_exist(cls, path: str, framework: SupportedFrameworks) -> int:
         retval: int = 0
@@ -64,28 +67,27 @@ class Generator(BaseGenerator):
             if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW)):
                 retval += 1
         return retval
-        
 
     @classmethod
-    def write_files(cls, path: str, intermediary_objects:tuple[IBaseObject, ...], framework: SupportedFrameworks, discard_old_changes: bool):
+    def write_files(cls, path: str, intermediary_objects: tuple[IBaseObject, ...], framework: SupportedFrameworks, discard_old_changes: bool):
         if framework == SupportedFrameworks.ETK:
             old_user_gui: Optional[str] = None
             if os.path.exists(cls._join_paths(path, cls.__USER_GUI_NAME_ETK)) and not discard_old_changes:
                 old_user_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK))
-            
+
             read_user_gui: Optional[str] = None
             if old_user_gui != None:
                 user_gui_region_start: int = old_user_gui.find("# region generated code")
                 if user_gui_region_start == -1:
                     user_gui_region_start: int = old_user_gui.find("#region generated code")
                 if user_gui_region_start == -1:
-                    raise RegionMarkerIncompleteError           
+                    raise RegionMarkerIncompleteError
                 user_gui_region_end = cls.__find_region_end_python(old_user_gui, user_gui_region_start)
 
                 read_user_gui = old_user_gui[user_gui_region_start:user_gui_region_end]
-            
+
             system_gui, attributes = cls.__SYSTEM_GUI_GEN_ETK.generate_file(intermediary_objects)
-            attributes_region = "# region attributes\n" + attributes +  "# endregion\n\n"
+            attributes_region = "# region attributes\n" + attributes + "# endregion\n\n"
 
             user_gui, removed_events = cls.__USER_GUI_GEN_ETK.generate_file(intermediary_objects, read_user_gui)
             user_gui = user_gui.replace("from typing import Any", "from typing import Any  # type:ignore")
@@ -97,7 +99,7 @@ class Generator(BaseGenerator):
                 fix_code(user_gui)
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK), user_gui)
             else:
-                old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end],"# region generated code\n\n" + user_gui + "\n") # type:ignore
+                old_user_gui = old_user_gui.replace(old_user_gui[user_gui_region_start:user_gui_region_end], "# region generated code\n\n" + user_gui + "\n")  # type:ignore
                 fix_code(old_user_gui)
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_NAME_ETK), old_user_gui)
 
@@ -108,21 +110,21 @@ class Generator(BaseGenerator):
                         old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
                     elif discard_old_changes:
                         send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK))
-            
+
                 all_removed_events: str = old_removed_events
 
                 all_removed_events += "\n" + removed_events
                 fix_code(all_removed_events)
                 cls.__write_file(cls._join_paths(path, cls.__REMOVED_EVENTS_ETK), all_removed_events)
-            
+
             system_template: str = cls._read_file(cls._join_relative_path("./templates/ETKwrite/SystemGUI.txt"))
             system_gui = system_template.replace("#tag:generated_code#", system_gui)
             fix_code(system_gui)
             cls.__write_file(cls._join_paths(path, cls.__SYSTEM_GUI_NAME_ETK), system_gui)
-            
+
         elif framework == SupportedFrameworks.TGW:
-# region TGW
-# region system cpp
+            # region TGW
+            # region system cpp
             system_cpp_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/SystemCPPGUI.txt"))
 
             system_cpp_gui_params, system_cpp_gui_constructor, system_cpp_gui_event_binds = cls.__SYSTEM_CPP_GUI_GEN_TGW.generate_file(intermediary_objects)
@@ -145,37 +147,37 @@ class Generator(BaseGenerator):
             old_user_header_gui: Optional[str] = None
             if os.path.exists(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW)) and not discard_old_changes:
                 old_user_header_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW))
-            
+
             if old_user_header_gui != None:
                 user_header_gui_region_start: int = old_user_header_gui.find("#pragma region generated code")
                 if user_header_gui_region_start == -1:
-                    raise RegionMarkerIncompleteError           
+                    raise RegionMarkerIncompleteError
                 user_header_gui_region_end = cls.__find_region_end_cpp(old_user_header_gui, user_header_gui_region_start)
-            
+
             user_header_gui: str = attributes_region + cls.__USER_HEADER_GUI_GEN_TGW.generate_file(intermediary_objects)
-            
+
             if old_user_header_gui is None:
                 user_template: str = cls._read_file(cls._join_relative_path("./templates/TGWwrite/UserHeaderGUI.txt"))
                 user_header_gui = user_template.replace("#tag:generated_code#\n", user_header_gui)
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW), user_header_gui)
             else:
-                old_user_header_gui = old_user_header_gui.replace(old_user_header_gui[user_header_gui_region_start:user_header_gui_region_end],"#pragma region generated code\n\n" + user_header_gui) # type:ignore
+                old_user_header_gui = old_user_header_gui.replace(old_user_header_gui[user_header_gui_region_start:user_header_gui_region_end], "#pragma region generated code\n\n" + user_header_gui)  # type:ignore
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_HEADER_NAME_TGW), old_user_header_gui)
 # endregion
 # region user cpp
             old_user_cpp_gui: Optional[str] = None
             if os.path.exists(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW)) and not discard_old_changes:
                 old_user_cpp_gui = cls._read_file(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW))
-            
+
             read_user_cpp_gui: Optional[str] = None
             if old_user_cpp_gui != None:
                 user_cpp_gui_region_start: int = old_user_cpp_gui.find("#pragma region generated code")
                 if user_cpp_gui_region_start == -1:
-                    raise RegionMarkerIncompleteError           
+                    raise RegionMarkerIncompleteError
                 user_cpp_gui_region_end = cls.__find_region_end_cpp(old_user_cpp_gui, user_cpp_gui_region_start)
 
                 read_user_cpp_gui = old_user_cpp_gui[user_cpp_gui_region_start:user_cpp_gui_region_end]
-            
+
             user_cpp_gui, removed_events = cls.__USER_CPP_GUI_GEN_TGW.generate_file(intermediary_objects, read_user_cpp_gui)
             user_cpp_gui = attributes_region + user_cpp_gui
 
@@ -184,9 +186,9 @@ class Generator(BaseGenerator):
                 user_cpp_gui = user_template.replace("#tag:generated_code#\n", user_cpp_gui)
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW), user_cpp_gui)
             else:
-                old_user_cpp_gui = old_user_cpp_gui.replace(old_user_cpp_gui[user_cpp_gui_region_start:user_cpp_gui_region_end],"#pragma region generated code\n\n" + user_cpp_gui) # type:ignore
+                old_user_cpp_gui = old_user_cpp_gui.replace(old_user_cpp_gui[user_cpp_gui_region_start:user_cpp_gui_region_end], "#pragma region generated code\n\n" + user_cpp_gui)  # type:ignore
                 cls.__write_file(cls._join_paths(path, cls.__USER_GUI_CPP_NAME_TGW), old_user_cpp_gui)
-# region removed events            
+# region removed events
             if removed_events != "":
                 old_removed_events: str = ""
                 if os.path.exists(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW)):
@@ -194,18 +196,18 @@ class Generator(BaseGenerator):
                         old_removed_events = cls._read_file(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
                     elif discard_old_changes:
                         send2trash.send2trash(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW))
-                
+
                 all_removed_events: str = old_removed_events
 
                 all_removed_events += "\n" + removed_events
                 fix_code(all_removed_events)
                 cls.__write_file(cls._join_paths(path, cls.__REMOVED_EVENTS_TGW), all_removed_events)
 # endregion
-# endregion            
+# endregion
 # endregion
         else:
             raise ValueError(f"Selected framework ({framework.name}) is not supported")
-    
+
     @staticmethod
     def __find_next(st: str, searches: tuple[str, ...], start: int = 0, end: Optional[int] = None):
         if end is None:
@@ -215,7 +217,6 @@ class Generator(BaseGenerator):
             erg[s] = st.find(s, start, end)
         erg = {k: v for k, v in erg.items() if v != -1}
         return min(erg.items(), key=lambda v: v[1])
-
 
     @classmethod
     def __find_region_end_python(cls, st: str, start: int) -> int:
@@ -232,8 +233,8 @@ class Generator(BaseGenerator):
                 indent -= 1
             if indent == 0:
                 return i
-            index = i+1 
-    
+            index = i+1
+
     @classmethod
     def __find_region_end_cpp(cls, st: str, start: int) -> int:
         index = start
@@ -249,9 +250,9 @@ class Generator(BaseGenerator):
                 indent -= 1
             if indent == 0:
                 return i
-            index = i+1 
-    
+            index = i+1
+
     @staticmethod
     def __write_file(path: str, data: str):
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             f.write(data)
