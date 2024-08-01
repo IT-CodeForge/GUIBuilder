@@ -3,10 +3,9 @@ from os import devnull, path
 import sys
 from traceback import format_exc
 from exceptions import UserError
-from steuerung import Steuerung
 from jk.msgbox import MSGBoxStream
 
-version = "2.0_pre-2"
+version: str
 dir_root: str  # path to root dir (project folder / folder of exe)
 internal_dir_root: str  # path to internal root dir (project folder / folder of unpacked files)
 additional_files_path: str
@@ -41,7 +40,11 @@ def __main():
         main.internal_dir_root = str(sys._MEIPASS)  # type:ignore
     main.additional_files_path = path.abspath(f"{main.internal_dir_root}\\additional_files")
 
+    with open(path.join(main.additional_files_path, "version.txt"), "r") as f:
+        main.version = f.readlines()[0]
+
     print("\n"*20)
+    from steuerung import Steuerung
     s = Steuerung()
     s.run()
 
