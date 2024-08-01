@@ -71,7 +71,7 @@ edit: Callable[[IEdit], str] = lambda obj: f"{get_object_name(obj)} = new {TYPE_
 canvas: Callable[[ICanvas], str] = lambda obj: f"{get_object_name(obj)}_bitmap = new {TYPE_TRANS.get(ICanvas)}(this, {__visible_object(obj)})"
 timer: Callable[[ITimer], str] = lambda obj: f"{get_object_name(obj)} = new {TYPE_TRANS.get(ITimer)}(this, {obj.interval}, &{get_object_name(obj)}_id)"
 
-window_params: Callable[[IWindow], str] = lambda obj : f'10, 10, {obj.size[0]}, {obj.size[1]}, "{obj.name}", {__col_arr_to_col(obj.background_color)}'
+window_params: Callable[[IWindow], str] = lambda obj : f'10, 10, {obj.size[0]}, {obj.size[1]}, "{obj.title}", {__col_arr_to_col(obj.background_color)}'
 
 # endregion
 
