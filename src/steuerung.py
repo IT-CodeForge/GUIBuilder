@@ -472,6 +472,8 @@ class Steuerung:
                 continue
             self.__objects.update({self.__create_new_gui_element(type(e)): e})
 
+        self.__apply_window_attributes_to_gui() # needs to be applied before elements are applied (otherwise e.g. elements outside container)
+
         for e, o in self.__objects.items():
             if e == self.__gui:
                 continue
