@@ -45,8 +45,9 @@ class GUI(ETKMainWindow):
             try:
                 raise exc
             except UserError as e:
+                generate_error(e)
                 try:
-                    generate_error(e)
+                    self._tk_object.after(0, sys.exit, 1)
                 finally:
                     sys.exit(1)
 
