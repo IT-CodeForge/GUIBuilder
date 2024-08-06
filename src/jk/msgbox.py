@@ -80,7 +80,7 @@ class MSGBoxStream():
     def write(self, text: str) -> int:
         self.msg += text
         if not self.t.is_alive():
-            self.t = Thread(target=self.__send)
+            self.t = Thread(target=self.__send, daemon=False)
             self.t.start()
             import ctypes
             ctypes.windll.shcore.SetProcessDpiAwareness(0)
