@@ -57,9 +57,10 @@ class Intermediary:
 
         if "objects" not in data.keys():
             raise LoadingError(f"Die Datei {path} ist unvollständig.\n Der Schlüssel 'objects' fehlt.", f"The file {path} is invalid.\nIt does not contain the 'objects' key.")
+        o: dict[str, Any]
         for o in data["objects"]:
             import intermediary
-            type = getattr(intermediary, o["type"])
+            type: Type[IObjects] = getattr(intermediary, o["type"])
             for a in type.ATTRIBUTES:
                 if a not in o.keys():
                     raise LoadingError(f"Das Objekt {o["type"]} mit der id {o.get("id")} in der Datei {path} ist unvollständig.\n Der Schlüssel '{a}' fehlt.", f"The object {o["type"]} with the id {o.get("id")} in the file {path} is invalid.\nIt does not contain the '{a}' key.")
