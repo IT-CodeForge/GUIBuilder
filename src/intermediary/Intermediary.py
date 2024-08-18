@@ -37,7 +37,7 @@ class Intermediary:
         self.__objects.pop(object.id)
 
     def save_to_file(self, path: str, language: str) -> None:
-        objects = {str(type(o).__name__): o.get_attributes_as_dict() for o in self.__objects.values()}
+        objects = [{"type": str(type(o).__name__)} | o.get_attributes_as_dict() for o in self.__objects.values()]
         data = {"next_id": self.__next_id, "language": language, "objects": objects}
         with open(path, "w", encoding="utf-8") as f:
             f.write(json.dumps(data, indent=4))
@@ -57,14 +57,14 @@ class Intermediary:
 
         if "objects" not in data.keys():
             raise LoadingError(f"Die Datei {path} ist unvollständig.\n Der Schlüssel 'objects' fehlt.", f"The file {path} is invalid.\nIt does not contain the 'objects' key.")
-        for c, d in data["objects"].items():
+        for o in data["objects"]:
             import intermediary
-            type = getattr(intermediary, c)
+            type = getattr(intermediary, o["type"])
             for a in type.ATTRIBUTES:
-                if a not in d.keys():
-                    raise LoadingError(f"Das Objekt {c} in der Datei {path} ist unvollständig.\n Der Schlüssel '{a}' fehlt.", f"The object {c} in the file {path} is invalid.\nIt does not contain the '{a}' key.")
-            object: IObjects = type(d["id"])
-            object.load_attributes_from_dict(d)
+                if a not in o.keys():
+                    raise LoadingError(f"Das Objekt {o["type"]} mit der id {o.get("id")} in der Datei {path} ist unvollständig.\n Der Schlüssel '{a}' fehlt.", f"The object {o["type"]} with the id {o.get("id")} in the file {path} is invalid.\nIt does not contain the '{a}' key.")
+            object: IObjects = type(o["id"])
+            object.load_attributes_from_dict(o)
             self.__objects.update({object.id: object})
 
         return lang
