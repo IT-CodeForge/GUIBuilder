@@ -1,3 +1,5 @@
+:: V1.1
+
 @echo off
 
 IF EXIST .\PYTHONPATH (
@@ -14,6 +16,10 @@ IF EXIST .\requirements.txt (
 		call :newlines
 		echo CREATING VENV
 		python -m venv .\.venv
+		
+		call :newlines
+		echo UPGRADING PIP:
+		python -m pip install --upgrade pip
 		
 		call :newlines
 		echo ENTERING VENV

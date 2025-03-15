@@ -1,3 +1,5 @@
+:: V1.2
+
 @echo off
 
 FOR /F "tokens=* USEBACKQ" %%F IN (`powershell -Command "[guid]::NewGuid().ToString()"`) DO (
