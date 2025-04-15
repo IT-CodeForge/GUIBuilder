@@ -38,7 +38,7 @@ class Intermediary:
 
     def save_to_file(self, path: str, language: str) -> None:
         objects = [{"type": str(type(o).__name__)} | o.get_attributes_as_dict() for o in self.__objects.values()]
-        data = {"next_id": self.__next_id, "language": language, "objects": objects}
+        data: dict[str, Any] = {"next_id": self.__next_id, "language": language, "objects": objects}
         with open(path, "w", encoding="utf-8") as f:
             f.write(json.dumps(data, indent=4))
 
