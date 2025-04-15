@@ -1,5 +1,3 @@
-eel
-requests
 astor
 autopep8
 send2trash
